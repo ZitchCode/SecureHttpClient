@@ -1,0 +1,10 @@
+﻿{
+  "supports": {},
+  "dependencies": {
+    "NETStandard.Library": "1.6.0",
+    "Portable.BouncyCastle": "1.8.1.1"
+  },
+  "frameworks": {
+    "netstandard1.3": {}
+  }
+}

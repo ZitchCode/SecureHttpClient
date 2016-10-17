@@ -12,7 +12,7 @@ using Java.Util.Concurrent;
 
 namespace SecureHttpClient
 {
-    public class SecureHttpClientHandler : HttpClientHandler
+    public class SecureHttpClientHandler : HttpClientHandler, Abstractions.ISecureHttpClientHandler
     {
         private static readonly Lazy<OkHttpClient> OkHttpClientInstance = new Lazy<OkHttpClient>(CreateOkHttpClientInstance);
 
@@ -22,6 +22,13 @@ namespace SecureHttpClient
         public SecureHttpClientHandler()
         {
             _builder = OkHttpClientInstance.Value.NewBuilder().CookieJar(new NativeCookieJar());
+        }
+
+        public void AddCertificatePinner(string hostname, string[] pins)
+        {
+            System.Diagnostics.Debug.WriteLine($"Add CertificatePinner: hostname:{hostname}, pins:{string.Join("|", pins)}");
+            var certificatePinner = new CertificatePinner.Builder().Add(hostname, pins).Build();
+            _builder.CertificatePinner(certificatePinner);
         }
 
         private static OkHttpClient CreateOkHttpClientInstance()
@@ -108,7 +115,7 @@ namespace SecureHttpClient
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            var ret = new HttpResponseMessage((HttpStatusCode)resp.Code())
+            var ret = new HttpResponseMessage((HttpStatusCode) resp.Code())
             {
                 RequestMessage = request,
                 ReasonPhrase = resp.Message()

@@ -3,16 +3,20 @@ using System.Net;
 using System.Net.Http;
 using Foundation;
 using CoreFoundation;
+using SecureHttpClient.CertificatePinning;
+using Security;
 
 namespace SecureHttpClient
 {
     internal class DataTaskDelegate : NSUrlSessionDataDelegate
     {
         private readonly SecureHttpClientHandler _secureHttpClientHandler;
+        private readonly CertificatePinner _certificatePinner;
 
-        public DataTaskDelegate(SecureHttpClientHandler secureHttpClientHandler)
+        public DataTaskDelegate(SecureHttpClientHandler secureHttpClientHandler, CertificatePinner certificatePinner)
         {
             _secureHttpClientHandler = secureHttpClientHandler;
+            _certificatePinner = certificatePinner;
         }
 
         public override void DidReceiveResponse(NSUrlSession session, NSUrlSessionDataTask dataTask, NSUrlResponse response, Action<NSUrlSessionResponseDisposition> completionHandler)
@@ -139,6 +143,33 @@ namespace SecureHttpClient
                     completionHandler(NSUrlSessionAuthChallengeDisposition.UseCredential, credential);
                 }
                 return;
+            }
+
+            if (challenge.ProtectionSpace.AuthenticationMethod == NSUrlProtectionSpace.AuthenticationMethodServerTrust)
+            {
+                var hostname = task.CurrentRequest.Url.Host;
+                if (_certificatePinner != null && _certificatePinner.HasPin(hostname))
+                {
+                    var serverTrust = challenge.ProtectionSpace.ServerSecTrust;
+                    var status = serverTrust.Evaluate();
+                    if (status == SecTrustResult.Proceed || status == SecTrustResult.Unspecified)
+                    {
+                        var serverCertificate = serverTrust[0];
+                        var x509Certificate = serverCertificate.ToX509Certificate2();
+                        var match = _certificatePinner.Check(hostname, x509Certificate.RawData);
+                        if (match)
+                        {
+                            completionHandler(NSUrlSessionAuthChallengeDisposition.UseCredential, NSUrlCredential.FromTrust(serverTrust));
+                        }
+                        else
+                        {
+                            var inflightRequest = GetResponseForTask(task);
+                            inflightRequest.Error = new NSError(NSError.NSUrlErrorDomain, (nint)(long)NSUrlError.ServerCertificateUntrusted);
+                            completionHandler(NSUrlSessionAuthChallengeDisposition.CancelAuthenticationChallenge, null);
+                        }
+                        return;
+                    }
+                }
             }
 
             completionHandler(NSUrlSessionAuthChallengeDisposition.PerformDefaultHandling, challenge.ProposedCredential);

@@ -1,3 +1,5 @@
+using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Collections.Generic;
@@ -5,24 +7,33 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using Foundation;
+using SecureHttpClient.CertificatePinning;
 
 namespace SecureHttpClient
 {
-    public class SecureHttpClientHandler : HttpClientHandler
+    public class SecureHttpClientHandler : HttpClientHandler, Abstractions.ISecureHttpClientHandler
     {
         internal readonly Dictionary<NSUrlSessionTask, InflightOperation> InflightRequests;
+        private readonly Lazy<CertificatePinner> _certificatePinner;
         private NSUrlSession _session;
         
         public SecureHttpClientHandler()
         {
             InflightRequests = new Dictionary<NSUrlSessionTask, InflightOperation>();
+            _certificatePinner = new Lazy<CertificatePinner>();
+        }
+
+        public void AddCertificatePinner(string hostname, string[] pins)
+        {
+            Debug.WriteLine($"Add CertificatePinner: hostname:{hostname}, pins:{string.Join("|", pins)}");
+            _certificatePinner.Value.AddPins(hostname, pins);
         }
 
         private void InitSession()
         {
             using (var configuration = NSUrlSessionConfiguration.DefaultSessionConfiguration)
             {
-                _session = NSUrlSession.FromConfiguration(configuration, new DataTaskDelegate(this), null);
+                _session = NSUrlSession.FromConfiguration(configuration, new DataTaskDelegate(this, _certificatePinner.IsValueCreated ? _certificatePinner.Value : null), null);
             }
         }
 
