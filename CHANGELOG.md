@@ -1,0 +1,89 @@
+## 1.3.0
+- xamarin : upgrade to cycle 8 sr0 stable update (xamarin.vs 4.2.0.703 ; xamarin.android 7.0.1.3 ; xamarin.ios 10.0.1.10 ; mono 4.6.1.5)
+- rename project : NativeHttpClient -> SecureHttpClientHandler
+- iOS / portable : certificate pinner is not static anymore
+- test : fix certificate pinner tests
+- test : autostart
+- get rid of proxy
+- Square.OkIO 1.10.0
+- Square.OkHttp3 3.4.1.1
+- Microsoft.NETCore.App 1.0.1
+
+## 1.2.3
+- build : modify test csproj to delete nuget.props file after build
+- test : add http tests
+
+## 1.2.2
+- add certificatePinning project (for iOS and netstandard)
+- iOS : add certificate pinning
+
+## 1.2.1
+- xamarin : upgrade to cycle 8 sr0 beta (xamarin.vs 4.2.0.688 ; xamarin.android 7.0.1.0 ; xamarin.ios 10.0.1.5 ; mono 4.6.0.251)
+- xamarin : upgrade to cycle 8 sr0 stable (xamarin.vs 4.2.0.695 ; xamarin.android 7.0.1.2 ; xamarin.ios 10.0.1.8 ; mono 4.6.1.3)
+- test : now accepts improvable tls1.2 (required for ios)
+
+## 1.2.0
+- xamarin : upgrade to cycle 8 stable (xamarin.vs 4.2.0.680 ; xamarin.android 7.0.0.18 ; xamarin.ios 10.0.0.6 ; mono 4.6.0.245)
+- add iOS projects and update nuget script
+- iOs implementation using NSUrlSessionHandler, but no certificate pinning for the moment
+
+## 1.1.5
+- generate versions automatically from version file
+
+## 1.1.4
+- xamarin : upgrade to cycle 8 beta pre3 (xamarin.vs 4.2.0.628 ; xamarin.android 7.0.0.3 ; mono 4.6.0.182)
+- android : support android N (7.0)
+
+## 1.1.3
+- android : remove one useless dependency
+- merge assemblies before packing nuget
+
+## 1.1.2
+- clean android resources
+
+## 1.1.1
+- remove pdb and mdb from nuget
+
+## 1.1.0
+- remove useless bait dll and use directly the portable versionning
+- do not expose some public classes (thanks to internalsvisibleto)
+
+## 1.0.5
+- bait and switch : add abstractions dll
+- clean nuget pack
+
+## 1.0.4
+- clean some references, force Square.OkIO 1.9.0
+- implement bait and switch trick more properly with abstract dll
+
+## 1.0.3
+- add proxy (on supported platforms)
+
+## 1.0.2
+- webexception in case of trust failure
+
+## 1.0.1
+- re-add debug logs
+- change nativemessagehandler constructors
+
+## 1.0.0
+- new project name : NativeHttpClient
+- android : get rid of useless options (progressstreamcontent ; throwoncaptive ; disablecaching)
+- android : use okhttp's certificatepinner and get rid of dirty legacy code
+- portable : add certificate pinner
+
+## 0.3.4.1
+- use OkHttp 3.4.1
+- fix concurrency issue with cookie manager
+- increase timeout to 100s
+
+## 0.3.1.2
+- merge tests in common dll
+- get rid of servicepointmanager
+- cleaning
+
+## 0.2.7.5
+- support Tls1.2 on android <5.0
+- validate certificates properly using subjectAltNames (for zesto)
+- use OkHttp 2.7.5
+- cleaning
