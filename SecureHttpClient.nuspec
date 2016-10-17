@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>SecureHttpClient</id>
+    <version>$version$</version>
+    <title>Secure HttpClient</title>
+    <authors>tranb3r</authors>
+    <owners>tranb3r</owners>
+	<description>Cross-platform HttpClientHandler with TLS1.2 and Certificate Pinning</description>
+    <tags></tags>
+	<projectUrl>https://github.com/zitch-code/secure-httpclient</projectUrl>
+    <licenseUrl>https://raw.github.com/zitch-code/secure-httpclient/master/LICENSE</licenseUrl>	
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <dependencies>
+      <group targetFramework="MonoAndroid">
+        <dependency id="Square.OkHttp3" version="3.4.1.1" />
+        <dependency id="Square.OkIO" version="1.10.0" />
+      </group>
+      <group targetFramework="Xamarin.iOS">
+        <dependency id="Portable.BouncyCastle" version="1.8.1.1" />
+      </group>
+      <group targetFramework="netstandard1.3">
+        <dependency id="Portable.BouncyCastle" version="1.8.1.1" />
+      </group>
+    </dependencies>
+  </metadata>
+
+  <files>
+    <file src="bin\MonoAndroid\SecureHttpClient.dll" target="lib\MonoAndroid" />
+    <file src="bin\Xamarin.iOS\SecureHttpClient.dll" target="lib\Xamarin.iOS" />
+	<file src="bin\netstandard1.3\SecureHttpClient.dll" target="lib\netstandard1.3" />
+  </files>
+</package>
