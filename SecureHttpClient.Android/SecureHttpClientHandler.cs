@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using Square.OkHttp3;
 using Java.IO;
+using Android.OS;
 using Java.Util.Concurrent;
 
 namespace SecureHttpClient
@@ -30,6 +31,11 @@ namespace SecureHttpClient
                 .WriteTimeout(100, TimeUnit.Seconds)
                 .ReadTimeout(100, TimeUnit.Seconds);
             builder.CookieJar(new NativeCookieJar());
+            if ((int)Build.VERSION.SdkInt < 21)
+            {
+                // Support TLS1.2 on Android versions before Lollipop
+                builder.SslSocketFactory(new TlsSslSocketFactory(), TlsSslSocketFactory.GetSystemDefaultTrustManager());
+            }
             return builder.Build();
         }
 
