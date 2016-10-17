@@ -1,0 +1,8 @@
+﻿{
+  "dependencies": {
+    "xunit.runner.devices": "2.1.0"
+  },
+  "frameworks": {
+    "MonoAndroid,Version=v7.0": {}
+  }
+}

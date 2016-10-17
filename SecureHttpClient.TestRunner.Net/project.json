@@ -1,0 +1,27 @@
+{
+  "buildOptions": {
+    "emitEntryPoint": true
+  },
+
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.1"
+    },
+    "xunit.runner.utility": "2.1.0"
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+      "dependencies": {
+        "SecureHttpClient.Test": {
+          "target": "project"
+        }
+      },
+      "imports": [
+        "dnxcore50",
+        "portable-net45+win8+wp8+wpa81"
+      ]
+    }
+  }
+}
