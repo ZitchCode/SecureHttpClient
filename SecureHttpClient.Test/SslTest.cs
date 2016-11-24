@@ -120,7 +120,7 @@ namespace SecureHttpClient.Test
         {
             const string page = @"https://www.howsmyssl.com/a/check";
             const string hostname = @"www.howsmyssl.com";
-            var pins = new [] { @"sha256/a4hGJrBxOsRxR7b5NsbQW1ZD6aRJFW1cN97+FZuMopQ=" };
+            var pins = new [] { @"sha256/IXSn4uPyRRA95HFQTXm1PJOKMP9KeEIatv+0UUWwcLo=" };
             await GetPageAsync(page, hostname, pins).ConfigureAwait(false);
             Assert.True(true);
         }
