@@ -1,3 +1,9 @@
+## 1.4.0
+- xamarin : upgrade to cycle 8 sr1 stable (xamarin.vs 4.2.1.60 ; xamarin.android 7.0.2.37 ; xamarin.ios 10.2.1.5 ; mono 4.6.2.7)
+- test : add delete cookie test
+- test : fix pin in ssl test following certificate change
+- android : fix delete cookie
+
 ## 1.3.0
 - xamarin : upgrade to cycle 8 sr0 stable update (xamarin.vs 4.2.0.703 ; xamarin.android 7.0.1.3 ; xamarin.ios 10.0.1.10 ; mono 4.6.1.5)
 - rename project : NativeHttpClient -> SecureHttpClientHandler
