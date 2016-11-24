@@ -103,6 +103,18 @@ namespace SecureHttpClient.Test
             Assert.Contains(new KeyValuePair<string, string>("k1", "v1"), cookies);
         }
 
+        [Fact]
+        public async Task HttpTest_DeleteCookie()
+        {
+            const string page1 = @"https://httpbin.org/cookies/set?k1=v1";
+            await GetPageAsync(page1).ConfigureAwait(false);
+            const string page2 = @"https://httpbin.org/cookies/delete?k1";
+            var result = await GetPageAsync(page2).ConfigureAwait(false);
+            var json = JToken.Parse(result);
+            var cookies = json["cookies"].ToObject<Dictionary<string, string>>();
+            Assert.Empty(cookies);
+        }
+
         private static async Task<string> GetPageAsync(string page)
         {
             string result;

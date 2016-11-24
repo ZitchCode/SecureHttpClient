@@ -24,7 +24,14 @@ namespace SecureHttpClient
         {
             foreach (var cookie in cookies.Select(ToNativeCookie))
             {
-                _cookieManager.CookieStore.Add(new URI(cookie.Domain), cookie);
+                if (cookie.Discard)
+                {
+                    _cookieManager.CookieStore.Remove(new URI(cookie.Domain), cookie);
+                }
+                else
+                {
+                    _cookieManager.CookieStore.Add(new URI(cookie.Domain), cookie);
+                }
             }
         }
 
@@ -35,6 +42,7 @@ namespace SecureHttpClient
                 Domain = cookie.Domain(),
                 Path = cookie.Path(),
                 Secure = cookie.Secure(),
+                Discard = cookie.ExpiresAt() == long.MinValue
             };
         }
 
