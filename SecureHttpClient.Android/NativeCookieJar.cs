@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Java.Lang;
 using Java.Net;
 using Square.OkHttp3;
 
@@ -6,6 +8,8 @@ namespace SecureHttpClient
 {
     internal class NativeCookieJar : Java.Lang.Object, ICookieJar
     {
+        private static DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
         private readonly CookieManager _cookieManager;
 
         public NativeCookieJar()
@@ -37,10 +41,58 @@ namespace SecureHttpClient
             var cookieStrings = new Android.Runtime.JavaList<string>();
             foreach (var cookie in cookies)
             {
-                cookieStrings.Add(cookie.ToString());
+                cookieStrings.Add(CookieToString(cookie));
             }
             var map = new Android.Runtime.JavaDictionary<string, IList<string>> { { "Set-Cookie", cookieStrings } };
             _cookieManager.Put(url.Uri(), map);
+        }
+
+        private static string CookieToString(Cookie cookie)
+        {
+            var result = new StringBuilder();
+
+            result.Append(cookie.Name());
+            result.Append('=');
+            result.Append(cookie.Value());
+
+            if (cookie.Persistent())
+            {
+                if (cookie.ExpiresAt() == Long.MinValue)
+                {
+                    result.Append("; max-age=0");
+                }
+                else
+                {
+                    var date = FromUnixTime(cookie.ExpiresAt()).ToUniversalTime().ToString("r");
+                    result.Append("; expires=").Append(date);
+                }
+            }
+
+            if (!cookie.HostOnly())
+            {
+                result.Append("; domain=");
+                result.Append(".");
+                result.Append(cookie.Domain());
+            }
+
+            result.Append("; path=").Append(cookie.Path());
+
+            if (cookie.Secure())
+            {
+                result.Append("; secure");
+            }
+
+            if (cookie.HttpOnly())
+            {
+                result.Append("; httponly");
+            }
+
+            return result.ToString();
+        }
+
+        private static DateTime FromUnixTime(long unixTimeMillis)
+        {
+            return _epoch.AddMilliseconds(unixTimeMillis);
         }
 
         private static IEnumerable<Cookie> DecodeHeader(HttpUrl httpUrl, string header)
