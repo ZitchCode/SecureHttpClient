@@ -106,12 +106,17 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task HttpTest_DeleteCookie()
         {
-            const string page1 = @"https://httpbin.org/cookies/set?k1=v1";
-            await GetPageAsync(page1).ConfigureAwait(false);
-            const string page2 = @"https://httpbin.org/cookies/delete?k1";
-            var result = await GetPageAsync(page2).ConfigureAwait(false);
-            var json = JToken.Parse(result);
-            var cookies = json["cookies"].ToObject<Dictionary<string, string>>();
+            Dictionary<string, string> cookies;
+            var secureHttpClientHandler = new SecureHttpClientHandler();
+            using (var httpClient = new HttpClient(secureHttpClientHandler))
+            {
+                const string page1 = @"https://httpbin.org/cookies/set?k1=v1";
+                await GetPageAsync(httpClient, page1).ConfigureAwait(false);
+                const string page2 = @"https://httpbin.org/cookies/delete?k1";
+                var result = await GetPageAsync(httpClient, page2).ConfigureAwait(false);
+                var json = JToken.Parse(result);
+                cookies = json["cookies"].ToObject<Dictionary<string, string>>();
+            }
             Assert.Empty(cookies);
         }
 
@@ -120,6 +125,16 @@ namespace SecureHttpClient.Test
             string result;
             var secureHttpClientHandler = new SecureHttpClientHandler();
             using (var httpClient = new HttpClient(secureHttpClientHandler))
+            using (var response = await httpClient.GetAsync(page).ConfigureAwait(false))
+            {
+                result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            }
+            return result;
+        }
+
+        private static async Task<string> GetPageAsync(HttpClient httpClient, string page)
+        {
+            string result;
             using (var response = await httpClient.GetAsync(page).ConfigureAwait(false))
             {
                 result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
