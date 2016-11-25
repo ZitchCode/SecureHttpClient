@@ -1,5 +1,6 @@
 ## 1.4.1
 - test : fix delete cookie test
+- android : better implementation of cookiejar
 
 ## 1.4.0
 - xamarin : upgrade to cycle 8 sr1 stable (xamarin.vs 4.2.1.60 ; xamarin.android 7.0.2.37 ; xamarin.ios 10.2.1.5 ; mono 4.6.2.7)

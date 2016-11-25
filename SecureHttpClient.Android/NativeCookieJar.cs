@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Java.Net;
 using Square.OkHttp3;
 
@@ -16,44 +15,112 @@ namespace SecureHttpClient
 
         public IList<Cookie> LoadForRequest(HttpUrl httpUrl)
         {
-            // No domain matching done here, because OkHttp.Cookie's "hostonly" does not exist in Java.Net.HttpCookie
-            return _cookieManager.CookieStore.Cookies.Select(ToNetCookie).ToList();
+            var headers = new Dictionary<string, IList<string>>();
+            var cookieHeaders = _cookieManager.Get(httpUrl.Uri(), headers);
+            var cookies = new List<Cookie>();
+            foreach (var entry in cookieHeaders)
+            {
+                if ((entry.Key == "Cookie" || entry.Key == "Cookie2") && entry.Value != null)
+                {
+                    foreach (var header in entry.Value)
+                    {
+                        var newCookies = DecodeHeader(httpUrl, header);
+                        cookies.AddRange(newCookies);
+                    }
+                }
+            }
+            return cookies;
         }
 
         public void SaveFromResponse(HttpUrl url, IList<Cookie> cookies)
         {
-            foreach (var cookie in cookies.Select(ToNativeCookie))
+            var cookieStrings = new Android.Runtime.JavaList<string>();
+            foreach (var cookie in cookies)
             {
-                if (cookie.Discard)
-                {
-                    _cookieManager.CookieStore.Remove(new URI(cookie.Domain), cookie);
-                }
-                else
-                {
-                    _cookieManager.CookieStore.Add(new URI(cookie.Domain), cookie);
-                }
+                cookieStrings.Add(cookie.ToString());
             }
+            var map = new Android.Runtime.JavaDictionary<string, IList<string>> { { "Set-Cookie", cookieStrings } };
+            _cookieManager.Put(url.Uri(), map);
         }
 
-        private static HttpCookie ToNativeCookie(Cookie cookie)
+        private static IEnumerable<Cookie> DecodeHeader(HttpUrl httpUrl, string header)
         {
-            return new HttpCookie(cookie.Name(), cookie.Value())
+            var result = new List<Cookie>();
+            var limit = header.Length;
+            int pairEnd;
+            for (var pos = 0; pos < limit; pos = pairEnd + 1)
             {
-                Domain = cookie.Domain(),
-                Path = cookie.Path(),
-                Secure = cookie.Secure(),
-                Discard = cookie.ExpiresAt() == long.MinValue
-            };
+                pairEnd = DelimiterOffset(header, pos, limit, ";,");
+                var equalsSign = DelimiterOffset(header, pos, pairEnd, "=");
+                var name = TrimSubstring(header, pos, equalsSign);
+                if (name.StartsWith("$"))
+                {
+                    continue;
+                }
+
+                // We have either name=value or just a name.
+                var value = equalsSign < pairEnd ? TrimSubstring(header, equalsSign + 1, pairEnd) : "";
+
+                result.Add(new Cookie.Builder().Name(name).Value(value).Domain(httpUrl.Host()).Build());
+            }
+            return result;
         }
 
-        private static Cookie ToNetCookie(HttpCookie cookie)
+        private static int DelimiterOffset(string input, int pos, int limit, string delimiters)
         {
-            var cookieBuilder = new Cookie.Builder().Name(cookie.Name).Value(cookie.Value).Path(cookie.Path).Domain(cookie.Domain);
-            if (cookie.Secure)
+            for (var i = pos; i < limit; i++)
             {
-                cookieBuilder.Secure();
+                if (delimiters.IndexOf(input[i]) != -1)
+                {
+                    return i;
+                }
             }
-            return cookieBuilder.Build();
+            return limit;
+        }
+
+        private static string TrimSubstring(string str, int pos, int limit)
+        {
+            var start = SkipLeadingAsciiWhitespace(str, pos, limit);
+            var end = SkipTrailingAsciiWhitespace(str, start, limit);
+            return str.Substring(start, end - start);
+        }
+
+        private static int SkipLeadingAsciiWhitespace(string input, int pos, int limit)
+        {
+            for (var i = pos; i < limit; ++i)
+            {
+                switch (input[i])
+                {
+                    case '\t':
+                    case '\n':
+                    case '\f':
+                    case '\r':
+                    case ' ':
+                        continue;
+                    default:
+                        return i;
+                }
+            }
+            return limit;
+        }
+
+        private static int SkipTrailingAsciiWhitespace(string input, int pos, int limit)
+        {
+            for (var i = limit - 1; i >= pos; --i)
+            {
+                switch (input[i])
+                {
+                    case '\t':
+                    case '\n':
+                    case '\f':
+                    case '\r':
+                    case ' ':
+                        continue;
+                    default:
+                        return i + 1;
+                }
+            }
+            return pos;
         }
     }
 }
