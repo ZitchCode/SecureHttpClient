@@ -2,6 +2,7 @@
 - netstandard 1.6.1
 - netcoreapp 1.1.0
 - system.net.requests 4.3.0
+- fix iOS projects order (xamarin bug #44887)
 
 ## 1.4.1
 - test : fix delete cookie test
