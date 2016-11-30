@@ -1,3 +1,8 @@
+## 1.4.2
+- netstandard 1.6.1
+- netcoreapp 1.1.0
+- system.net.requests 4.3.0
+
 ## 1.4.1
 - test : fix delete cookie test
 - android : better implementation of cookiejar
