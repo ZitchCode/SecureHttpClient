@@ -1,3 +1,6 @@
+## 1.5.0
+- fix certificate hash
+
 ## 1.4.2
 - netstandard 1.6.1
 - netcoreapp 1.1.0
