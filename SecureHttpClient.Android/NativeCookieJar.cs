@@ -22,14 +22,17 @@ namespace SecureHttpClient
             var headers = new Dictionary<string, IList<string>>();
             var cookieHeaders = _cookieManager.Get(httpUrl.Uri(), headers);
             var cookies = new List<Cookie>();
-            foreach (var entry in cookieHeaders)
+            if (cookieHeaders != null)
             {
-                if ((entry.Key == "Cookie" || entry.Key == "Cookie2") && entry.Value != null)
+                foreach (var entry in cookieHeaders)
                 {
-                    foreach (var header in entry.Value)
+                    if ((entry.Key == "Cookie" || entry.Key == "Cookie2") && entry.Value != null)
                     {
-                        var newCookies = DecodeHeader(httpUrl, header);
-                        cookies.AddRange(newCookies);
+                        foreach (var header in entry.Value)
+                        {
+                            var newCookies = DecodeHeader(httpUrl, header);
+                            cookies.AddRange(newCookies);
+                        }
                     }
                 }
             }
@@ -57,15 +60,8 @@ namespace SecureHttpClient
 
             if (cookie.Persistent())
             {
-                if (cookie.ExpiresAt() == Long.MinValue)
-                {
-                    result.Append("; max-age=0");
-                }
-                else
-                {
-                    var date = FromUnixTime(cookie.ExpiresAt()).ToUniversalTime().ToString("r");
-                    result.Append("; expires=").Append(date);
-                }
+                var date = FromUnixTime(cookie.ExpiresAt()).ToUniversalTime().ToString("r");
+                result.Append("; expires=").Append(date);
             }
 
             if (!cookie.HostOnly())
@@ -92,7 +88,7 @@ namespace SecureHttpClient
 
         private static DateTime FromUnixTime(long unixTimeMillis)
         {
-            return _epoch.AddMilliseconds(unixTimeMillis);
+            return unixTimeMillis == Long.MinValue ? _epoch : _epoch.AddMilliseconds(unixTimeMillis);
         }
 
         private static IEnumerable<Cookie> DecodeHeader(HttpUrl httpUrl, string header)
