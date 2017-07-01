@@ -1,18 +1,18 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureHttpClient.Android", "SecureHttpClient.Android\SecureHttpClient.Android.csproj", "{F7290B9E-C821-4DA7-A4E5-824D9B0F70F2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureHttpClient.Portable", "SecureHttpClient.Portable\SecureHttpClient.Portable.csproj", "{6DD98593-4498-463D-B16E-F6CC5A928B79}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{08CA4EC8-8C67-4325-A09B-95E4B4ABFA05}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{98B921B7-5B2A-4E33-941F-119E72DF1908}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureHttpClient.Android", "SecureHttpClient.Android\SecureHttpClient.Android.csproj", "{F7290B9E-C821-4DA7-A4E5-824D9B0F70F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureHttpClient.Portable", "SecureHttpClient.Portable\SecureHttpClient.Portable.csproj", "{6DD98593-4498-463D-B16E-F6CC5A928B79}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureHttpClient.TestRunner.Android", "SecureHttpClient.TestRunner.Android\SecureHttpClient.TestRunner.Android.csproj", "{5C9E2D3F-3E93-4F95-8A29-80055BD1D15A}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SecureHttpClient.TestRunner.Net", "SecureHttpClient.TestRunner.Net\SecureHttpClient.TestRunner.Net.xproj", "{D52770C2-BAB3-4E25-8787-45CC74177A95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecureHttpClient.TestRunner.Net", "SecureHttpClient.TestRunner.Net\SecureHttpClient.TestRunner.Net.csproj", "{D52770C2-BAB3-4E25-8787-45CC74177A95}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureHttpClient.Test", "SecureHttpClient.Test\SecureHttpClient.Test.csproj", "{503B71DB-1CCA-49CA-8C2F-7FAA87B5520A}"
 EndProject

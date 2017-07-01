@@ -1,6 +1,6 @@
 ﻿{
   "dependencies": {
-    "xunit.runner.devices": "2.1.0"
+    "xunit.runner.devices": "2.2.0"
   },
   "frameworks": {
     "Xamarin.iOS,Version=v1.0": {}

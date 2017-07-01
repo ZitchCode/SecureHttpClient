@@ -13,14 +13,14 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <dependencies>
       <group targetFramework="MonoAndroid">
-        <dependency id="Square.OkHttp3" version="3.4.1.1" />
-        <dependency id="Square.OkIO" version="1.10.0" />
+        <dependency id="Square.OkHttp3" version="3.5.0" />
+        <dependency id="Square.OkIO" version="1.11.0" />
       </group>
       <group targetFramework="Xamarin.iOS">
-        <dependency id="Portable.BouncyCastle" version="1.8.1.1" />
+        <dependency id="Portable.BouncyCastle" version="1.8.1.2" />
       </group>
       <group targetFramework="netstandard1.3">
-        <dependency id="Portable.BouncyCastle" version="1.8.1.1" />
+        <dependency id="Portable.BouncyCastle" version="1.8.1.2" />
       </group>
     </dependencies>
   </metadata>

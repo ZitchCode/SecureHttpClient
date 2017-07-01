@@ -15,7 +15,7 @@
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
     <AssemblyName>SecureHttpClient</AssemblyName>
-    <TargetFrameworkVersion>v7.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,7 +47,6 @@
     <Compile Include="SecureHttpClientHandler.cs" />
     <Compile Include="TlsSslSocketFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\CustomAssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="project.json" />
@@ -59,20 +58,4 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" Condition="Exists('$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets')" />
-  <Target Name="ReadCustomVersionFile">
-	<ReadLinesFromFile File="..\version.txt">
-	  <Output TaskParameter="Lines" PropertyName="LinesFromCustomVersionFile" />
-	</ReadLinesFromFile>
-  </Target>
-  <Target Name="CreateCustomVersionProperties" DependsOnTargets="ReadCustomVersionFile">
-    <PropertyGroup>
-	  <Major>$([System.String]::Copy( $(LinesFromCustomVersionFile) ).Split( '.' )[ 0 ])</Major>
-	  <Minor>$([System.String]::Copy( $(LinesFromCustomVersionFile) ).Split( '.' )[ 1 ])</Minor>
-	  <Build>$([System.String]::Copy( $(LinesFromCustomVersionFile) ).Split( '.' )[ 2 ])</Build>
-    </PropertyGroup>
-  </Target>  
-  <Target Name="BeforeBuild" DependsOnTargets="CreateCustomVersionProperties" Condition="Exists('$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets')" >
-    <AssemblyInfo CodeLanguage="CS" OutputFile="Properties\CustomAssemblyInfo.cs" AssemblyVersion="$(Major).$(Minor).$(Build)" AssemblyFileVersion="$(Major).$(Minor).$(Build)" />
-  </Target>
 </Project>

@@ -1,77 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{503B71DB-1CCA-49CA-8C2F-7FAA87B5520A}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SecureHttpClient.Test</RootNamespace>
+    <TargetFramework>netstandard1.3</TargetFramework>
     <AssemblyName>SecureHttpClient.Test</AssemblyName>
-    <DefaultLanguage>en-US</DefaultLanguage>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <OutputType>Library</OutputType>
+    <PackageId>SecureHttpClient.Test</PackageId>
   </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+  </PropertyGroup>  
+  
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-    <None Include="project.json" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="System.Net.Requests" Version="4.3.0" />
+    <PackageReference Include="xunit" Version="2.2.0" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="HttpTest.cs" />
-    <Compile Include="SslTest.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\CustomAssemblyInfo.cs" />
+    <ProjectReference Include="..\SecureHttpClient.Abstractions\SecureHttpClient.Abstractions.csproj" />
+    <ProjectReference Include="..\SecureHttpClient.Portable\SecureHttpClient.Portable.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SecureHttpClient.Abstractions\SecureHttpClient.Abstractions.csproj">
-      <Project>{dd85e6b4-0cf7-469d-bf00-6fb24cb9f2b1}</Project>
-      <Name>SecureHttpClient.Abstractions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SecureHttpClient.Portable\SecureHttpClient.Portable.csproj">
-      <Project>{6dd98593-4498-463d-b16e-f6cc5a928b79}</Project>
-      <Name>SecureHttpClient.Portable</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" Condition="Exists('$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets')" />
-  <Target Name="ReadCustomVersionFile">
-    <ReadLinesFromFile File="..\version.txt">
-      <Output TaskParameter="Lines" PropertyName="LinesFromCustomVersionFile" />
-    </ReadLinesFromFile>
-  </Target>
-  <Target Name="CreateCustomVersionProperties" DependsOnTargets="ReadCustomVersionFile">
-    <PropertyGroup>
-      <Major>$([System.String]::Copy( $(LinesFromCustomVersionFile) ).Split( '.' )[ 0 ])</Major>
-      <Minor>$([System.String]::Copy( $(LinesFromCustomVersionFile) ).Split( '.' )[ 1 ])</Minor>
-      <Build>$([System.String]::Copy( $(LinesFromCustomVersionFile) ).Split( '.' )[ 2 ])</Build>
-    </PropertyGroup>
-  </Target>
-  <Target Name="BeforeBuild" DependsOnTargets="CreateCustomVersionProperties" Condition="Exists('$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets')">
-    <AssemblyInfo CodeLanguage="CS" OutputFile="Properties\CustomAssemblyInfo.cs" AssemblyVersion="$(Major).$(Minor).$(Build)" AssemblyFileVersion="$(Major).$(Minor).$(Build)" />
-  </Target>
-  <Target Name="AfterBuild">
-    <Delete Files=".\SecureHttpClient.Test.nuget.props" />
-  </Target>
+  
 </Project>

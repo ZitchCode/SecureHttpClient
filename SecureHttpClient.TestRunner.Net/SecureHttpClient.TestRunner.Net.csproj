@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <AssemblyName>SecureHttpClient.TestRunner.Net</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>SecureHttpClient.TestRunner.Net</PackageId>
+    <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SecureHttpClient.Test\SecureHttpClient.Test.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.runner.utility" Version="2.2.0" />
+  </ItemGroup>
+
+</Project>

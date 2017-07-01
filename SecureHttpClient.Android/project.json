@@ -1,9 +1,9 @@
 ﻿{
   "dependencies": {
-    "Square.OkHttp3": "3.4.1.1",
-    "Square.OkIO": "1.10.0"
+    "Square.OkHttp3": "3.5.0",
+    "Square.OkIO": "1.11.0"
   },
   "frameworks": {
-    "MonoAndroid,Version=v7.0": {}
+    "MonoAndroid,Version=v7.1": {}
   }
 }

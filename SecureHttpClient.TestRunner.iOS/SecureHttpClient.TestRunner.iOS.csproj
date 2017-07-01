@@ -86,7 +86,6 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="Properties\CustomAssemblyInfo.cs" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <InterfaceDefinition Include="Resources\LaunchScreen.xib" />
@@ -113,20 +112,4 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" Condition="Exists('$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets')" />
-  <Target Name="ReadCustomVersionFile">
-    <ReadLinesFromFile File="..\version.txt">
-      <Output TaskParameter="Lines" PropertyName="LinesFromCustomVersionFile" />
-    </ReadLinesFromFile>
-  </Target>
-  <Target Name="CreateCustomVersionProperties" DependsOnTargets="ReadCustomVersionFile">
-    <PropertyGroup>
-      <Major>$([System.String]::Copy( $(LinesFromCustomVersionFile) ).Split( '.' )[ 0 ])</Major>
-      <Minor>$([System.String]::Copy( $(LinesFromCustomVersionFile) ).Split( '.' )[ 1 ])</Minor>
-      <Build>$([System.String]::Copy( $(LinesFromCustomVersionFile) ).Split( '.' )[ 2 ])</Build>
-    </PropertyGroup>
-  </Target>
-  <Target Name="BeforeBuild" DependsOnTargets="CreateCustomVersionProperties" Condition="Exists('$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets')">
-    <AssemblyInfo CodeLanguage="CS" OutputFile="Properties\CustomAssemblyInfo.cs" AssemblyVersion="$(Major).$(Minor).$(Build)" AssemblyFileVersion="$(Major).$(Minor).$(Build)" />
-  </Target>
 </Project>
