@@ -1,5 +1,14 @@
 ## 1.5.0
-- fix certificate hash
+- several bug fixes
+- simplify version management
+- migration for VS2017 & VS For Mac
+- xamarin : xamarin 4.5.0.486 ; xamarin.android 7.3.1.2 ; xamarin.ios 10.10.0.37 ; mono 5.0.1
+- android : build-tools 26, platform-tools 26
+- Portable.BouncyCastle 1.8.1.2
+- Newtonsoft.Json 10.0.3
+- xunit 2.2.0
+- Square.OkHttp3 3.5.0 ; Square.OkIO 1.11.0
+- support Android 7.1
 
 ## 1.4.2
 - netstandard 1.6.1
