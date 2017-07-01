@@ -33,7 +33,8 @@ namespace SecureHttpClient
         {
             using (var configuration = NSUrlSessionConfiguration.DefaultSessionConfiguration)
             {
-                _session = NSUrlSession.FromConfiguration(configuration, new DataTaskDelegate(this, _certificatePinner.IsValueCreated ? _certificatePinner.Value : null), null);
+                var nsUrlSessionDelegate = (INSUrlSessionDelegate) new DataTaskDelegate(this, _certificatePinner.IsValueCreated ? _certificatePinner.Value : null);
+                _session = NSUrlSession.FromConfiguration(configuration, nsUrlSessionDelegate, null);
             }
         }
 
