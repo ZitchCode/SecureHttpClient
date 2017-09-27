@@ -18,16 +18,18 @@ namespace SecureHttpClient
 
         private readonly OkHttpClient.Builder _builder;
         private OkHttpClient _client;
+        private readonly Lazy<CertificatePinner.Builder> _certificatePinnerBuilder;
 
         public SecureHttpClientHandler()
         {
             _builder = OkHttpClientInstance.Value.NewBuilder().CookieJar(new NativeCookieJar());
+            _certificatePinnerBuilder = new Lazy<CertificatePinner.Builder>();
         }
 
         public void AddCertificatePinner(string hostname, string[] pins)
         {
             System.Diagnostics.Debug.WriteLine($"Add CertificatePinner: hostname:{hostname}, pins:{string.Join("|", pins)}");
-            var certificatePinner = new CertificatePinner.Builder().Add(hostname, pins).Build();
+            var certificatePinner = _certificatePinnerBuilder.Value.Add(hostname, pins).Build();
             _builder.CertificatePinner(certificatePinner);
         }
 
