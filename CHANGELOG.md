@@ -1,3 +1,9 @@
+## 1.5.1
+- security fix for iOS
+- fix android certificate pinner when adding several hostnames
+- change architecture for iOS
+- more certificatePinner tests
+
 ## 1.5.0
 - several bug fixes
 - simplify version management
