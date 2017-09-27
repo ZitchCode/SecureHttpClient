@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
@@ -115,42 +114,14 @@ namespace SecureHttpClient.Test
             Assert.Matches(expectedRating, actualRating);
         }
 
-        [Fact]
-        public async Task SslTest_CertificatePinner_Success()
-        {
-            const string page = @"https://www.howsmyssl.com/a/check";
-            const string hostname = @"www.howsmyssl.com";
-            var pins = new [] { @"sha256/cIUz7PQ6YLrKkkiUunDVewT4lVroRUdo6AFkGRIqLmY=" };
-            await GetPageAsync(page, hostname, pins).ConfigureAwait(false);
-            Assert.True(true);
-        }
-
-        [Fact]
-        public async Task SslTest_CertificatePinner_Failure()
-        {
-            const string page = @"https://www.howsmyssl.com/a/check";
-            const string hostname = @"www.howsmyssl.com";
-            var pins = new[] { @"sha256/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=" };
-            var throwsExpectedException = false;
-            try
-            {
-                await GetPageAsync(page, hostname, pins).ConfigureAwait(false);
-            }
-            catch (WebException ex)
-            {
-                throwsExpectedException = ex.Status == WebExceptionStatus.TrustFailure;
-            }
-            Assert.True(throwsExpectedException);
-        }
-
         private static async Task<string> GetPageAsync(string page, string hostname = null, string[] pins = null)
         {
-            string result;
             var secureHttpClientHandler = new SecureHttpClientHandler();
             if (pins != null)
             {
                 secureHttpClientHandler.AddCertificatePinner(hostname, pins);
             }
+            string result;
             using (var httpClient = new HttpClient(secureHttpClientHandler))
             using (var response = await httpClient.GetAsync(page).ConfigureAwait(false))
             {
