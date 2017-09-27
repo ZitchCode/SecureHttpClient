@@ -141,8 +141,8 @@ namespace SecureHttpClient
                     }
                     var credential = new NSUrlCredential(credentialsToUse.UserName, credentialsToUse.Password, NSUrlCredentialPersistence.ForSession);
                     completionHandler(NSUrlSessionAuthChallengeDisposition.UseCredential, credential);
+                    return;
                 }
-                return;
             }
 
             if (challenge.ProtectionSpace.AuthenticationMethod == NSUrlProtectionSpace.AuthenticationMethodServerTrust)
