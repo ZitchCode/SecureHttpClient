@@ -55,7 +55,7 @@ namespace SecureHttpClient
             var result = new StringBuilder();
 
             result.Append(cookie.Name());
-            result.Append('=');
+            result.Append("=");
             result.Append(cookie.Value());
 
             if (cookie.Persistent())
