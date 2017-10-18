@@ -9,7 +9,7 @@ namespace SecureHttpClient.Test
     {
         private const string Hostname = @"www.howsmyssl.com";
         private const string Page = @"https://www.howsmyssl.com/a/check";
-        private static readonly string[] PinsOk = { @"sha256/tOkDfmGzPZDODlXBPeg8eatUyJ3EiFM0KAvUTj468oA=" };
+        private static readonly string[] PinsOk = { @"sha256/bSiC80QPUR5DseZipWn6Kt6qROywi1cbRxDe14+N5sI=" };
         private static readonly string[] PinsKo = { @"sha256/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=" };
 
         private const string Hostname2 = @"github.com";

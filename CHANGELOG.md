@@ -1,3 +1,10 @@
+## 1.6.0
+- xamarin : 15.4 stable (xamarin.vs 4.7.10.22 ; xamarin.android 8.0.0.33 ; xamarin.ios 11.2.0.8 ; mono 5.4.0.201)
+- android : build-tools 26.0.2, platform-tools 26.0.1
+- support Android 8.0
+- support iOS 11
+- fix pin change in certificate test
+
 ## 1.5.1
 - security fix for iOS
 - fix android certificate pinner when adding several hostnames

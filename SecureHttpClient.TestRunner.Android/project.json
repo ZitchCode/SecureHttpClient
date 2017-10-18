@@ -3,6 +3,6 @@
     "xunit.runner.devices": "2.2.0"
   },
   "frameworks": {
-    "MonoAndroid,Version=v7.1": {}
+    "MonoAndroid,Version=v8.0": {}
   }
 }
