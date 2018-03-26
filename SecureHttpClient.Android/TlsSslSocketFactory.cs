@@ -9,6 +9,15 @@ namespace SecureHttpClient
     {
         private readonly SSLSocketFactory _factory = (SSLSocketFactory)Default;
 
+        public TlsSslSocketFactory(KeyManagerFactory keyManagerFactory = null) {
+            if (keyManagerFactory != null)
+            {
+                SSLContext context = SSLContext.GetInstance("TLS");
+                context.Init(keyManagerFactory.GetKeyManagers(), null, null);
+                _factory = context.SocketFactory;
+            }
+        }
+
         public override string[] GetDefaultCipherSuites()
         {
             return _factory.GetDefaultCipherSuites();

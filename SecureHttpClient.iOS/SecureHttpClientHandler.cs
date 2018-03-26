@@ -8,12 +8,14 @@ using System.Linq;
 using System.Net.Http;
 using Foundation;
 using SecureHttpClient.CertificatePinning;
+using Security;
 
 namespace SecureHttpClient
 {
     public class SecureHttpClientHandler : HttpClientHandler, Abstractions.ISecureHttpClientHandler
     {
         internal readonly Dictionary<NSUrlSessionTask, InflightOperation> InflightRequests;
+        internal NSUrlCredential ClientCertificate { get; private set; }
         private readonly Lazy<CertificatePinner> _certificatePinner;
         private NSUrlSession _session;
         
@@ -27,6 +29,29 @@ namespace SecureHttpClient
         {
             Debug.WriteLine($"Add CertificatePinner: hostname:{hostname}, pins:{string.Join("|", pins)}");
             _certificatePinner.Value.AddPins(hostname, pins);
+        }
+
+        public void SetClientCertificate(byte[] certificate, string passphrase)
+        {
+            NSDictionary opt;
+            if (string.IsNullOrEmpty(passphrase))
+            {
+                opt = new NSDictionary();
+            }
+            else
+            {
+                opt = NSDictionary.FromObjectAndKey(new NSString(passphrase), new NSString("passphrase"));
+            }
+
+            NSDictionary[] array;
+            var status = SecImportExport.ImportPkcs12(certificate, opt, out array);
+
+            if (status == SecStatusCode.Success)
+            {
+                var identity = new SecIdentity(array[0]["identity"].Handle);
+                SecCertificate[] certs = { identity.Certificate };
+                ClientCertificate = new NSUrlCredential(identity, certs, NSUrlCredentialPersistence.ForSession);
+            }
         }
 
         private void InitSession()
