@@ -30,6 +30,12 @@ namespace SecureHttpClient
             ServerCertificateCustomValidationCallback = CheckServerCertificate;
         }
 
+        public void SetClientCertificate(byte[] certificate, string passphrase)
+        {
+            ClientCertificates.Clear();
+            ClientCertificates.Add(new X509Certificate2(certificate, passphrase));
+        }
+
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             HttpResponseMessage response;

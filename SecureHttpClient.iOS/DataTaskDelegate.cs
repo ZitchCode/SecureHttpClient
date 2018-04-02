@@ -172,6 +172,16 @@ namespace SecureHttpClient
                 }
             }
 
+            if (challenge.ProtectionSpace.AuthenticationMethod == NSUrlProtectionSpace.AuthenticationMethodClientCertificate)
+            {
+                var certificate = _secureHttpClientHandler.ClientCertificate;
+                if (certificate != null)
+                {
+                    completionHandler(NSUrlSessionAuthChallengeDisposition.UseCredential, certificate);
+                    return;
+                }
+            }
+
             completionHandler(NSUrlSessionAuthChallengeDisposition.PerformDefaultHandling, challenge.ProposedCredential);
         }
 

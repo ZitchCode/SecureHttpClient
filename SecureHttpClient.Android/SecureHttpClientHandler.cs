@@ -9,6 +9,8 @@ using Square.OkHttp3;
 using Java.IO;
 using Android.OS;
 using Java.Util.Concurrent;
+using Java.Security;
+using Javax.Net.Ssl;
 
 namespace SecureHttpClient
 {
@@ -31,6 +33,23 @@ namespace SecureHttpClient
             System.Diagnostics.Debug.WriteLine($"Add CertificatePinner: hostname:{hostname}, pins:{string.Join("|", pins)}");
             var certificatePinner = _certificatePinnerBuilder.Value.Add(hostname, pins).Build();
             _builder.CertificatePinner(certificatePinner);
+        }
+
+        public void SetClientCertificate(byte[] certificate, string passphrase) {
+            KeyStore keyStore = KeyStore.GetInstance("pkcs12");
+            keyStore.Load(new System.IO.MemoryStream(certificate), passphrase.ToCharArray());
+            var keyManagerFactory = KeyManagerFactory.GetInstance("X509");
+            keyManagerFactory.Init(keyStore, passphrase.ToCharArray());
+            if ((int)Build.VERSION.SdkInt < 21)
+            {
+                _builder.SslSocketFactory(new TlsSslSocketFactory(keyManagerFactory), TlsSslSocketFactory.GetSystemDefaultTrustManager());
+            }
+            else
+            {
+                SSLContext context = SSLContext.GetInstance("TLS");
+                context.Init(keyManagerFactory.GetKeyManagers(), null, null);
+                _builder.SslSocketFactory(context.SocketFactory, TlsSslSocketFactory.GetSystemDefaultTrustManager());
+            }
         }
 
         private static OkHttpClient CreateOkHttpClientInstance()
