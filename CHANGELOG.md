@@ -1,3 +1,12 @@
+## 1.7.0
+- add support for client certificates (by gtbX)
+- xamarin : 15.6.5 servicing release (xamarin.vs 4.9.0.753 ; xamarin.android 8.2.0.16 ; xamarin.ios 11.9.1.24 ; mono 5.8.1.0 ; vs for mac 7.4.2.12)
+- Portable.BouncyCastle 1.8.1.4
+- Newtonsoft.Json 11.0.2
+- support Android 8.1
+- android : build-tools 27.0.3, platform-tools 27.0.1
+- ios : xcode 9.3
+
 ## 1.6.0
 - xamarin : 15.4 stable (xamarin.vs 4.7.10.22 ; xamarin.android 8.0.0.33 ; xamarin.ios 11.2.0.8 ; mono 5.4.0.201)
 - android : build-tools 26.0.2, platform-tools 26.0.1

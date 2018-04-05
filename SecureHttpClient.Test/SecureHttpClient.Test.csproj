@@ -16,7 +16,7 @@
   </PropertyGroup>  
   
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="System.Net.Requests" Version="4.3.0" />
     <PackageReference Include="xunit" Version="2.2.0" />
   </ItemGroup>
@@ -24,6 +24,10 @@
   <ItemGroup>
     <ProjectReference Include="..\SecureHttpClient.Abstractions\SecureHttpClient.Abstractions.csproj" />
     <ProjectReference Include="..\SecureHttpClient.Portable\SecureHttpClient.Portable.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
   
 </Project>
