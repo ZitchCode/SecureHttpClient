@@ -6,6 +6,10 @@
 - support Android 8.1
 - android : build-tools 27.0.3, platform-tools 27.0.1
 - ios : xcode 9.3
+- netstandard 2.0 ; clean csproj ; fix warnings
+- fix certificatepinner test
+- xUnit 2.3.1
+- Square.OkHttp3 3.8.1 ; Square.OkIO 1.13.0
 
 ## 1.6.0
 - xamarin : 15.4 stable (xamarin.vs 4.7.10.22 ; xamarin.android 8.0.0.33 ; xamarin.ios 11.2.0.8 ; mono 5.4.0.201)

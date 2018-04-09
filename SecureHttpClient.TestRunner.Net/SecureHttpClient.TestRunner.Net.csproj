@@ -1,11 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>SecureHttpClient.TestRunner.Net</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>SecureHttpClient.TestRunner.Net</PackageId>
-    <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="xunit.runner.utility" Version="2.2.0" />
+    <PackageReference Include="xunit.runner.utility" Version="2.3.1" />
   </ItemGroup>
 
 </Project>
