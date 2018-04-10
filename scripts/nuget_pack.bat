@@ -1,6 +1,6 @@
 @echo off
 
-SET MacServerAddress=192.168.118.128
+SET MacServerAddress=192.168.118.129
 SET MacServerUser=bertrand
 
 echo -- GET VERSION ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -27,7 +27,7 @@ echo -- MERGE ------------------------------------------------------------------
 mkdir "..\bin"
 ..\..\ILRepack.exe /out:..\bin\MonoAndroid\SecureHttpClient.dll /ver:%Version% ..\SecureHttpClient.Android\bin\Release\SecureHttpClient.dll ..\SecureHttpClient.Android\bin\Release\SecureHttpClient.Abstractions.dll
 ..\..\ILRepack.exe /out:..\bin\Xamarin.iOS\SecureHttpClient.dll /ver:%Version% ..\SecureHttpClient.iOS\bin\Release\SecureHttpClient.dll ..\SecureHttpClient.iOS\bin\Release\SecureHttpClient.CertificatePinning.dll ..\SecureHttpClient.iOS\bin\Release\SecureHttpClient.Abstractions.dll
-..\..\ILRepack.exe /out:..\bin\netstandard1.3\SecureHttpClient.dll /ver:%Version% ..\SecureHttpClient.Portable\bin\Release\netstandard1.3\SecureHttpClient.dll ..\SecureHttpClient.Portable\bin\Release\netstandard1.3\SecureHttpClient.CertificatePinning.dll ..\SecureHttpClient.Portable\bin\Release\netstandard1.3\SecureHttpClient.Abstractions.dll
+..\..\ILRepack.exe /out:..\bin\netstandard2.0\SecureHttpClient.dll /ver:%Version% ..\SecureHttpClient.Portable\bin\Release\netstandard2.0\SecureHttpClient.dll ..\SecureHttpClient.Portable\bin\Release\netstandard2.0\SecureHttpClient.CertificatePinning.dll ..\SecureHttpClient.Portable\bin\Release\netstandard2.0\SecureHttpClient.Abstractions.dll
 
 echo -- NUGET PACK ----------------------------------------------------------------------------------------------------------------------------------------------
 ..\..\nuget.exe pack ..\SecureHttpClient.nuspec -OutputDir ..\ -version %Version%
