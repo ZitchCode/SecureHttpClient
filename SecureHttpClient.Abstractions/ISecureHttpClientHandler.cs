@@ -1,6 +1,6 @@
 ﻿namespace SecureHttpClient.Abstractions
 {
-    internal interface ISecureHttpClientHandler
+    public interface ISecureHttpClientHandler
     {
         void AddCertificatePinner(string hostname, string[] pins);
 
