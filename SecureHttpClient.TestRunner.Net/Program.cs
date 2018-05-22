@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Reflection;
+using Serilog;
+using Serilog.Core;
 using Xunit.Runners;
 
 namespace SecureHttpClient.TestRunner.Net
 {
     internal class Program
     {
-        // We use consoleLock because messages can arrive in parallel, so we want to make sure we get
-        // consistent console output.
-        private static readonly object ConsoleLock = new object();
-
         // Use an event to know when we're done
         private static ManualResetEvent _finished;
 
@@ -20,6 +18,13 @@ namespace SecureHttpClient.TestRunner.Net
 
         private static int Main(string[] args)
         {
+            // Init logger
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] [{SourceContext:l}] {Message}{NewLine}{Exception}")
+                .Enrich.WithProperty(Constants.SourceContextPropertyName, "TestRunner")
+                .CreateLogger();
+
             // Tests to run
             var testAssemblies = new List<Assembly>
             {
@@ -31,6 +36,8 @@ namespace SecureHttpClient.TestRunner.Net
             {
                 RunTests(testAssembly);
             }
+
+            Log.CloseAndFlush();
 
             Console.ReadLine();
             return _result;
@@ -49,7 +56,7 @@ namespace SecureHttpClient.TestRunner.Net
                 runner.OnTestPassed = OnTestPassed;
                 runner.OnTestSkipped = OnTestSkipped;
 
-                Console.WriteLine($"Processing {testAssembly.FullName}...");
+                Log.Debug($"Processing {testAssembly.FullName}...");
                 runner.Start();
 
                 _finished.WaitOne();
@@ -59,56 +66,33 @@ namespace SecureHttpClient.TestRunner.Net
 
         private static void OnDiscoveryComplete(DiscoveryCompleteInfo info)
         {
-            lock (ConsoleLock)
-            {
-                Console.WriteLine($"Running {info.TestCasesToRun} of {info.TestCasesDiscovered} tests...");
-            }
+            Log.Debug($"Running {info.TestCasesToRun} of {info.TestCasesDiscovered} tests...");
         }
 
         private static void OnExecutionComplete(ExecutionCompleteInfo info)
         {
-            lock (ConsoleLock)
-            {
-                Console.WriteLine($"Finished: {info.TotalTests} tests in {Math.Round(info.ExecutionTime, 3)}s ({info.TestsFailed} failed, {info.TestsSkipped} skipped)");
-            }
-
+            Log.Information($"Finished: {info.TotalTests} tests in {Math.Round(info.ExecutionTime, 3)}s ({info.TestsFailed} failed, {info.TestsSkipped} skipped)");
             _finished.Set();
         }
 
         private static void OnTestFailed(TestFailedInfo info)
         {
-            lock (ConsoleLock)
+            Log.Error($"[FAIL] {info.TestDisplayName}: {info.ExceptionMessage}");
+            if (info.ExceptionStackTrace != null)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-
-                Console.WriteLine($"[FAIL] {info.TestDisplayName}: {info.ExceptionMessage}");
-                if (info.ExceptionStackTrace != null)
-                    Console.WriteLine(info.ExceptionStackTrace);
-
-                Console.ResetColor();
+                Log.Error(info.ExceptionStackTrace);
             }
-
             _result = 1;
         }
 
         private static void OnTestPassed(TestPassedInfo info)
         {
-            lock (ConsoleLock)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"[PASS] {info.TestDisplayName}");
-                Console.ResetColor();
-            }
+            Log.Information($"[PASS] {info.TestDisplayName}");
         }
 
         private static void OnTestSkipped(TestSkippedInfo info)
         {
-            lock (ConsoleLock)
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"[SKIP] {info.TestDisplayName}: {info.SkipReason}");
-                Console.ResetColor();
-            }
+            Log.Information($"[SKIP] {info.TestDisplayName}: {info.SkipReason}");
         }
     }
 }

@@ -11,6 +11,7 @@ using Android.OS;
 using Java.Util.Concurrent;
 using Java.Security;
 using Javax.Net.Ssl;
+using Microsoft.Extensions.Logging;
 
 namespace SecureHttpClient
 {
@@ -21,16 +22,18 @@ namespace SecureHttpClient
         private readonly OkHttpClient.Builder _builder;
         private OkHttpClient _client;
         private readonly Lazy<CertificatePinner.Builder> _certificatePinnerBuilder;
+        private readonly ILogger _logger;
 
-        public SecureHttpClientHandler()
+        public SecureHttpClientHandler(ILogger logger = null)
         {
+            _logger = logger;
             _builder = OkHttpClientInstance.Value.NewBuilder().CookieJar(new NativeCookieJar());
             _certificatePinnerBuilder = new Lazy<CertificatePinner.Builder>();
         }
 
         public void AddCertificatePinner(string hostname, string[] pins)
         {
-            System.Diagnostics.Debug.WriteLine($"Add CertificatePinner: hostname:{hostname}, pins:{string.Join("|", pins)}");
+            _logger?.LogDebug($"Add CertificatePinner: hostname:{hostname}, pins:{string.Join("|", pins)}");
             var certificatePinner = _certificatePinnerBuilder.Value.Add(hostname, pins).Build();
             _builder.CertificatePinner(certificatePinner);
         }

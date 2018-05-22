@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Diagnostics;
+using Microsoft.Extensions.Logging;
 
 namespace SecureHttpClient.CertificatePinning
 {
     internal class CertificatePinner
     {
         private readonly ConcurrentDictionary<string, string[]> _pins;
+        private readonly ILogger _logger;
 
-        public CertificatePinner()
+        public CertificatePinner(ILogger logger = null)
         {
             _pins = new ConcurrentDictionary<string, string[]>();
+            _logger = logger;
         }
 
         public void AddPins(string hostname, string[] pins)
         {
+            _logger?.LogDebug($"Add CertificatePinner: hostname:{hostname}, pins:{string.Join("|", pins)}");
             _pins[hostname] = pins; // Updates value if already existing
         }
 
@@ -29,7 +32,7 @@ namespace SecureHttpClient.CertificatePinning
             string[] pins;
             if (!_pins.TryGetValue(hostname, out pins))
             {
-                Debug.WriteLine($"No certificate pin found for {hostname}");
+                _logger?.LogDebug($"No certificate pin found for {hostname}");
                 return true;
             }
 
@@ -38,7 +41,14 @@ namespace SecureHttpClient.CertificatePinning
 
             // Check pin
             var match = Array.IndexOf(pins, spkiFingerprint) > -1;
-            Debug.WriteLine(match ? $"Certificate pin is ok for {hostname}" : $"Certificate pin error for {hostname}: found {spkiFingerprint}, expected {string.Join("|", pins)}");
+            if (match)
+            {
+                _logger?.LogDebug($"Certificate pin is ok for {hostname}");
+            }
+            else
+            {
+                _logger?.LogInformation($"Certificate pin error for {hostname}: found {spkiFingerprint}, expected {string.Join("|", pins)}");
+            }
             return match;
         }
     }

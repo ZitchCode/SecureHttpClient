@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Collections.Generic;
@@ -7,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using Foundation;
+using Microsoft.Extensions.Logging;
 using SecureHttpClient.CertificatePinning;
 using Security;
 
@@ -19,15 +19,14 @@ namespace SecureHttpClient
         private readonly Lazy<CertificatePinner> _certificatePinner;
         private NSUrlSession _session;
         
-        public SecureHttpClientHandler()
+        public SecureHttpClientHandler(ILogger logger = null)
         {
             InflightRequests = new Dictionary<NSUrlSessionTask, InflightOperation>();
-            _certificatePinner = new Lazy<CertificatePinner>();
+            _certificatePinner = new Lazy<CertificatePinner>(() => new CertificatePinner(logger));
         }
 
         public void AddCertificatePinner(string hostname, string[] pins)
         {
-            Debug.WriteLine($"Add CertificatePinner: hostname:{hostname}, pins:{string.Join("|", pins)}");
             _certificatePinner.Value.AddPins(hostname, pins);
         }
 

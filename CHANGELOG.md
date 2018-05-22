@@ -1,3 +1,8 @@
+## 1.8.0
+- xamarin : 15.7.0 preview 5 (xamarin.vs 4.10.0.440 ; xamarin.android 8.3.0.18 ; xamarin.ios 11.10.1.174 ; mono 5.10.1.47 ; vs for mac 7.5.0.1222)
+- fix certificatepinner test
+- better logging with ILogger (and Serilog in test runners)
+
 ## 1.7.0
 - add support for client certificates (by gtbX)
 - xamarin : 15.6.5 servicing release (xamarin.vs 4.9.0.753 ; xamarin.android 8.2.0.16 ; xamarin.ios 11.9.1.24 ; mono 5.8.1.0 ; vs for mac 7.4.2.12)

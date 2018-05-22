@@ -1,11 +1,11 @@
 using System;
-using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using SecureHttpClient.CertificatePinning;
 
 namespace SecureHttpClient
@@ -13,10 +13,13 @@ namespace SecureHttpClient
     public class SecureHttpClientHandler : HttpClientHandler, Abstractions.ISecureHttpClientHandler
     {
         private readonly Lazy<CertificatePinner> _certificatePinner;
+        private readonly ILogger _logger;
 
-        public SecureHttpClientHandler()
+        public SecureHttpClientHandler(ILogger logger = null)
         {
-            _certificatePinner = new Lazy<CertificatePinner>();
+            _logger = logger;
+
+            _certificatePinner = new Lazy<CertificatePinner>(() => new CertificatePinner(logger));
 
             // Set Accept-Encoding headers and take care of decompression if needed
             AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
@@ -25,7 +28,6 @@ namespace SecureHttpClient
 
         public void AddCertificatePinner(string hostname, string[] pins)
         {
-            Debug.WriteLine($"Add CertificatePinner: hostname:{hostname}, pins:{string.Join("|", pins)}");
             _certificatePinner.Value.AddPins(hostname, pins);
             ServerCertificateCustomValidationCallback = CheckServerCertificate;
         }
@@ -58,13 +60,13 @@ namespace SecureHttpClient
         {
             if (certificate == null)
             {
-                Debug.WriteLine("Missing certificate");
+                _logger?.LogDebug("Missing certificate");
                 return false;
             }
 
             if (sslPolicyErrors != SslPolicyErrors.None)
             {
-                Debug.WriteLine($"SSL policy errors {sslPolicyErrors}");
+                _logger?.LogDebug($"SSL policy errors {sslPolicyErrors}");
                 return false;
             }
 
@@ -72,7 +74,7 @@ namespace SecureHttpClient
             var requestHost = httpRequestMessage?.RequestUri?.Host;
             if (string.IsNullOrEmpty(requestHost))
             {
-                Debug.WriteLine("Failed to get host from request");
+                _logger?.LogDebug("Failed to get host from request");
                 return false;
             }
 

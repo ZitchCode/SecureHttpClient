@@ -20,7 +20,7 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task CertificatePinnerTest_OneHost_Success()
         {
-            var secureHttpClientHandler = new SecureHttpClientHandler();
+            var secureHttpClientHandler = SecureHttpClientHandlerBuilder.Build();
             secureHttpClientHandler.AddCertificatePinner(Hostname, PinsOk);
 
             await AssertCertificatePinnerSuccessAsync(Page, secureHttpClientHandler).ConfigureAwait(false);
@@ -29,7 +29,7 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task CertificatePinnerTest_OneHost_Failure()
         {
-            var secureHttpClientHandler = new SecureHttpClientHandler();
+            var secureHttpClientHandler = SecureHttpClientHandlerBuilder.Build();
             secureHttpClientHandler.AddCertificatePinner(Hostname, PinsKo);
 
             await AssertCertificatePinnerFailureAsync(Page, secureHttpClientHandler).ConfigureAwait(false);
@@ -38,7 +38,7 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task CertificatePinnerTest_TwoHosts_Success()
         {
-            var secureHttpClientHandler = new SecureHttpClientHandler();
+            var secureHttpClientHandler = SecureHttpClientHandlerBuilder.Build();
             secureHttpClientHandler.AddCertificatePinner(Hostname, PinsOk);
             secureHttpClientHandler.AddCertificatePinner(Hostname2, Pins2Ok);
 
@@ -49,7 +49,7 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task CertificatePinnerTest_TwoHosts_FirstHostFails()
         {
-            var secureHttpClientHandler = new SecureHttpClientHandler();
+            var secureHttpClientHandler = SecureHttpClientHandlerBuilder.Build();
             secureHttpClientHandler.AddCertificatePinner(Hostname, PinsKo);
             secureHttpClientHandler.AddCertificatePinner(Hostname2, Pins2Ok);
 
@@ -60,7 +60,7 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task CertificatePinnerTest_TwoHosts_SecondHostFails()
         {
-            var secureHttpClientHandler = new SecureHttpClientHandler();
+            var secureHttpClientHandler = SecureHttpClientHandlerBuilder.Build();
             secureHttpClientHandler.AddCertificatePinner(Hostname, PinsOk);
             secureHttpClientHandler.AddCertificatePinner(Hostname2, Pins2Ko);
 

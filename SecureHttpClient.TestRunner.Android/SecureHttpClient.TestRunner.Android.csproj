@@ -66,6 +66,9 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Serilog.Sinks.Xamarin">
+      <Version>0.1.29</Version>
+    </PackageReference>
     <PackageReference Include="xunit.runner.devices" Version="2.3.3" />
   </ItemGroup>
   <ItemGroup>

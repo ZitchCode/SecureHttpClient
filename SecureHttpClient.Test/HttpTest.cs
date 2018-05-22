@@ -107,7 +107,7 @@ namespace SecureHttpClient.Test
         public async Task HttpTest_SetCookieAgain()
         {
             Dictionary<string, string> cookies;
-            var secureHttpClientHandler = new SecureHttpClientHandler();
+            var secureHttpClientHandler = SecureHttpClientHandlerBuilder.Build();
             using (var httpClient = new HttpClient(secureHttpClientHandler))
             {
                 const string page1 = @"https://httpbin.org/cookies/set?k1=v1";
@@ -124,7 +124,7 @@ namespace SecureHttpClient.Test
         public async Task HttpTest_DeleteCookie()
         {
             Dictionary<string, string> cookies;
-            var secureHttpClientHandler = new SecureHttpClientHandler();
+            var secureHttpClientHandler = SecureHttpClientHandlerBuilder.Build();
             using (var httpClient = new HttpClient(secureHttpClientHandler))
             {
                 const string page1 = @"https://httpbin.org/cookies/set?k1=v1";
@@ -140,7 +140,7 @@ namespace SecureHttpClient.Test
         private static async Task<string> GetPageAsync(string page)
         {
             string result;
-            var secureHttpClientHandler = new SecureHttpClientHandler();
+            var secureHttpClientHandler = SecureHttpClientHandlerBuilder.Build();
             using (var httpClient = new HttpClient(secureHttpClientHandler))
             using (var response = await httpClient.GetAsync(page).ConfigureAwait(false))
             {
@@ -162,7 +162,7 @@ namespace SecureHttpClient.Test
         private static async Task<byte[]> GetBytesAsync(string page)
         {
             byte[] result;
-            var secureHttpClientHandler = new SecureHttpClientHandler();
+            var secureHttpClientHandler = SecureHttpClientHandlerBuilder.Build();
             using (var httpClient = new HttpClient(secureHttpClientHandler))
             using (var response = await httpClient.GetAsync(page).ConfigureAwait(false))
             {
