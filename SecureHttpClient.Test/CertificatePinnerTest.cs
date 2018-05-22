@@ -14,7 +14,7 @@ namespace SecureHttpClient.Test
 
         private const string Hostname2 = @"github.com";
         private const string Page2 = @"https://github.com/zitch-code/secure-httpclient";
-        private static readonly string[] Pins2Ok = { @"sha256/pL1+qb9HTMRZJmuC/bB/ZI9d302BYrrqiVuRyW+DGrU=" };
+        private static readonly string[] Pins2Ok = { @"sha256/o5oa5F4LbZEfeZ0kXDgmaU2K3sIPYtbQpT3EQLJZquM=" };
         private static readonly string[] Pins2Ko = { @"sha256/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy=" };
 
         [Fact]
