@@ -105,25 +105,15 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Serilog.Sinks.Xamarin">
-      <Version>0.1.29</Version>
-    </PackageReference>
+    <PackageReference Include="Serilog" Version="2.7.1" />
+    <PackageReference Include="Serilog.Sinks.Xamarin" Version="0.1.29" />
     <PackageReference Include="xunit.runner.devices" Version="2.3.3" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Entitlements.plist" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SecureHttpClient.Test\SecureHttpClient.Test.csproj">
-      <Project>{503b71db-1cca-49ca-8c2f-7faa87b5520a}</Project>
-      <Name>SecureHttpClient.Test</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SecureHttpClient.iOS\SecureHttpClient.iOS.csproj">
-      <Project>{b613456e-80e9-4fa5-9e03-a6ee28cfd4c6}</Project>
-      <Name>SecureHttpClient.iOS</Name>
-      <IsAppExtension>false</IsAppExtension>
-      <IsWatchApp>false</IsWatchApp>
-    </ProjectReference>
+    <ProjectReference Include="..\SecureHttpClient.Test\SecureHttpClient.Test.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

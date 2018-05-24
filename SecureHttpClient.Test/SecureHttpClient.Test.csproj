@@ -1,29 +1,18 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="MSBuild.Sdk.Extras/1.5.4">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;MonoAndroid81;Xamarin.iOS10</TargetFrameworks>
     <AssemblyName>SecureHttpClient.Test</AssemblyName>
-    <OutputType>Library</OutputType>
-    <PackageId>SecureHttpClient.Test</PackageId>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugType>full</DebugType>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-  </PropertyGroup>  
-  
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="2.0.2" />
     <PackageReference Include="xunit" Version="2.3.1" />
-  </ItemGroup>
-
+  </ItemGroup>  
+  
   <ItemGroup>
-    <ProjectReference Include="..\SecureHttpClient.Abstractions\SecureHttpClient.Abstractions.csproj" />
-    <ProjectReference Include="..\SecureHttpClient.Portable\SecureHttpClient.Portable.csproj" />
+    <ProjectReference Include="..\SecureHttpClient\SecureHttpClient.csproj" />
   </ItemGroup>
   
 </Project>

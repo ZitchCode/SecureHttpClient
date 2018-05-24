@@ -4,7 +4,6 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>SecureHttpClient.TestRunner.Net</AssemblyName>
     <OutputType>Exe</OutputType>
-    <PackageId>SecureHttpClient.TestRunner.Net</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

@@ -12,22 +12,25 @@
     <licenseUrl>https://raw.github.com/zitch-code/secure-httpclient/master/LICENSE</licenseUrl>	
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <dependencies>
-      <group targetFramework="MonoAndroid">
+      <group targetFramework="MonoAndroid81">
         <dependency id="Square.OkHttp3" version="3.8.1" />
         <dependency id="Square.OkIO" version="1.13.0" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="2.0.2" />
       </group>
-      <group targetFramework="Xamarin.iOS">
+      <group targetFramework="Xamarin.iOS10">
         <dependency id="Portable.BouncyCastle" version="1.8.1.4" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="2.0.2" />
       </group>
       <group targetFramework="netstandard2.0">
         <dependency id="Portable.BouncyCastle" version="1.8.1.4" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="2.0.2" />
       </group>
     </dependencies>
   </metadata>
 
   <files>
-    <file src="bin\MonoAndroid\SecureHttpClient.dll" target="lib\MonoAndroid" />
-    <file src="bin\Xamarin.iOS\SecureHttpClient.dll" target="lib\Xamarin.iOS" />
+    <file src="bin\monoandroid81\SecureHttpClient.dll" target="lib\monoandroid81" />
+    <file src="bin\xamarin.ios10\SecureHttpClient.dll" target="lib\xamarin.ios10" />
 	<file src="bin\netstandard2.0\SecureHttpClient.dll" target="lib\netstandard2.0" />
   </files>
 </package>

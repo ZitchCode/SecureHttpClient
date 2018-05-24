@@ -1,0 +1,36 @@
+﻿<Project Sdk="MSBuild.Sdk.Extras/1.5.4">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;MonoAndroid81;Xamarin.iOS10</TargetFrameworks>
+    <AssemblyName>SecureHttpClient</AssemblyName>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="**\*.cs;**\*.xml;**\*.axml;**\*.png" Exclude="obj\**\*.*;bin\**\*.*;bin;obj" />
+    <Compile Include="Abstractions\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
+    <Compile Include="Platforms\Android\**\*.cs" />
+    <PackageReference Include="Square.OkHttp3" Version="3.8.1" />
+    <PackageReference Include="Square.OkIO" Version="1.13.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
+    <Compile Include="Platforms\iOS\**\*.cs" />
+    <Compile Include="CertificatePinning\**\*.cs" />
+    <PackageReference Include="Portable.BouncyCastle" Version="1.8.1.4" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
+    <Compile Include="Platforms\Net\**\*.cs" />
+    <Compile Include="CertificatePinning\**\*.cs" />
+    <PackageReference Include="Portable.BouncyCastle" Version="1.8.1.4" />
+  </ItemGroup>
+
+</Project>
