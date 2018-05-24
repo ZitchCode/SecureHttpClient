@@ -9,6 +9,7 @@ using System.Net.Http;
 using Foundation;
 using SecureHttpClient.CertificatePinning;
 using Security;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SecureHttpClient
 {
@@ -16,6 +17,7 @@ namespace SecureHttpClient
     {
         internal readonly Dictionary<NSUrlSessionTask, InflightOperation> InflightRequests;
         internal NSUrlCredential ClientCertificate { get; private set; }
+        private X509Certificate2Collection _trustedRoots = null;
         private readonly Lazy<CertificatePinner> _certificatePinner;
         private NSUrlSession _session;
         
@@ -40,7 +42,7 @@ namespace SecureHttpClient
             }
             else
             {
-                opt = NSDictionary.FromObjectAndKey(new NSString(passphrase), new NSString("passphrase"));
+                opt = NSDictionary.FromObjectAndKey(new NSString(passphrase), SecImportExport.Passphrase);
             }
 
             NSDictionary[] array;
@@ -54,11 +56,20 @@ namespace SecureHttpClient
             }
         }
 
+        public void SetTrustedRoots(params byte[][] certificates)
+        {
+            if (certificates.Length == 0) {
+                _trustedRoots = null;
+                return;
+            }
+            _trustedRoots = new X509Certificate2Collection(certificates.Select(x => new X509Certificate2(x)).ToArray());
+        }
+
         private void InitSession()
         {
             using (var configuration = NSUrlSessionConfiguration.DefaultSessionConfiguration)
             {
-                var nsUrlSessionDelegate = (INSUrlSessionDelegate) new DataTaskDelegate(this, _certificatePinner.IsValueCreated ? _certificatePinner.Value : null);
+                var nsUrlSessionDelegate = (INSUrlSessionDelegate) new DataTaskDelegate(this, _certificatePinner.IsValueCreated ? _certificatePinner.Value : null, _trustedRoots);
                 _session = NSUrlSession.FromConfiguration(configuration, nsUrlSessionDelegate, null);
             }
         }
