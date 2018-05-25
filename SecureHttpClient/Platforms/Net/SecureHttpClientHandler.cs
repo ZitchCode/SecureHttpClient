@@ -1,3 +1,5 @@
+#if NETSTANDARD2_0
+
 using System;
 using System.Net;
 using System.Net.Http;
@@ -10,11 +12,18 @@ using SecureHttpClient.CertificatePinning;
 
 namespace SecureHttpClient
 {
+    /// <summary>
+    /// Implementation of ISecureHttpClientHandler (NetStandard implementation)
+    /// </summary>
     public class SecureHttpClientHandler : HttpClientHandler, Abstractions.ISecureHttpClientHandler
     {
         private readonly Lazy<CertificatePinner> _certificatePinner;
         private readonly ILogger _logger;
 
+        /// <summary>
+        /// SecureHttpClientHandler constructor (NetStandard implementation)
+        /// </summary>
+        /// <param name="logger">Optional logger</param>
         public SecureHttpClientHandler(ILogger logger = null)
         {
             _logger = logger;
@@ -26,18 +35,29 @@ namespace SecureHttpClient
             MaxAutomaticRedirections = 10;
         }
 
+        /// <summary>
+        /// Add certificate pins for a given hostname (NetStandard implementation)
+        /// </summary>
+        /// <param name="hostname">The hostname</param>
+        /// <param name="pins">The array of certifiate pins (example of pin string: "sha256/fiKY8VhjQRb2voRmVXsqI0xPIREcwOVhpexrplrlqQY=")</param>
         public void AddCertificatePinner(string hostname, string[] pins)
         {
             _certificatePinner.Value.AddPins(hostname, pins);
             ServerCertificateCustomValidationCallback = CheckServerCertificate;
         }
 
+        /// <summary>
+        /// Set a client certificate (NetStandard implementation)
+        /// </summary>
+        /// <param name="certificate">The client certificate raw data</param>
+        /// <param name="passphrase">The client certificate pass phrase</param>
         public void SetClientCertificate(byte[] certificate, string passphrase)
         {
             ClientCertificates.Clear();
             ClientCertificates.Add(new X509Certificate2(certificate, passphrase));
         }
 
+        /// <inheritdoc />
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             HttpResponseMessage response;
@@ -84,3 +104,5 @@ namespace SecureHttpClient
         }
     }
 }
+
+#endif

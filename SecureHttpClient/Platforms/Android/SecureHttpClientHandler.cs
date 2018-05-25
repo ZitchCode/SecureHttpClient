@@ -1,3 +1,5 @@
+#if __ANDROID__
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +17,9 @@ using Microsoft.Extensions.Logging;
 
 namespace SecureHttpClient
 {
+    /// <summary>
+    /// Implementation of ISecureHttpClientHandler (Android implementation)
+    /// </summary>
     public class SecureHttpClientHandler : HttpClientHandler, Abstractions.ISecureHttpClientHandler
     {
         private static readonly Lazy<OkHttpClient> OkHttpClientInstance = new Lazy<OkHttpClient>(CreateOkHttpClientInstance);
@@ -24,6 +29,10 @@ namespace SecureHttpClient
         private readonly Lazy<CertificatePinner.Builder> _certificatePinnerBuilder;
         private readonly ILogger _logger;
 
+        /// <summary>
+        /// SecureHttpClientHandler constructor (Android implementation)
+        /// </summary>
+        /// <param name="logger">Optional logger</param>
         public SecureHttpClientHandler(ILogger logger = null)
         {
             _logger = logger;
@@ -31,6 +40,11 @@ namespace SecureHttpClient
             _certificatePinnerBuilder = new Lazy<CertificatePinner.Builder>();
         }
 
+        /// <summary>
+        /// Add certificate pins for a given hostname (Android implementation)
+        /// </summary>
+        /// <param name="hostname">The hostname</param>
+        /// <param name="pins">The array of certifiate pins (example of pin string: "sha256/fiKY8VhjQRb2voRmVXsqI0xPIREcwOVhpexrplrlqQY=")</param>
         public void AddCertificatePinner(string hostname, string[] pins)
         {
             _logger?.LogDebug($"Add CertificatePinner: hostname:{hostname}, pins:{string.Join("|", pins)}");
@@ -38,7 +52,13 @@ namespace SecureHttpClient
             _builder.CertificatePinner(certificatePinner);
         }
 
-        public void SetClientCertificate(byte[] certificate, string passphrase) {
+        /// <summary>
+        /// Set a client certificate (Android implementation)
+        /// </summary>
+        /// <param name="certificate">The client certificate raw data</param>
+        /// <param name="passphrase">The client certificate pass phrase</param>
+        public void SetClientCertificate(byte[] certificate, string passphrase)
+        {
             KeyStore keyStore = KeyStore.GetInstance("pkcs12");
             keyStore.Load(new System.IO.MemoryStream(certificate), passphrase.ToCharArray());
             var keyManagerFactory = KeyManagerFactory.GetInstance("X509");
@@ -70,6 +90,7 @@ namespace SecureHttpClient
             return builder.Build();
         }
 
+        /// <inheritdoc />
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             if (_client == null)
@@ -165,3 +186,5 @@ namespace SecureHttpClient
         }
     }
 }
+
+#endif

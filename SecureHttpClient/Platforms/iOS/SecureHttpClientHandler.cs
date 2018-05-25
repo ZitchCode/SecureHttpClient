@@ -1,3 +1,5 @@
+#if __IOS__
+
 using System;
 using System.Threading.Tasks;
 using System.Threading;
@@ -12,24 +14,41 @@ using Security;
 
 namespace SecureHttpClient
 {
+    /// <summary>
+    /// Implementation of ISecureHttpClientHandler (iOS implementation)
+    /// </summary>
     public class SecureHttpClientHandler : HttpClientHandler, Abstractions.ISecureHttpClientHandler
     {
         internal readonly Dictionary<NSUrlSessionTask, InflightOperation> InflightRequests;
         internal NSUrlCredential ClientCertificate { get; private set; }
         private readonly Lazy<CertificatePinner> _certificatePinner;
         private NSUrlSession _session;
-        
+
+        /// <summary>
+        /// SecureHttpClientHandler constructor (iOS implementation)
+        /// </summary>
+        /// <param name="logger">Optional logger</param>
         public SecureHttpClientHandler(ILogger logger = null)
         {
             InflightRequests = new Dictionary<NSUrlSessionTask, InflightOperation>();
             _certificatePinner = new Lazy<CertificatePinner>(() => new CertificatePinner(logger));
         }
 
+        /// <summary>
+        /// Add certificate pins for a given hostname (iOS implementation)
+        /// </summary>
+        /// <param name="hostname">The hostname</param>
+        /// <param name="pins">The array of certifiate pins (example of pin string: "sha256/fiKY8VhjQRb2voRmVXsqI0xPIREcwOVhpexrplrlqQY=")</param>
         public void AddCertificatePinner(string hostname, string[] pins)
         {
             _certificatePinner.Value.AddPins(hostname, pins);
         }
 
+        /// <summary>
+        /// Set a client certificate (iOS implementation)
+        /// </summary>
+        /// <param name="certificate">The client certificate raw data</param>
+        /// <param name="passphrase">The client certificate pass phrase</param>
         public void SetClientCertificate(byte[] certificate, string passphrase)
         {
             NSDictionary opt;
@@ -62,6 +81,7 @@ namespace SecureHttpClient
             }
         }
 
+        /// <inheritdoc />
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             if (_session == null)
@@ -115,3 +135,4 @@ namespace SecureHttpClient
     }
 }
 
+#endif
