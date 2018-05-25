@@ -4,6 +4,7 @@
 - better logging with ILogger (and Serilog in test runners)
 - use multi-targeting for source project
 - use default debugtype (portable) as it's now supported by xamarin
+- simplify nuget pack
 
 ## 1.7.0
 - add support for client certificates (by gtbX)

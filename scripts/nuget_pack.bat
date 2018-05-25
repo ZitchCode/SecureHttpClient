@@ -1,26 +1,22 @@
 @echo off
 
-echo -- GET VERSION ---------------------------------------------------------------------------------------------------------------------------------------------
+echo -- INIT ----------------------------------------------------------------------------------------------------------------------------------------------------
+set LibName=SecureHttpClient
+echo LibName: %LibName%
 set /p Version=<..\version.txt
 echo Version: %Version%
 
 echo -- CLEAN ---------------------------------------------------------------------------------------------------------------------------------------------------
-msbuild /v:m ../SecureHttpClient/SecureHttpClient.csproj /p:Configuration=Release /t:Clean
-if exist "..\bin\" rd /s/q "..\bin"
+msbuild /v:m ../%LibName%/%LibName%.csproj /p:Configuration=Release /t:Clean
 
 echo -- RESTORE -------------------------------------------------------------------------------------------------------------------------------------------------
-msbuild /v:m ../SecureHttpClient/SecureHttpClient.csproj /p:Configuration=Release /t:Restore
+msbuild /v:m ../%LibName%/%LibName%.csproj /p:Configuration=Release /t:Restore
 
 echo -- BUILD ---------------------------------------------------------------------------------------------------------------------------------------------------
-msbuild /v:m ../SecureHttpClient/SecureHttpClient.csproj /p:Configuration=Release
+msbuild /v:m ../%LibName%/%LibName%.csproj /p:Configuration=Release /t:Build /p:Version=%Version%;AssemblyVersion=%Version%;AssemblyFileVersion=%Version%
 
-echo -- MERGE ---------------------------------------------------------------------------------------------------------------------------------------------------
-mkdir "..\bin"
-..\..\ILRepack.exe /out:..\bin\monoandroid81\SecureHttpClient.dll /ver:%Version% ..\SecureHttpClient\bin\Release\monoandroid81\SecureHttpClient.dll
-..\..\ILRepack.exe /out:..\bin\xamarin.ios10\SecureHttpClient.dll /ver:%Version% ..\SecureHttpClient\bin\Release\xamarin.ios10\SecureHttpClient.dll
-..\..\ILRepack.exe /out:..\bin\netstandard2.0\SecureHttpClient.dll /ver:%Version% ..\SecureHttpClient\bin\Release\netstandard2.0\SecureHttpClient.dll
-
-echo -- NUGET PACK ----------------------------------------------------------------------------------------------------------------------------------------------
-..\..\nuget.exe pack ..\SecureHttpClient.nuspec -OutputDir ..\ -version %Version%
+echo -- PACK ----------------------------------------------------------------------------------------------------------------------------------------------------
+msbuild /v:m ../%LibName%/%LibName%.csproj /p:Configuration=Release /t:Pack /p:NoBuild=true
+move ..\%LibName%\bin\Release\%LibName%.%Version%.nupkg ..\ >nul
 
 echo -- DONE !! -------------------------------------------------------------------------------------------------------------------------------------------------

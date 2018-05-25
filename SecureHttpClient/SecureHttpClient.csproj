@@ -6,6 +6,18 @@
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <Title>Secure HttpClient</Title>
+    <Description>Cross-platform HttpClientHandler with TLS1.2 and Certificate Pinning</Description>
+    <Authors>tranb3r</Authors>
+    <Owners>tranb3r</Owners>
+    <Copyright>Copyright 2018</Copyright>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/tranb3r/secure-httpclient/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/tranb3r/secure-httpclient</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/tranb3r/secure-httpclient</RepositoryUrl>
+    <PackageTags>xamarin, netstandard, ios, android, httpclient, security</PackageTags>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Include="**\*.cs;**\*.xml;**\*.axml;**\*.png" Exclude="obj\**\*.*;bin\**\*.*;bin;obj" />
     <Compile Include="Abstractions\**\*.cs" />
