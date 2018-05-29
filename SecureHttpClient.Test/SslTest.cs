@@ -101,7 +101,8 @@ namespace SecureHttpClient.Test
             try
             {
                 await GetPageAsync(page, caCert: System.Text.Encoding.ASCII.GetBytes(untrusted_root_badssl_com_certificate)).ConfigureAwait(false);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 var exceptionType = ex.GetType().ToString();
                 throwsExpectedException = expectedExceptions.Contains(exceptionType);
@@ -118,7 +119,8 @@ namespace SecureHttpClient.Test
             try
             {
                 await GetPageAsync(page, caCert: System.Text.Encoding.ASCII.GetBytes(untrusted_root_badssl_com_certificate)).ConfigureAwait(false);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 var exceptionType = ex.GetType().ToString();
                 throwsExpectedException = expectedExceptions.Contains(exceptionType);
