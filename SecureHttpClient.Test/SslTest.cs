@@ -110,6 +110,23 @@ namespace SecureHttpClient.Test
         }
 
         [Fact]
+        public async Task SslTest_RevokedCertificate()
+        {
+            const string page = @"https://revoked.badssl.com/";
+            var expectedExceptions = new List<string> { "Javax.Net.Ssl.SSLHandshakeException", "System.Net.WebException" };
+            var throwsExpectedException = false;
+            try
+            {
+                await GetPageAsync(page, caCert: System.Text.Encoding.ASCII.GetBytes(untrusted_root_badssl_com_certificate)).ConfigureAwait(false);
+            } catch (Exception ex)
+            {
+                var exceptionType = ex.GetType().ToString();
+                throwsExpectedException = expectedExceptions.Contains(exceptionType);
+            }
+            Assert.True(throwsExpectedException);
+        }
+
+        [Fact]
         public async Task SslTest_Sha256Certificate()
         {
             const string page = @"https://sha256.badssl.com/";
