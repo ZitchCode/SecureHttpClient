@@ -1,8 +1,10 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Security;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,6 +15,7 @@ namespace SecureHttpClient
     public class SecureHttpClientHandler : HttpClientHandler, Abstractions.ISecureHttpClientHandler
     {
         private readonly Lazy<CertificatePinner> _certificatePinner;
+        private X509Certificate2Collection _trustedRoots;
 
         public SecureHttpClientHandler()
         {
@@ -34,6 +37,21 @@ namespace SecureHttpClient
         {
             ClientCertificates.Clear();
             ClientCertificates.Add(new X509Certificate2(certificate, passphrase));
+        }
+
+        public void SetTrustedRoots(params byte[][] certificates)
+        {
+            if (certificates.Length == 0)
+            {
+                _trustedRoots = null;
+                return;
+            }
+            _trustedRoots = new X509Certificate2Collection();
+            foreach (var cert in certificates)
+            {
+                _trustedRoots.Import(cert);
+            }
+            ServerCertificateCustomValidationCallback = CheckServerCertificate;
         }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
@@ -62,23 +80,38 @@ namespace SecureHttpClient
                 return false;
             }
 
-            if (sslPolicyErrors != SslPolicyErrors.None)
+            bool good = sslPolicyErrors == SslPolicyErrors.None;
+            if (_trustedRoots != null && (sslPolicyErrors & ~SslPolicyErrors.RemoteCertificateChainErrors) == 0)
+            {
+                chain.ChainPolicy.ExtraStore.AddRange(_trustedRoots);
+                chain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
+                if (chain.Build(certificate))
+                {
+                    var root = chain.ChainElements[chain.ChainElements.Count - 1].Certificate;
+                    good = _trustedRoots.Find(X509FindType.FindByThumbprint, root.Thumbprint, false).Count > 0;
+                }
+            }
+
+            if (!good)
             {
                 Debug.WriteLine($"SSL policy errors {sslPolicyErrors}");
                 return false;
             }
 
-            // Get request host
-            var requestHost = httpRequestMessage?.RequestUri?.Host;
-            if (string.IsNullOrEmpty(requestHost))
+            if (_certificatePinner.IsValueCreated)
             {
-                Debug.WriteLine("Failed to get host from request");
-                return false;
-            }
+                // Get request host
+                var requestHost = httpRequestMessage?.RequestUri?.Host;
+                if (string.IsNullOrEmpty(requestHost))
+                {
+                    Debug.WriteLine("Failed to get host from request");
+                    return false;
+                }
 
-            // Check pin
-            var result = _certificatePinner.Value.Check(requestHost, certificate.RawData);
-            return result;
+                // Check pin
+                good = _certificatePinner.Value.Check(requestHost, certificate.RawData);
+            }
+            return good;
         }
     }
 }

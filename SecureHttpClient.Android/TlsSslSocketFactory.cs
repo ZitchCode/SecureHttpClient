@@ -9,11 +9,11 @@ namespace SecureHttpClient
     {
         private readonly SSLSocketFactory _factory = (SSLSocketFactory)Default;
 
-        public TlsSslSocketFactory(KeyManagerFactory keyManagerFactory = null) {
-            if (keyManagerFactory != null)
+        public TlsSslSocketFactory(IKeyManager[] keyManagers = null, ITrustManager[] trustManagers = null) {
+            if (keyManagers != null || trustManagers != null)
             {
                 SSLContext context = SSLContext.GetInstance("TLS");
-                context.Init(keyManagerFactory.GetKeyManagers(), null, null);
+                context.Init(keyManagers, trustManagers, null);
                 _factory = context.SocketFactory;
             }
         }

@@ -5,6 +5,7 @@ using Foundation;
 using CoreFoundation;
 using SecureHttpClient.CertificatePinning;
 using Security;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SecureHttpClient
 {
@@ -12,11 +13,13 @@ namespace SecureHttpClient
     {
         private readonly SecureHttpClientHandler _secureHttpClientHandler;
         private readonly CertificatePinner _certificatePinner;
+        private readonly X509Certificate2Collection _trustedRoots;
 
-        public DataTaskDelegate(SecureHttpClientHandler secureHttpClientHandler, CertificatePinner certificatePinner)
+        public DataTaskDelegate(SecureHttpClientHandler secureHttpClientHandler, CertificatePinner certificatePinner, X509Certificate2Collection trustedRoots)
         {
             _secureHttpClientHandler = secureHttpClientHandler;
             _certificatePinner = certificatePinner;
+            _trustedRoots = trustedRoots;
         }
 
         public override void DidReceiveResponse(NSUrlSession session, NSUrlSessionDataTask dataTask, NSUrlResponse response, Action<NSUrlSessionResponseDisposition> completionHandler)
@@ -147,6 +150,8 @@ namespace SecureHttpClient
 
             if (challenge.ProtectionSpace.AuthenticationMethod == NSUrlProtectionSpace.AuthenticationMethodServerTrust)
             {
+                challenge.ProtectionSpace.ServerSecTrust.SetAnchorCertificates(_trustedRoots);
+
                 var hostname = task.CurrentRequest.Url.Host;
                 if (_certificatePinner != null && _certificatePinner.HasPin(hostname))
                 {
