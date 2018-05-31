@@ -118,7 +118,7 @@ namespace SecureHttpClient.Test
             var throwsExpectedException = false;
             try
             {
-                await GetPageAsync(page, caCert: System.Text.Encoding.ASCII.GetBytes(untrusted_root_badssl_com_certificate)).ConfigureAwait(false);
+                await GetPageAsync(page).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
