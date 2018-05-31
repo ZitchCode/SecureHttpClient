@@ -83,31 +83,22 @@ namespace SecureHttpClient
             bool good = sslPolicyErrors == SslPolicyErrors.None;
             if (_trustedRoots != null && (sslPolicyErrors & ~SslPolicyErrors.RemoteCertificateChainErrors) == 0)
             {
-                using (var customChain = new X509Chain())
+                chain.ChainPolicy.ExtraStore.AddRange(_trustedRoots);
+                chain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
+                if (chain.Build(certificate))
                 {
-                    customChain.ChainPolicy.ExtraStore.AddRange(_trustedRoots);
-                    customChain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
-                    var built = customChain.Build(certificate);
-                    // check to see if we failed CRL check when no CRL info specified
-                    if (!built && !customChain.ChainElements.HaveCRLs())
-                    {
-                        customChain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
-                        built = customChain.Build(certificate);
-                    }
-                    if (built)
-                    {
-                        var root = customChain.ChainElements[customChain.ChainElements.Count - 1].Certificate;
-                        good = _trustedRoots.Find(X509FindType.FindByThumbprint, root.Thumbprint, false).Count > 0;
-                    }
+                    var root = chain.ChainElements[chain.ChainElements.Count - 1].Certificate;
+                    good = _trustedRoots.Find(X509FindType.FindByThumbprint, root.Thumbprint, false).Count > 0;
                 }
             }
-            else if (!good)
+
+            if (!good)
             {
                 Debug.WriteLine($"SSL policy errors {sslPolicyErrors}");
                 return false;
             }
 
-            if (good && _certificatePinner.IsValueCreated)
+            if (_certificatePinner.IsValueCreated)
             {
                 // Get request host
                 var requestHost = httpRequestMessage?.RequestUri?.Host;
@@ -121,27 +112,6 @@ namespace SecureHttpClient
                 good = _certificatePinner.Value.Check(requestHost, certificate.RawData);
             }
             return good;
-        }
-    }
-
-    internal static class X509Certificate2Extension
-    {
-        private static readonly Oid Crls = new Oid("2.5.29.31");
-        public static bool HasCRLs(this X509Certificate2 cert)
-        {
-            return null != cert.Extensions.Cast<X509Extension>().FirstOrDefault(x => x.Oid.Equals(Crls));
-        }
-
-        public static bool HaveCRLs(this X509ChainElementCollection chainElements)
-        {
-            foreach (var elem in chainElements)
-            {
-                if (elem.Certificate.HasCRLs())
-                {
-                    return true;
-                }
-            }
-            return false;
         }
     }
 }
