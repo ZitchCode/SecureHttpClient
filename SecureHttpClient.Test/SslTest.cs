@@ -110,7 +110,7 @@ namespace SecureHttpClient.Test
             Assert.True(throwsExpectedException);
         }
 
-        [Fact]
+        [Fact(Skip = "Unsupported on Android, not implemented on UWP")]
         public async Task SslTest_RevokedCertificate()
         {
             const string page = @"https://revoked.badssl.com/";
