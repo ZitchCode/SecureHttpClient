@@ -188,7 +188,7 @@ namespace SecureHttpClient.Test
 
         private static async Task<string> GetPageAsync(string page, string hostname = null, string[] pins = null, byte[] clientCert = null, string certPassword = null, byte[] caCert = null)
         {
-            var secureHttpClientHandler = new SecureHttpClientHandler();
+            var secureHttpClientHandler = SecureHttpClientHandlerBuilder.Build();
             if (pins != null)
             {
                 secureHttpClientHandler.AddCertificatePinner(hostname, pins);

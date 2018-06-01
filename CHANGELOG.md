@@ -1,3 +1,12 @@
+## 1.8.0
+- xamarin : 15.7.2 (xamarin.vs 4.10.0.448 ; xamarin.android 8.3.0.19 ; xamarin.ios 11.10.1.178 ; mono 5.10.1.47 ; vs for mac 7.5.1.22)
+- fix certificatepinner test
+- better logging with ILogger (and Serilog in test runners)
+- use multi-targeting for source project
+- use default debugtype (portable) as it's now supported by xamarin
+- simplify nuget pack
+- add xmldoc
+
 ## 1.7.0
 - add support for client certificates (by gtbX)
 - xamarin : 15.6.5 servicing release (xamarin.vs 4.9.0.753 ; xamarin.android 8.2.0.16 ; xamarin.ios 11.9.1.24 ; mono 5.8.1.0 ; vs for mac 7.4.2.12)

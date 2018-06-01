@@ -66,6 +66,8 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Serilog" Version="2.7.1" />
+    <PackageReference Include="Serilog.Sinks.Xamarin" Version="0.1.29" />
     <PackageReference Include="xunit.runner.devices" Version="2.3.3" />
   </ItemGroup>
   <ItemGroup>
@@ -80,14 +82,7 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SecureHttpClient.Android\SecureHttpClient.Android.csproj">
-      <Project>{f7290b9e-c821-4da7-a4e5-824d9b0f70f2}</Project>
-      <Name>SecureHttpClient.Android</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SecureHttpClient.Test\SecureHttpClient.Test.csproj">
-      <Project>{503b71db-1cca-49ca-8c2f-7faa87b5520a}</Project>
-      <Name>SecureHttpClient.Test</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\SecureHttpClient.Test\SecureHttpClient.Test.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

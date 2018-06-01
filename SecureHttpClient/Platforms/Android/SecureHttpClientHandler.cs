@@ -1,3 +1,5 @@
+#if __ANDROID__
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,38 +9,57 @@ using System.Threading;
 using System.Threading.Tasks;
 using Android.OS;
 using Android.Runtime;
-using Java.Lang;
 using Java.IO;
 using Java.Security;
 using Java.Security.Cert;
 using Java.Util.Concurrent;
 using Javax.Net.Ssl;
 using Square.OkHttp3;
+using Microsoft.Extensions.Logging;
 
 namespace SecureHttpClient
 {
+    /// <summary>
+    /// Implementation of ISecureHttpClientHandler (Android implementation)
+    /// </summary>
     public class SecureHttpClientHandler : HttpClientHandler, Abstractions.ISecureHttpClientHandler
     {
         private readonly Lazy<OkHttpClient> _client;
         private readonly Lazy<CertificatePinner.Builder> _certificatePinnerBuilder;
+        private readonly ILogger _logger;
         private KeyManagerFactory _keyMgrFactory;
         private TrustManagerFactory _trustMgrFactory;
         private IX509TrustManager _x509TrustManager;
         private IKeyManager[] _keyManagers => _keyMgrFactory?.GetKeyManagers();
         private ITrustManager[] _trustManagers => _trustMgrFactory?.GetTrustManagers();
 
-        public SecureHttpClientHandler()
+        /// <summary>
+        /// SecureHttpClientHandler constructor (Android implementation)
+        /// </summary>
+        /// <param name="logger">Optional logger</param>
+        public SecureHttpClientHandler(ILogger logger = null)
         {
+            _logger = logger;
             _client = new Lazy<OkHttpClient>(CreateOkHttpClientInstance);
             _certificatePinnerBuilder = new Lazy<CertificatePinner.Builder>();
         }
 
+        /// <summary>
+        /// Add certificate pins for a given hostname (Android implementation)
+        /// </summary>
+        /// <param name="hostname">The hostname</param>
+        /// <param name="pins">The array of certifiate pins (example of pin string: "sha256/fiKY8VhjQRb2voRmVXsqI0xPIREcwOVhpexrplrlqQY=")</param>
         public void AddCertificatePinner(string hostname, string[] pins)
         {
-            System.Diagnostics.Debug.WriteLine($"Add CertificatePinner: hostname:{hostname}, pins:{string.Join("|", pins)}");
+            _logger?.LogDebug($"Add CertificatePinner: hostname:{hostname}, pins:{string.Join("|", pins)}");
             _certificatePinnerBuilder.Value.Add(hostname, pins);
         }
 
+        /// <summary>
+        /// Set a client certificate (Android implementation)
+        /// </summary>
+        /// <param name="certificate">The client certificate raw data</param>
+        /// <param name="passphrase">The client certificate pass phrase</param>
         public void SetClientCertificate(byte[] certificate, string passphrase)
         {
             KeyStore keyStore = KeyStore.GetInstance("pkcs12");
@@ -47,6 +68,10 @@ namespace SecureHttpClient
             _keyMgrFactory.Init(keyStore, passphrase.ToCharArray());
         }
 
+        /// <summary>
+        /// Set certificates for the trusted Root Certificate Authorities
+        /// </summary>
+        /// <param name="certificates">Certificates for the CAs to trust</param>
         public void SetTrustedRoots(params byte[][] certificates)
         {
             if (certificates == null)
@@ -104,6 +129,7 @@ namespace SecureHttpClient
             return builder.Build();
         }
 
+        /// <inheritdoc />
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             var javaUri = request.RequestUri.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped);
@@ -194,3 +220,5 @@ namespace SecureHttpClient
         }
     }
 }
+
+#endif

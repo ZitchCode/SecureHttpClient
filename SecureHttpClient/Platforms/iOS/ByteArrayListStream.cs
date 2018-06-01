@@ -178,7 +178,6 @@ namespace SecureHttpClient
             {
                 _maxLength += arrayToAdd.Length;
                 _bytes.Add(arrayToAdd);
-                //Console.WriteLine("Added a new byte array, {0}: max = {1}", arrayToAdd.Length, maxLength);
             }
 
             Interlocked.Exchange(ref _lockRelease, EmptyDisposable.Instance).Dispose();

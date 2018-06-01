@@ -1,5 +1,6 @@
+#if __IOS__
+
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Collections.Generic;
@@ -7,12 +8,16 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using Foundation;
+using Microsoft.Extensions.Logging;
 using SecureHttpClient.CertificatePinning;
 using Security;
 using System.Security.Cryptography.X509Certificates;
 
 namespace SecureHttpClient
 {
+    /// <summary>
+    /// Implementation of ISecureHttpClientHandler (iOS implementation)
+    /// </summary>
     public class SecureHttpClientHandler : HttpClientHandler, Abstractions.ISecureHttpClientHandler
     {
         internal readonly Dictionary<NSUrlSessionTask, InflightOperation> InflightRequests;
@@ -20,19 +25,32 @@ namespace SecureHttpClient
         private X509Certificate2Collection _trustedRoots = null;
         private readonly Lazy<CertificatePinner> _certificatePinner;
         private NSUrlSession _session;
-        
-        public SecureHttpClientHandler()
+
+        /// <summary>
+        /// SecureHttpClientHandler constructor (iOS implementation)
+        /// </summary>
+        /// <param name="logger">Optional logger</param>
+        public SecureHttpClientHandler(ILogger logger = null)
         {
             InflightRequests = new Dictionary<NSUrlSessionTask, InflightOperation>();
-            _certificatePinner = new Lazy<CertificatePinner>();
+            _certificatePinner = new Lazy<CertificatePinner>(() => new CertificatePinner(logger));
         }
 
+        /// <summary>
+        /// Add certificate pins for a given hostname (iOS implementation)
+        /// </summary>
+        /// <param name="hostname">The hostname</param>
+        /// <param name="pins">The array of certifiate pins (example of pin string: "sha256/fiKY8VhjQRb2voRmVXsqI0xPIREcwOVhpexrplrlqQY=")</param>
         public void AddCertificatePinner(string hostname, string[] pins)
         {
-            Debug.WriteLine($"Add CertificatePinner: hostname:{hostname}, pins:{string.Join("|", pins)}");
             _certificatePinner.Value.AddPins(hostname, pins);
         }
 
+        /// <summary>
+        /// Set a client certificate (iOS implementation)
+        /// </summary>
+        /// <param name="certificate">The client certificate raw data</param>
+        /// <param name="passphrase">The client certificate pass phrase</param>
         public void SetClientCertificate(byte[] certificate, string passphrase)
         {
             NSDictionary opt;
@@ -56,6 +74,10 @@ namespace SecureHttpClient
             }
         }
 
+        /// <summary>
+        /// Set certificates for the trusted Root Certificate Authorities
+        /// </summary>
+        /// <param name="certificates">Certificates for the CAs to trust</param>
         public void SetTrustedRoots(params byte[][] certificates)
         {
             if (certificates.Length == 0) {
@@ -78,6 +100,7 @@ namespace SecureHttpClient
             }
         }
 
+        /// <inheritdoc />
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             if (_session == null)
@@ -131,3 +154,4 @@ namespace SecureHttpClient
     }
 }
 
+#endif

@@ -4,7 +4,6 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>SecureHttpClient.TestRunner.Net</AssemblyName>
     <OutputType>Exe</OutputType>
-    <PackageId>SecureHttpClient.TestRunner.Net</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Serilog" Version="2.7.1" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
     <PackageReference Include="xunit.runner.utility" Version="2.3.1" />
   </ItemGroup>
 
