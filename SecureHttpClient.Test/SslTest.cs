@@ -14,7 +14,7 @@ namespace SecureHttpClient.Test
         public async Task SslTest_ExpiredCertificate()
         {
             const string page = @"https://expired.badssl.com/";
-            var expectedExceptions = new List<string> {"Javax.Net.Ssl.SSLHandshakeException", "System.Net.WebException"};
+            var expectedExceptions = new List<string> { "Javax.Net.Ssl.SSLHandshakeException", "System.Net.WebException" };
             var throwsExpectedException = false;
             try
             {
@@ -195,9 +195,12 @@ namespace SecureHttpClient.Test
             }
             if (clientCert != null)
             {
-                secureHttpClientHandler.SetClientCertificate(clientCert, certPassword);
+                var provider = new ClientCertificateProvider();
+                provider.Import(clientCert, certPassword);
+                secureHttpClientHandler.SetClientCertificates(provider);
             }
-            if (caCert != null) {
+            if (caCert != null)
+            {
                 secureHttpClientHandler.SetTrustedRoots(caCert);
             }
             string result;

@@ -39,12 +39,18 @@ namespace SecureHttpClient
             _certificatePinnerBuilder.Value.Add(hostname, pins);
         }
 
-        public void SetClientCertificate(byte[] certificate, string passphrase)
+        public void SetClientCertificates(Abstractions.IClientCertificateProvider iprovider)
         {
-            KeyStore keyStore = KeyStore.GetInstance("pkcs12");
-            keyStore.Load(new System.IO.MemoryStream(certificate), passphrase.ToCharArray());
-            _keyMgrFactory = KeyManagerFactory.GetInstance("X509");
-            _keyMgrFactory.Init(keyStore, passphrase.ToCharArray());
+            var provider = iprovider as ClientCertificateProvider;
+            if (provider != null)
+            {
+                _keyMgrFactory = KeyManagerFactory.GetInstance("X509");
+                _keyMgrFactory.Init(provider.KeyStore, null);
+            }
+            else
+            {
+                _keyMgrFactory = null;
+            }
         }
 
         public void SetTrustedRoots(params byte[][] certificates)
@@ -60,7 +66,7 @@ namespace SecureHttpClient
             var certFactory = CertificateFactory.GetInstance("X.509");
             foreach (var certificate in certificates)
             {
-                var cert = (X509Certificate)certFactory.GenerateCertificate(new System.IO.MemoryStream(certificate));
+                var cert = (X509Certificate) certFactory.GenerateCertificate(new System.IO.MemoryStream(certificate));
                 keyStore.SetCertificateEntry(cert.SubjectDN.Name, cert);
             }
 

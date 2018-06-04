@@ -49,6 +49,7 @@
     <Compile Include="SecureHttpClientHandler.cs" />
     <Compile Include="TlsSslSocketFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ClientCertificateProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Square.OkHttp3" Version="3.8.1" />

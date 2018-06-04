@@ -20,7 +20,7 @@ namespace SecureHttpClient
         private X509Certificate2Collection _trustedRoots = null;
         private readonly Lazy<CertificatePinner> _certificatePinner;
         private NSUrlSession _session;
-        
+
         public SecureHttpClientHandler()
         {
             InflightRequests = new Dictionary<NSUrlSessionTask, InflightOperation>();
@@ -33,32 +33,15 @@ namespace SecureHttpClient
             _certificatePinner.Value.AddPins(hostname, pins);
         }
 
-        public void SetClientCertificate(byte[] certificate, string passphrase)
+        public void SetClientCertificates(Abstractions.IClientCertificateProvider provider)
         {
-            NSDictionary opt;
-            if (string.IsNullOrEmpty(passphrase))
-            {
-                opt = new NSDictionary();
-            }
-            else
-            {
-                opt = NSDictionary.FromObjectAndKey(new NSString(passphrase), SecImportExport.Passphrase);
-            }
-
-            NSDictionary[] array;
-            var status = SecImportExport.ImportPkcs12(certificate, opt, out array);
-
-            if (status == SecStatusCode.Success)
-            {
-                var identity = new SecIdentity(array[0]["identity"].Handle);
-                SecCertificate[] certs = { identity.Certificate };
-                ClientCertificate = new NSUrlCredential(identity, certs, NSUrlCredentialPersistence.ForSession);
-            }
+            ClientCertificate = (provider as ClientCertificateProvider)?.Credential;
         }
 
         public void SetTrustedRoots(params byte[][] certificates)
         {
-            if (certificates.Length == 0) {
+            if (certificates.Length == 0)
+            {
                 _trustedRoots = null;
                 return;
             }

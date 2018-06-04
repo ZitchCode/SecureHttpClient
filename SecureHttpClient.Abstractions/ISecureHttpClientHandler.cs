@@ -4,7 +4,7 @@
     {
         void AddCertificatePinner(string hostname, string[] pins);
 
-        void SetClientCertificate(byte[] certificate, string passphrase);
+        void SetClientCertificates(IClientCertificateProvider provider);
 
         void SetTrustedRoots(params byte[][] certificates);
     }
