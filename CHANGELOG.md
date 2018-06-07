@@ -1,6 +1,7 @@
 ## 1.9.0
 - xamarin : 15.7.3 (xamarin.vs 4.10.10.1 ; xamarin.android 8.3.3.2 ; xamarin.ios 11.12.0.4 ; mono 5.10.1.57 ; vs for mac 7.5.2.40)
 - add support for setting custom Root CAs
+- Portable.BouncyCastle 1.8.2
 
 ## 1.8.0
 - xamarin : 15.7.2 (xamarin.vs 4.10.0.448 ; xamarin.android 8.3.0.19 ; xamarin.ios 11.10.1.178 ; mono 5.10.1.47 ; vs for mac 7.5.1.22)
