@@ -35,7 +35,7 @@ namespace SecureHttpClient
 
         public void SetClientCertificates(Abstractions.IClientCertificateProvider provider)
         {
-            ClientCertificate = (provider as ClientCertificateProvider)?.Credential;
+            ClientCertificate = (provider as IClientCertificateProvider)?.Credential;
         }
 
         public void SetTrustedRoots(params byte[][] certificates)

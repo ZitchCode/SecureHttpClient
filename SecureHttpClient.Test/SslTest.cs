@@ -195,7 +195,7 @@ namespace SecureHttpClient.Test
             }
             if (clientCert != null)
             {
-                var provider = new ClientCertificateProvider();
+                var provider = new ImportedClientCertificateProvider();
                 provider.Import(clientCert, certPassword);
                 secureHttpClientHandler.SetClientCertificates(provider);
             }

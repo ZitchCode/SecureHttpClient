@@ -34,7 +34,7 @@ namespace SecureHttpClient
         public void SetClientCertificates(Abstractions.IClientCertificateProvider iprovider)
         {
             ClientCertificates.Clear();
-            var provider = iprovider as ClientCertificateProvider;
+            var provider = iprovider as IClientCertificateProvider;
             if (provider != null)
             {
                 ClientCertificates.AddRange(provider.Certificates);

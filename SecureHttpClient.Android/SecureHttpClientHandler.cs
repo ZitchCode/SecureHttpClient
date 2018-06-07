@@ -41,7 +41,7 @@ namespace SecureHttpClient
 
         public void SetClientCertificates(Abstractions.IClientCertificateProvider iprovider)
         {
-            var provider = iprovider as ClientCertificateProvider;
+            var provider = iprovider as IClientCertificateProvider;
             if (provider != null)
             {
                 _keyMgrFactory = KeyManagerFactory.GetInstance("X509");

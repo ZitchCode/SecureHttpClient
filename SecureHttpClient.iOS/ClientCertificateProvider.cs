@@ -1,18 +1,33 @@
 ﻿using Foundation;
-using SecureHttpClient.Abstractions;
 using Security;
 
 namespace SecureHttpClient
 {
-    public class ClientCertificateProvider : IClientCertificateProvider
+	/// <summary>
+	/// IClientCertificateProvider for iOS
+	/// </summary>
+    public interface IClientCertificateProvider : Abstractions.IClientCertificateProvider
     {
-
         /// <summary>
         /// The current client certificate
         /// </summary>
         /// <value>The credential.</value>
-        public NSUrlCredential Credential { get; protected set; }
+		NSUrlCredential Credential { get; }
+	}
 
+	/// <summary>
+	/// Base Client certificate provider for iOS
+	/// </summary>
+	public class ClientCertificateProvider : IClientCertificateProvider
+	{
+		public NSUrlCredential Credential { get; protected set; }
+	}
+
+	/// <summary>
+	/// Client certificate provider for imported certificates and keys.
+	/// </summary>
+	public class ImportedClientCertificateProvider : ClientCertificateProvider
+	{
         /// <summary>
         /// Import the specified certificate and its associated private key.
         /// </summary>
