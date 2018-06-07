@@ -75,7 +75,7 @@ namespace SecureHttpClient
         }
 
         /// <summary>
-        /// Set certificates for the trusted Root Certificate Authorities
+        /// Set certificates for the trusted Root Certificate Authorities (iOS implementation)
         /// </summary>
         /// <param name="certificates">Certificates for the CAs to trust</param>
         public void SetTrustedRoots(params byte[][] certificates)

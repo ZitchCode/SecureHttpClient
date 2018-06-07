@@ -12,7 +12,7 @@ namespace SecureHttpClient
         public TlsSslSocketFactory(IKeyManager[] keyManagers = null, ITrustManager[] trustManagers = null) {
             if (keyManagers != null || trustManagers != null)
             {
-                SSLContext context = SSLContext.GetInstance("TLS");
+                var context = SSLContext.GetInstance("TLS");
                 context.Init(keyManagers, trustManagers, null);
                 _factory = context.SocketFactory;
             }
