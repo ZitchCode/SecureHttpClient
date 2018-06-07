@@ -1,18 +1,20 @@
 #if __ANDROID__
 
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using Square.OkHttp3;
-using Java.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using Android.OS;
-using Java.Util.Concurrent;
+using Android.Runtime;
+using Java.IO;
 using Java.Security;
+using Java.Security.Cert;
+using Java.Util.Concurrent;
 using Javax.Net.Ssl;
+using Square.OkHttp3;
 using Microsoft.Extensions.Logging;
 
 namespace SecureHttpClient
@@ -22,12 +24,14 @@ namespace SecureHttpClient
     /// </summary>
     public class SecureHttpClientHandler : HttpClientHandler, Abstractions.ISecureHttpClientHandler
     {
-        private static readonly Lazy<OkHttpClient> OkHttpClientInstance = new Lazy<OkHttpClient>(CreateOkHttpClientInstance);
-
-        private readonly OkHttpClient.Builder _builder;
-        private OkHttpClient _client;
+        private readonly Lazy<OkHttpClient> _client;
         private readonly Lazy<CertificatePinner.Builder> _certificatePinnerBuilder;
         private readonly ILogger _logger;
+        private KeyManagerFactory _keyMgrFactory;
+        private TrustManagerFactory _trustMgrFactory;
+        private IX509TrustManager _x509TrustManager;
+        private IKeyManager[] _keyManagers => _keyMgrFactory?.GetKeyManagers();
+        private ITrustManager[] _trustManagers => _trustMgrFactory?.GetTrustManagers();
 
         /// <summary>
         /// SecureHttpClientHandler constructor (Android implementation)
@@ -36,7 +40,7 @@ namespace SecureHttpClient
         public SecureHttpClientHandler(ILogger logger = null)
         {
             _logger = logger;
-            _builder = OkHttpClientInstance.Value.NewBuilder().CookieJar(new NativeCookieJar());
+            _client = new Lazy<OkHttpClient>(CreateOkHttpClientInstance);
             _certificatePinnerBuilder = new Lazy<CertificatePinner.Builder>();
         }
 
@@ -48,8 +52,7 @@ namespace SecureHttpClient
         public void AddCertificatePinner(string hostname, string[] pins)
         {
             _logger?.LogDebug($"Add CertificatePinner: hostname:{hostname}, pins:{string.Join("|", pins)}");
-            var certificatePinner = _certificatePinnerBuilder.Value.Add(hostname, pins).Build();
-            _builder.CertificatePinner(certificatePinner);
+            _certificatePinnerBuilder.Value.Add(hostname, pins);
         }
 
         /// <summary>
@@ -61,43 +64,74 @@ namespace SecureHttpClient
         {
             KeyStore keyStore = KeyStore.GetInstance("pkcs12");
             keyStore.Load(new System.IO.MemoryStream(certificate), passphrase.ToCharArray());
-            var keyManagerFactory = KeyManagerFactory.GetInstance("X509");
-            keyManagerFactory.Init(keyStore, passphrase.ToCharArray());
-            if ((int)Build.VERSION.SdkInt < 21)
+            _keyMgrFactory = KeyManagerFactory.GetInstance("X509");
+            _keyMgrFactory.Init(keyStore, passphrase.ToCharArray());
+        }
+
+        /// <summary>
+        /// Set certificates for the trusted Root Certificate Authorities
+        /// </summary>
+        /// <param name="certificates">Certificates for the CAs to trust</param>
+        public void SetTrustedRoots(params byte[][] certificates)
+        {
+            if (certificates == null)
             {
-                _builder.SslSocketFactory(new TlsSslSocketFactory(keyManagerFactory), TlsSslSocketFactory.GetSystemDefaultTrustManager());
+                _trustMgrFactory = null;
+                _x509TrustManager = null;
+                return;
             }
-            else
+            KeyStore keyStore = KeyStore.GetInstance(KeyStore.DefaultType);
+            keyStore.Load(null);
+            var certFactory = CertificateFactory.GetInstance("X.509");
+            foreach (var certificate in certificates)
             {
-                SSLContext context = SSLContext.GetInstance("TLS");
-                context.Init(keyManagerFactory.GetKeyManagers(), null, null);
-                _builder.SslSocketFactory(context.SocketFactory, TlsSslSocketFactory.GetSystemDefaultTrustManager());
+                var cert = (X509Certificate)certFactory.GenerateCertificate(new System.IO.MemoryStream(certificate));
+                keyStore.SetCertificateEntry(cert.SubjectDN.Name, cert);
+            }
+
+            _trustMgrFactory = TrustManagerFactory.GetInstance(TrustManagerFactory.DefaultAlgorithm);
+            _trustMgrFactory.Init(keyStore);
+            foreach (var trustManager in _trustManagers)
+            {
+                _x509TrustManager = trustManager.JavaCast<IX509TrustManager>();
+                if (_x509TrustManager != null)
+                {
+                    break;
+                }
             }
         }
 
-        private static OkHttpClient CreateOkHttpClientInstance()
+        private OkHttpClient CreateOkHttpClientInstance()
         {
             var builder = new OkHttpClient.Builder()
                 .ConnectTimeout(100, TimeUnit.Seconds)
                 .WriteTimeout(100, TimeUnit.Seconds)
-                .ReadTimeout(100, TimeUnit.Seconds);
-            builder.CookieJar(new NativeCookieJar());
-            if ((int)Build.VERSION.SdkInt < 21)
+                .ReadTimeout(100, TimeUnit.Seconds)
+                .CookieJar(new NativeCookieJar());
+
+            if (_certificatePinnerBuilder.IsValueCreated)
+            {
+                builder.CertificatePinner(_certificatePinnerBuilder.Value.Build());
+            }
+
+            if (Build.VERSION.SdkInt < BuildVersionCodes.Lollipop)
             {
                 // Support TLS1.2 on Android versions before Lollipop
-                builder.SslSocketFactory(new TlsSslSocketFactory(), TlsSslSocketFactory.GetSystemDefaultTrustManager());
+                builder.SslSocketFactory(new TlsSslSocketFactory(_keyManagers, _trustManagers), _x509TrustManager ?? TlsSslSocketFactory.GetSystemDefaultTrustManager());
             }
+            else if (_keyMgrFactory != null || _trustMgrFactory != null)
+            {
+                SSLContext context = SSLContext.GetInstance("TLS");
+                context.Init(_keyManagers, _trustManagers, null);
+                builder.SslSocketFactory(context.SocketFactory, _x509TrustManager ?? TlsSslSocketFactory.GetSystemDefaultTrustManager());
+            }
+
             return builder.Build();
         }
 
         /// <inheritdoc />
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            if (_client == null)
-            {
-                _client = _builder.Build();
-            }
-
             var javaUri = request.RequestUri.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped);
             var url = new Java.Net.URL(javaUri);
 
@@ -133,7 +167,7 @@ namespace SecureHttpClient
             cancellationToken.ThrowIfCancellationRequested();
 
             var rq = builder.Build();
-            var call = _client.NewCall(rq);
+            var call = _client.Value.NewCall(rq);
 
             // NB: Even closing a socket must be done off the UI thread. Cray!
             cancellationToken.Register(() => Task.Run(() => call.Cancel()));

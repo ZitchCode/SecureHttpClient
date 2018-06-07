@@ -18,5 +18,11 @@
         /// <param name="certificate">The client certificate raw data</param>
         /// <param name="passphrase">The client certificate pass phrase</param>
         void SetClientCertificate(byte[] certificate, string passphrase);
+
+        /// <summary>
+        /// Set certificates for the trusted Root Certificate Authorities
+        /// </summary>
+        /// <param name="certificates">Certificates for the CAs to trust</param>
+        void SetTrustedRoots(params byte[][] certificates);
     }
 }
