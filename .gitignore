@@ -9,6 +9,7 @@
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
+**/[Rr]esource.[Dd]esigner.cs
 
 # Build results
 [Dd]ebug/
