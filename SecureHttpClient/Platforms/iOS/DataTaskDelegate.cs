@@ -180,6 +180,12 @@ namespace SecureHttpClient
             if (challenge.ProtectionSpace.AuthenticationMethod == NSUrlProtectionSpace.AuthenticationMethodClientCertificate)
             {
                 var certificate = _secureHttpClientHandler.ClientCertificate;
+                if (certificate == null)
+                {
+                    var url = task.CurrentRequest.Url;
+                    var space = new NSUrlProtectionSpace(url.Host, url.Port, url.Scheme, null, NSUrlProtectionSpace.AuthenticationMethodClientCertificate);
+                    certificate = NSUrlCredentialStorage.SharedCredentialStorage.GetDefaultCredential(space);
+                }
                 if (certificate != null)
                 {
                     completionHandler(NSUrlSessionAuthChallengeDisposition.UseCredential, certificate);

@@ -13,11 +13,10 @@
         void AddCertificatePinner(string hostname, string[] pins);
 
         /// <summary>
-        /// Set a client certificate
+        /// Set the client certificate provider
         /// </summary>
-        /// <param name="certificate">The client certificate raw data</param>
-        /// <param name="passphrase">The client certificate pass phrase</param>
-        void SetClientCertificate(byte[] certificate, string passphrase);
+        /// <param name="provider">The provider for client certificates on this platform</param>
+        void SetClientCertificates(IClientCertificateProvider provider);
 
         /// <summary>
         /// Set certificates for the trusted Root Certificate Authorities

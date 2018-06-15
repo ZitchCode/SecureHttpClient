@@ -25,7 +25,7 @@ namespace SecureHttpClient
         private X509Certificate2Collection _trustedRoots = null;
         private readonly Lazy<CertificatePinner> _certificatePinner;
         private NSUrlSession _session;
-
+        
         /// <summary>
         /// SecureHttpClientHandler constructor (iOS implementation)
         /// </summary>
@@ -35,52 +35,34 @@ namespace SecureHttpClient
             InflightRequests = new Dictionary<NSUrlSessionTask, InflightOperation>();
             _certificatePinner = new Lazy<CertificatePinner>(() => new CertificatePinner(logger));
         }
-
+        
         /// <summary>
         /// Add certificate pins for a given hostname (iOS implementation)
         /// </summary>
         /// <param name="hostname">The hostname</param>
         /// <param name="pins">The array of certifiate pins (example of pin string: "sha256/fiKY8VhjQRb2voRmVXsqI0xPIREcwOVhpexrplrlqQY=")</param>
-        public void AddCertificatePinner(string hostname, string[] pins)
+        public virtual void AddCertificatePinner(string hostname, string[] pins)
         {
             _certificatePinner.Value.AddPins(hostname, pins);
         }
 
         /// <summary>
-        /// Set a client certificate (iOS implementation)
+        /// Set the client certificate provider (iOS implementation)
         /// </summary>
-        /// <param name="certificate">The client certificate raw data</param>
-        /// <param name="passphrase">The client certificate pass phrase</param>
-        public void SetClientCertificate(byte[] certificate, string passphrase)
+        /// <param name="provider">The provider for client certificates on this platform</param>
+        public virtual void SetClientCertificates(Abstractions.IClientCertificateProvider provider)
         {
-            NSDictionary opt;
-            if (string.IsNullOrEmpty(passphrase))
-            {
-                opt = new NSDictionary();
-            }
-            else
-            {
-                opt = NSDictionary.FromObjectAndKey(new NSString(passphrase), SecImportExport.Passphrase);
-            }
-
-            NSDictionary[] array;
-            var status = SecImportExport.ImportPkcs12(certificate, opt, out array);
-
-            if (status == SecStatusCode.Success)
-            {
-                var identity = new SecIdentity(array[0]["identity"].Handle);
-                SecCertificate[] certs = { identity.Certificate };
-                ClientCertificate = new NSUrlCredential(identity, certs, NSUrlCredentialPersistence.ForSession);
-            }
+            ClientCertificate = (provider as IClientCertificateProvider)?.Credential;
         }
 
         /// <summary>
-        /// Set certificates for the trusted Root Certificate Authorities
+        /// Set certificates for the trusted Root Certificate Authorities (iOS implementation)
         /// </summary>
         /// <param name="certificates">Certificates for the CAs to trust</param>
-        public void SetTrustedRoots(params byte[][] certificates)
+        public virtual void SetTrustedRoots(params byte[][] certificates)
         {
-            if (certificates.Length == 0) {
+            if (certificates.Length == 0)
+            {
                 _trustedRoots = null;
                 return;
             }
