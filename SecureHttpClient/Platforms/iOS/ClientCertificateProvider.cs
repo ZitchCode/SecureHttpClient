@@ -14,7 +14,7 @@ namespace SecureHttpClient
         /// The current client certificate
         /// </summary>
         /// <value>The credential.</value>
-		NSUrlCredential Credential { get; }
+        NSUrlCredential Credential { get; }
     }
 
     /// <summary>
