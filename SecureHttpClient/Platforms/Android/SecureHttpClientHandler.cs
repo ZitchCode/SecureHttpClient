@@ -30,8 +30,8 @@ namespace SecureHttpClient
         private KeyManagerFactory _keyMgrFactory;
         private TrustManagerFactory _trustMgrFactory;
         private IX509TrustManager _x509TrustManager;
-        private IKeyManager[] _keyManagers => _keyMgrFactory?.GetKeyManagers();
-        private ITrustManager[] _trustManagers => _trustMgrFactory?.GetTrustManagers();
+        private IKeyManager[] KeyManagers => _keyMgrFactory?.GetKeyManagers();
+        private ITrustManager[] TrustManagers => _trustMgrFactory?.GetTrustManagers();
 
         /// <summary>
         /// SecureHttpClientHandler constructor (Android implementation)
@@ -85,7 +85,7 @@ namespace SecureHttpClient
                 _x509TrustManager = null;
                 return;
             }
-            KeyStore keyStore = KeyStore.GetInstance(KeyStore.DefaultType);
+            var keyStore = KeyStore.GetInstance(KeyStore.DefaultType);
             keyStore.Load(null);
             var certFactory = CertificateFactory.GetInstance("X.509");
             foreach (var certificate in certificates)
@@ -96,7 +96,7 @@ namespace SecureHttpClient
 
             _trustMgrFactory = TrustManagerFactory.GetInstance(TrustManagerFactory.DefaultAlgorithm);
             _trustMgrFactory.Init(keyStore);
-            foreach (var trustManager in _trustManagers)
+            foreach (var trustManager in TrustManagers)
             {
                 _x509TrustManager = trustManager.JavaCast<IX509TrustManager>();
                 if (_x509TrustManager != null)
@@ -122,12 +122,12 @@ namespace SecureHttpClient
             if (Build.VERSION.SdkInt < BuildVersionCodes.Lollipop)
             {
                 // Support TLS1.2 on Android versions before Lollipop
-                builder.SslSocketFactory(new TlsSslSocketFactory(_keyManagers, _trustManagers), _x509TrustManager ?? TlsSslSocketFactory.GetSystemDefaultTrustManager());
+                builder.SslSocketFactory(new TlsSslSocketFactory(KeyManagers, TrustManagers), _x509TrustManager ?? TlsSslSocketFactory.GetSystemDefaultTrustManager());
             }
             else if (_keyMgrFactory != null || _trustMgrFactory != null)
             {
-                SSLContext context = SSLContext.GetInstance("TLS");
-                context.Init(_keyManagers, _trustManagers, null);
+                var context = SSLContext.GetInstance("TLS");
+                context.Init(KeyManagers, TrustManagers, null);
                 builder.SslSocketFactory(context.SocketFactory, _x509TrustManager ?? TlsSslSocketFactory.GetSystemDefaultTrustManager());
             }
 
