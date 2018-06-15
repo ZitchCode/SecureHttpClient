@@ -43,7 +43,7 @@ namespace SecureHttpClient
             _client = new Lazy<OkHttpClient>(CreateOkHttpClientInstance);
             _certificatePinnerBuilder = new Lazy<CertificatePinner.Builder>();
         }
-        
+
         /// <summary>
         /// Add certificate pins for a given hostname (Android implementation)
         /// </summary>
@@ -72,7 +72,7 @@ namespace SecureHttpClient
                 _keyMgrFactory = null;
             }
         }
-        
+
         /// <summary>
         /// Set certificates for the trusted Root Certificate Authorities (Android implementation)
         /// </summary>

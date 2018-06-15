@@ -25,7 +25,7 @@ namespace SecureHttpClient
         private X509Certificate2Collection _trustedRoots = null;
         private readonly Lazy<CertificatePinner> _certificatePinner;
         private NSUrlSession _session;
-        
+
         /// <summary>
         /// SecureHttpClientHandler constructor (iOS implementation)
         /// </summary>
@@ -35,7 +35,7 @@ namespace SecureHttpClient
             InflightRequests = new Dictionary<NSUrlSessionTask, InflightOperation>();
             _certificatePinner = new Lazy<CertificatePinner>(() => new CertificatePinner(logger));
         }
-        
+
         /// <summary>
         /// Add certificate pins for a given hostname (iOS implementation)
         /// </summary>

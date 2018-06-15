@@ -5,9 +5,9 @@ using Security;
 
 namespace SecureHttpClient
 {
-	/// <summary>
-	/// IClientCertificateProvider for iOS
-	/// </summary>
+    /// <summary>
+    /// IClientCertificateProvider for iOS
+    /// </summary>
     public interface IClientCertificateProvider : Abstractions.IClientCertificateProvider
     {
         /// <summary>
@@ -15,21 +15,21 @@ namespace SecureHttpClient
         /// </summary>
         /// <value>The credential.</value>
 		NSUrlCredential Credential { get; }
-	}
+    }
 
-	/// <summary>
-	/// Base Client certificate provider for iOS
-	/// </summary>
-	public class ClientCertificateProvider : IClientCertificateProvider
-	{
-		public NSUrlCredential Credential { get; protected set; }
-	}
+    /// <summary>
+    /// Base Client certificate provider for iOS
+    /// </summary>
+    public class ClientCertificateProvider : IClientCertificateProvider
+    {
+        public NSUrlCredential Credential { get; protected set; }
+    }
 
-	/// <summary>
-	/// Client certificate provider for imported certificates and keys.
-	/// </summary>
-	public class ImportedClientCertificateProvider : ClientCertificateProvider
-	{
+    /// <summary>
+    /// Client certificate provider for imported certificates and keys.
+    /// </summary>
+    public class ImportedClientCertificateProvider : ClientCertificateProvider
+    {
         /// <summary>
         /// Import the specified certificate and its associated private key.
         /// </summary>

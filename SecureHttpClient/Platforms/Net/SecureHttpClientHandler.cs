@@ -35,7 +35,7 @@ namespace SecureHttpClient
             AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             MaxAutomaticRedirections = 10;
         }
-        
+
         /// <summary>
         /// Add certificate pins for a given hostname (NetStandard implementation)
         /// </summary>
