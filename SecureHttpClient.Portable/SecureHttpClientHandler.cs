@@ -24,14 +24,14 @@ namespace SecureHttpClient
             MaxAutomaticRedirections = 10;
         }
 
-        public void AddCertificatePinner(string hostname, string[] pins)
+        public virtual void AddCertificatePinner(string hostname, string[] pins)
         {
             Debug.WriteLine($"Add CertificatePinner: hostname:{hostname}, pins:{string.Join("|", pins)}");
             _certificatePinner.Value.AddPins(hostname, pins);
             ServerCertificateCustomValidationCallback = CheckServerCertificate;
         }
 
-        public void SetClientCertificates(Abstractions.IClientCertificateProvider iprovider)
+        public virtual void SetClientCertificates(Abstractions.IClientCertificateProvider iprovider)
         {
             ClientCertificates.Clear();
             var provider = iprovider as IClientCertificateProvider;
@@ -41,7 +41,7 @@ namespace SecureHttpClient
             }
         }
 
-        public void SetTrustedRoots(params byte[][] certificates)
+        public virtual void SetTrustedRoots(params byte[][] certificates)
         {
             if (certificates.Length == 0)
             {

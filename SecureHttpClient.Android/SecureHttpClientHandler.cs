@@ -33,13 +33,13 @@ namespace SecureHttpClient
             _certificatePinnerBuilder = new Lazy<CertificatePinner.Builder>();
         }
 
-        public void AddCertificatePinner(string hostname, string[] pins)
+        public virtual void AddCertificatePinner(string hostname, string[] pins)
         {
             System.Diagnostics.Debug.WriteLine($"Add CertificatePinner: hostname:{hostname}, pins:{string.Join("|", pins)}");
             _certificatePinnerBuilder.Value.Add(hostname, pins);
         }
 
-        public void SetClientCertificates(Abstractions.IClientCertificateProvider iprovider)
+        public virtual void SetClientCertificates(Abstractions.IClientCertificateProvider iprovider)
         {
             var provider = iprovider as IClientCertificateProvider;
             if (provider != null)
@@ -53,7 +53,7 @@ namespace SecureHttpClient
             }
         }
 
-        public void SetTrustedRoots(params byte[][] certificates)
+        public virtual void SetTrustedRoots(params byte[][] certificates)
         {
             if (certificates == null)
             {

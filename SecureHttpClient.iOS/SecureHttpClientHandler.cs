@@ -27,18 +27,18 @@ namespace SecureHttpClient
             _certificatePinner = new Lazy<CertificatePinner>();
         }
 
-        public void AddCertificatePinner(string hostname, string[] pins)
+        public virtual void AddCertificatePinner(string hostname, string[] pins)
         {
             Debug.WriteLine($"Add CertificatePinner: hostname:{hostname}, pins:{string.Join("|", pins)}");
             _certificatePinner.Value.AddPins(hostname, pins);
         }
 
-        public void SetClientCertificates(Abstractions.IClientCertificateProvider provider)
+        public virtual void SetClientCertificates(Abstractions.IClientCertificateProvider provider)
         {
             ClientCertificate = (provider as IClientCertificateProvider)?.Credential;
         }
 
-        public void SetTrustedRoots(params byte[][] certificates)
+        public virtual void SetTrustedRoots(params byte[][] certificates)
         {
             if (certificates.Length == 0)
             {
