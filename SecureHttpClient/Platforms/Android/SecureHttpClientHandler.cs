@@ -59,13 +59,12 @@ namespace SecureHttpClient
         /// Set the client certificate provider (Android implementation)
         /// </summary>
         /// <param name="provider">The provider for client certificates on this platform</param>
-        public virtual void SetClientCertificates(Abstractions.IClientCertificateProvider iprovider)
+        public virtual void SetClientCertificates(Abstractions.IClientCertificateProvider provider)
         {
-            var provider = iprovider as IClientCertificateProvider;
-            if (provider != null)
+            if (provider is IClientCertificateProvider androidProvider)
             {
                 _keyMgrFactory = KeyManagerFactory.GetInstance("X509");
-                _keyMgrFactory.Init(provider.KeyStore, null);
+                _keyMgrFactory.Init(androidProvider.KeyStore, null);
             }
             else
             {
