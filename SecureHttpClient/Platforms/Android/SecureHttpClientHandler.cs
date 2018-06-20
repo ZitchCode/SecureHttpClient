@@ -49,30 +49,35 @@ namespace SecureHttpClient
         /// </summary>
         /// <param name="hostname">The hostname</param>
         /// <param name="pins">The array of certifiate pins (example of pin string: "sha256/fiKY8VhjQRb2voRmVXsqI0xPIREcwOVhpexrplrlqQY=")</param>
-        public void AddCertificatePinner(string hostname, string[] pins)
+        public virtual void AddCertificatePinner(string hostname, string[] pins)
         {
             _logger?.LogDebug($"Add CertificatePinner: hostname:{hostname}, pins:{string.Join("|", pins)}");
             _certificatePinnerBuilder.Value.Add(hostname, pins);
         }
 
         /// <summary>
-        /// Set a client certificate (Android implementation)
+        /// Set the client certificate provider (Android implementation)
         /// </summary>
-        /// <param name="certificate">The client certificate raw data</param>
-        /// <param name="passphrase">The client certificate pass phrase</param>
-        public void SetClientCertificate(byte[] certificate, string passphrase)
+        /// <param name="provider">The provider for client certificates on this platform</param>
+        public virtual void SetClientCertificates(Abstractions.IClientCertificateProvider iprovider)
         {
-            var keyStore = KeyStore.GetInstance("pkcs12");
-            keyStore.Load(new System.IO.MemoryStream(certificate), passphrase.ToCharArray());
-            _keyMgrFactory = KeyManagerFactory.GetInstance("X509");
-            _keyMgrFactory.Init(keyStore, passphrase.ToCharArray());
+            var provider = iprovider as IClientCertificateProvider;
+            if (provider != null)
+            {
+                _keyMgrFactory = KeyManagerFactory.GetInstance("X509");
+                _keyMgrFactory.Init(provider.KeyStore, null);
+            }
+            else
+            {
+                _keyMgrFactory = null;
+            }
         }
 
         /// <summary>
         /// Set certificates for the trusted Root Certificate Authorities (Android implementation)
         /// </summary>
         /// <param name="certificates">Certificates for the CAs to trust</param>
-        public void SetTrustedRoots(params byte[][] certificates)
+        public virtual void SetTrustedRoots(params byte[][] certificates)
         {
             if (certificates == null)
             {
@@ -85,7 +90,7 @@ namespace SecureHttpClient
             var certFactory = CertificateFactory.GetInstance("X.509");
             foreach (var certificate in certificates)
             {
-                var cert = (X509Certificate)certFactory.GenerateCertificate(new System.IO.MemoryStream(certificate));
+                var cert = (X509Certificate) certFactory.GenerateCertificate(new System.IO.MemoryStream(certificate));
                 keyStore.SetCertificateEntry(cert.SubjectDN.Name, cert);
             }
 

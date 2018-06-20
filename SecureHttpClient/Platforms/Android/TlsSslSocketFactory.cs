@@ -9,7 +9,8 @@ namespace SecureHttpClient
     {
         private readonly SSLSocketFactory _factory = (SSLSocketFactory)Default;
 
-        public TlsSslSocketFactory(IKeyManager[] keyManagers = null, ITrustManager[] trustManagers = null) {
+        public TlsSslSocketFactory(IKeyManager[] keyManagers = null, ITrustManager[] trustManagers = null)
+        {
             if (keyManagers != null || trustManagers != null)
             {
                 var context = SSLContext.GetInstance("TLS");
