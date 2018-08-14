@@ -53,7 +53,10 @@ namespace SecureHttpClient
             if (status == SecStatusCode.Success)
             {
                 var identity = new SecIdentity(array[0]["identity"].Handle);
-                SecCertificate[] certs = { identity.Certificate };
+                NSArray chain = array[0]["chain"] as NSArray;
+                SecCertificate[] certs = new SecCertificate[chain.Count];
+                for (System.nuint i = 0; i < chain.Count; i++)
+                  certs[i] = chain.GetItem<SecCertificate>(i);
                 Credential = new NSUrlCredential(identity, certs, NSUrlCredentialPersistence.ForSession);
             }
         }
