@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
@@ -121,6 +123,30 @@ namespace SecureHttpClient.Test
         }
 
         [Fact]
+        public async Task HttpTest_SetCookies()
+        {
+            const string cookie1 = "k1=v1; Path=/";
+            const string cookie2 = "k2=v2; Path=/";
+            Dictionary<string, string> cookies;
+            IEnumerable<string> respCookies;
+            var secureHttpClientHandler = SecureHttpClientHandlerBuilder.Build();
+            using (var httpClient = new HttpClient(secureHttpClientHandler))
+            {
+                var page1 = $@"https://httpbin.org/response-headers?Set-Cookie={WebUtility.UrlEncode(cookie1)}&Set-Cookie={WebUtility.UrlEncode(cookie2)}";
+                var response1 = await httpClient.GetAsync(page1).ConfigureAwait(false);
+                response1.Headers.TryGetValues("set-cookie", out respCookies);
+                respCookies = respCookies?.SelectMany(c => c.Split(',')).Select(c => c.Trim());
+                const string page2 = @"https://httpbin.org/cookies";
+                var result = await GetPageAsync(httpClient, page2).ConfigureAwait(false);
+                var json = JToken.Parse(result);
+                cookies = json["cookies"].ToObject<Dictionary<string, string>>();
+            }
+            Assert.Equal(new List<string> { cookie1, cookie2 }, respCookies);
+            Assert.Contains(new KeyValuePair<string, string>("k1", "v1"), cookies);
+            Assert.Contains(new KeyValuePair<string, string>("k2", "v2"), cookies);
+        }
+
+        [Fact]
         public async Task HttpTest_DeleteCookie()
         {
             Dictionary<string, string> cookies;
@@ -134,7 +160,7 @@ namespace SecureHttpClient.Test
                 var json = JToken.Parse(result);
                 cookies = json["cookies"].ToObject<Dictionary<string, string>>();
             }
-            Assert.Empty(cookies);
+            Assert.DoesNotContain(new KeyValuePair<string, string>("k1", "v1"), cookies);
         }
 
         private static async Task<string> GetPageAsync(string page)

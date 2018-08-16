@@ -59,13 +59,12 @@ namespace SecureHttpClient
         /// Set the client certificate provider (Android implementation)
         /// </summary>
         /// <param name="provider">The provider for client certificates on this platform</param>
-        public virtual void SetClientCertificates(Abstractions.IClientCertificateProvider iprovider)
+        public virtual void SetClientCertificates(Abstractions.IClientCertificateProvider provider)
         {
-            var provider = iprovider as IClientCertificateProvider;
-            if (provider != null)
+            if (provider is IClientCertificateProvider androidProvider)
             {
                 _keyMgrFactory = KeyManagerFactory.GetInstance("X509");
-                _keyMgrFactory.Init(provider.KeyStore, null);
+                _keyMgrFactory.Init(androidProvider.KeyStore, null);
             }
             else
             {
@@ -214,11 +213,12 @@ namespace SecureHttpClient
                 ret.Content = new ByteArrayContent(new byte[0]);
             }
 
-            var respHeaders = resp.Headers();
-            foreach (var k in respHeaders.Names())
+            foreach (var k in resp.Headers().ToMultimap())
             {
-                ret.Headers.TryAddWithoutValidation(k, respHeaders.Get(k));
-                ret.Content.Headers.TryAddWithoutValidation(k, respHeaders.Get(k));
+                // special handling for Set-Cookie because folding them into one header is strongly discouraged.
+                // but adding them just folds them again so this is no option at the moment
+                ret.Headers.TryAddWithoutValidation(k.Key, k.Value);
+                ret.Content.Headers.TryAddWithoutValidation(k.Key, k.Value);
             }
 
             return ret;

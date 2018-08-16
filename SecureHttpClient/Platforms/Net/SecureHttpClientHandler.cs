@@ -51,13 +51,12 @@ namespace SecureHttpClient
         /// Set the client certificate provider (NetStandard implementation)
         /// </summary>
         /// <param name="provider">The provider for client certificates on this platform</param>
-        public virtual void SetClientCertificates(Abstractions.IClientCertificateProvider iprovider)
+        public virtual void SetClientCertificates(Abstractions.IClientCertificateProvider provider)
         {
             ClientCertificates.Clear();
-            var provider = iprovider as IClientCertificateProvider;
-            if (provider != null)
+            if (provider is IClientCertificateProvider netProvider)
             {
-                ClientCertificates.AddRange(provider.Certificates);
+                ClientCertificates.AddRange(netProvider.Certificates);
             }
         }
 
