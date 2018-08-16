@@ -9,11 +9,11 @@ namespace SecureHttpClient.Test
     {
         private const string Hostname = @"www.howsmyssl.com";
         private const string Page = @"https://www.howsmyssl.com/a/check";
-        private static readonly string[] PinsOk = { @"sha256/fiKY8VhjQRb2voRmVXsqI0xPIREcwOVhpexrplrlqQY=" };
+        private static readonly string[] PinsOk = { @"sha256/CBW7CCp07lAHYvJOtKtdlemkwSzosfNYj2HFFfAcxvg=" };
         private static readonly string[] PinsKo = { @"sha256/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=" };
 
         private const string Hostname2 = @"github.com";
-        private const string Page2 = @"https://github.com/zitch-code/secure-httpclient";
+        private const string Page2 = @"https://github.com";
         private static readonly string[] Pins2Ok = { @"sha256/o5oa5F4LbZEfeZ0kXDgmaU2K3sIPYtbQpT3EQLJZquM=" };
         private static readonly string[] Pins2Ko = { @"sha256/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy=" };
 
