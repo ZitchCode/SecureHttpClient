@@ -5,6 +5,7 @@
 - xunit 2.4.0
 - add global.json for .net sdk version 2.1.402
 - support Android 9.0 and iOS 12
+- use JavaNetCookieJar from OkHttp3.UrlConnection
 
 ## 1.10.0
 - fix android Set-Cookie header issue (#7)

@@ -36,6 +36,7 @@
     <Compile Include="Platforms\Android\**\*.cs" />
     <PackageReference Include="Square.OkHttp3" Version="3.8.1" />
     <PackageReference Include="Square.OkIO" Version="1.13.0" />
+    <PackageReference Include="Square.OkHttp3.UrlConnection" Version="3.11.0" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
