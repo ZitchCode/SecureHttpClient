@@ -107,7 +107,7 @@
   <ItemGroup>
     <PackageReference Include="Serilog" Version="2.7.1" />
     <PackageReference Include="Serilog.Sinks.Xamarin" Version="0.1.29" />
-    <PackageReference Include="xunit.runner.devices" Version="2.3.3" />
+    <PackageReference Include="xunit.runner.devices" Version="2.4.48" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Entitlements.plist" />

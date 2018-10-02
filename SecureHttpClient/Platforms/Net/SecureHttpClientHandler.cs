@@ -4,6 +4,7 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Net.Security;
+using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
@@ -89,7 +90,7 @@ namespace SecureHttpClient
             }
             catch (HttpRequestException ex)
             {
-                if (ex.InnerException != null && ex.InnerException.HResult == -2147012721) // ERROR_WINHTTP_SECURE_FAILURE 0x80072F8F
+                if (ex.InnerException is AuthenticationException)
                 {
                     throw new WebException(ex.InnerException.Message, WebExceptionStatus.TrustFailure);
                 }

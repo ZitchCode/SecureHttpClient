@@ -1,3 +1,11 @@
+## 1.10.1
+- xamarin : 15.8.5 (xamarin.vs 4.11.0.776 ; xamarin.android 9.0.0.19 ; xamarin.ios 12.0.0.15 ; vs for mac 7.6.8.38)
+- MSBuild.Sdk.Extras 1.6.55
+- Portable.BouncyCastle 1.8.3
+- xunit 2.4.0
+- add global.json for .net sdk version 2.1.402
+- support Android 9.0 and iOS 12
+
 ## 1.10.0
 - fix android Set-Cookie header issue (#7)
 - ios : xcode 9.4.1 (ios 11.4)
