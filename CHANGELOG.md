@@ -1,4 +1,4 @@
-## 1.10.1
+## 1.11.0
 - xamarin : 15.8.5 (xamarin.vs 4.11.0.776 ; xamarin.android 9.0.0.19 ; xamarin.ios 12.0.0.15 ; vs for mac 7.6.8.38)
 - MSBuild.Sdk.Extras 1.6.55
 - Portable.BouncyCastle 1.8.3
