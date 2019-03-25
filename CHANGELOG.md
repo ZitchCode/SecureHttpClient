@@ -1,3 +1,16 @@
+## 1.12.0
+- vs 2019 : 16.0.0 preview 4.3 (xamarin.vs 16.0.0.513 ; xamarin.android 9.2.0.5 ; xamarin.ios 12.6.0.23 ; vs for mac 8.0 build 2931)
+- global.json dotnet sdk 2.1.602
+- MSBuild.Sdk.Extras 1.6.68
+- Portable.BouncyCastle 1.8.5
+- Serilog 2.8.0
+- Newtonsoft.Json 12.0.1
+- Microsoft.Extensions.Logging.Abstractions 2.2.0
+- xunit 2.4.1
+- xunit.runner.utility 2.4.1
+- xunit.runner.devices 2.5.25
+- fix certificate pin in tests
+
 ## 1.11.0
 - xamarin : 15.8.5 (xamarin.vs 4.11.0.776 ; xamarin.android 9.0.0.19 ; xamarin.ios 12.0.0.15 ; vs for mac 7.6.8.38)
 - MSBuild.Sdk.Extras 1.6.55
