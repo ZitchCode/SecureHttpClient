@@ -21,7 +21,11 @@ namespace SecureHttpClient
     /// </summary>
     public class ClientCertificateProvider : IClientCertificateProvider
     {
-        public virtual X509CertificateCollection Certificates { get; protected set; } = new X509CertificateCollection();
+		/// <summary>
+		/// The current collection of client certificates.
+		/// </summary>
+		/// <value>The certificates.</value>
+		public virtual X509CertificateCollection Certificates { get; protected set; } = new X509CertificateCollection();
     }
 
     /// <summary>

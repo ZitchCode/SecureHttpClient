@@ -22,7 +22,11 @@ namespace SecureHttpClient
     /// </summary>
     public class ClientCertificateProvider : IClientCertificateProvider
     {
-        public NSUrlCredential Credential { get; protected set; }
+		/// <summary>
+		/// The current client certificate
+		/// </summary>
+		/// <value>The credential.</value>
+		public NSUrlCredential Credential { get; protected set; }
     }
 
     /// <summary>
