@@ -37,6 +37,7 @@
     <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
     <AndroidSupportedAbis />
     <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
+	<AndroidEnableDesugar>true</AndroidEnableDesugar>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -56,6 +57,7 @@
     <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
     <EnableProguard>False</EnableProguard>
     <DebugSymbols>False</DebugSymbols>
+	<AndroidEnableDesugar>true</AndroidEnableDesugar>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
