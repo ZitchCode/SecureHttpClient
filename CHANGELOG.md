@@ -14,6 +14,7 @@
 - Karamunting.Android.Square.Okio 1.17.3
 - Karamunting.Square.OkHttp3.UrlConnection 3.14.0
 - min Android version 21 (for okhttp 3.13.0)
+- clean android test csproj ; use d8
 
 ## 1.11.0
 - xamarin : 15.8.5 (xamarin.vs 4.11.0.776 ; xamarin.android 9.0.0.19 ; xamarin.ios 12.0.0.15 ; vs for mac 7.6.8.38)
