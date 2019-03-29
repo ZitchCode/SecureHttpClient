@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -14,72 +13,44 @@ namespace SecureHttpClient.Test
         public async Task SslTest_ExpiredCertificate()
         {
             const string page = @"https://expired.badssl.com/";
-            var expectedExceptions = new List<string> { "Javax.Net.Ssl.SSLHandshakeException", "System.Net.WebException" };
-            var throwsExpectedException = false;
-            try
-            {
-                await GetPageAsync(page).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                var exceptionType = ex.GetType().ToString();
-                throwsExpectedException = expectedExceptions.Contains(exceptionType);
-            }
-            Assert.True(throwsExpectedException);
-        }
+#if __ANDROID__
+            await Assert.ThrowsAsync<Javax.Net.Ssl.SSLHandshakeException>(() => GetPageAsync(page));
+#else
+			await Assert.ThrowsAsync<WebException>(() => GetPageAsync(page));
+#endif
+		}
 
-        [Fact]
+		[Fact]
         public async Task SslTest_WrongHostCertificate()
         {
             const string page = @"https://wrong.host.badssl.com/";
-            var expectedExceptions = new List<string> { "Javax.Net.Ssl.SSLPeerUnverifiedException", "System.Net.WebException" };
-            var throwsExpectedException = false;
-            try
-            {
-                await GetPageAsync(page).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                var exceptionType = ex.GetType().ToString();
-                throwsExpectedException = expectedExceptions.Contains(exceptionType);
-            }
-            Assert.True(throwsExpectedException);
+#if __ANDROID__
+            await Assert.ThrowsAsync<Javax.Net.Ssl.SSLPeerUnverifiedException>(() => GetPageAsync(page));
+#else
+			await Assert.ThrowsAsync<WebException>(() => GetPageAsync(page));
+#endif
         }
 
         [Fact]
         public async Task SslTest_SelfSignedCertificate()
         {
             const string page = @"https://self-signed.badssl.com/";
-            var expectedExceptions = new List<string> { "Javax.Net.Ssl.SSLHandshakeException", "System.Net.WebException" };
-            var throwsExpectedException = false;
-            try
-            {
-                await GetPageAsync(page).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                var exceptionType = ex.GetType().ToString();
-                throwsExpectedException = expectedExceptions.Contains(exceptionType);
-            }
-            Assert.True(throwsExpectedException);
+#if __ANDROID__
+            await Assert.ThrowsAsync<Javax.Net.Ssl.SSLHandshakeException>(() => GetPageAsync(page));
+#else
+			await Assert.ThrowsAsync<WebException>(() => GetPageAsync(page));
+#endif
         }
 
         [Fact]
         public async Task SslTest_UntrustedRootCertificate()
         {
             const string page = @"https://untrusted-root.badssl.com/";
-            var expectedExceptions = new List<string> { "Javax.Net.Ssl.SSLHandshakeException", "System.Net.WebException" };
-            var throwsExpectedException = false;
-            try
-            {
-                await GetPageAsync(page).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                var exceptionType = ex.GetType().ToString();
-                throwsExpectedException = expectedExceptions.Contains(exceptionType);
-            }
-            Assert.True(throwsExpectedException);
+#if __ANDROID__
+            await Assert.ThrowsAsync<Javax.Net.Ssl.SSLHandshakeException>(() => GetPageAsync(page));
+#else
+			await Assert.ThrowsAsync<WebException>(() => GetPageAsync(page));
+#endif
         }
 
         [Fact]
@@ -96,36 +67,22 @@ namespace SecureHttpClient.Test
         public async Task SslTest_OnlyTrustSpecificRootCertificate()
         {
             const string page = @"https://badssl.com"; // Has valid public cert, but not signed by our custom root
-            var expectedExceptions = new List<string> { "Javax.Net.Ssl.SSLHandshakeException", "System.Net.WebException" };
-            var throwsExpectedException = false;
-            try
-            {
-                await GetPageAsync(page, caCert: System.Text.Encoding.ASCII.GetBytes(untrusted_root_badssl_com_certificate)).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                var exceptionType = ex.GetType().ToString();
-                throwsExpectedException = expectedExceptions.Contains(exceptionType);
-            }
-            Assert.True(throwsExpectedException);
+#if __ANDROID__
+            await Assert.ThrowsAsync<Javax.Net.Ssl.SSLHandshakeException>(() => GetPageAsync(page, caCert: System.Text.Encoding.ASCII.GetBytes(untrusted_root_badssl_com_certificate)));
+#else
+			await Assert.ThrowsAsync<WebException>(() => GetPageAsync(page, caCert: System.Text.Encoding.ASCII.GetBytes(untrusted_root_badssl_com_certificate)));
+#endif
         }
 
         [Fact(Skip = "Unsupported on Android, not implemented on UWP")]
         public async Task SslTest_RevokedCertificate()
         {
             const string page = @"https://revoked.badssl.com/";
-            var expectedExceptions = new List<string> { "Javax.Net.Ssl.SSLHandshakeException", "System.Net.WebException" };
-            var throwsExpectedException = false;
-            try
-            {
-                await GetPageAsync(page).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                var exceptionType = ex.GetType().ToString();
-                throwsExpectedException = expectedExceptions.Contains(exceptionType);
-            }
-            Assert.True(throwsExpectedException);
+#if __ANDROID__
+            await Assert.ThrowsAsync<Javax.Net.Ssl.SSLHandshakeException>(() => GetPageAsync(page));
+#else
+			await Assert.ThrowsAsync<WebException>(() => GetPageAsync(page));
+#endif
         }
 
         [Fact]
