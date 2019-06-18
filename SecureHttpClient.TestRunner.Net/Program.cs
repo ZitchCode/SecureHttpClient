@@ -39,7 +39,6 @@ namespace SecureHttpClient.TestRunner.Net
 
             Log.CloseAndFlush();
 
-            Console.ReadLine();
             return _result;
         }
 

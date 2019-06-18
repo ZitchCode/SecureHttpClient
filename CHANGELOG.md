@@ -1,3 +1,12 @@
+## 1.12.1
+- vs : 16.2.0 preview 2.0 (xamarin.vs 16.2.0.61 ; xamarin.android 9.4.0.17 ; xamarin.ios 12.14.0.83)
+- .net core sdk 2.1.700
+- Karamunting.Android.Square.OkHttp 3.14.2
+- Karamunting.Android.Square.Okio 1.17.4
+- Karamunting.Square.OkHttp3.UrlConnection 3.14.2
+- Newtonsoft.Json 12.0.2
+- Serilog.Extensions.Logging 2.0.4
+
 ## 1.12.0
 - vs 2019 : 16.0.0 preview 4.3 (xamarin.vs 16.0.0.513 ; xamarin.android 9.2.0.5 ; xamarin.ios 12.6.0.23 ; vs for mac 8.0 build 2931)
 - global.json dotnet sdk 2.1.602

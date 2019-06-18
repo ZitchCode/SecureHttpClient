@@ -1,4 +1,4 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras/1.6.68">
+﻿<Project Sdk="MSBuild.Sdk.Extras">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;MonoAndroid90;Xamarin.iOS10</TargetFrameworks>
@@ -34,9 +34,9 @@
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
     <Compile Include="Platforms\Android\**\*.cs" />
-    <PackageReference Include="Karamunting.Android.Square.OkHttp" Version="3.14.0" />
-    <PackageReference Include="Karamunting.Android.Square.Okio" Version="1.17.3" />
-    <PackageReference Include="Karamunting.Square.OkHttp3.UrlConnection" Version="3.14.0" />
+    <PackageReference Include="Karamunting.Android.Square.OkHttp" Version="3.14.2" />
+    <PackageReference Include="Karamunting.Android.Square.Okio" Version="1.17.4" />
+    <PackageReference Include="Karamunting.Square.OkHttp3.UrlConnection" Version="3.14.2" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
