@@ -196,14 +196,11 @@ namespace SecureHttpClient
 
             var respBody = resp.Body();
 
-            var respUrl = resp.Request().Url().Url().ToString();
-            var respMethod = new HttpMethod(resp.Request().Method());
-
             cancellationToken.ThrowIfCancellationRequested();
 
             var ret = new HttpResponseMessage((HttpStatusCode) resp.Code())
             {
-                RequestMessage = new HttpRequestMessage(respMethod, respUrl),
+                RequestMessage = GetFinalRequestMessage(request, resp),
                 ReasonPhrase = resp.Message()
             };
 
@@ -225,6 +222,16 @@ namespace SecureHttpClient
             }
 
             return ret;
+        }
+
+        private HttpRequestMessage GetFinalRequestMessage(HttpRequestMessage request, Response resp)
+        {
+            var respUrl = resp.Request().Url().Url().ToString();
+            var respMethod = new HttpMethod(resp.Request().Method());
+            var finalRequest = new HttpRequestMessage(respMethod, respUrl) { Content = request.Content };
+            request.Headers?.ForEach(header => finalRequest.Headers.Add(header.Key, header.Value));
+            request.Properties?.ForEach(property => finalRequest.Properties.Add(property.Key, property.Value));
+            return finalRequest;
         }
     }
 }
