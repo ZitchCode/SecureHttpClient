@@ -196,11 +196,14 @@ namespace SecureHttpClient
 
             var respBody = resp.Body();
 
+            var respUrl = resp.Request().Url().Url().ToString();
+            var respMethod = new HttpMethod(resp.Request().Method());
+
             cancellationToken.ThrowIfCancellationRequested();
 
             var ret = new HttpResponseMessage((HttpStatusCode) resp.Code())
             {
-                RequestMessage = request,
+                RequestMessage = new HttpRequestMessage(respMethod, respUrl),
                 ReasonPhrase = resp.Message()
             };
 

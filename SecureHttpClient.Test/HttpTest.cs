@@ -54,10 +54,15 @@ namespace SecureHttpClient.Test
         public async Task HttpTest_Redirect()
         {
             const string page = @"https://httpbin.org/redirect/5";
+            const string final = @"https://httpbin.org/get";
+
             var result = await GetPageAsync(page).ConfigureAwait(false);
             var json = JToken.Parse(result);
             var url = json["url"].ToString();
-            Assert.Equal(@"https://httpbin.org/get", url);
+            Assert.Equal(final, url);
+
+            var response = await GetResponseAsync(page).ConfigureAwait(false);
+            Assert.Equal(final, response.RequestMessage.RequestUri.AbsoluteUri);
         }
 
         [Fact]
@@ -161,6 +166,17 @@ namespace SecureHttpClient.Test
                 cookies = json["cookies"].ToObject<Dictionary<string, string>>();
             }
             Assert.DoesNotContain(new KeyValuePair<string, string>("k1", "v1"), cookies);
+        }
+
+        private static async Task<HttpResponseMessage> GetResponseAsync(string page)
+        {
+            HttpResponseMessage response;
+            var secureHttpClientHandler = SecureHttpClientHandlerBuilder.Build();
+            using (var httpClient = new HttpClient(secureHttpClientHandler))
+            {
+                response = await httpClient.GetAsync(page).ConfigureAwait(false);
+            }
+            return response;
         }
 
         private static async Task<string> GetPageAsync(string page)

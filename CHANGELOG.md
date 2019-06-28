@@ -1,3 +1,7 @@
+## 1.12.2
+- vs : 16.2.0 preview 3.0 (xamarin.vs 16.2.0.81 ; xamarin.android 9.4.0.34 ; xamarin.ios 12.14.0.93)
+- android: make sure the request url in the response corresponds to the last redirect url
+
 ## 1.12.1
 - vs : 16.2.0 preview 2.0 (xamarin.vs 16.2.0.61 ; xamarin.android 9.4.0.17 ; xamarin.ios 12.14.0.83)
 - .net core sdk 2.1.700
