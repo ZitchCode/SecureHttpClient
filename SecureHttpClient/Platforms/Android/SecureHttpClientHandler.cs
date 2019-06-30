@@ -198,9 +198,11 @@ namespace SecureHttpClient
 
             cancellationToken.ThrowIfCancellationRequested();
 
+            request.RequestUri = new Uri(resp.Request().Url().Url().ToString()); // should point to the request leading to the final response (in case of redirects)
+
             var ret = new HttpResponseMessage((HttpStatusCode) resp.Code())
             {
-                RequestMessage = GetFinalRequestMessage(request, resp),
+                RequestMessage = request,
                 ReasonPhrase = resp.Message()
             };
 
@@ -222,16 +224,6 @@ namespace SecureHttpClient
             }
 
             return ret;
-        }
-
-        private HttpRequestMessage GetFinalRequestMessage(HttpRequestMessage request, Response resp)
-        {
-            var respUrl = resp.Request().Url().Url().ToString();
-            var respMethod = new HttpMethod(resp.Request().Method());
-            var finalRequest = new HttpRequestMessage(respMethod, respUrl) { Content = request.Content };
-            request.Headers?.ForEach(header => finalRequest.Headers.Add(header.Key, header.Value));
-            request.Properties?.ForEach(property => finalRequest.Properties.Add(property.Key, property.Value));
-            return finalRequest;
         }
     }
 }

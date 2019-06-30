@@ -61,7 +61,10 @@ namespace SecureHttpClient.Test
             var url = json["url"].ToString();
             Assert.Equal(final, url);
 
-            var response = await GetResponseAsync(page).ConfigureAwait(false);
+            var request = new HttpRequestMessage(HttpMethod.Get, page);
+            var response = await GetResponseAsync(request).ConfigureAwait(false);
+
+            Assert.Equal(final, request.RequestUri.AbsoluteUri);
             Assert.Equal(final, response.RequestMessage.RequestUri.AbsoluteUri);
         }
 
@@ -168,13 +171,13 @@ namespace SecureHttpClient.Test
             Assert.DoesNotContain(new KeyValuePair<string, string>("k1", "v1"), cookies);
         }
 
-        private static async Task<HttpResponseMessage> GetResponseAsync(string page)
+        private static async Task<HttpResponseMessage> GetResponseAsync(HttpRequestMessage request)
         {
             HttpResponseMessage response;
             var secureHttpClientHandler = SecureHttpClientHandlerBuilder.Build();
             using (var httpClient = new HttpClient(secureHttpClientHandler))
             {
-                response = await httpClient.GetAsync(page).ConfigureAwait(false);
+                response = await httpClient.SendAsync(request).ConfigureAwait(false);
             }
             return response;
         }

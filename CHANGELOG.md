@@ -1,3 +1,6 @@
+## 1.12.4
+- finally fixing properly the redirect uri bug on android
+
 ## 1.12.3
 - fix missing data in reponse's last request for android
 
