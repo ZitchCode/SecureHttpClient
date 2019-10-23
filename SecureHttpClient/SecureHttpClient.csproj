@@ -1,7 +1,7 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;MonoAndroid90;Xamarin.iOS10</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;MonoAndroid10.0;Xamarin.iOS10</TargetFrameworks>
     <AssemblyName>SecureHttpClient</AssemblyName>
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
@@ -29,14 +29,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
     <Compile Include="Platforms\Android\**\*.cs" />
-    <PackageReference Include="Karamunting.Android.Square.OkHttp" Version="3.14.2" />
-    <PackageReference Include="Karamunting.Android.Square.Okio" Version="1.17.4" />
-    <PackageReference Include="Karamunting.Square.OkHttp3.UrlConnection" Version="3.14.2" />
+    <PackageReference Include="Square.OkHttp3" Version="3.14.4" />
+    <PackageReference Include="Square.Okio" Version="1.17.4" />
+    <PackageReference Include="Square.OkHttp3.UrlConnection" Version="3.12.3" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">

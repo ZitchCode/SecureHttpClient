@@ -1,3 +1,22 @@
+## 1.13.0
+- vs : 16.3.6 (xamarin.vs 16.3.0.277 ; xamarin.android 10.0.3.0 ; xamarin.ios 13.4.0.2)
+- .net core sdk 3.0.100
+- MSBuild.Sdk.Extras 2.0.54
+- add build files to solution
+- portable pdb
+- test on android 10 and ios 13
+- netcoreapp3.0
+- fix pin in tests
+- fix expected tls version in tests
+- Serilog 2.9.0
+- Serilog.Sinks.Xamarin 0.1.37
+- Serilog.Extensions.Logging 3.0.1
+- Microsoft.Extensions.Logging.Abstractions 3.0.0
+- Square.OkHttp3 3.14.4
+- Square.Okio 1.17.4
+- Square.OkHttp3.UrlConnection 3.12.3
+- removed Karamunting.Square.*
+
 ## 1.12.4
 - finally fixing properly the redirect uri bug on android
 

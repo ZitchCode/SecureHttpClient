@@ -120,7 +120,7 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task SslTest_HowsMySsl()
         {
-            const string expectedTlsVersion = "TLS 1.2";
+            const string expectedTlsVersion = "[TLS 1.2|TLS 1.3]";
             const string expectedRating = "[Probably Okay|Improvable]";
 
             const string page = @"https://www.howsmyssl.com/a/check";
@@ -130,7 +130,7 @@ namespace SecureHttpClient.Test
             var actualTlsVersion = json["tls_version"].ToString();
             var actualRating = json["rating"].ToString();
 
-            Assert.Equal(expectedTlsVersion, actualTlsVersion);
+            Assert.Matches(expectedTlsVersion, actualTlsVersion);
             Assert.Matches(expectedRating, actualRating);
         }
 

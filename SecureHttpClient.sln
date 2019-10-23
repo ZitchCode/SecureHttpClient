@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.13
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29418.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{08CA4EC8-8C67-4325-A09B-95E4B4ABFA05}"
 EndProject
@@ -15,6 +15,15 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureHttpClient.TestRunner.iOS", "SecureHttpClient.TestRunner.iOS\SecureHttpClient.TestRunner.iOS.csproj", "{B38723F0-E81C-4DB7-B362-FFEA31E2BDCB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureHttpClient", "SecureHttpClient\SecureHttpClient.csproj", "{F30E01E7-A9DB-4E37-9E23-2E8A38E309EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{660924B3-5808-46CA-A170-062605939D7A}"
+	ProjectSection(SolutionItems) = preProject
+		CHANGELOG.md = CHANGELOG.md
+		scripts\clean.bat = scripts\clean.bat
+		global.json = global.json
+		scripts\nuget_pack.bat = scripts\nuget_pack.bat
+		version.txt = version.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
