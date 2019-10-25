@@ -1,11 +1,9 @@
-﻿using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Xunit;
 
 namespace SecureHttpClient.Test
 {
-    public class CertificatePinnerTest
+    public class CertificatePinnerTest : TestBase
     {
         private const string Hostname = @"www.howsmyssl.com";
         private const string Page = @"https://www.howsmyssl.com/a/check";
@@ -20,83 +18,45 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task CertificatePinnerTest_OneHost_Success()
         {
-            var secureHttpClientHandler = SecureHttpClientHandlerBuilder.Build();
-            secureHttpClientHandler.AddCertificatePinner(Hostname, PinsOk);
-
-            await AssertCertificatePinnerSuccessAsync(Page, secureHttpClientHandler).ConfigureAwait(false);
+            AddCertificatePinner(Hostname, PinsOk);
+            await GetAsync(Page);
         }
 
         [Fact]
         public async Task CertificatePinnerTest_OneHost_Failure()
         {
-            var secureHttpClientHandler = SecureHttpClientHandlerBuilder.Build();
-            secureHttpClientHandler.AddCertificatePinner(Hostname, PinsKo);
-
-            await AssertCertificatePinnerFailureAsync(Page, secureHttpClientHandler).ConfigureAwait(false);
+            AddCertificatePinner(Hostname, PinsKo);
+            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(Page));
         }
 
         [Fact]
         public async Task CertificatePinnerTest_TwoHosts_Success()
         {
-            var secureHttpClientHandler = SecureHttpClientHandlerBuilder.Build();
-            secureHttpClientHandler.AddCertificatePinner(Hostname, PinsOk);
-            secureHttpClientHandler.AddCertificatePinner(Hostname2, Pins2Ok);
+            AddCertificatePinner(Hostname, PinsOk);
+            AddCertificatePinner(Hostname2, Pins2Ok);
 
-            await AssertCertificatePinnerSuccessAsync(Page, secureHttpClientHandler).ConfigureAwait(false);
-            await AssertCertificatePinnerSuccessAsync(Page2, secureHttpClientHandler).ConfigureAwait(false);
+            await GetAsync(Page);
+            await GetAsync(Page2);
         }
 
         [Fact]
         public async Task CertificatePinnerTest_TwoHosts_FirstHostFails()
         {
-            var secureHttpClientHandler = SecureHttpClientHandlerBuilder.Build();
-            secureHttpClientHandler.AddCertificatePinner(Hostname, PinsKo);
-            secureHttpClientHandler.AddCertificatePinner(Hostname2, Pins2Ok);
+            AddCertificatePinner(Hostname, PinsKo);
+            AddCertificatePinner(Hostname2, Pins2Ok);
 
-            await AssertCertificatePinnerFailureAsync(Page, secureHttpClientHandler).ConfigureAwait(false);
-            await AssertCertificatePinnerSuccessAsync(Page2, secureHttpClientHandler).ConfigureAwait(false);
+            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(Page));
+            await GetAsync(Page2);
         }
 
         [Fact]
         public async Task CertificatePinnerTest_TwoHosts_SecondHostFails()
         {
-            var secureHttpClientHandler = SecureHttpClientHandlerBuilder.Build();
-            secureHttpClientHandler.AddCertificatePinner(Hostname, PinsOk);
-            secureHttpClientHandler.AddCertificatePinner(Hostname2, Pins2Ko);
+            AddCertificatePinner(Hostname, PinsOk);
+            AddCertificatePinner(Hostname2, Pins2Ko);
 
-            await AssertCertificatePinnerSuccessAsync(Page, secureHttpClientHandler).ConfigureAwait(false);
-            await AssertCertificatePinnerFailureAsync(Page2, secureHttpClientHandler).ConfigureAwait(false);
-        }
-
-        private static async Task<string> GetPageAsync(string page, HttpMessageHandler secureHttpClientHandler)
-        {
-            string result;
-            using (var httpClient = new HttpClient(secureHttpClientHandler, false))
-            using (var response = await httpClient.GetAsync(page).ConfigureAwait(false))
-            {
-                result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            }
-            return result;
-        }
-
-        private static async Task AssertCertificatePinnerSuccessAsync(string page, HttpMessageHandler secureHttpClientHandler)
-        {
-            await GetPageAsync(page, secureHttpClientHandler).ConfigureAwait(false);
-            Assert.True(true);
-        }
-
-        private static async Task AssertCertificatePinnerFailureAsync(string page, HttpMessageHandler secureHttpClientHandler)
-        {
-            var throwsExpectedException = false;
-            try
-            {
-                await GetPageAsync(page, secureHttpClientHandler).ConfigureAwait(false);
-            }
-            catch (WebException ex)
-            {
-                throwsExpectedException = ex.Status == WebExceptionStatus.TrustFailure;
-            }
-            Assert.True(throwsExpectedException);
+            await GetAsync(Page);
+            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(Page2));
         }
     }
 }

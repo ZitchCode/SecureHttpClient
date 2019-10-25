@@ -91,7 +91,7 @@ namespace SecureHttpClient.TestRunner.Net
 
         private static void OnTestSkipped(TestSkippedInfo info)
         {
-            Log.Information($"[SKIP] {info.TestDisplayName}: {info.SkipReason}");
+            Log.Warning($"[SKIP] {info.TestDisplayName}: {info.SkipReason}");
         }
     }
 }

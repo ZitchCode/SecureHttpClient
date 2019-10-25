@@ -16,6 +16,7 @@ using Java.Util.Concurrent;
 using Javax.Net.Ssl;
 using Square.OkHttp3;
 using Microsoft.Extensions.Logging;
+using System.Security.Authentication;
 
 namespace SecureHttpClient
 {
@@ -181,12 +182,12 @@ namespace SecureHttpClient
             {
                 resp = await call.ExecuteAsync().ConfigureAwait(false);
             }
+            catch (SSLException ex)
+            {
+                throw new HttpRequestException(ex.Message, new AuthenticationException(ex.Message, ex));
+            }
             catch (IOException ex)
             {
-                if (ex.Message != null && ex.Message.StartsWith("Certificate pinning failure!"))
-                {
-                    throw new WebException(ex.Message, WebExceptionStatus.TrustFailure);
-                }
                 if (ex.Message != null && ex.Message.ToLowerInvariant().Contains("canceled"))
                 {
                     throw new System.OperationCanceledException();

@@ -4,10 +4,7 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Net.Security;
-using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using SecureHttpClient.CertificatePinning;
 
@@ -78,25 +75,6 @@ namespace SecureHttpClient
                 _trustedRoots.Import(cert);
             }
             ServerCertificateCustomValidationCallback = CheckServerCertificate;
-        }
-
-        /// <inheritdoc />
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            HttpResponseMessage response;
-            try
-            {
-                response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
-            }
-            catch (HttpRequestException ex)
-            {
-                if (ex.InnerException is AuthenticationException)
-                {
-                    throw new WebException(ex.InnerException.Message, WebExceptionStatus.TrustFailure);
-                }
-                throw;
-            }
-            return response;
         }
 
         private bool CheckServerCertificate(HttpRequestMessage httpRequestMessage, X509Certificate2 certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)

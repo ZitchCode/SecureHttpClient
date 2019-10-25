@@ -1,3 +1,11 @@
+## 1.13.1
+- fix exception mess
+- test project cleanup
+- test : Xunit.SkippableFact 1.3.12
+- test : Xamarin.Essentials 1.3.1
+- test : Xamarin.Forms 4.3.0.908675
+- test : Flurl.Http 2.4.2
+
 ## 1.13.0
 - vs : 16.3.6 (xamarin.vs 16.3.0.277 ; xamarin.android 10.0.3.0 ; xamarin.ios 13.4.0.2)
 - .net core sdk 3.0.100
