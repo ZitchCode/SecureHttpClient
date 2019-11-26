@@ -67,7 +67,7 @@
   <ItemGroup>
     <PackageReference Include="Serilog" Version="2.9.0" />
     <PackageReference Include="Serilog.Sinks.Xamarin" Version="0.1.37" />
-    <PackageReference Include="Xamarin.Forms" Version="4.3.0.908675" />
+    <PackageReference Include="Xamarin.Forms" Version="4.3.0.991211" />
     <PackageReference Include="xunit.runner.devices" Version="2.5.25" />
   </ItemGroup>
   <ItemGroup>
@@ -79,7 +79,7 @@
     <AndroidResource Include="Resources\drawable\Icon.png" />
   </ItemGroup>
   <ItemGroup>
-	<ProguardConfiguration Include="Proguard.cfg" />
+    <ProguardConfiguration Include="Proguard.cfg" />
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
