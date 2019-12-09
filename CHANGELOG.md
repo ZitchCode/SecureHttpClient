@@ -1,6 +1,6 @@
 ## 1.13.2
 - vs : 16.3.10 (xamarin.vs 16.3.0.281 ; xamarin.android 10.0.6.2 ; xamarin.ios 13.6.0.12)
-- Microsoft.Extensions.Logging.Abstractions 3.0.1
+- Microsoft.Extensions.Logging.Abstractions 3.1.0
 - Portable.BouncyCastle 1.8.5.2
 - test : Newtonsoft.Json 12.0.3
 - test : Xamarin.Forms 4.3.0.991211
