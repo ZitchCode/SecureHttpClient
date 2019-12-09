@@ -16,6 +16,11 @@ namespace SecureHttpClient.TestRunner.Net
         // Start out assuming success; we'll set this to 1 if we get a failed test
         private static int _result;
 
+        private static int _totalTests;
+        private static int _testsFailed;
+        private static int _testsSkipped;
+        private static decimal _executionTime;
+
         private static int Main(string[] args)
         {
             // Init logger
@@ -37,6 +42,8 @@ namespace SecureHttpClient.TestRunner.Net
                 RunTests(testAssembly);
             }
 
+            Log.Information($"Total: Finished: {_totalTests} tests in {Math.Round(_executionTime, 3)}s ({_testsFailed} failed, {_testsSkipped} skipped)");
+
             Log.CloseAndFlush();
 
             return _result;
@@ -47,20 +54,18 @@ namespace SecureHttpClient.TestRunner.Net
             _finished = new ManualResetEvent(false);
 
             // Run tests
-            using (var runner = AssemblyRunner.WithoutAppDomain(testAssembly.Location))
-            {
-                runner.OnDiscoveryComplete = OnDiscoveryComplete;
-                runner.OnExecutionComplete = OnExecutionComplete;
-                runner.OnTestFailed = OnTestFailed;
-                runner.OnTestPassed = OnTestPassed;
-                runner.OnTestSkipped = OnTestSkipped;
+            using var runner = AssemblyRunner.WithoutAppDomain(testAssembly.Location);
+            runner.OnDiscoveryComplete = OnDiscoveryComplete;
+            runner.OnExecutionComplete = OnExecutionComplete;
+            runner.OnTestFailed = OnTestFailed;
+            runner.OnTestPassed = OnTestPassed;
+            runner.OnTestSkipped = OnTestSkipped;
 
-                Log.Debug($"Processing {testAssembly.FullName}...");
-                runner.Start();
+            Log.Debug($"Processing {testAssembly.FullName}...");
+            runner.Start();
 
-                _finished.WaitOne();
-                _finished.Dispose();
-            }
+            _finished.WaitOne();
+            _finished.Dispose();
         }
 
         private static void OnDiscoveryComplete(DiscoveryCompleteInfo info)
@@ -71,6 +76,12 @@ namespace SecureHttpClient.TestRunner.Net
         private static void OnExecutionComplete(ExecutionCompleteInfo info)
         {
             Log.Information($"Finished: {info.TotalTests} tests in {Math.Round(info.ExecutionTime, 3)}s ({info.TestsFailed} failed, {info.TestsSkipped} skipped)");
+
+            _totalTests += info.TotalTests;
+            _testsFailed += info.TestsFailed;
+            _testsSkipped += info.TestsSkipped;
+            _executionTime += info.ExecutionTime;
+
             _finished.Set();
         }
 
