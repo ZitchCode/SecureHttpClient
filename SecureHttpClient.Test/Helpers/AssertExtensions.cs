@@ -4,7 +4,7 @@ using System.Security.Authentication;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace SecureHttpClient.Test
+namespace SecureHttpClient.Test.Helpers
 {
     public static class AssertExtensions
     {

@@ -4,6 +4,7 @@
 - Portable.BouncyCastle 1.8.5.2
 - test : Newtonsoft.Json 12.0.3
 - test : Xamarin.Forms 4.3.0.991211
+- test : move certs to resources
 
 ## 1.13.1
 - fix exception mess

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -37,9 +36,8 @@ namespace SecureHttpClient.Test
             _secureHttpClientHandler.AddCertificatePinner(hostname, pins);
         }
 
-        public void SetClientCertificate(string clientCertBase64, string certPassword)
+        public void SetClientCertificate(byte[] clientCert, string certPassword)
         {
-            var clientCert = Convert.FromBase64String(clientCertBase64);
             var provider = new ImportedClientCertificateProvider();
             provider.Import(clientCert, certPassword);
             _secureHttpClientHandler.SetClientCertificates(provider);

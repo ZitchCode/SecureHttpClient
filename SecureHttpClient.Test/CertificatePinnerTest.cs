@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using SecureHttpClient.Test.Helpers;
 using Xunit;
 
 namespace SecureHttpClient.Test
