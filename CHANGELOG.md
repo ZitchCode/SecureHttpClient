@@ -5,6 +5,7 @@
 - test : Newtonsoft.Json 12.0.3
 - test : Xamarin.Forms 4.3.0.991211
 - test : move certs to resources
+- test : add http2 check
 
 ## 1.13.1
 - fix exception mess

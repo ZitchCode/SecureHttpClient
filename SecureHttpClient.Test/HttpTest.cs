@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -157,6 +158,20 @@ namespace SecureHttpClient.Test
             var json = JToken.Parse(result);
             var cookies = json["cookies"].ToObject<Dictionary<string, string>>();
             Assert.DoesNotContain(new KeyValuePair<string, string>("k1", "v1"), cookies);
+        }
+
+        [Fact]
+        public async Task HttpTest_Protocol()
+        {
+            const string page = @"https://http2.golang.org/reqinfo";
+            var request = new HttpRequestMessage(HttpMethod.Get, page);
+            if (DeviceInfo.Platform != DevicePlatform.Android && DeviceInfo.Platform != DevicePlatform.iOS)
+            {
+                request.Version = new Version(2, 0);
+            }
+            var response = await SendAsync(request).ReceiveString();
+            var protocol = response.Split('\n').Single(str => str.StartsWith("Protocol:"));
+            Assert.Contains("HTTP/2.0", protocol);
         }
     }
 }
