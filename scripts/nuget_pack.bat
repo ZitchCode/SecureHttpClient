@@ -1,22 +1,22 @@
 @echo off
 
 echo -- INIT ----------------------------------------------------------------------------------------------------------------------------------------------------
-set LibName=SecureHttpClient
-echo LibName: %LibName%
-set /p Version=<..\version.txt
-echo Version: %Version%
+set Z_LibName=SecureHttpClient
+echo LibName: %Z_LibName%
+set /p Z_Version=<..\version.txt
+echo Version: %Z_Version%
 
 echo -- CLEAN ---------------------------------------------------------------------------------------------------------------------------------------------------
-msbuild /v:m ../%LibName%/%LibName%.csproj /p:Configuration=Release /t:Clean
+msbuild /v:m ../%Z_LibName%/%Z_LibName%.csproj /p:Configuration=Release /t:Clean
 
 echo -- RESTORE -------------------------------------------------------------------------------------------------------------------------------------------------
-msbuild /v:m ../%LibName%/%LibName%.csproj /p:Configuration=Release /t:Restore
+msbuild /v:m ../%Z_LibName%/%Z_LibName%.csproj /p:Configuration=Release /t:Restore
 
 echo -- BUILD ---------------------------------------------------------------------------------------------------------------------------------------------------
-msbuild /v:m ../%LibName%/%LibName%.csproj /p:Configuration=Release /t:Build /p:Version=%Version%;AssemblyVersion=%Version%;AssemblyFileVersion=%Version%
+msbuild /v:m ../%Z_LibName%/%Z_LibName%.csproj /p:Configuration=Release /t:Build /p:Version=%Z_Version%;AssemblyVersion=%Z_Version%;AssemblyFileVersion=%Z_Version%
 
 echo -- PACK ----------------------------------------------------------------------------------------------------------------------------------------------------
-msbuild /v:m ../%LibName%/%LibName%.csproj /p:Configuration=Release /t:Pack /p:NoBuild=true
-move ..\%LibName%\bin\Release\%LibName%.%Version%.nupkg ..\ >nul
+msbuild /v:m ../%Z_LibName%/%Z_LibName%.csproj /p:Configuration=Release /t:Pack /p:NoBuild=true /p:NuspecFile=..\SecureHttpClient.nuspec /p:NuspecProperties=version=%Z_Version%
+move ..\%Z_LibName%\bin\Release\%Z_LibName%.%Z_Version%.nupkg ..\ >nul
 
 echo -- DONE !! -------------------------------------------------------------------------------------------------------------------------------------------------
