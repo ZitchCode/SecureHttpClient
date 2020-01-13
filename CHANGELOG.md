@@ -1,3 +1,7 @@
+## 1.13.3
+- vs : 16.5.0 preview 1.0 (xamarin.vs 16.5.000.307 ; xamarin.android 10.2.0.16 ; xamarin.ios 13.14.0.6)
+- test : Xamarin.Forms 4.4.0.991265
+
 ## 1.13.2
 - vs : 16.3.10 (xamarin.vs 16.3.0.281 ; xamarin.android 10.0.6.2 ; xamarin.ios 13.6.0.12)
 - Microsoft.Extensions.Logging.Abstractions 3.1.0
