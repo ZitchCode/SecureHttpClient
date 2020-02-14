@@ -15,17 +15,17 @@
     <repository url="https://github.com/tranb3r/secure-httpclient" />
     <dependencies>
       <group targetFramework="MonoAndroid10.0">
-        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="3.1.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="3.1.1" exclude="Build,Analyzers" />
         <dependency id="Square.OkHttp3" version="3.14.4" exclude="Build,Analyzers" />
         <dependency id="Square.OkHttp3.UrlConnection" version="3.12.3" exclude="Build,Analyzers" />
         <dependency id="Square.Okio" version="1.17.4" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="Xamarin.iOS1.0">
-        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="3.1.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="3.1.1" exclude="Build,Analyzers" />
         <dependency id="Portable.BouncyCastle" version="1.8.5.2" exclude="Build,Analyzers" />
       </group>
       <group targetFramework=".NETStandard2.0">
-        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="3.1.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="3.1.1" exclude="Build,Analyzers" />
         <dependency id="Portable.BouncyCastle" version="1.8.5.2" exclude="Build,Analyzers" />
       </group>
     </dependencies>
