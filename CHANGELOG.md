@@ -1,6 +1,8 @@
 ## 1.13.4
 - vs : 16.5.0 preview 2.0 (xamarin.vs 16.5.000.400 ; xamarin.android 10.2.0.84 ; xamarin.ios 13.14.1.17)
 - C# 8.0
+- Microsoft.Extensions.Logging 3.1.1
+- test : Xamarin.Forms 4.3.0.991640
 
 ## 1.13.3
 - vs : 16.5.0 preview 1.0 (xamarin.vs 16.5.000.307 ; xamarin.android 10.2.0.16 ; xamarin.ios 13.14.0.6)
