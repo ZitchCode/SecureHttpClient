@@ -29,8 +29,7 @@ namespace SecureHttpClient.CertificatePinning
         public bool Check(string hostname, byte[] certificate)
         {
             // Get pins
-            string[] pins;
-            if (!_pins.TryGetValue(hostname, out pins))
+            if (!_pins.TryGetValue(hostname, out var pins))
             {
                 _logger?.LogDebug($"No certificate pin found for {hostname}");
                 return true;

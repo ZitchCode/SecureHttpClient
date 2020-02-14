@@ -18,12 +18,9 @@ namespace SecureHttpClient.CertificatePinning
             var spkiDer = spki.GetDerEncoded();
 
             // Compute spki fingerprint (sha256)
-            string spkiFingerprint;
-            using (var digester = SHA256.Create())
-            {
-                var digest = digester.ComputeHash(spkiDer);
-                spkiFingerprint = Convert.ToBase64String(digest);
-            }
+            using var digester = SHA256.Create();
+            var digest = digester.ComputeHash(spkiDer);
+            var spkiFingerprint = Convert.ToBase64String(digest);
 
             return $"sha256/{spkiFingerprint}";
         }

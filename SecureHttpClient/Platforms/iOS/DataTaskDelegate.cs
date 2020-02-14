@@ -132,8 +132,7 @@ namespace SecureHttpClient
                 if (_secureHttpClientHandler.Credentials != null)
                 {
                     NetworkCredential credentialsToUse;
-                    var credentials = _secureHttpClientHandler.Credentials as NetworkCredential;
-                    if (credentials != null)
+                    if (_secureHttpClientHandler.Credentials is NetworkCredential credentials)
                     {
                         credentialsToUse = credentials;
                     }

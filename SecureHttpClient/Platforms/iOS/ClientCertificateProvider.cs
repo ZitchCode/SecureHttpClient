@@ -51,8 +51,7 @@ namespace SecureHttpClient
                 opt = NSDictionary.FromObjectAndKey(new NSString(passphrase), SecImportExport.Passphrase);
             }
 
-            NSDictionary[] array;
-            var status = SecImportExport.ImportPkcs12(certificate, opt, out array);
+            var status = SecImportExport.ImportPkcs12(certificate, opt, out NSDictionary[] array);
 
             if (status == SecStatusCode.Success)
             {

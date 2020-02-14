@@ -85,7 +85,7 @@ namespace SecureHttpClient
                 return false;
             }
 
-            bool good = sslPolicyErrors == SslPolicyErrors.None;
+            var good = sslPolicyErrors == SslPolicyErrors.None;
             if (_trustedRoots != null && (sslPolicyErrors & ~SslPolicyErrors.RemoteCertificateChainErrors) == 0)
             {
                 chain.ChainPolicy.ExtraStore.AddRange(_trustedRoots);

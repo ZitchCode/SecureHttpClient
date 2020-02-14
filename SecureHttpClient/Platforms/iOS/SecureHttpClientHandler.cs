@@ -10,7 +10,6 @@ using System.Net.Http;
 using Foundation;
 using Microsoft.Extensions.Logging;
 using SecureHttpClient.CertificatePinning;
-using Security;
 using System.Security.Cryptography.X509Certificates;
 
 namespace SecureHttpClient
@@ -75,11 +74,9 @@ namespace SecureHttpClient
 
         private void InitSession()
         {
-            using (var configuration = NSUrlSessionConfiguration.DefaultSessionConfiguration)
-            {
-                var nsUrlSessionDelegate = (INSUrlSessionDelegate) new DataTaskDelegate(this, _certificatePinner.IsValueCreated ? _certificatePinner.Value : null, _trustedRoots);
-                _session = NSUrlSession.FromConfiguration(configuration, nsUrlSessionDelegate, null);
-            }
+            using var configuration = NSUrlSessionConfiguration.DefaultSessionConfiguration;
+            var nsUrlSessionDelegate = (INSUrlSessionDelegate)new DataTaskDelegate(this, _certificatePinner.IsValueCreated ? _certificatePinner.Value : null, _trustedRoots);
+            _session = NSUrlSession.FromConfiguration(configuration, nsUrlSessionDelegate, null);
         }
 
         /// <inheritdoc />
