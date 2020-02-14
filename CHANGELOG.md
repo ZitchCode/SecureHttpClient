@@ -1,3 +1,6 @@
+## 1.13.5
+- fix nuspec
+
 ## 1.13.4
 - vs : 16.5.0 preview 2.0 (xamarin.vs 16.5.000.400 ; xamarin.android 10.2.0.84 ; xamarin.ios 13.14.1.17)
 - C# 8.0
