@@ -1,10 +1,17 @@
+## 1.13.6
+- vs : 16.5.0 preview 4.0 (xamarin.vs 16.5.000.468 ; xamarin.android 10.2.0.99 ; xamarin.ios 13.14.1.38)
+- Microsoft.Extensions.Logging.Abstractions 3.1.2
+- Portable.BouncyCastle 1.8.6
+- test : Xamarin.Essentials 1.5.0
+- test : Xamarin.Forms 4.5.0.356
+
 ## 1.13.5
 - fix nuspec
 
 ## 1.13.4
 - vs : 16.5.0 preview 2.0 (xamarin.vs 16.5.000.400 ; xamarin.android 10.2.0.84 ; xamarin.ios 13.14.1.17)
 - C# 8.0
-- Microsoft.Extensions.Logging 3.1.1
+- Microsoft.Extensions.Logging.Abstractions 3.1.1
 - test : Xamarin.Forms 4.3.0.991640
 
 ## 1.13.3
