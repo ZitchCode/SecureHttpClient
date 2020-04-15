@@ -77,6 +77,55 @@ namespace SecureHttpClient.Test
         }
 
         [Fact]
+        public async Task SslTest_Sha384Certificate()
+        {
+            const string page = @"https://sha384.badssl.com/";
+            await GetAsync(page);
+        }
+
+        [Fact]
+        public async Task SslTest_Sha512Certificate()
+        {
+            const string page = @"https://sha512.badssl.com/";
+            await GetAsync(page);
+        }
+
+        [Fact]
+        public async Task SslTest_Ecc256Certificate()
+        {
+            const string page = @"https://ecc256.badssl.com/";
+            await GetAsync(page);
+        }
+
+        [Fact]
+        public async Task SslTest_Ecc384Certificate()
+        {
+            const string page = @"https://ecc384.badssl.com/";
+            await GetAsync(page);
+        }
+
+        [Fact]
+        public async Task SslTest_Rsa2048Certificate()
+        {
+            const string page = @"https://rsa2048.badssl.com/";
+            await GetAsync(page);
+        }
+
+        [Fact]
+        public async Task SslTest_Rsa4096Certificate()
+        {
+            const string page = @"https://rsa4096.badssl.com/";
+            await GetAsync(page);
+        }
+
+        [Fact]
+        public async Task SslTest_Rsa8192Certificate()
+        {
+            const string page = @"https://rsa8192.badssl.com/";
+            await GetAsync(page);
+        }
+
+        [Fact]
         public async Task SslTest_MissingClientCertificate()
         {
             const string page = @"https://client-cert-missing.badssl.com/";

@@ -16,6 +16,11 @@ namespace SecureHttpClient.Test
         private static readonly string[] Pins2Ok = { @"sha256/o5oa5F4LbZEfeZ0kXDgmaU2K3sIPYtbQpT3EQLJZquM=" };
         private static readonly string[] Pins2Ko = { @"sha256/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy=" };
 
+        private const string Hostname3 = @"ecc256.badssl.com";
+        private const string Page3 = @"https://ecc256.badssl.com/";
+        private static readonly string[] Pins3Ok = { @"sha256/fxf7kzJ2eD+yjn1GfHWRkHU24U297K69jSfvf387A0c=" };
+        private static readonly string[] Pins3Ko = { @"sha256/zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz=" };
+
         [Fact]
         public async Task CertificatePinnerTest_OneHost_Success()
         {
@@ -58,6 +63,20 @@ namespace SecureHttpClient.Test
 
             await GetAsync(Page);
             await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(Page2));
+        }
+
+        [Fact]
+        public async Task CertificatePinnerTest_EccCertificate_Success()
+        {
+            AddCertificatePinner(Hostname3, Pins3Ok);
+            await GetAsync(Page3);
+        }
+
+        [Fact]
+        public async Task CertificatePinnerTest_EccCertificate_Failure()
+        {
+            AddCertificatePinner(Hostname3, Pins3Ko);
+            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(Page3));
         }
     }
 }

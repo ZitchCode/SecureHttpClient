@@ -1,6 +1,7 @@
 ## 1.13.7
 - vs : 16.6.0 preview 2.1 (xamarin.vs 16.6.000.984 ; xamarin.android 10.3.0.33 ; xamarin.ios 13.18.0.22)
 - .net core sdk 3.0.200
+- add tests for ecc certificates
 - Microsoft.Extensions.Logging.Abstractions 3.1.3
 - Portable.BouncyCastle 1.8.6.7
 - test : Xamarin.Essentials 1.5.2
