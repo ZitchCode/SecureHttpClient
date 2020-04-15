@@ -4,4 +4,3 @@ for /d /r .. %%d in (bin,obj) do @if exist "%%d" echo "%%d"
 set /p temp= Hit enter to continue
 for /d /r .. %%d in (bin,obj) do @if exist "%%d" rd /s/q "%%d"
 echo Done !
-ping -n 2 127.0.0.1 > nul
