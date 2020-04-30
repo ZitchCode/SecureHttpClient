@@ -1,3 +1,10 @@
+## 1.13.8
+- vs : 16.6.0 preview 4.0 (xamarin.vs 16.6.000.1052 ; xamarin.android 10.3.0.74 ; xamarin.ios 13.18.1.31)
+- test : Xamarin.Essentials 1.5.3.1
+- test : Xamarin.Forms 4.6.0.726
+- test : Xunit.SkippableFact 1.4.8
+- test : Serilog.Sinks.Xamarin 0.2.0.64
+
 ## 1.13.7
 - vs : 16.6.0 preview 2.1 (xamarin.vs 16.6.000.984 ; xamarin.android 10.3.0.33 ; xamarin.ios 13.18.0.22)
 - .net core sdk 3.0.200
