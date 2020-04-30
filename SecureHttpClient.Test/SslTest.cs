@@ -41,7 +41,7 @@ namespace SecureHttpClient.Test
         [SkippableFact]
         public async Task SslTest_SpecificTrustedRootCertificate()
         {
-            Skip.If(DeviceInfo.Platform == DevicePlatform.iOS, "Not working on iOS 13");
+            Skip.If(DeviceInfo.Platform == DevicePlatform.iOS || DeviceInfo.Platform == DevicePlatform.UWP, "Not working on iOS 13 and on UWP");
 
             // NB: Using this feature on iOS 11 requires setting NSExceptionDomains in Info.plist,
             // particularly NSExceptionRequiresForwardSecrecy=NO : https://stackoverflow.com/q/46316604/5652125
@@ -132,9 +132,11 @@ namespace SecureHttpClient.Test
             await Assert.ThrowsAsync<HttpRequestException>(() => GetAsync(page));
         }
 
-        [Fact]
+        [SkippableFact]
         public async Task SslTest_ClientCertificate()
         {
+            Skip.If(DeviceInfo.Platform == DevicePlatform.UWP, "Not supported on UWP");
+
             const string page = @"https://client.badssl.com/";
             var clientCert = await ResourceHelper.GetBytesAsync("badssl.com-client.p12");
             const string certPass = "badssl.com";

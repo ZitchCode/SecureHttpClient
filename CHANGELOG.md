@@ -1,5 +1,6 @@
 ## 1.13.8
 - vs : 16.6.0 preview 4.0 (xamarin.vs 16.6.000.1052 ; xamarin.android 10.3.0.74 ; xamarin.ios 13.18.1.31)
+- test : add UWP test runner
 - test : Xamarin.Essentials 1.5.3.1
 - test : Xamarin.Forms 4.6.0.726
 - test : Xunit.SkippableFact 1.4.8
