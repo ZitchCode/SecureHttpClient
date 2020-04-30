@@ -16,14 +16,14 @@ namespace SecureHttpClient
     public class SecureHttpClientHandler : HttpClientHandler, Abstractions.ISecureHttpClientHandler
     {
         private readonly Lazy<CertificatePinner> _certificatePinner;
-        private readonly ILogger _logger;
+        private readonly ILogger<Abstractions.ISecureHttpClientHandler> _logger;
         private X509Certificate2Collection _trustedRoots;
 
         /// <summary>
         /// SecureHttpClientHandler constructor (NetStandard implementation)
         /// </summary>
-        /// <param name="logger">Optional logger</param>
-        public SecureHttpClientHandler(ILogger logger = null)
+        /// <param name="logger">Logger</param>
+        public SecureHttpClientHandler(ILogger<Abstractions.ISecureHttpClientHandler> logger)
         {
             _logger = logger;
 

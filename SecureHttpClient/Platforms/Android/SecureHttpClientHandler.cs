@@ -27,7 +27,7 @@ namespace SecureHttpClient
     {
         private readonly Lazy<OkHttpClient> _client;
         private readonly Lazy<CertificatePinner.Builder> _certificatePinnerBuilder;
-        private readonly ILogger _logger;
+        private readonly ILogger<Abstractions.ISecureHttpClientHandler> _logger;
         private KeyManagerFactory _keyMgrFactory;
         private TrustManagerFactory _trustMgrFactory;
         private IX509TrustManager _x509TrustManager;
@@ -37,8 +37,8 @@ namespace SecureHttpClient
         /// <summary>
         /// SecureHttpClientHandler constructor (Android implementation)
         /// </summary>
-        /// <param name="logger">Optional logger</param>
-        public SecureHttpClientHandler(ILogger logger = null)
+        /// <param name="logger">Logger</param>
+        public SecureHttpClientHandler(ILogger<Abstractions.ISecureHttpClientHandler> logger)
         {
             _logger = logger;
             _client = new Lazy<OkHttpClient>(CreateOkHttpClientInstance);

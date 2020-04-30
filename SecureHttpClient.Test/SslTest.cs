@@ -8,8 +8,12 @@ using Xunit;
 
 namespace SecureHttpClient.Test
 {
-    public class SslTest : TestBase
+    public class SslTest : TestBase, IClassFixture<TestFixture>
     {
+        public SslTest(TestFixture testFixture) : base(testFixture)
+        {
+        }
+
         [Fact]
         public async Task SslTest_ExpiredCertificate()
         {

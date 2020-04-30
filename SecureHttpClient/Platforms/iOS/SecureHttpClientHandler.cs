@@ -28,8 +28,8 @@ namespace SecureHttpClient
         /// <summary>
         /// SecureHttpClientHandler constructor (iOS implementation)
         /// </summary>
-        /// <param name="logger">Optional logger</param>
-        public SecureHttpClientHandler(ILogger logger = null)
+        /// <param name="logger">Logger</param>
+        public SecureHttpClientHandler(ILogger<Abstractions.ISecureHttpClientHandler> logger)
         {
             InflightRequests = new Dictionary<NSUrlSessionTask, InflightOperation>();
             _certificatePinner = new Lazy<CertificatePinner>(() => new CertificatePinner(logger));

@@ -11,8 +11,12 @@ using Xunit;
 
 namespace SecureHttpClient.Test
 {
-    public class HttpTest : TestBase
+    public class HttpTest : TestBase, IClassFixture<TestFixture>
     {
+        public HttpTest(TestFixture testFixture) : base(testFixture)
+        {
+        }
+
         [Fact]
         public async Task HttpTest_Get()
         {

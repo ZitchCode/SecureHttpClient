@@ -1,49 +1,49 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using Serilog;
+using Microsoft.Extensions.DependencyInjection;
+using SecureHttpClient.Abstractions;
 
 namespace SecureHttpClient.Test
 {
     public class TestBase
     {
-        private readonly SecureHttpClientHandler _secureHttpClientHandler;
+        private readonly ISecureHttpClientHandler _secureHttpClientHandler;
         private readonly HttpClient _httpClient;
 
-        public TestBase()
+        protected TestBase(TestFixture fixture)
         {
-            var logger = new LoggerFactory().AddSerilog().CreateLogger(nameof(SecureHttpClientHandler));
-            _secureHttpClientHandler = new SecureHttpClientHandler(logger);
-            _httpClient = new HttpClient(_secureHttpClientHandler);
+            var httpClientHandler = fixture.ServiceProvider.GetRequiredService<HttpClientHandler>();
+            _secureHttpClientHandler = httpClientHandler as SecureHttpClientHandler;
+            _httpClient = new HttpClient(httpClientHandler);
         }
 
-        public async Task<HttpResponseMessage> GetAsync(string page)
+        protected async Task<HttpResponseMessage> GetAsync(string page)
         {
             var response = await _httpClient.GetAsync(page).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
             return response;
         }
 
-        public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
+        protected async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
             var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
             return response;
         }
 
-        public void AddCertificatePinner(string hostname, string[] pins)
+        protected void AddCertificatePinner(string hostname, string[] pins)
         {
             _secureHttpClientHandler.AddCertificatePinner(hostname, pins);
         }
 
-        public void SetClientCertificate(byte[] clientCert, string certPassword)
+        protected void SetClientCertificate(byte[] clientCert, string certPassword)
         {
             var provider = new ImportedClientCertificateProvider();
             provider.Import(clientCert, certPassword);
             _secureHttpClientHandler.SetClientCertificates(provider);
         }
 
-        public void SetCaCertificate(string caCertEncoded)
+        protected void SetCaCertificate(string caCertEncoded)
         {
             var caCert = System.Text.Encoding.ASCII.GetBytes(caCertEncoded);
             _secureHttpClientHandler.SetTrustedRoots(caCert);

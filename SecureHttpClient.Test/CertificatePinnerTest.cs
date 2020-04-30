@@ -4,7 +4,7 @@ using Xunit;
 
 namespace SecureHttpClient.Test
 {
-    public class CertificatePinnerTest : TestBase
+    public class CertificatePinnerTest : TestBase, IClassFixture<TestFixture>
     {
         private const string Hostname = @"www.howsmyssl.com";
         private const string Page = @"https://www.howsmyssl.com/a/check";
@@ -20,6 +20,10 @@ namespace SecureHttpClient.Test
         private const string Page3 = @"https://ecc256.badssl.com/";
         private static readonly string[] Pins3Ok = { @"sha256/fxf7kzJ2eD+yjn1GfHWRkHU24U297K69jSfvf387A0c=" };
         private static readonly string[] Pins3Ko = { @"sha256/zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz=" };
+
+        public CertificatePinnerTest(TestFixture testFixture) : base(testFixture)
+        {
+        }
 
         [Fact]
         public async Task CertificatePinnerTest_OneHost_Success()
