@@ -1,3 +1,12 @@
+## 1.14.1
+- vs : 16.7.0 preview 4.0 (xamarin.vs 16.7.000.438 ; xamarin.android 11.0.0.3 ; xamarin.ios 13.20.1.44)
+- .net core sdk 3.1.300
+- Microsoft.Extensions.Logging.Abstractions 3.1.6
+- test : Xamarin.Essentials 1.5.3.2
+- test : Xamarin.Forms 4.7.0.1142
+- test : Xunit.SkippableFact 1.4.13
+- test : Microsoft.Extensions.DependencyInjection 3.1.6
+
 ## 1.14.0
 - vs : 16.6.0 preview 4.0 (xamarin.vs 16.6.000.1052 ; xamarin.android 10.3.0.74 ; xamarin.ios 13.18.1.31)
 - make logger mandatory (required for DI scenario)
