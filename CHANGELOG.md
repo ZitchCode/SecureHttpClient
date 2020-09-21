@@ -1,6 +1,6 @@
 ## 1.14.1
-- vs : 16.7.0 preview 4.0 (xamarin.vs 16.7.000.438 ; xamarin.android 11.0.0.3 ; xamarin.ios 13.20.1.44)
-- .net core sdk 3.1.300
+- vs : 16.7.3 (xamarin.vs 16.7.000.440 ; xamarin.android 11.0.2.0 ; xamarin.ios 13.20.2.2)
+- .net core sdk 3.1.400
 - Microsoft.Extensions.Logging.Abstractions 3.1.6
 - test : Xamarin.Essentials 1.5.3.2
 - test : Xamarin.Forms 4.7.0.1142
