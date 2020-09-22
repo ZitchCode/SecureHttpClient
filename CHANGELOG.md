@@ -2,6 +2,7 @@
 - vs : 16.7.4 (xamarin.vs 16.7.000.452 ; xamarin.android 11.0.2.0 ; xamarin.ios 14.00.0.0)
 - .net core sdk 3.1.400
 - ios : xcode 12.0 (ios 14.0)
+- fix tests
 - MSBuild.Sdk.Extras 2.1.2
 - Microsoft.Extensions.Logging.Abstractions 3.1.6
 - test : Xamarin.Essentials 1.5.3.2

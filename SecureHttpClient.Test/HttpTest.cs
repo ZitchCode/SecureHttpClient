@@ -60,8 +60,8 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task HttpTest_Redirect()
         {
-            const string page = @"https://httpbin.org/redirect/5";
-            const string final = @"https://httpbin.org/get";
+            const string page = @"https://httpbingo.org/redirect/5"; // httpbingo replaces httpbin because of issue https://github.com/postmanlabs/httpbin/issues/617
+            const string final = @"https://httpbingo.org/get";
 
             var result = await GetAsync(page).ReceiveString();
             var json = JToken.Parse(result);
