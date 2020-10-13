@@ -1,14 +1,16 @@
 ## 1.14.1
-- vs : 16.7.4 (xamarin.vs 16.7.000.452 ; xamarin.android 11.0.2.0 ; xamarin.ios 14.00.0.0)
+- vs : 16.7.5 (xamarin.vs 16.7.000.452 ; xamarin.android 11.0.2.0 ; xamarin.ios 14.00.0.0)
 - .net core sdk 3.1.400
 - ios : xcode 12.0 (ios 14.0)
 - fix tests
 - MSBuild.Sdk.Extras 2.1.2
-- Microsoft.Extensions.Logging.Abstractions 3.1.6
+- Microsoft.Extensions.Logging.Abstractions 3.1.9
+- Portable.BouncyCastle 1.8.8
 - test : Xamarin.Essentials 1.5.3.2
-- test : Xamarin.Forms 4.7.0.1142
+- test : Xamarin.Forms 4.8.0.1534
 - test : Xunit.SkippableFact 1.4.13
-- test : Microsoft.Extensions.DependencyInjection 3.1.6
+- test : Microsoft.Extensions.DependencyInjection 3.1.9
+- test : Serilog 2.10.0
 
 ## 1.14.0
 - vs : 16.6.0 preview 4.0 (xamarin.vs 16.6.000.1052 ; xamarin.android 10.3.0.74 ; xamarin.ios 13.18.1.31)
