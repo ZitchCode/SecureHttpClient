@@ -31,10 +31,12 @@
     <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <MtouchLink>None</MtouchLink>
+    <MtouchLink>Full</MtouchLink>
+    <MtouchExtraArgs>--linkskip=SecureHttpClient.Test</MtouchExtraArgs>
     <MtouchArch>x86_64</MtouchArch>
     <ConsolePause>false</ConsolePause>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <MtouchDebug>true</MtouchDebug>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -112,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Entitlements.plist" />
+    <LinkDescription Include="..\build\LinkerConfigTest.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SecureHttpClient.Test\SecureHttpClient.Test.csproj" />

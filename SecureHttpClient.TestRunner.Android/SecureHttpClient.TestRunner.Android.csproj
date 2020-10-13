@@ -46,7 +46,7 @@
     <WarningLevel>4</WarningLevel>
     <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
     <AndroidLinkMode>Full</AndroidLinkMode>
-    <AndroidLinkSkip>SecureHttpClient.Test;Xunit.SkippableFact</AndroidLinkSkip>
+    <AndroidLinkSkip>SecureHttpClient.Test</AndroidLinkSkip>
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
     <BundleAssemblies>False</BundleAssemblies>
     <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
@@ -84,6 +84,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SecureHttpClient.Test\SecureHttpClient.Test.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <LinkDescription Include="..\build\LinkerConfigTest.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
