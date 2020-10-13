@@ -69,8 +69,14 @@
     <PackageReference Include="Serilog.Sinks.Xamarin" Version="0.2.0.64" />
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1534" />
     <PackageReference Include="xunit.runner.devices" Version="2.5.25" />
-    <PackageReference Include="SecureHttpClient" Version="1.14.0" />
   </ItemGroup>
+  <Choose>
+    <When Condition=" '$(Configuration)'=='Release' ">
+      <ItemGroup>
+        <PackageReference Include="SecureHttpClient" Version="1.14.1" />
+      </ItemGroup>
+    </When>
+  </Choose>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />

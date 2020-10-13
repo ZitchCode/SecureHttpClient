@@ -12,6 +12,7 @@
 - test : Microsoft.Extensions.DependencyInjection 3.1.9
 - test : Microsoft.Extensions.Logging 3.1.9
 - test : Serilog 2.10.0
+- test : reference nuget only in release
 
 ## 1.14.0
 - vs : 16.6.0 preview 4.0 (xamarin.vs 16.6.000.1052 ; xamarin.android 10.3.0.74 ; xamarin.ios 13.18.1.31)

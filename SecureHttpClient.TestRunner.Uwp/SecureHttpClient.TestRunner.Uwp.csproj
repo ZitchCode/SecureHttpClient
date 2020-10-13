@@ -159,6 +159,11 @@
       <Version>2.5.25</Version>
     </PackageReference>
   </ItemGroup>
+  <Choose><When Condition=" '$(Configuration)'=='Release' ">
+    <ItemGroup>
+      <PackageReference Include="SecureHttpClient" Version="1.14.1" />
+    </ItemGroup>
+  </When></Choose>  
   <ItemGroup>
     <ProjectReference Include="..\SecureHttpClient.Test\SecureHttpClient.Test.csproj">
       <Project>{503b71db-1cca-49ca-8c2f-7faa87b5520a}</Project>
