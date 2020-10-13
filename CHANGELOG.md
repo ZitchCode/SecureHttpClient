@@ -10,6 +10,7 @@
 - test : Xamarin.Forms 4.8.0.1534
 - test : Xunit.SkippableFact 1.4.13
 - test : Microsoft.Extensions.DependencyInjection 3.1.9
+- test : Microsoft.Extensions.Logging 3.1.9
 - test : Serilog 2.10.0
 
 ## 1.14.0
