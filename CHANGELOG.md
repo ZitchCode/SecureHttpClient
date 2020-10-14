@@ -1,5 +1,5 @@
 ## 1.14.1
-- vs : 16.7.5 (xamarin.vs 16.7.000.452 ; xamarin.android 11.0.2.0 ; xamarin.ios 14.00.0.0)
+- vs : 16.7.6 (xamarin.vs 16.7.000.456 ; xamarin.android 11.0.2.0 ; xamarin.ios 14.00.0.0)
 - .net core sdk 3.1.400
 - ios : xcode 12.0 (ios 14.0)
 - fix tests
