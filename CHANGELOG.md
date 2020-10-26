@@ -1,3 +1,6 @@
+## 1.14.2
+- fix msbuild warnings (ignore VSX1000 warning ; use license instead of licenseUrl in nuspec)
+
 ## 1.14.1
 - vs : 16.7.6 (xamarin.vs 16.7.000.456 ; xamarin.android 11.0.2.0 ; xamarin.ios 14.00.0.0)
 - .net core sdk 3.1.400

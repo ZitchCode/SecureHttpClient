@@ -7,10 +7,10 @@
     <authors>tranb3r</authors>
     <owners>tranb3r</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <licenseUrl>https://raw.githubusercontent.com/tranb3r/secure-httpclient/master/LICENSE</licenseUrl>
+    <license type="expression">MIT</license>
     <projectUrl>https://github.com/tranb3r/secure-httpclient</projectUrl>
     <description>Cross-platform HttpClientHandler with TLS1.2 and Certificate Pinning</description>
-    <copyright>Copyright 2018</copyright>
+    <copyright>Copyright 2020</copyright>
     <tags>xamarin, netstandard, ios, android, httpclient, security</tags>
     <repository url="https://github.com/tranb3r/secure-httpclient" />
     <dependencies>
