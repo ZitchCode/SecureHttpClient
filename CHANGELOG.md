@@ -3,7 +3,7 @@
 - fix msbuild warnings (ignore VSX1000 warning ; use license instead of licenseUrl in nuspec)
 - Microsoft.Extensions.Logging.Abstractions 3.1.10
 - Square.OkHttp3 4.3.1
-- Square.OkHttp3.UrlConnection 4.3.1 (not published yet)
+- Xamarin.Square.OkHttp3.UrlConnection 4.3.1
 - Square.Okio 2.4.3
 - android 11
 - test : Xamarin.Kotlin.StdLib 1.3.61
