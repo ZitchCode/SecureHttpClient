@@ -6,6 +6,7 @@
 - Xamarin.Square.OkHttp3.UrlConnection 4.3.1
 - Square.Okio 2.4.3
 - android 11
+- xcode 12.1 & ios 14.1
 - test : Xamarin.Kotlin.StdLib 1.3.61
 - test : remove Flurl
 - test : netcoreapp3.1
