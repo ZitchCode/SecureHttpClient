@@ -16,9 +16,9 @@
     <dependencies>
       <group targetFramework="MonoAndroid10.0">
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="3.1.10" exclude="Build,Analyzers" />
-        <dependency id="Square.OkHttp3" version="3.14.4" exclude="Build,Analyzers" />
-        <dependency id="Square.OkHttp3.UrlConnection" version="3.12.3" exclude="Build,Analyzers" />
-        <dependency id="Square.Okio" version="1.17.4" exclude="Build,Analyzers" />
+        <dependency id="Square.OkHttp3" version="4.3.1" exclude="Build,Analyzers" />
+        <dependency id="Square.OkHttp3.UrlConnection" version="4.3.1" exclude="Build,Analyzers" />
+        <dependency id="Square.Okio" version="2.4.3" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="Xamarin.iOS1.0">
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="3.1.10" exclude="Build,Analyzers" />

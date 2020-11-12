@@ -151,7 +151,7 @@ namespace SecureHttpClient
                     contentType = string.Join(" ", request.Content.Headers.GetValues("Content-Type"));
                 }
 
-                body = RequestBody.Create(MediaType.Parse(contentType), bytes);
+                body = RequestBody.Create(bytes, MediaType.Parse(contentType));
             }
 
             var builder = new Request.Builder()
