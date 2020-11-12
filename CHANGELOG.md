@@ -3,6 +3,7 @@
 - fix msbuild warnings (ignore VSX1000 warning ; use license instead of licenseUrl in nuspec)
 - Microsoft.Extensions.Logging.Abstractions 3.1.10
 - test : remove Flurl
+- test : netcoreapp3.1
 - test : Microsoft.Extensions.DependencyInjection 3.1.10
 - test : Microsoft.Extensions.Logging 3.1.10
 - test : Xamarin.Forms 4.8.0.1687
