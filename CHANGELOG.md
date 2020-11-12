@@ -2,9 +2,9 @@
 - vs : 16.8.0 (xamarin.vs 16.8.000.255 ; xamarin.android 11.1.0.17 ; xamarin.ios 14.4.1.3)
 - fix msbuild warnings (ignore VSX1000 warning ; use license instead of licenseUrl in nuspec)
 - Microsoft.Extensions.Logging.Abstractions 3.1.10
-- Square.OkHttp3 4.3.1
-- Xamarin.Square.OkHttp3.UrlConnection 4.3.1
-- Square.Okio 2.4.3
+- Xamarin.Square.OkHttp3 4.9.0
+- Xamarin.Square.OkHttp3.UrlConnection 4.9.0
+- Xamarin.Square.Okio 2.9.0
 - android 11
 - xcode 12.1 & ios 14.1
 - test : Xamarin.Kotlin.StdLib 1.3.61
