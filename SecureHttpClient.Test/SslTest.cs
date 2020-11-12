@@ -100,9 +100,11 @@ namespace SecureHttpClient.Test
             await GetAsync(page);
         }
 
-        [Fact]
+        [SkippableFact]
         public async Task SslTest_Ecc384Certificate()
         {
+            Skip.If(DeviceInfo.Platform == DevicePlatform.Android && DeviceInfo.Version.Major == 7 && DeviceInfo.Version.Minor == 0, "Failing on Android 24");
+
             const string page = @"https://ecc384.badssl.com/";
             await GetAsync(page);
         }
