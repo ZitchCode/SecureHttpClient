@@ -1,6 +1,5 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
-using Flurl.Http;
 using Newtonsoft.Json.Linq;
 using SecureHttpClient.Test.Helpers;
 using Xamarin.Essentials;
