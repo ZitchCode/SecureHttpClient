@@ -16,9 +16,9 @@
     <dependencies>
       <group targetFramework="MonoAndroid11.0">
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="3.1.10" exclude="Build,Analyzers" />
-        <dependency id="Xamarin.Square.OkHttp3" version="4.9.0" exclude="Build,Analyzers" />
-        <dependency id="Xamarin.Square.OkHttp3.UrlConnection" version="4.9.0" exclude="Build,Analyzers" />
-        <dependency id="Xamarin.Square.Okio" version="2.9.0" exclude="Build,Analyzers" />
+        <dependency id="Xamarin.SquareUp.OkHttp3" version="4.9.0" exclude="Build,Analyzers" />
+        <dependency id="Xamarin.SquareUp.OkHttp3.UrlConnection" version="4.9.0" exclude="Build,Analyzers" />
+        <dependency id="Xamarin.SquareUp.Okio" version="2.9.0" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="Xamarin.iOS1.0">
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="3.1.10" exclude="Build,Analyzers" />
