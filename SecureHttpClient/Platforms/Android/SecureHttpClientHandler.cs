@@ -16,6 +16,7 @@ using Javax.Net.Ssl;
 using Square.OkHttp3;
 using Microsoft.Extensions.Logging;
 using System.Security.Authentication;
+using Java.Net;
 
 namespace SecureHttpClient
 {
@@ -113,6 +114,12 @@ namespace SecureHttpClient
                 .ReadTimeout(100, TimeUnit.Seconds)
                 .CookieJar(new JavaNetCookieJar(new Java.Net.CookieManager()))
                 .AddInterceptor(new DecompressInterceptor(_logger));
+
+            if (UseProxy && Proxy is WebProxy webProxy)
+            {
+                var proxyAddress = new InetSocketAddress(webProxy.Address.Host, webProxy.Address.Port);
+                builder.Proxy(new Proxy(Java.Net.Proxy.Type.Http, proxyAddress));
+            }
 
             if (_certificatePinnerBuilder.IsValueCreated)
             {

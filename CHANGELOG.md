@@ -1,4 +1,5 @@
 ## 1.15.1
+- android now supports both system's proxy and httpclienthandler's proxy
 - fix decompression (deflate and gzip) on android
 - get rid of specific code for android version < 21
 - test : add android network security config in order to trust user ca and simplify http traffic inspection
