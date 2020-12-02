@@ -1,3 +1,6 @@
+## 1.15.1
+- fix decompression (deflate and gzip) on android
+
 ## 1.15.0
 - vs : 16.8.0 (xamarin.vs 16.8.000.255 ; xamarin.android 11.1.0.17 ; xamarin.ios 14.4.1.3)
 - fix msbuild warnings (ignore VSX1000 warning ; use license instead of licenseUrl in nuspec)

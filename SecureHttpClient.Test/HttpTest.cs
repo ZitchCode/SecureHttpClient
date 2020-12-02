@@ -37,10 +37,22 @@ namespace SecureHttpClient.Test
             Assert.Equal("True", url);
         }
 
+        [Fact]
+        public async Task HttpTest_Gzip_WithRequestHeader()
+        {
+            const string page = @"https://httpbin.org/gzip";
+            var req = new HttpRequestMessage(HttpMethod.Get, page);
+            req.Headers.Add("Accept-Encoding", "gzip");
+            var result = await SendAsync(req).ReceiveString();
+            var json = JToken.Parse(result);
+            var url = json["gzipped"].ToString();
+            Assert.Equal("True", url);
+        }
+
         [SkippableFact]
         public async Task HttpTest_Deflate()
         {
-            Skip.IfNot(DeviceInfo.Platform == DevicePlatform.iOS, "Failing on Android and .Net");
+            Skip.If(DeviceInfo.Platform != DevicePlatform.Android && DeviceInfo.Platform != DevicePlatform.iOS, "Failing on .Net");
 
             const string page = @"https://httpbin.org/deflate";
             var result = await GetAsync(page).ReceiveString();

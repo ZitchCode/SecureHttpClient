@@ -112,7 +112,8 @@ namespace SecureHttpClient
                 .ConnectTimeout(100, TimeUnit.Seconds)
                 .WriteTimeout(100, TimeUnit.Seconds)
                 .ReadTimeout(100, TimeUnit.Seconds)
-                .CookieJar(new JavaNetCookieJar(new Java.Net.CookieManager()));
+                .CookieJar(new JavaNetCookieJar(new Java.Net.CookieManager()))
+                .AddInterceptor(new DecompressInterceptor(_logger));
 
             if (_certificatePinnerBuilder.IsValueCreated)
             {
