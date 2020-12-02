@@ -7,7 +7,6 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Android.OS;
 using Android.Runtime;
 using Java.IO;
 using Java.Security;
@@ -120,12 +119,7 @@ namespace SecureHttpClient
                 builder.CertificatePinner(_certificatePinnerBuilder.Value.Build());
             }
 
-            if (Build.VERSION.SdkInt < BuildVersionCodes.Lollipop)
-            {
-                // Support TLS1.2 on Android versions before Lollipop
-                builder.SslSocketFactory(new TlsSslSocketFactory(KeyManagers, TrustManagers), _x509TrustManager ?? TlsSslSocketFactory.GetSystemDefaultTrustManager());
-            }
-            else if (_keyMgrFactory != null || _trustMgrFactory != null)
+            if (_keyMgrFactory != null || _trustMgrFactory != null)
             {
                 var context = SSLContext.GetInstance("TLS");
                 context.Init(KeyManagers, TrustManagers, null);
