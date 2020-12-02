@@ -2,5 +2,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.securehttpclient.android.test" android:versionCode="1" android:versionName="1" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="30" />
 	<uses-permission android:name="android.permission.INTERNET" />
-	<application android:label="SecureHttpClient.TestRunner.Android" android:icon="@drawable/Icon"></application>
+	<application android:label="SecureHttpClient.TestRunner.Android" android:icon="@drawable/Icon" android:networkSecurityConfig="@xml/network_security_config"></application>
 </manifest>

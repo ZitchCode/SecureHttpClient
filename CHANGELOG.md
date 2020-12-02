@@ -1,6 +1,7 @@
 ## 1.15.1
 - fix decompression (deflate and gzip) on android
 - get rid of specific code for android version < 21
+- test : add android network security config in order to trust user ca and simplify http traffic inspection
 
 ## 1.15.0
 - vs : 16.8.0 (xamarin.vs 16.8.000.255 ; xamarin.android 11.1.0.17 ; xamarin.ios 14.4.1.3)
