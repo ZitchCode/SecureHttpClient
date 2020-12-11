@@ -1,3 +1,9 @@
+## 1.16.1
+- vs : 16.8.3 (xamarin.vs 16.8.000.260 ; xamarin.android 11.1.0.17 ; xamarin.ios 14.6.0.15)
+- xcode 12.2 (ios 14.2)
+- MSBuild.Sdk.Extras 3.0.22
+- test : Microsoft.NETCore.UniversalWindowsPlatform 6.2.11
+
 ## 1.16.0
 - android now supports both system's proxy and httpclienthandler's proxy
 - fix decompression (deflate and gzip) on android
