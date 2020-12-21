@@ -1,3 +1,8 @@
+## 1.16.2
+- Portable.BouncyCastle 1.8.9
+- test : Xamarin.Kotlin.StdLib 1.4.20
+- test : Xamarin.Forms 4.8.0.1821
+
 ## 1.16.1
 - vs : 16.8.3 (xamarin.vs 16.8.000.260 ; xamarin.android 11.1.0.17 ; xamarin.ios 14.6.0.15)
 - xcode 12.2 (ios 14.2)
