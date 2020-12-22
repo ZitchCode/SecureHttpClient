@@ -1,6 +1,7 @@
 ## 1.16.2
 - Portable.BouncyCastle 1.8.9
 - test : Xamarin.Kotlin.StdLib 1.4.20
+- test : Xamarin.Essentials 1.6.0
 - test : Xamarin.Forms 4.8.0.1821
 
 ## 1.16.1
