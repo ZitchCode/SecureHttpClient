@@ -24,15 +24,15 @@
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="3.1.10" exclude="Build,Analyzers" />
         <dependency id="Portable.BouncyCastle" version="1.8.9" exclude="Build,Analyzers" />
       </group>
-      <group targetFramework=".NETStandard2.0">
+      <group targetFramework=".NETStandard2.1">
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="3.1.10" exclude="Build,Analyzers" />
         <dependency id="Portable.BouncyCastle" version="1.8.9" exclude="Build,Analyzers" />
       </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="SecureHttpClient\bin\Release\netstandard2.0\SecureHttpClient.dll" target="lib\netstandard2.0" />
-    <file src="SecureHttpClient\bin\Release\netstandard2.0\SecureHttpClient.xml" target="lib\netstandard2.0" />
+    <file src="SecureHttpClient\bin\Release\netstandard2.1\SecureHttpClient.dll" target="lib\netstandard2.1" />
+    <file src="SecureHttpClient\bin\Release\netstandard2.1\SecureHttpClient.xml" target="lib\netstandard2.1" />
     <file src="SecureHttpClient\bin\Release\monoandroid11.0\SecureHttpClient.dll" target="lib\monoandroid11.0" />
     <file src="SecureHttpClient\bin\Release\monoandroid11.0\SecureHttpClient.xml" target="lib\monoandroid11.0" />
     <file src="SecureHttpClient\bin\Release\xamarin.ios10\SecureHttpClient.dll" target="lib\xamarinios10" />
