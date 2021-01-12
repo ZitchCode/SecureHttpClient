@@ -6,6 +6,7 @@
 - dotnet sdk 5.0.101
 - MSBuild.Sdk.Extras 3.0.23
 - test : remove UWP project
+- test : netcoreapp5.0
 - test : Xamarin.Kotlin.StdLib 1.4.20
 - test : Xamarin.Essentials 1.6.0
 - test : Xamarin.Forms 5.0.0.1874
