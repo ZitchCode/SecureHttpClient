@@ -1,6 +1,7 @@
 ## 1.17.0
 - vs : 16.8.4 (xamarin.vs 16.8.000.261 ; xamarin.android 11.1.0.26 ; xamarin.ios 14.8.0.3)
 - Portable.BouncyCastle 1.8.9
+- C# 9.0
 - test : remove UWP project
 - test : Xamarin.Kotlin.StdLib 1.4.20
 - test : Xamarin.Essentials 1.6.0
