@@ -26,15 +26,7 @@ namespace SecureHttpClient.Test.Helpers
         public static async Task ThrowsTrustFailureAsync(Func<Task> testCode)
         {
             var exception = await Assert.ThrowsAsync<HttpRequestException>(testCode).ConfigureAwait(false);
-
-            if (DeviceInfo.Platform == DevicePlatform.UWP)
-            {
-                Assert.Contains(exception.HResult, SecurityErrors);
-            }
-            else
-            {
-                Assert.IsType<AuthenticationException>(exception.InnerException);
-            }
+            Assert.IsType<AuthenticationException>(exception.InnerException);
         }
     }
 }

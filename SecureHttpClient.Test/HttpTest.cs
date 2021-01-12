@@ -165,7 +165,7 @@ namespace SecureHttpClient.Test
         [SkippableFact]
         public async Task HttpTest_DeleteCookie()
         {
-            Skip.If((DeviceInfo.Platform == DevicePlatform.Android && DeviceInfo.Version.Major == 7) || DeviceInfo.Platform == DevicePlatform.UWP, "Failing on Android 24-25 and on UWP");
+            Skip.If(DeviceInfo.Platform == DevicePlatform.Android && DeviceInfo.Version.Major == 7, "Failing on Android 24-25");
 
             const string page1 = @"https://httpbin.org/cookies/set?k1=v1";
             await GetAsync(page1);
