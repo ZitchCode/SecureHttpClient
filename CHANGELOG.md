@@ -4,6 +4,7 @@
 - netstandard2.1
 - C# 9.0
 - dotnet sdk 5.0.101
+- Microsoft.Extensions.* 3.1.11
 - MSBuild.Sdk.Extras 3.0.23
 - test : remove UWP project
 - test : netcoreapp5.0
