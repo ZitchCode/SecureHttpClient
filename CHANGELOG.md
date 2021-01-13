@@ -4,6 +4,7 @@
 - netstandard2.1
 - C# 9.0
 - dotnet sdk 5.0.101
+- xcode 12.3 (ios 14.3)
 - Microsoft.Extensions.* 3.1.11
 - MSBuild.Sdk.Extras 3.0.23
 - test : remove UWP project
