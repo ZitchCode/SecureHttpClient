@@ -2,6 +2,7 @@
 - vs : 16.8.4 (xamarin.vs 16.8.000.261 ; xamarin.android 11.1.0.26 ; xamarin.ios 14.8.0.3)
 - Portable.BouncyCastle 1.8.9
 - netstandard2.1
+- compute spki without bouncycastle thanks to netstandard2.1 on .net
 - C# 9.0
 - dotnet sdk 5.0.101
 - xcode 12.3 (ios 14.3)

@@ -114,7 +114,7 @@ namespace SecureHttpClient
                 }
 
                 // Check pin
-                good = _certificatePinner.Value.Check(requestHost, certificate.RawData);
+                good = _certificatePinner.Value.Check(requestHost, certificate);
             }
             return good;
         }

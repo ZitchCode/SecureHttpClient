@@ -36,7 +36,6 @@
   <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
     <Compile Include="Platforms\Net\**\*.cs" />
     <Compile Include="CertificatePinning\**\*.cs" />
-    <PackageReference Include="Portable.BouncyCastle" Version="1.8.9" />
   </ItemGroup>
 
 </Project>

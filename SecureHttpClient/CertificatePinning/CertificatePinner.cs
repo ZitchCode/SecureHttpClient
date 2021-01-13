@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.Extensions.Logging;
 
 namespace SecureHttpClient.CertificatePinning
@@ -26,7 +27,7 @@ namespace SecureHttpClient.CertificatePinning
             return _pins.ContainsKey(hostname);
         }
 
-        public bool Check(string hostname, byte[] certificate)
+        public bool Check(string hostname, X509Certificate2 certificate)
         {
             // Get pins
             if (!_pins.TryGetValue(hostname, out var pins))

@@ -160,7 +160,7 @@ namespace SecureHttpClient
                     {
                         var serverCertificate = serverTrust[0];
                         var x509Certificate = serverCertificate.ToX509Certificate2();
-                        var match = _certificatePinner.Check(hostname, x509Certificate.RawData);
+                        var match = _certificatePinner.Check(hostname, x509Certificate);
                         if (match)
                         {
                             completionHandler(NSUrlSessionAuthChallengeDisposition.UseCredential, NSUrlCredential.FromTrust(serverTrust));
