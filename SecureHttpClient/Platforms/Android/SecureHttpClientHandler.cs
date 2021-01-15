@@ -8,7 +8,6 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Android.Runtime;
-using Java.IO;
 using Java.Security;
 using Java.Security.Cert;
 using Java.Util.Concurrent;
@@ -184,17 +183,21 @@ namespace SecureHttpClient
             {
                 resp = await call.ExecuteAsync().ConfigureAwait(false);
             }
-            catch (SSLException ex)
+            catch (Javax.Net.Ssl.SSLException ex)
             {
                 throw new HttpRequestException(ex.Message, new AuthenticationException(ex.Message, ex));
             }
-            catch (IOException ex)
+            catch (Java.Net.UnknownHostException ex)
             {
-                if (ex.Message != null && ex.Message.ToLowerInvariant().Contains("canceled"))
-                {
-                    throw new System.OperationCanceledException();
-                }
-                throw;
+                throw new HttpRequestException(ex.Message, ex);
+            }
+            catch (Java.Net.SocketTimeoutException ex)
+            {
+                throw new TaskCanceledException(ex.Message, ex);
+            }
+            catch (Java.IO.IOException ex)
+            {
+                throw new HttpRequestException(ex.Message, ex);
             }
 
             var respBody = resp.Body();

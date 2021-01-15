@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using SecureHttpClient.Abstractions;
@@ -47,6 +48,11 @@ namespace SecureHttpClient.Test
         {
             var caCert = System.Text.Encoding.ASCII.GetBytes(caCertEncoded);
             _secureHttpClientHandler.SetTrustedRoots(caCert);
+        }
+
+        protected void SetTimeout(int timeout)
+        {
+            _httpClient.Timeout = TimeSpan.FromSeconds(timeout);
         }
     }
 }

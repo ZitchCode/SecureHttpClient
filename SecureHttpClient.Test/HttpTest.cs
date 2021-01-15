@@ -189,5 +189,20 @@ namespace SecureHttpClient.Test
             var protocol = response.Split('\n').Single(str => str.StartsWith("Protocol:"));
             Assert.Contains("HTTP/2.0", protocol);
         }
+
+        [Fact]
+        public async Task HttpTest_Timeout()
+        {
+            const string page = @"https://httpbin.org/delay/5";
+            SetTimeout(1);
+            await Assert.ThrowsAsync<TaskCanceledException>(() => GetAsync(page));
+        }
+
+        [Fact]
+        public async Task HttpTest_UnknownHost()
+        {
+            const string page = @"https://nosuchhostisknown/";
+            await Assert.ThrowsAsync<HttpRequestException>(() => GetAsync(page));
+        }
     }
 }
