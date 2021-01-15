@@ -165,10 +165,10 @@ namespace SecureHttpClient
                     request.Content.Headers :
                     Enumerable.Empty<KeyValuePair<string, IEnumerable<string>>>());
 
-            foreach (var kvp in keyValuePairs)
+            foreach (var (name, values) in keyValuePairs)
             {
-                var headerSeparator = kvp.Key == "User-Agent" ? " " : ",";
-                builder.AddHeader(kvp.Key, string.Join(headerSeparator, kvp.Value));
+                var headerSeparator = name == "User-Agent" ? " " : ",";
+                builder.AddHeader(name, string.Join(headerSeparator, values));
             }
 
             cancellationToken.ThrowIfCancellationRequested();
@@ -218,12 +218,12 @@ namespace SecureHttpClient
                 ret.Content = new ByteArrayContent(new byte[0]);
             }
 
-            foreach (var k in resp.Headers().ToMultimap())
+            foreach (var (name, values) in resp.Headers().ToMultimap())
             {
                 // special handling for Set-Cookie because folding them into one header is strongly discouraged.
                 // but adding them just folds them again so this is no option at the moment
-                ret.Headers.TryAddWithoutValidation(k.Key, k.Value);
-                ret.Content.Headers.TryAddWithoutValidation(k.Key, k.Value);
+                ret.Headers.TryAddWithoutValidation(name, values);
+                ret.Content.Headers.TryAddWithoutValidation(name, values);
             }
 
             return ret;

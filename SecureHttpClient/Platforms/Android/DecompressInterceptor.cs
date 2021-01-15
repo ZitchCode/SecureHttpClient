@@ -20,7 +20,7 @@ namespace SecureHttpClient
             return IsCompressed(response) ? Decompress(response) : response;
         }
         
-        private bool IsCompressed(Response response)
+        private static bool IsCompressed(Response response)
         {
             return response.Headers("Content-Encoding") != null 
                    && (response.Headers("Content-Encoding").Contains("gzip") || response.Headers("Content-Encoding").Contains("deflate"))

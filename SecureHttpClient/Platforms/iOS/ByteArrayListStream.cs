@@ -11,7 +11,7 @@ namespace SecureHttpClient
         private Exception _exception;
         private IDisposable _lockRelease;
         private readonly AsyncLock _readStreamLock;
-        private readonly List<byte[]> _bytes = new List<byte[]>();
+        private readonly List<byte[]> _bytes = new ();
 
         private bool _isCompleted;
         private long _maxLength;
@@ -40,11 +40,8 @@ namespace SecureHttpClient
 
         public override long Position
         {
-            get { return _position; }
-            set
-            {
-                throw new NotSupportedException();
-            }
+            get => _position;
+            set => throw new NotSupportedException();
         }
 
         public override long Length => _maxLength;

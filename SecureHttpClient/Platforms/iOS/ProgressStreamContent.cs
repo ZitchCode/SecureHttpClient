@@ -53,8 +53,7 @@ namespace SecureHttpClient
             if (_totalBytesExpected == -1)
                 _totalBytesExpected = Headers.ContentLength ?? -1;
 
-            long computedLength;
-            if (_totalBytesExpected == -1 && TryComputeLength(out computedLength))
+            if (_totalBytesExpected == -1 && TryComputeLength(out var computedLength))
                 _totalBytesExpected = computedLength == 0 ? -1 : computedLength;
 
             // If less than zero still then change to -1
@@ -67,7 +66,7 @@ namespace SecureHttpClient
         ProgressDelegate _progress;
         public ProgressDelegate Progress
         {
-            get { return _progress; }
+            get => _progress;
             set { _progress = value ?? delegate { }; }
         }
 
@@ -86,7 +85,7 @@ namespace SecureHttpClient
 
         private class ProgressStream : Stream
         {
-            private CancellationToken _token;
+            private readonly CancellationToken _token;
 
             public ProgressStream(Stream stream, CancellationToken token)
             {
@@ -125,8 +124,8 @@ namespace SecureHttpClient
 
             public override long Position
             {
-                get { return ParentStream.Position; }
-                set { ParentStream.Position = value; }
+                get => ParentStream.Position;
+                set => ParentStream.Position = value;
             }
 
             public override int Read(byte[] buffer, int offset, int count)

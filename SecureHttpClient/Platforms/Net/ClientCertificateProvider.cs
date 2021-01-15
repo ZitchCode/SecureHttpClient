@@ -25,7 +25,7 @@ namespace SecureHttpClient
 		/// The current collection of client certificates.
 		/// </summary>
 		/// <value>The certificates.</value>
-		public virtual X509CertificateCollection Certificates { get; protected set; } = new X509CertificateCollection();
+		public virtual X509CertificateCollection Certificates { get; protected set; } = new ();
     }
 
     /// <summary>

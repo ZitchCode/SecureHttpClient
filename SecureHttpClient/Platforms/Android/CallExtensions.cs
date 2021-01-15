@@ -32,30 +32,30 @@ namespace SecureHttpClient
 			return tcs.Task;
 		}
 
-		public static void Enqueue(this ICall call, Action<ICall, Response> onResponse, Action<ICall, Java.IO.IOException> onFailure)
+        private static void Enqueue(this ICall call, Action<ICall, Response> onResponse, Action<ICall, Java.IO.IOException> onFailure)
 		{
 			call.Enqueue(new ActionCallback(onResponse, onFailure));
 		}
 
 		private class ActionCallback : Java.Lang.Object, ICallback
 		{
-			private readonly Action<ICall, Response> onResponse;
-			private readonly Action<ICall, Java.IO.IOException> onFailure;
+			private readonly Action<ICall, Response> _onResponse;
+			private readonly Action<ICall, Java.IO.IOException> _onFailure;
 
 			public ActionCallback(Action<ICall, Response> onResponse, Action<ICall, Java.IO.IOException> onFailure)
 			{
-				this.onResponse = onResponse;
-				this.onFailure = onFailure;
+				_onResponse = onResponse;
+				_onFailure = onFailure;
 			}
 
 			public void OnResponse(ICall call, Response response)
 			{
-				onResponse?.Invoke(call, response);
+				_onResponse?.Invoke(call, response);
 			}
 
 			public void OnFailure(ICall call, Java.IO.IOException exception)
 			{
-				onFailure?.Invoke(call, exception);
+				_onFailure?.Invoke(call, exception);
 			}
 		}
 	}

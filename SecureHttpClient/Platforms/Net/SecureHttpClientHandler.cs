@@ -92,7 +92,7 @@ namespace SecureHttpClient
                 chain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
                 if (chain.Build(certificate))
                 {
-                    var root = chain.ChainElements[chain.ChainElements.Count - 1].Certificate;
+                    var root = chain.ChainElements[^1].Certificate;
                     good = _trustedRoots.Find(X509FindType.FindByThumbprint, root.Thumbprint, false).Count > 0;
                 }
             }
