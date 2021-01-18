@@ -23,7 +23,7 @@
   <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
     <Compile Include="Platforms\Android\**\*.cs" />
     <PackageReference Include="Xamarin.SquareUp.OkHttp3" Version="4.9.0" />
-    <PackageReference Include="Xamarin.SquareUp.Okio" Version="2.9.0" />
+    <PackageReference Include="Xamarin.SquareUp.Okio" Version="2.10.0" />
     <PackageReference Include="Xamarin.SquareUp.OkHttp3.UrlConnection" Version="4.9.0" />
   </ItemGroup>
 
