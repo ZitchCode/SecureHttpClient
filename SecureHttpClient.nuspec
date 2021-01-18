@@ -8,11 +8,11 @@
     <owners>tranb3r</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
-    <projectUrl>https://github.com/tranb3r/secure-httpclient</projectUrl>
-    <description>Cross-platform HttpClientHandler with TLS1.2 and Certificate Pinning</description>
+    <projectUrl>https://github.com/tranb3r/securehttpclient</projectUrl>
+    <description>Cross-platform HttpClientHandler with additional security features (certificate pinning, TLS1.2+, client certificates)</description>
     <copyright>Copyright 2020</copyright>
     <tags>xamarin, netstandard, ios, android, httpclient, security</tags>
-    <repository url="https://github.com/tranb3r/secure-httpclient" />
+    <repository url="https://github.com/tranb3r/securehttpclient" />
     <dependencies>
       <group targetFramework="MonoAndroid11.0">
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="3.1.11" exclude="Build,Analyzers" />
