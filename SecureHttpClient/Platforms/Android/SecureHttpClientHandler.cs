@@ -187,10 +187,6 @@ namespace SecureHttpClient
             {
                 throw new HttpRequestException(ex.Message, new AuthenticationException(ex.Message, ex));
             }
-            catch (Java.Net.UnknownHostException ex)
-            {
-                throw new HttpRequestException(ex.Message, ex);
-            }
             catch (Java.Net.SocketTimeoutException ex)
             {
                 throw new TaskCanceledException(ex.Message, ex);
