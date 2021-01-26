@@ -1,5 +1,7 @@
 ## 1.17.2
 - add buildTransitive for nuget targets
+- test : Xamarin.Essentials 1.6.1
+- test : Xamarin.Forms 5.0.0.1931
 
 ## 1.17.1
 - improve handling of timeout and unknownhost exceptions on android
