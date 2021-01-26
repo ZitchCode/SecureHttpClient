@@ -36,7 +36,9 @@
     <file src="SecureHttpClient\bin\Release\monoandroid11.0\SecureHttpClient.xml" target="lib\monoandroid11.0" />
     <file src="SecureHttpClient\bin\Release\xamarin.ios10\SecureHttpClient.dll" target="lib\xamarinios10" />
     <file src="SecureHttpClient\bin\Release\xamarin.ios10\SecureHttpClient.xml" target="lib\xamarinios10" />
+
     <file src="build\Proguard.cfg" target="proguard\monoandroid11.0" />
     <file src="build\SecureHttpClient.targets" target="build\monoandroid11.0" />
+    <file src="build\SecureHttpClient.targets" target="buildTransitive\monoandroid11.0" />
   </files>
 </package>

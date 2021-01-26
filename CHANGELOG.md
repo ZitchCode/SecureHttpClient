@@ -1,3 +1,6 @@
+## 1.17.2
+- add buildTransitive for nuget targets
+
 ## 1.17.1
 - improve handling of timeout and unknownhost exceptions on android
 - Xamarin.SquareUp.Okio 2.10.0
