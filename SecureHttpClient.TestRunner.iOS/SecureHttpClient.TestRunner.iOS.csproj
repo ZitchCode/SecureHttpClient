@@ -115,7 +115,7 @@
   <Choose>
     <When Condition=" '$(Configuration)'!='Debug' ">
       <ItemGroup>
-        <PackageReference Include="SecureHttpClient" Version="1.17.3" />
+        <PackageReference Include="SecureHttpClient" Version="1.17.4" />
       </ItemGroup>
     </When>
   </Choose>
