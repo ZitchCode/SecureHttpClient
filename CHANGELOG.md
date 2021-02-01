@@ -1,3 +1,6 @@
+## 1.17.3
+- test : fix pin
+
 ## 1.17.2
 - add buildTransitive for nuget targets
 - test : Xamarin.Essentials 1.6.1
