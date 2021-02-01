@@ -1,5 +1,7 @@
 ## 1.17.3
 - remove duplicate code
+- Xamarin.SquareUp.OkHttp3 4.9.1
+- Xamarin.SquareUp.OkHttp3.UrlConnection 4.9.1
 - test : fix pin
 
 ## 1.17.2
