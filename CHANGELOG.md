@@ -1,3 +1,6 @@
+## 1.17.4
+- fix nuspec
+
 ## 1.17.3
 - remove duplicate code
 - Xamarin.SquareUp.OkHttp3 4.9.1
