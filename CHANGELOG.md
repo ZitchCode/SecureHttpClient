@@ -1,4 +1,5 @@
 ## 1.17.3
+- remove duplicate code
 - test : fix pin
 
 ## 1.17.2
