@@ -1,3 +1,6 @@
+## 1.17.5
+- Microsoft.Extensions.* 5.0.x
+
 ## 1.17.4
 - fix nuspec
 
