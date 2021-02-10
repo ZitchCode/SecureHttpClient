@@ -1,4 +1,6 @@
 ## 1.17.5
+- vs : 16.8.5 (xamarin.vs 16.8.000.262 ; xamarin.android 11.1.0.26 ; xamarin.ios 14.10.0.4)
+- xcode 12.4 (ios 14.4)
 - Microsoft.Extensions.* 5.0.x
 
 ## 1.17.4
