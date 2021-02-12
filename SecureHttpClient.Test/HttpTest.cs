@@ -88,6 +88,16 @@ namespace SecureHttpClient.Test
         }
 
         [Fact]
+        public async Task HttpTest_DoNotFollowRedirects()
+        {
+            const string page = @"https://httpbingo.org/redirect/5"; // httpbingo replaces httpbin because of issue https://github.com/postmanlabs/httpbin/issues/617
+            DoNotFollowRedirects();
+            var response = await GetAsync(page, false);
+            Assert.Equal(HttpStatusCode.Found, response.StatusCode);
+            Assert.Equal(page, response.RequestMessage.RequestUri.AbsoluteUri);
+        }
+
+        [Fact]
         public async Task HttpTest_Delay()
         {
             const string page = @"https://httpbin.org/delay/5";

@@ -112,6 +112,7 @@ namespace SecureHttpClient
                 .WriteTimeout(100, TimeUnit.Seconds)
                 .ReadTimeout(100, TimeUnit.Seconds)
                 .CookieJar(new JavaNetCookieJar(new Java.Net.CookieManager()))
+                .FollowRedirects(AllowAutoRedirect)
                 .AddInterceptor(new DecompressInterceptor(_logger));
 
             if (UseProxy && Proxy is WebProxy webProxy)
