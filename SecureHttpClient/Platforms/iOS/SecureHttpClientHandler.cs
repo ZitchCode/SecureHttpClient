@@ -4,7 +4,6 @@ using System;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using Foundation;
@@ -88,18 +87,22 @@ namespace SecureHttpClient
             }
 
             var headers = request.Headers as IEnumerable<KeyValuePair<string, IEnumerable<string>>>;
-            var ms = new MemoryStream();
 
+            var body = default(NSData);
             if (request.Content != null)
             {
-                await request.Content.CopyToAsync(ms).ConfigureAwait(false);
-                headers = headers.Union(request.Content.Headers).ToArray();
+                var bytes = await request.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                if (bytes.Length > 0 || request.Method != HttpMethod.Get)
+                {
+                    body = NSData.FromArray(bytes);
+                    headers = headers.Union(request.Content.Headers).ToArray();
+                }
             }
 
             var rq = new NSMutableUrlRequest
             {
                 AllowsCellularAccess = true,
-                Body = NSData.FromArray(ms.ToArray()),
+                Body = body,
                 CachePolicy = NSUrlRequestCachePolicy.UseProtocolCachePolicy,
                 Headers = headers.Aggregate(new NSMutableDictionary(), (acc, x) => {
                     acc.Add(new NSString(x.Key), new NSString(string.Join(x.Key == "User-Agent" ? " " : ",", x.Value)));

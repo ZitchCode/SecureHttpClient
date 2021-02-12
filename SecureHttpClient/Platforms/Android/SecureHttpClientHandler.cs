@@ -146,14 +146,15 @@ namespace SecureHttpClient
             if (request.Content != null)
             {
                 var bytes = await request.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-
-                var contentType = "text/plain";
-                if (request.Content.Headers.ContentType != null)
+                if (bytes.Length > 0 || request.Method != HttpMethod.Get)
                 {
-                    contentType = string.Join(" ", request.Content.Headers.GetValues("Content-Type"));
+                    var contentType = "text/plain";
+                    if (request.Content.Headers.ContentType != null)
+                    {
+                        contentType = string.Join(" ", request.Content.Headers.GetValues("Content-Type"));
+                    }
+                    body = RequestBody.Create(bytes, MediaType.Parse(contentType));
                 }
-
-                body = RequestBody.Create(bytes, MediaType.Parse(contentType));
             }
 
             var builder = new Request.Builder()

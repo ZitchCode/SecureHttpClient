@@ -214,5 +214,35 @@ namespace SecureHttpClient.Test
             const string page = @"https://nosuchhostisknown/";
             await Assert.ThrowsAsync<HttpRequestException>(() => GetAsync(page));
         }
+
+        [SkippableFact]
+        public async Task HttpTest_GetWithNonEmptyRequestBody()
+        {
+            Skip.If(DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS, "GET method must not have a body");
+
+            const string page = @"https://httpbin.org/get";
+            var request = new HttpRequestMessage(HttpMethod.Get, page)
+            {
+                Content = new StringContent("test request body")
+            };
+            var result = await SendAsync(request).ReceiveString();
+            var json = JToken.Parse(result);
+            var url = json["url"].ToString();
+            Assert.Equal(page, url);
+        }
+
+        [Fact]
+        public async Task HttpTest_GetWithEmptyRequestBody()
+        {
+            const string page = @"https://httpbin.org/get";
+            var request = new HttpRequestMessage(HttpMethod.Get, page)
+            {
+                Content = new StringContent("")
+            };
+            var result = await SendAsync(request).ReceiveString();
+            var json = JToken.Parse(result);
+            var url = json["url"].ToString();
+            Assert.Equal(page, url);
+        }
     }
 }
