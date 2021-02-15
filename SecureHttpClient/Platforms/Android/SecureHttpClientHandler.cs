@@ -202,13 +202,12 @@ namespace SecureHttpClient
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            request.RequestUri = new Uri(resp.Request().Url().Url().ToString()); // should point to the request leading to the final response (in case of redirects)
-
             var ret = new HttpResponseMessage((HttpStatusCode) resp.Code())
             {
                 RequestMessage = request,
                 ReasonPhrase = resp.Message()
             };
+            ret.RequestMessage.RequestUri = new Uri(resp.Request().Url().Url().ToString()); // should point to the request leading to the final response (in case of redirects)
 
             if (respBody != null)
             {
