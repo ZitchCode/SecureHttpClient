@@ -66,8 +66,23 @@ namespace SecureHttpClient
                     // NB: Cocoa trolling us so hard by giving us back dummy dictionary entries
                     if (v.Key == null || v.Value == null) continue;
 
-                    ret.Headers.TryAddWithoutValidation(v.Key.ToString(), v.Value.ToString());
-                    ret.Content.Headers.TryAddWithoutValidation(v.Key.ToString(), v.Value.ToString());
+                    var headerKey = v.Key.ToString();
+
+                    if (headerKey.ToLower() == "set-cookie")
+                    {
+                        var splitter = new SetCookieHeaderSplitter(v.Value.ToString());
+                        while (splitter.HasNext())
+                        {
+                            var setCookieHeaderValue = splitter.Next();
+                            ret.Headers.TryAddWithoutValidation(headerKey, setCookieHeaderValue);
+                            ret.Content.Headers.TryAddWithoutValidation(headerKey, setCookieHeaderValue);
+                        }
+                    }
+                    else
+                    {
+                        ret.Headers.TryAddWithoutValidation(headerKey, v.Value.ToString());
+                        ret.Content.Headers.TryAddWithoutValidation(headerKey, v.Value.ToString());
+                    }
                 }
 
                 data.FutureResponse.TrySetResult(ret);

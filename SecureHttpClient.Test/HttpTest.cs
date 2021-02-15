@@ -157,17 +157,16 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task HttpTest_SetCookies()
         {
-            const string cookie1 = "k1=v1; Path=/";
-            const string cookie2 = "k2=v2; Path=/";
+            const string cookie1 = "k1=v1; Path=/; expires=Sat, 01-Jan-2050 00:00:00 GMT";
+            const string cookie2 = "k2=v2; Path=/; expires=Fri, 01-Jan-2049 00:00:00 GMT";
             var page1 = $@"https://httpbin.org/response-headers?Set-Cookie={WebUtility.UrlEncode(cookie1)}&Set-Cookie={WebUtility.UrlEncode(cookie2)}";
             var response1 = await GetAsync(page1);
             response1.Headers.TryGetValues("set-cookie", out var respCookies);
-            respCookies = respCookies?.SelectMany(c => c.Split(',')).Select(c => c.Trim());
+            Assert.Equal(new List<string> { cookie1, cookie2 }, respCookies);
             const string page2 = @"https://httpbin.org/cookies";
             var result = await GetAsync(page2).ReceiveString();
             var json = JToken.Parse(result);
             var cookies = json["cookies"].ToObject<Dictionary<string, string>>();
-            Assert.Equal(new List<string> { cookie1, cookie2 }, respCookies);
             Assert.Contains(new KeyValuePair<string, string>("k1", "v1"), cookies);
             Assert.Contains(new KeyValuePair<string, string>("k2", "v2"), cookies);
         }

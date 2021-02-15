@@ -1,6 +1,7 @@
 ## 1.17.6
 - fix support for AllowAutoRedirect=false (was missing on android)
 - fix error on android and ios when get request has an empty body
+- fix parsing of set-cookie header with folding on ios
 
 ## 1.17.5
 - vs : 16.8.5 (xamarin.vs 16.8.000.262 ; xamarin.android 11.1.0.26 ; xamarin.ios 14.10.0.4)
