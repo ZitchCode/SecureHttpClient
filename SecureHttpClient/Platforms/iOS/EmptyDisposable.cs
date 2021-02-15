@@ -1,3 +1,5 @@
+#if __IOS__
+
 using System;
 
 namespace SecureHttpClient
@@ -10,3 +12,5 @@ namespace SecureHttpClient
         public void Dispose() { }
     }
 }
+
+#endif

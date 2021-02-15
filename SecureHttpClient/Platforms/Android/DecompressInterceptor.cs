@@ -1,4 +1,6 @@
-﻿using Java.Util.Zip;
+﻿#if __ANDROID__
+
+using Java.Util.Zip;
 using Microsoft.Extensions.Logging;
 using Square.OkHttp3;
 using Square.OkIO;
@@ -47,3 +49,5 @@ namespace SecureHttpClient
         }
     }
 }
+
+#endif

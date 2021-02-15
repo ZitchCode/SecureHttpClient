@@ -1,3 +1,5 @@
+#if __IOS__
+
 using System;
 using System.Threading.Tasks;
 using System.Threading;
@@ -41,3 +43,5 @@ namespace SecureHttpClient
         }
     }
 }
+
+#endif

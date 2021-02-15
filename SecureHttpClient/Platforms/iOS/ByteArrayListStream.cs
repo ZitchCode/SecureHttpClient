@@ -1,3 +1,5 @@
+#if __IOS__
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -193,3 +195,5 @@ namespace SecureHttpClient
         }
     }
 }
+
+#endif

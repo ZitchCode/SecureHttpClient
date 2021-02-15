@@ -1,3 +1,5 @@
+#if __ANDROID__
+
 using Android.Runtime;
 using Java.Lang;
 using Java.Security;
@@ -114,3 +116,5 @@ namespace SecureHttpClient
         }
     }
 }
+
+#endif
