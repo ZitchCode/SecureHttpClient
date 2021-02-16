@@ -2,6 +2,7 @@
 - fix support for AllowAutoRedirect=false (was missing on android)
 - fix error on android and ios when get request has an empty body
 - fix parsing of set-cookie header with folding on ios
+- ios now supports both system's proxy and httpclienthandler's proxy
 - test : Xamarin.Forms 5.0.0.2012
 
 ## 1.17.5

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using Foundation;
 using Microsoft.Extensions.Logging;
@@ -74,8 +75,37 @@ namespace SecureHttpClient
         private void InitSession()
         {
             using var configuration = NSUrlSessionConfiguration.DefaultSessionConfiguration;
+            if (UseProxy && Proxy is WebProxy webProxy)
+            {
+                SetProxy(configuration, webProxy);
+            }
             var nsUrlSessionDelegate = (INSUrlSessionDelegate)new DataTaskDelegate(this, _certificatePinner.IsValueCreated ? _certificatePinner.Value : null, _trustedRoots);
             _session = NSUrlSession.FromConfiguration(configuration, nsUrlSessionDelegate, null);
+        }
+
+        private static void SetProxy(NSUrlSessionConfiguration configuration, WebProxy webProxy)
+        {
+            var host = webProxy.Address.Host;
+            var port = webProxy.Address.Port;
+            var values = new []
+            {
+                NSObject.FromObject(host),
+                NSNumber.FromInt32(port),
+                NSNumber.FromInt32(1),
+                NSObject.FromObject(host),
+                NSNumber.FromInt32(port),
+                NSNumber.FromInt32(1)
+            };
+            var keys = new []
+            {
+                NSObject.FromObject("HTTPProxy"),
+                NSObject.FromObject("HTTPPort"),
+                NSObject.FromObject("HTTPEnable"),
+                NSObject.FromObject("HTTPSProxy"),
+                NSObject.FromObject("HTTPSPort"),
+                NSObject.FromObject("HTTPSEnable")
+            };
+            configuration.ConnectionProxyDictionary = NSDictionary.FromObjectsAndKeys(values, keys);
         }
 
         /// <inheritdoc />
