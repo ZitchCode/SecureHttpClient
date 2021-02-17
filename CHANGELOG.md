@@ -1,5 +1,6 @@
 ## 1.17.6
 - fix support for AllowAutoRedirect=false (was missing on android)
+- fix support for UseCookies=false (was missing on android and ios)
 - fix error on android and ios when get request has an empty body
 - fix parsing of set-cookie header with folding on ios
 - ios now supports both system's proxy and httpclienthandler's proxy

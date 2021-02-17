@@ -79,6 +79,10 @@ namespace SecureHttpClient
             {
                 SetProxy(configuration, webProxy);
             }
+            if (!UseCookies)
+            {
+                configuration.HttpCookieStorage = null;
+            }
             var nsUrlSessionDelegate = (INSUrlSessionDelegate)new DataTaskDelegate(this, _certificatePinner.IsValueCreated ? _certificatePinner.Value : null, _trustedRoots);
             _session = NSUrlSession.FromConfiguration(configuration, nsUrlSessionDelegate, null);
         }

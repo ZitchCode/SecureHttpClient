@@ -63,5 +63,10 @@ namespace SecureHttpClient.Test
         {
             _httpClient.Timeout = TimeSpan.FromSeconds(timeout);
         }
+
+        protected void DisableCookies()
+        {
+            _secureHttpClientHandler.UseCookies = false;
+        }
     }
 }

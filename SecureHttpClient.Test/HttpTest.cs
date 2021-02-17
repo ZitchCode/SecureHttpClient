@@ -186,6 +186,17 @@ namespace SecureHttpClient.Test
         }
 
         [Fact]
+        public async Task HttpTest_DoNotUseCookies()
+        {
+            const string page = @"https://httpbin.org/cookies/set?k1=v1";
+            DisableCookies();
+            var result = await GetAsync(page).ReceiveString();
+            var json = JToken.Parse(result);
+            var cookies = json["cookies"].ToObject<Dictionary<string, string>>();
+            Assert.Empty(cookies);
+        }
+
+        [Fact]
         public async Task HttpTest_Protocol()
         {
             const string page = @"https://http2.golang.org/reqinfo";
