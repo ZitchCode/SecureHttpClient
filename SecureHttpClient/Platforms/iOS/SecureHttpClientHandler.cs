@@ -75,9 +75,13 @@ namespace SecureHttpClient
         private void InitSession()
         {
             using var configuration = NSUrlSessionConfiguration.DefaultSessionConfiguration;
-            if (UseProxy && Proxy is WebProxy webProxy)
+            if (!UseProxy)
             {
-                SetProxy(configuration, webProxy);
+                configuration.ConnectionProxyDictionary = new NSDictionary();
+            }
+            else if (Proxy is WebProxy webProxy)
+            {
+                configuration.ConnectionProxyDictionary = GetProxyDictionary(webProxy);
             }
             if (!UseCookies)
             {
@@ -87,7 +91,7 @@ namespace SecureHttpClient
             _session = NSUrlSession.FromConfiguration(configuration, nsUrlSessionDelegate, null);
         }
 
-        private static void SetProxy(NSUrlSessionConfiguration configuration, WebProxy webProxy)
+        private static NSDictionary GetProxyDictionary(WebProxy webProxy)
         {
             var host = webProxy.Address.Host;
             var port = webProxy.Address.Port;
@@ -109,7 +113,8 @@ namespace SecureHttpClient
                 NSObject.FromObject("HTTPSPort"),
                 NSObject.FromObject("HTTPSEnable")
             };
-            configuration.ConnectionProxyDictionary = NSDictionary.FromObjectsAndKeys(values, keys);
+            var proxyDictionary = NSDictionary.FromObjectsAndKeys(values, keys);
+            return proxyDictionary;
         }
 
         /// <inheritdoc />

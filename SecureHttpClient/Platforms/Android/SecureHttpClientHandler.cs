@@ -119,7 +119,11 @@ namespace SecureHttpClient
                 builder.CookieJar(new JavaNetCookieJar(new Java.Net.CookieManager()));
             }
 
-            if (UseProxy && Proxy is WebProxy webProxy)
+            if (!UseProxy)
+            {
+                builder.Proxy(Java.Net.Proxy.NoProxy);
+            }
+            else if (Proxy is WebProxy webProxy)
             {
                 var proxyAddress = new InetSocketAddress(webProxy.Address.Host, webProxy.Address.Port);
                 builder.Proxy(new Proxy(Java.Net.Proxy.Type.Http, proxyAddress));
