@@ -1,4 +1,4 @@
-## 1.17.6
+## 1.18.0
 - fix support for AllowAutoRedirect=false (was missing on android)
 - fix support for UseCookies=false (was missing on android and ios)
 - fix support for UseProxy=false (was missing on android and ios)
