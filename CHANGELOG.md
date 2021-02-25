@@ -1,3 +1,6 @@
+## 1.18.1
+- iOS: import full certificate chain instead of only the last one
+
 ## 1.18.0
 - fix support for AllowAutoRedirect=false (was missing on android)
 - fix support for UseCookies=false (was missing on android and ios)
