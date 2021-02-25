@@ -22,7 +22,7 @@
       </group>
       <group targetFramework="Xamarin.iOS1.0">
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="5.0.0" exclude="Build,Analyzers" />
-        <dependency id="Portable.BouncyCastle" version="1.8.9" exclude="Build,Analyzers" />
+        <dependency id="Portable.BouncyCastle" version="1.8.10" exclude="Build,Analyzers" />
       </group>
       <group targetFramework=".NETStandard2.1">
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="5.0.0" exclude="Build,Analyzers" />
