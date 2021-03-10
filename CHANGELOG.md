@@ -1,3 +1,7 @@
+## 1.18.2
+- vs : 16.9.1 (xamarin.vs 16.9.000.271 ; xamarin.android 11.2.0.21 ; xamarin.ios 14.14.2.5)
+- dotnet sdk 5.0.200
+
 ## 1.18.1
 - vs : 16.8.6 (xamarin.vs 16.8.000.262 ; xamarin.android 11.1.0.26 ; xamarin.ios 14.10.0.4)
 - iOS: import full certificate chain instead of only the last one
