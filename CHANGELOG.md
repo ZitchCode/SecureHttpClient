@@ -1,5 +1,5 @@
 ## 1.18.2
-- vs : 16.9.1 (xamarin.vs 16.9.000.271 ; xamarin.android 11.2.0.21 ; xamarin.ios 14.14.2.5)
+- vs : 16.9.3 (xamarin.vs 16.9.000.273 ; xamarin.android 11.2.2.1 ; xamarin.ios 14.14.2.5)
 - dotnet sdk 5.0.200
 
 ## 1.18.1
