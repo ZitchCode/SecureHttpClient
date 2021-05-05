@@ -16,3 +16,7 @@ Tested on the following platforms:
 - Android 5-11 (api 21-30)
 - iOS 14.4
 - .net 5.0
+
+About cookies and redirects:
+- SecureHttpClient handles cookies and redirects, but the behavior can differ a bit from one platform to another, because of different implementations in the native libraries used by SecureHttpClient.
+- for identical behavior between platforms, it's recommended to use [Flurl](https://github.com/tmenier/Flurl) on top of SecureHttpClient, and let [Flurl](https://github.com/tmenier/Flurl) handle cookies and redirects.
