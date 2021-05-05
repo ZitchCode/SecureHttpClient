@@ -14,5 +14,5 @@ Usage:
 
 Tested on the following platforms:
 - Android 5-11 (api 21-30)
-- iOS 14.3
+- iOS 14.4
 - .net 5.0
