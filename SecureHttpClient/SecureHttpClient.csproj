@@ -7,6 +7,26 @@
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PackageId>SecureHttpClient</PackageId>
+    <Title>SecureHttpClient</Title>
+    <Authors>tranb3r</Authors>
+    <Owners>tranb3r</Owners>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageLicenseUrl>https://licenses.nuget.org/MIT</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/tranb3r/securehttpclient</PackageProjectUrl>
+    <Description>Cross-platform HttpClientHandler with additional security features (certificate pinning, TLS1.2+, client certificates)</Description>
+    <Copyright>Copyright 2020</Copyright>
+    <PackageTags>xamarin, netstandard, ios, android, httpclient, security</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <EnablePackCleanup>false</EnablePackCleanup>
+    <PackSymbols>false</PackSymbols>
+    <PackFrameworkReferences>false</PackFrameworkReferences>
+  </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
@@ -18,6 +38,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+    <PackageReference Include="NuGetizer" Version="0.6.2" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
@@ -36,6 +57,12 @@
   <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
     <Compile Include="Platforms\Net\**\*.cs" />
     <Compile Include="CertificatePinning\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageFile Include="..\build\Proguard.cfg" PackagePath="proguard\monoandroid11.0\Proguard.cfg" />
+    <PackageFile Include="..\build\SecureHttpClient.targets" PackagePath="build\monoandroid11.0\SecureHttpClient.targets" />
+    <PackageFile Include="..\build\SecureHttpClient.targets" PackagePath="buildTransitive\monoandroid11.0\SecureHttpClient.targets" />
   </ItemGroup>
 
 </Project>
