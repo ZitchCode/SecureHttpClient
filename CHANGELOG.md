@@ -1,6 +1,7 @@
 ## 1.18.2
-- vs : 16.9.4 (xamarin.vs 16.9.000.273 ; xamarin.android 11.2.2.1 ; xamarin.ios 14.14.2.5)
+- vs : 16.9.5 (xamarin.vs 16.9.000.292 ; xamarin.android 11.2.2.1 ; xamarin.ios 14.16.0.5)
 - dotnet sdk 5.0.200
+- xcode 12.5 (ios 14.5)
 - test : fix pin
 - test : Newtonsoft.Json 13.0.1
 - build : use nugetizer 0.6.2 and get rid of manually updated .nuspec file
