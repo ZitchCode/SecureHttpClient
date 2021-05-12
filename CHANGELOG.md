@@ -4,8 +4,8 @@
 - xcode 12.5 (ios 14.5)
 - test : fix pin
 - test : Newtonsoft.Json 13.0.1
-- build : use nugetizer 0.6.2 and get rid of manually updated .nuspec file
 - test : Xamarin.Kotlin.StdLib 1.5.0
+- build : use nugetizer 0.7.0 and get rid of manually updated .nuspec file
 
 ## 1.18.1
 - vs : 16.8.6 (xamarin.vs 16.8.000.262 ; xamarin.android 11.1.0.26 ; xamarin.ios 14.10.0.4)
