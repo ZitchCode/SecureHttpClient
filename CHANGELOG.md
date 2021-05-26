@@ -1,6 +1,6 @@
 ## 1.18.2
-- vs : 16.9.5 (xamarin.vs 16.9.000.292 ; xamarin.android 11.2.2.1 ; xamarin.ios 14.16.0.5)
-- dotnet sdk 5.0.200
+- vs : 16.10.0 (xamarin.vs 16.10.000.228 ; xamarin.android 11.3.0.1 ; xamarin.ios 14.20.0.1)
+- dotnet sdk 5.0.300
 - xcode 12.5 (ios 14.5)
 - test : fix pin
 - test : Newtonsoft.Json 13.0.1
