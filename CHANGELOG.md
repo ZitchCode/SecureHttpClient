@@ -1,3 +1,6 @@
+## 1.18.3
+- use official square bindings instead of forked ones
+
 ## 1.18.2
 - vs : 16.10.0 (xamarin.vs 16.10.000.228 ; xamarin.android 11.3.0.1 ; xamarin.ios 14.20.0.1)
 - dotnet sdk 5.0.300
