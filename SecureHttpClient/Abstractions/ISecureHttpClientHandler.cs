@@ -9,7 +9,7 @@
         /// Add certificate pins for a given hostname
         /// </summary>
         /// <param name="hostname">The hostname</param>
-        /// <param name="pins">The array of certifiate pins (example of pin string: "sha256/fiKY8VhjQRb2voRmVXsqI0xPIREcwOVhpexrplrlqQY=")</param>
+        /// <param name="pins">The array of certificate pins (example of pin string: "sha256/fiKY8VhjQRb2voRmVXsqI0xPIREcwOVhpexrplrlqQY=")</param>
         void AddCertificatePinner(string hostname, string[] pins);
 
         /// <summary>
