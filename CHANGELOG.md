@@ -1,3 +1,7 @@
+## 1.18.4
+- vs : 16.11.1 (xamarin.vs 16.11.000.174 ; xamarin.android 11.4.0.5 ; xamarin.ios 14.20.0.25)
+- dotnet sdk 5.0.400
+
 ## 1.18.3
 - use official square bindings instead of forked ones
 - remove android's sslsocketfactory code that is not used anymore
