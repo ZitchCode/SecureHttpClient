@@ -1,6 +1,10 @@
 ## 1.18.4
 - vs : 16.11.1 (xamarin.vs 16.11.000.174 ; xamarin.android 11.4.0.5 ; xamarin.ios 14.20.0.25)
 - dotnet sdk 5.0.400
+- test : Microsoft.Extensions.DependencyInjection 5.0.2
+- test : Serilog.Sinks.Console 4.0.0
+- test : Xamarin.Essentials 1.7.0
+- test : Xamarin.Forms 5.0.0.2083
 
 ## 1.18.3
 - use official square bindings instead of forked ones
