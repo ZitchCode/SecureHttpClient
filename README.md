@@ -13,8 +13,8 @@ Usage:
 - for advanced usage examples, look into the SecureHttpClient.Test folder.
 
 Tested on the following platforms:
-- Android 5-11 (api 21-30)
-- iOS 14.5
+- Android 5-12 (api 21-31)
+- iOS 15.0
 - .net 5.0
 
 About cookies and redirects:
