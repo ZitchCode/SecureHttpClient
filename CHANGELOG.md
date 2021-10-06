@@ -5,7 +5,7 @@
 - test : Microsoft.Extensions.DependencyInjection 5.0.2
 - test : Serilog.Sinks.Console 4.0.0
 - test : Xamarin.Essentials 1.7.0
-- test : Xamarin.Forms 5.0.0.2083
+- test : Xamarin.Forms 5.0.0.2125
 
 ## 1.18.3
 - use official square bindings instead of forked ones
