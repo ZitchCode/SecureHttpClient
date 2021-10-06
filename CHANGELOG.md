@@ -1,5 +1,5 @@
 ## 1.18.4
-- vs : 16.11.1 (xamarin.vs 16.11.000.174 ; xamarin.android 11.4.0.5 ; xamarin.ios 14.20.0.25)
+- vs : 16.11.4 (xamarin.vs 16.11.000.190 ; xamarin.android 11.4.0.5 ; xamarin.ios 15.0.0.8)- dotnet sdk 5.0.400
 - dotnet sdk 5.0.400
 - build : NuGetizer 0.7.4
 - test : Microsoft.Extensions.DependencyInjection 5.0.2
