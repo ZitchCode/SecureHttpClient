@@ -1,6 +1,7 @@
 ## 1.18.4
 - vs : 17.0.0-rc (xamarin.vs 17.0.0.315 ; xamarin.android 12.1.0.4 ; xamarin.ios 15.0.0.8)
 - xcode 13.0 (ios 15.0)
+- android 12 (api 31)
 - dotnet sdk 5.0.400
 - build : NuGetizer 0.7.4
 - test : Microsoft.Extensions.DependencyInjection 5.0.2
