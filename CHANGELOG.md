@@ -1,5 +1,5 @@
 ## 1.18.4
-- vs : 16.11.4 (xamarin.vs 16.11.000.190 ; xamarin.android 11.4.0.5 ; xamarin.ios 15.0.0.8)
+- vs : 17.0.0-rc (xamarin.vs 17.0.0.315 ; xamarin.android 12.1.0.4 ; xamarin.ios 15.0.0.8)
 - xcode 13.0 (ios 15.0)
 - dotnet sdk 5.0.400
 - build : NuGetizer 0.7.4
