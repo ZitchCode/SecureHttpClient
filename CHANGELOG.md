@@ -3,7 +3,7 @@
 - xcode 13.0 (ios 15.0)
 - android 12 (api 31)
 - dotnet sdk 5.0.400
-- build : NuGetizer 0.7.4
+- build : NuGetizer 0.7.5
 - test : Microsoft.Extensions.DependencyInjection 5.0.2
 - test : Serilog.Sinks.Console 4.0.0
 - test : Xamarin.Essentials 1.7.0
