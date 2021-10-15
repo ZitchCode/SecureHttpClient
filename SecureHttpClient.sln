@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29418.71
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31808.319
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{08CA4EC8-8C67-4325-A09B-95E4B4ABFA05}"
 EndProject
@@ -15,6 +15,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureHttpClient.TestRunner.iOS", "SecureHttpClient.TestRunner.iOS\SecureHttpClient.TestRunner.iOS.csproj", "{B38723F0-E81C-4DB7-B362-FFEA31E2BDCB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecureHttpClient", "SecureHttpClient\SecureHttpClient.csproj", "{F30E01E7-A9DB-4E37-9E23-2E8A38E309EB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{53117652-4EF0-4378-B285-BFDF42947291} = {53117652-4EF0-4378-B285-BFDF42947291}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{660924B3-5808-46CA-A170-062605939D7A}"
 	ProjectSection(SolutionItems) = preProject
@@ -29,6 +32,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{660924B3
 		build\SecureHttpClient.targets = build\SecureHttpClient.targets
 		version.txt = version.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Square.OkHttp3.DecompressInterceptor", "Square.OkHttp3.DecompressInterceptor\Square.OkHttp3.DecompressInterceptor.csproj", "{53117652-4EF0-4378-B285-BFDF42947291}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -351,6 +356,62 @@ Global
 		{F30E01E7-A9DB-4E37-9E23-2E8A38E309EB}.Release|x64.Build.0 = Release|Any CPU
 		{F30E01E7-A9DB-4E37-9E23-2E8A38E309EB}.Release|x86.ActiveCfg = Release|Any CPU
 		{F30E01E7-A9DB-4E37-9E23-2E8A38E309EB}.Release|x86.Build.0 = Release|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Ad-Hoc|Any CPU.ActiveCfg = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Ad-Hoc|Any CPU.Build.0 = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Ad-Hoc|ARM.ActiveCfg = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Ad-Hoc|ARM.Build.0 = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Ad-Hoc|ARM64.ActiveCfg = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Ad-Hoc|ARM64.Build.0 = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Ad-Hoc|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Ad-Hoc|x64.ActiveCfg = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Ad-Hoc|x64.Build.0 = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Ad-Hoc|x86.ActiveCfg = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Ad-Hoc|x86.Build.0 = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.AppStore|Any CPU.ActiveCfg = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.AppStore|Any CPU.Build.0 = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.AppStore|ARM.ActiveCfg = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.AppStore|ARM.Build.0 = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.AppStore|ARM64.ActiveCfg = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.AppStore|ARM64.Build.0 = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.AppStore|iPhone.Build.0 = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.AppStore|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.AppStore|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.AppStore|x64.ActiveCfg = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.AppStore|x64.Build.0 = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.AppStore|x86.ActiveCfg = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.AppStore|x86.Build.0 = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Debug|ARM.Build.0 = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Debug|x64.Build.0 = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Debug|x86.Build.0 = Debug|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Release|ARM.ActiveCfg = Release|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Release|ARM.Build.0 = Release|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Release|ARM64.Build.0 = Release|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Release|iPhone.Build.0 = Release|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Release|x64.ActiveCfg = Release|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Release|x64.Build.0 = Release|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Release|x86.ActiveCfg = Release|Any CPU
+		{53117652-4EF0-4378-B285-BFDF42947291}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -361,6 +422,7 @@ Global
 		{503B71DB-1CCA-49CA-8C2F-7FAA87B5520A} = {98B921B7-5B2A-4E33-941F-119E72DF1908}
 		{B38723F0-E81C-4DB7-B362-FFEA31E2BDCB} = {98B921B7-5B2A-4E33-941F-119E72DF1908}
 		{F30E01E7-A9DB-4E37-9E23-2E8A38E309EB} = {08CA4EC8-8C67-4325-A09B-95E4B4ABFA05}
+		{53117652-4EF0-4378-B285-BFDF42947291} = {08CA4EC8-8C67-4325-A09B-95E4B4ABFA05}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D808F29-FA94-47AE-A112-BEF721E47F86}

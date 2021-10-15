@@ -1,7 +1,9 @@
 ﻿using Android.App;
 using Android.OS;
+using Android.Runtime;
 using Serilog;
 using Serilog.Core;
+using Xunit;
 using Xunit.Runners.UI;
 
 namespace SecureHttpClient.TestRunner.Android
@@ -17,9 +19,17 @@ namespace SecureHttpClient.TestRunner.Android
                 .Enrich.WithProperty(Constants.SourceContextPropertyName, "TestRunner")
                 .CreateLogger();
 
-            AddTestAssembly(typeof(Test.SslTest).Assembly);
+            AndroidEnvironment.UnhandledExceptionRaiser += OnAndroidEnvironmentUnhandledExceptionRaiser;
+
+            AddTestAssembly(typeof(Test.HttpTest).Assembly);
             AutoStart = true;
             base.OnCreate(bundle);
+        }
+
+        private static void OnAndroidEnvironmentUnhandledExceptionRaiser(object sender, RaiseThrowableEventArgs e)
+        {
+            Log.Fatal(e.Exception, "AndroidEnvironment.UnhandledExceptionRaiser");
+            Assert.True(false, "AndroidEnvironment.UnhandledExceptionRaiser");
         }
 
         protected override void OnStop()

@@ -112,7 +112,7 @@ namespace SecureHttpClient
                 .WriteTimeout(100, TimeUnit.Seconds)
                 .ReadTimeout(100, TimeUnit.Seconds)
                 .FollowRedirects(AllowAutoRedirect)
-                .AddInterceptor(new DecompressInterceptor(_logger));
+                .AddInterceptor(new DecompressInterceptor());
 
             if (UseCookies)
             {
