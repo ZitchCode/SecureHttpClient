@@ -10,8 +10,8 @@
     <TemplateGuid>{77efb91c-a7e9-4b0e-a7c5-31eeec3c6d46}</TemplateGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Square.OkHttp3.DecompressInterceptor</RootNamespace>
-    <AssemblyName>Square.OkHttp3.DecompressInterceptor</AssemblyName>
+    <RootNamespace>SecureHttpClient.OkHttp</RootNamespace>
+    <AssemblyName>SecureHttpClient.OkHttp</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <Deterministic>True</Deterministic>
     <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
@@ -59,7 +59,7 @@
     <PackageReference Include="Square.OkHttp3" Version="4.9.1" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedJar Include="Jars\okhttp-decompressinterceptor.jar" />
+    <EmbeddedJar Include="Jars\securehttpclient-okhttp.jar" />
   </ItemGroup>
   <ItemGroup>
     <None Include="java\buildjar.bat" />

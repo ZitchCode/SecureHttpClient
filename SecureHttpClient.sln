@@ -33,7 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{660924B3
 		version.txt = version.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Square.OkHttp3.DecompressInterceptor", "Square.OkHttp3.DecompressInterceptor\Square.OkHttp3.DecompressInterceptor.csproj", "{53117652-4EF0-4378-B285-BFDF42947291}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureHttpClient.OkHttp", "SecureHttpClient.OkHttp\SecureHttpClient.OkHttp.csproj", "{53117652-4EF0-4378-B285-BFDF42947291}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

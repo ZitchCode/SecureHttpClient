@@ -46,7 +46,7 @@
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
     <Compile Include="Platforms\Android\**\*.cs" />
-    <ProjectReference Include="..\Square.OkHttp3.DecompressInterceptor\Square.OkHttp3.DecompressInterceptor.csproj" />
+    <ProjectReference Include="..\SecureHttpClient.OkHttp\SecureHttpClient.OkHttp.csproj" />
     <PackageReference Include="Square.OkHttp3" Version="4.9.1" />
     <PackageReference Include="Square.OkIO" Version="2.10.0" />
     <PackageReference Include="Square.OkHttp3.UrlConnection" Version="4.9.1" />

@@ -1,4 +1,4 @@
-package securehttpclient;
+package securehttpclient.okhttp;
 
 import java.io.IOException;
 import java.util.zip.Inflater;

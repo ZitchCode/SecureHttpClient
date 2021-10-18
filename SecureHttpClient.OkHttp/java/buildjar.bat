@@ -10,14 +10,14 @@ bitsadmin.exe /transfer "Download okhttp jar" https://repo1.maven.org/maven2/com
 bitsadmin.exe /transfer "Download okhttp jar" https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.4.32/kotlin-stdlib-1.4.32.jar "%~dp0\jars\kotlin-stdlib.jar"
 
 echo -- BUILD JAVA ----------------------------------------------------------------------------------------------------------------------------------------------
-javac -classpath jars/* DecompressInterceptor.java
+javac -classpath jars/* *.java
 
 echo -- BUILD JAR -----------------------------------------------------------------------------------------------------------------------------------------------
 mkdir src
-mkdir src\securehttpclient
-move DecompressInterceptor.class src\securehttpclient\
-jar cvf okhttp-decompressinterceptor.jar -C src .
-move okhttp-decompressinterceptor.jar ..\Jars\
+mkdir src\securehttpclient-okhttp
+move *.class src\securehttpclient-okhttp\
+jar cvf securehttpclient-okhttp.jar -C src .
+move securehttpclient-okhttp.jar ..\Jars\
 
 echo -- CLEAN ---------------------------------------------------------------------------------------------------------------------------------------------------
 for /d /r . %%d in (jars,src) do @if exist "%%d" rd /s/q "%%d"

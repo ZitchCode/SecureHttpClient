@@ -13,6 +13,7 @@ using Java.Security.Cert;
 using Java.Util.Concurrent;
 using Javax.Net.Ssl;
 using Square.OkHttp3;
+using SecureHttpClient.OkHttp;
 using Microsoft.Extensions.Logging;
 using System.Security.Authentication;
 using Java.Net;
