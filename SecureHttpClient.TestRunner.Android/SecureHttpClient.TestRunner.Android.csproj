@@ -73,7 +73,7 @@
   <Choose>
     <When Condition=" '$(Configuration)'=='Release' ">
       <ItemGroup>
-        <PackageReference Include="SecureHttpClient" Version="1.18.4" />
+        <PackageReference Include="SecureHttpClient" />
       </ItemGroup>
     </When>
   </Choose>

@@ -1,5 +1,6 @@
 ## 1.18.5
 - vs : 17.0.0-rc2 (xamarin.vs 17.0.0.324 ; xamarin.android 12.1.0.4 ; xamarin.ios 15.0.0.17)
+- build : centralize securehttpclient nuget version in directory.build.targets
 
 ## 1.18.4
 - vs : 17.0.0-rc (xamarin.vs 17.0.0.315 ; xamarin.android 12.1.0.4 ; xamarin.ios 15.0.0.8)
