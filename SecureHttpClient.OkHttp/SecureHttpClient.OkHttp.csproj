@@ -56,7 +56,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Square.OkHttp3" Version="4.9.1" />
+    <PackageReference Include="Square.OkHttp3" Version="4.9.2" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedJar Include="Jars\securehttpclient-okhttp.jar" />
