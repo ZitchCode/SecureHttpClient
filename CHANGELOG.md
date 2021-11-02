@@ -4,6 +4,7 @@
 - Portable.BouncyCastle 1.9.0
 - SquareUp.OkHttp3 4.9.2
 - SquareUp.OkHttp3.UrlConnection 4.9.2
+- test : Serilog.Extensions.Logging 3.1.0
 - test : Xamarin.Forms 5.0.0.2196
 
 ## 1.18.4
