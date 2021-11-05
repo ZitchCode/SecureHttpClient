@@ -1,6 +1,7 @@
 ## 1.18.5
 - vs : 17.0.0-rc3 (xamarin.vs 17.0.0.331 ; xamarin.android 12.1.0.5 ; xamarin.ios 15.0.0.18)
 - build : centralize securehttpclient nuget version in directory.build.targets
+- C# 10.0
 - Portable.BouncyCastle 1.9.0
 - SquareUp.OkHttp3 4.9.2
 - SquareUp.OkHttp3.UrlConnection 4.9.2
