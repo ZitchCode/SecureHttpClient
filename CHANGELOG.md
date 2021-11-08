@@ -1,5 +1,6 @@
 ## 1.18.5
 - vs : 17.0.0-rc3 (xamarin.vs 17.0.0.331 ; xamarin.android 12.1.0.5 ; xamarin.ios 15.0.0.18)
+- dotnet sdk 6.0.100-rc.2.21505.57
 - build : centralize securehttpclient nuget version in directory.build.targets
 - C# 10.0
 - Microsoft.Extensions.* 6.0.0
@@ -8,6 +9,7 @@
 - SquareUp.OkHttp3.UrlConnection 4.9.2
 - test : Serilog.Extensions.Logging 3.1.0
 - test : Xamarin.Forms 5.0.0.2196
+- test : .net6
 
 ## 1.18.4
 - vs : 17.0.0-rc (xamarin.vs 17.0.0.315 ; xamarin.android 12.1.0.4 ; xamarin.ios 15.0.0.8)
