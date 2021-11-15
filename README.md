@@ -15,7 +15,7 @@ Usage:
 Tested on the following platforms:
 - Android 5-12 (api 21-31)
 - iOS 15.0
-- .net 5.0
+- .net 6.0
 
 About cookies and redirects:
 - SecureHttpClient handles cookies and redirects, but the behavior can differ a bit from one platform to another, because of different implementations in the native libraries used by SecureHttpClient.
