@@ -112,13 +112,6 @@
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
     <PackageReference Include="xunit.runner.devices" Version="2.5.25" />
   </ItemGroup>
-  <Choose>
-    <When Condition=" '$(Configuration)'!='Debug' ">
-      <ItemGroup>
-        <PackageReference Include="SecureHttpClient" />
-      </ItemGroup>
-    </When>
-  </Choose>
   <ItemGroup>
     <Content Include="Entitlements.plist" />
     <LinkDescription Include="..\build\LinkerConfigTest.xml" />

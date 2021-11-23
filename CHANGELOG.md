@@ -1,3 +1,6 @@
+## 1.18.6
+- fix nuget/project references in release/debug configurations (get rid of bait and switch)
+
 ## 1.18.5
 - vs : 17.0.0 (xamarin.vs 17.0.0.336 ; xamarin.android 12.1.0.5 ; xamarin.ios 15.0.0.18)
 - dotnet sdk 6.0.100
