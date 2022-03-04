@@ -14,7 +14,7 @@ Usage:
 
 Tested on the following platforms:
 - Android 5-12 (api 21-31)
-- iOS 15.0
+- iOS 15.2
 - .net 6.0
 
 About cookies and redirects:
