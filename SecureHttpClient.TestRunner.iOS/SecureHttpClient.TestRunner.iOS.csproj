@@ -109,7 +109,7 @@
   <ItemGroup>
     <PackageReference Include="Serilog" Version="2.10.0" />
     <PackageReference Include="Serilog.Sinks.Xamarin" Version="0.2.0.64" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2337" />
     <PackageReference Include="xunit.runner.devices" Version="2.5.25" />
   </ItemGroup>
   <ItemGroup>

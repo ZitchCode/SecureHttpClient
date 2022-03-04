@@ -4,6 +4,9 @@
 - xcode 13.2 (ios 15.2)
 - fix nuget/project references in release/debug configurations (get rid of bait and switch)
 - fix tests
+- test : Serilog.Sinks.Console 4.0.1
+- test : Xamarin.Essentials 1.7.1
+- test : Xamarin.Forms 5.0.0.2337
 
 ## 1.18.5
 - vs : 17.0.0 (xamarin.vs 17.0.0.336 ; xamarin.android 12.1.0.5 ; xamarin.ios 15.0.0.18)
