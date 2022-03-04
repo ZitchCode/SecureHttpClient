@@ -148,13 +148,6 @@ namespace SecureHttpClient.Test
         }
 
         [Fact]
-        public async Task SslTest_SubjectAltName()
-        {
-            const string page = @"https://www.prive.livretzesto.fr/";
-            await GetAsync(page);
-        }
-
-        [Fact]
         public async Task SslTest_HowsMySsl()
         {
             var expectedTlsVersion = (DeviceInfo.Platform == DevicePlatform.iOS || (DeviceInfo.Platform == DevicePlatform.Android && DeviceInfo.Version.Major >= 10)) ? "TLS 1.3" : "TLS 1.2";

@@ -3,6 +3,7 @@
 - dotnet sdk 6.0.200
 - xcode 13.2 (ios 15.2)
 - fix nuget/project references in release/debug configurations (get rid of bait and switch)
+- fix tests
 
 ## 1.18.5
 - vs : 17.0.0 (xamarin.vs 17.0.0.336 ; xamarin.android 12.1.0.5 ; xamarin.ios 15.0.0.18)

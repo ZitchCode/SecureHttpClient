@@ -196,7 +196,7 @@ namespace SecureHttpClient.Test
             Assert.Empty(cookies);
         }
 
-        [Fact]
+        [Fact(Skip = "Page does not exist anymore, needs to be fixed")]
         public async Task HttpTest_Protocol()
         {
             const string page = @"https://http2.golang.org/reqinfo";
