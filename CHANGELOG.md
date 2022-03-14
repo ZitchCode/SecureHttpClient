@@ -1,5 +1,5 @@
 ## 1.18.6
-- vs : 17.1.0 (xamarin.vs 17.1.0.309 ; xamarin.android 12.2.0.4 ; xamarin.ios 15.6.0.3)
+- vs : 17.1.1 (xamarin.vs 17.1.0.309 ; xamarin.android 12.2.0.4 ; xamarin.ios 15.6.0.3)
 - dotnet sdk 6.0.200
 - xcode 13.2 (ios 15.2)
 - fix nuget/project references in release/debug configurations (get rid of bait and switch)
