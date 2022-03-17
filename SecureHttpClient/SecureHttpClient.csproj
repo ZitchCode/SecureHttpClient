@@ -1,7 +1,7 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;MonoAndroid11.0;Xamarin.iOS10</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;MonoAndroid12.0;Xamarin.iOS10</TargetFrameworks>
     <AssemblyName>SecureHttpClient</AssemblyName>
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
@@ -64,9 +64,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageFile Include="..\build\Proguard.cfg" PackagePath="proguard\monoandroid11.0\Proguard.cfg" />
-    <PackageFile Include="..\build\SecureHttpClient.targets" PackagePath="build\monoandroid11.0\SecureHttpClient.targets" />
-    <PackageFile Include="..\build\SecureHttpClient.targets" PackagePath="buildTransitive\monoandroid11.0\SecureHttpClient.targets" />
+    <PackageFile Include="..\build\Proguard.cfg" PackagePath="proguard\monoandroid12.0\Proguard.cfg" />
+    <PackageFile Include="..\build\SecureHttpClient.targets" PackagePath="build\monoandroid12.0\SecureHttpClient.targets" />
+    <PackageFile Include="..\build\SecureHttpClient.targets" PackagePath="buildTransitive\monoandroid12.0\SecureHttpClient.targets" />
   </ItemGroup>
 
 </Project>
