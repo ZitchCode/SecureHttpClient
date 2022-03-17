@@ -47,9 +47,9 @@
   <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
     <Compile Include="Platforms\Android\**\*.cs" />
     <ProjectReference Include="..\SecureHttpClient.OkHttp\SecureHttpClient.OkHttp.csproj" />
-    <PackageReference Include="Square.OkHttp3" Version="4.9.2" />
+    <PackageReference Include="Square.OkHttp3" Version="4.9.3" />
     <PackageReference Include="Square.OkIO" Version="2.10.0" />
-    <PackageReference Include="Square.OkHttp3.UrlConnection" Version="4.9.2" />
+    <PackageReference Include="Square.OkHttp3.UrlConnection" Version="4.9.3" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">

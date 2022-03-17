@@ -5,6 +5,8 @@
 - Microsoft.Extensions.* 6.0.1
 - fix nuget/project references in release/debug configurations (get rid of bait and switch)
 - fix tests
+- SquareUp.OkHttp3 4.9.3
+- SquareUp.OkHttp3.UrlConnection 4.9.3
 - test : Serilog.Sinks.Console 4.0.1
 - test : Xamarin.Essentials 1.7.1
 - test : Xamarin.Forms 5.0.0.2337
