@@ -5,6 +5,10 @@
 - dotnet sdk 6.0.300
 - MSBuild.Sdk.Extras 3.0.44
 - fix certificate pins in tests
+- build : NuGetizer 0.8.0
+- test : Serilog 2.11.0
+- test : Xamarin.Essentials 1.7.3
+- test : Xamarin.Forms 5.0.0.2478
 
 ## 1.18.6
 - vs : 17.1.1 (xamarin.vs 17.1.0.309 ; xamarin.android 12.2.0.4 ; xamarin.ios 15.6.0.3)
