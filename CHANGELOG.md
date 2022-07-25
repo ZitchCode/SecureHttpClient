@@ -5,6 +5,9 @@
 - dotnet sdk 6.0.300
 - MSBuild.Sdk.Extras 3.0.44
 - fix certificate pins in tests
+- Square.OkHttp3 4.9.3.1
+- Square.OkHttp3.UrlConnection 4.9.3.1
+- Square.OkIO 2.10.0.4
 - build : NuGetizer 0.8.0
 - test : Serilog 2.11.0
 - test : Xamarin.Essentials 1.7.3
