@@ -4,6 +4,7 @@
 - android 12L (api 32)
 - dotnet sdk 6.0.300
 - MSBuild.Sdk.Extras 3.0.44
+- fix certificate pins in tests
 
 ## 1.18.6
 - vs : 17.1.1 (xamarin.vs 17.1.0.309 ; xamarin.android 12.2.0.4 ; xamarin.ios 15.6.0.3)
