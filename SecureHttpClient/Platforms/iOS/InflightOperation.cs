@@ -1,5 +1,3 @@
-#if __IOS__
-
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Threading;
@@ -18,5 +16,3 @@ namespace SecureHttpClient
         public NSError Error { get; set; }
     }
 }
-
-#endif

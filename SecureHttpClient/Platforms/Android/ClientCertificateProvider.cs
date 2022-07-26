@@ -1,6 +1,4 @@
-﻿#if __ANDROID__
-
-using System.IO;
+﻿using System.IO;
 using Java.Security;
 
 namespace SecureHttpClient
@@ -63,5 +61,3 @@ namespace SecureHttpClient
         }
     }
 }
-
-#endif

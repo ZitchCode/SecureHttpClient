@@ -1,6 +1,4 @@
-﻿#if NETSTANDARD2_1
-
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
 namespace SecureHttpClient
@@ -16,5 +14,3 @@ namespace SecureHttpClient
         }
     }
 }
-
-#endif

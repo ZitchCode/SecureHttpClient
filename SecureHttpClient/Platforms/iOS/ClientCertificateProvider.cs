@@ -1,6 +1,4 @@
-﻿#if __IOS__
-
-using Foundation;
+﻿using Foundation;
 using Security;
 
 namespace SecureHttpClient
@@ -65,5 +63,3 @@ namespace SecureHttpClient
         }
     }
 }
-
-#endif
