@@ -4,9 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Maui.Devices;
 using Newtonsoft.Json.Linq;
 using SecureHttpClient.Test.Helpers;
-using Xamarin.Essentials;
 using Xunit;
 
 namespace SecureHttpClient.Test
