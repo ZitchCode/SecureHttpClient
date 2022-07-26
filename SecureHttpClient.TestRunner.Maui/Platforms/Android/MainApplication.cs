@@ -1,5 +1,8 @@
 ﻿using Android.App;
 using Android.Runtime;
+using Serilog;
+using Serilog.Core;
+using Xunit;
 
 namespace SecureHttpClient.TestRunner.Maui
 {
@@ -11,6 +14,23 @@ namespace SecureHttpClient.TestRunner.Maui
         {
         }
 
-        protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+        protected override MauiApp CreateMauiApp()
+        {
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .WriteTo.AndroidLog()
+                .Enrich.WithProperty(Constants.SourceContextPropertyName, "TestRunner")
+                .CreateLogger();
+
+            AndroidEnvironment.UnhandledExceptionRaiser += OnAndroidEnvironmentUnhandledExceptionRaiser;
+
+            return MauiProgram.CreateMauiApp();
+        }
+
+        private static void OnAndroidEnvironmentUnhandledExceptionRaiser(object sender, RaiseThrowableEventArgs e)
+        {
+            Log.Fatal(e.Exception, "AndroidEnvironment.UnhandledExceptionRaiser");
+            Assert.True(false, "AndroidEnvironment.UnhandledExceptionRaiser");
+        }
     }
 }

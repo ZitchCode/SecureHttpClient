@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Serilog;
+using Serilog.Core;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -19,6 +20,15 @@ namespace SecureHttpClient.TestRunner.Maui.WinUI
             this.InitializeComponent();
         }
 
-        protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+        protected override MauiApp CreateMauiApp()
+        {
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .WriteTo.Debug(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] [{SourceContext:l}] {Message}{NewLine}{Exception}")
+                .Enrich.WithProperty(Constants.SourceContextPropertyName, "TestRunner")
+                .CreateLogger();
+
+            return MauiProgram.CreateMauiApp();
+        }
     }
 }
