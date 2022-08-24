@@ -45,15 +45,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Shiny.Xunit.Runners.Maui" Version="1.0.0-alpha-0008" />
+		<PackageReference Include="Shiny.Xunit.Runners.Maui" Version="1.0.0" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
-		<PackageReference Include="Serilog.Sinks.Xamarin" Version="1.0.0-dev-00104-fd287b7" />
+		<PackageReference Include="Serilog.Sinks.Xamarin" Version="1.0.0" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
-		<PackageReference Include="Serilog.Sinks.Xamarin" Version="1.0.0-dev-00104-fd287b7" />
+		<PackageReference Include="Serilog.Sinks.Xamarin" Version="1.0.0" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
