@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Microsoft.Maui.Hosting;
 using Xunit.Runners.Maui;
 
 namespace SecureHttpClient.TestRunner.Maui
