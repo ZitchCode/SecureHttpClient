@@ -26,6 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{660924B3
 		README.md = README.md
 		build\SecureHttpClient.targets = build\SecureHttpClient.targets
 		version.txt = version.txt
+		scripts\WorkAround10150.bat = scripts\WorkAround10150.bat
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecureHttpClient.OkHttp", "SecureHttpClient.OkHttp\SecureHttpClient.OkHttp.csproj", "{53117652-4EF0-4378-B285-BFDF42947291}"
