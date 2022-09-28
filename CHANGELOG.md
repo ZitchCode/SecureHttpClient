@@ -1,6 +1,7 @@
 ## 1.18.8
 - vs : 17.3.5 (xamarin.vs 17.3.0.308 ; xamarin.android 13.0.0.0 ; xamarin.ios 16.0.0.75)
 - dotnet sdk 6.0.400
+- test : fix pin
 
 ## 1.18.7
 - vs : 17.2.4 (xamarin.vs 17.2.0.177 ; xamarin.android 12.3.3.3 ; xamarin.ios 15.10.0.5)
