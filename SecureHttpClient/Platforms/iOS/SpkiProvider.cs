@@ -8,6 +8,9 @@ namespace SecureHttpClient
     {
         public static byte[] GetSpki(X509Certificate2 certificate)
         {
+            // We have to use BouncyCastle, because iOS does not support DSA, so .net does not support DSACertificateExtensions for iOS
+            // https://github.com/dotnet/runtime/issues/76305
+
             // Load ASN.1 encoded certificate structure
             var certAsn1 = Asn1Object.FromByteArray(certificate.RawData);
             var certStruct = X509CertificateStructure.GetInstance(certAsn1);
