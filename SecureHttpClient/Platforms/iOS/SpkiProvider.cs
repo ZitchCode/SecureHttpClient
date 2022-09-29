@@ -10,6 +10,9 @@ namespace SecureHttpClient
     {
         public static byte[] GetSpki(X509Certificate2 certificate)
         {
+            // We have to use BouncyCastle because Mono do not implement CertificateExtensions properly
+            // https://github.com/mono/mono/issues/20744
+
             // Load ASN.1 encoded certificate structure
             var certAsn1 = Asn1Object.FromByteArray(certificate.RawData);
             var certStruct = X509CertificateStructure.GetInstance(certAsn1);
