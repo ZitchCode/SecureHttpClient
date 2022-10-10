@@ -3,6 +3,7 @@
 - dotnet sdk 6.0.400
 - migrate projects to net6.0-android and net6.0-ios
 - kotlin-stdlib 1.6.21 (jar)
+- Microsoft.Extensions.Logging.Abstractions 6.0.2
 - Square.OkHttp3 4.9.3.2
 - Square.OkHttp3.UrlConnection 4.9.3.2
 - Square.OkIO 2.10.0.5
@@ -11,6 +12,7 @@
 - test : add spkifingerprint tests
 - test : Shiny.Xunit.Runners.Maui 1.0.0
 - test : Serilog.Sinks.Xamarin 1.0.0
+- test : xunit 2.4.2
 
 ## 1.18.7
 - vs : 17.2.4 (xamarin.vs 17.2.0.177 ; xamarin.android 12.3.3.3 ; xamarin.ios 15.10.0.5)
