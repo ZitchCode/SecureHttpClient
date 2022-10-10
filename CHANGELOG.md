@@ -1,3 +1,13 @@
+## 2.0.0
+- vs : 17.3.5 (xamarin.vs 17.3.0.308 ; xamarin.android 13.0.0.0 ; xamarin.ios 16.0.0.75)
+- dotnet sdk 6.0.400
+- migrate projects to net6.0-android and net6.0-ios
+- test : migrate testrunner to maui single project
+- test : fix pins
+- test : add spkifingerprint tests
+- test : Shiny.Xunit.Runners.Maui 1.0.0
+- test : Serilog.Sinks.Xamarin 1.0.0
+
 ## 1.18.7
 - vs : 17.2.4 (xamarin.vs 17.2.0.177 ; xamarin.android 12.3.3.3 ; xamarin.ios 15.10.0.5)
 - xcode 13.4.1 (ios 15.5)
