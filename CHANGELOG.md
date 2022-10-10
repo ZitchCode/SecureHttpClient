@@ -2,6 +2,10 @@
 - vs : 17.3.5 (xamarin.vs 17.3.0.308 ; xamarin.android 13.0.0.0 ; xamarin.ios 16.0.0.75)
 - dotnet sdk 6.0.400
 - migrate projects to net6.0-android and net6.0-ios
+- kotlin-stdlib 1.6.21 (jar)
+- Square.OkHttp3 4.9.3.2
+- Square.OkHttp3.UrlConnection 4.9.3.2
+- Square.OkIO 2.10.0.5
 - test : migrate testrunner to maui single project
 - test : fix pins
 - test : add spkifingerprint tests
