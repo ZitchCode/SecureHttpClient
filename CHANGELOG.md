@@ -1,6 +1,7 @@
 ## 2.0.0
 - vs : 17.3.6 (xamarin.vs 17.3.0.308 ; xamarin.android 13.0.0.0 ; xamarin.ios 16.0.0.75)
 - dotnet sdk 6.0.400
+- xcode 14.0.1 (ios 16.0)
 - migrate projects to net6.0-android and net6.0-ios
 - kotlin-stdlib 1.6.21 (jar)
 - Microsoft.Extensions.Logging.Abstractions 6.0.2
