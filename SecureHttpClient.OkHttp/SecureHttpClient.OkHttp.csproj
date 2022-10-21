@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedJar Include="Jars\securehttpclient-okhttp.jar" />
+	<AndroidLibrary Include="Jars\securehttpclient-okhttp.jar" />
   </ItemGroup>
 
   <ItemGroup>
