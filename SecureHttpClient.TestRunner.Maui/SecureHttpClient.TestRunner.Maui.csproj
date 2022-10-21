@@ -63,9 +63,4 @@
 	  <ProjectReference Include="..\SecureHttpClient.Test\SecureHttpClient.Test.csproj" />
 	</ItemGroup>
 
-	<!-- workaround for issue https://github.com/dotnet/maui/issues/10150 -->
-	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-		<Exec Command="call ..\scripts\WorkAround10150.bat" />
-	</Target>
-
 </Project>
