@@ -22,7 +22,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{660924B3
 		global.json = global.json
 		build\LinkerConfigTest.xml = build\LinkerConfigTest.xml
 		scripts\nuget_pack.bat = scripts\nuget_pack.bat
-		build\Proguard.cfg = build\Proguard.cfg
 		README.md = README.md
 		build\SecureHttpClient.nuspec = build\SecureHttpClient.nuspec
 		build\SecureHttpClient.targets = build\SecureHttpClient.targets
