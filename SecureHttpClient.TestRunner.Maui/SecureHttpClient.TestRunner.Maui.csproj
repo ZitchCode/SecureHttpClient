@@ -26,7 +26,10 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$([MSBuild]::GetTargetPlatformIdentifier($(TargetFramework)))'=='Release|android'">
-	  <AndroidLinkTool>r8</AndroidLinkTool>
+	    <AndroidLinkTool>r8</AndroidLinkTool>
+		<RunAOTCompilation>true</RunAOTCompilation>
+		<AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
+		<AndroidAotAdditionalArguments>no-write-symbols,nodebug</AndroidAotAdditionalArguments>
 	</PropertyGroup>
 
 	<ItemGroup>
