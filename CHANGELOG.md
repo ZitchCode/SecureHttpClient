@@ -2,12 +2,13 @@
 - vs : 17.3.6 (xamarin.vs 17.3.0.308 ; xamarin.android 13.0.0.0 ; xamarin.ios 16.0.0.75)
 - dotnet sdk 6.0.400
 - xcode 14.0.1 (ios 16.0)
-- migrate projects to net6.0-android and net6.0-ios
+- migrate projects to net6.0-android31.0, net6.0-ios15.4, net6.0-windows10.0.19041.0
 - kotlin-stdlib 1.6.21 (jar)
 - Microsoft.Extensions.Logging.Abstractions 6.0.2
 - Square.OkHttp3 4.9.3.2
 - Square.OkHttp3.UrlConnection 4.9.3.2
 - Square.OkIO 2.10.0.5
+- build : use nuspec file instead of NuGetizer
 - test : migrate testrunner to maui single project
 - test : fix pins
 - test : add spkifingerprint tests
