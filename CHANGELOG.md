@@ -2,12 +2,12 @@
 - vs : 17.3.6 (xamarin.vs 17.3.0.308 ; xamarin.android 13.0.0.0 ; xamarin.ios 16.0.0.75)
 - xcode 14.0.1 (ios 16.0)
 - dotnet sdk 6.0.400
-- remove proguard.cfg (not needed anymore)
 - Microsoft.Extensions.* 6.0.2
 - kotlin-stdlib 1.6.21 (jar)
 - Square.OkHttp3 4.9.3.2
 - Square.OkHttp3.UrlConnection 4.9.3.2
 - Square.OkIO 2.10.0.5
+- fix proguard.cfg
 - build : NuGetizer 0.9.0
 - test : fix pin
 - test : Serilog 2.12.0
