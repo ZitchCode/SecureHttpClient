@@ -63,10 +63,4 @@
     <Compile Include="CertificatePinning\**\*.cs" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageFile Include="..\build\Proguard.cfg" PackagePath="proguard\monoandroid12.0\Proguard.cfg" />
-    <PackageFile Include="..\build\SecureHttpClient.targets" PackagePath="build\monoandroid12.0\SecureHttpClient.targets" />
-    <PackageFile Include="..\build\SecureHttpClient.targets" PackagePath="buildTransitive\monoandroid12.0\SecureHttpClient.targets" />
-  </ItemGroup>
-
 </Project>
