@@ -3,7 +3,15 @@
 - xcode 14.0.1 (ios 16.0)
 - dotnet sdk 6.0.400
 - remove proguard.cfg (not needed anymore)
+- Microsoft.Extensions.* 6.0.2
+- build : NuGetizer 0.9.0
 - test : fix pin
+- test : Serilog 2.12.0
+- test : Serilog.Sinks.Console 4.1.0
+- test : Serilog.Sinks.Xamarin 1.0.0
+- test : Xamarin.Forms 5.0.0.2515
+- test : xunit 2.4.1
+- test : xunit.runner.utility 2.4.2
 
 ## 1.18.7
 - vs : 17.2.4 (xamarin.vs 17.2.0.177 ; xamarin.android 12.3.3.3 ; xamarin.ios 15.10.0.5)
