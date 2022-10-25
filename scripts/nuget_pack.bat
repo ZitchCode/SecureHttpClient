@@ -11,9 +11,6 @@ echo AndroidSdkDirectory: %Z_AndroidSdkDirectory%
 echo -- CLEAN ---------------------------------------------------------------------------------------------------------------------------------------------------
 dotnet clean -v m ../%Z_LibName%/%Z_LibName%.csproj -c Release
 
-:: echo -- RESTORE -------------------------------------------------------------------------------------------------------------------------------------------------
-:: dotnet restore -v m ../%Z_LibName%/%Z_LibName%.csproj
-
 echo -- BUILD ---------------------------------------------------------------------------------------------------------------------------------------------------
 dotnet build -v m ../%Z_LibName%/%Z_LibName%.csproj -c Release -p:AndroidSdkDirectory=%Z_AndroidSdkDirectory% -p:Version=%Z_Version% -p:AssemblyVersion=%Z_Version% -p:AssemblyFileVersion=%Z_Version%
 
