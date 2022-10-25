@@ -4,6 +4,10 @@
 - dotnet sdk 6.0.400
 - remove proguard.cfg (not needed anymore)
 - Microsoft.Extensions.* 6.0.2
+- kotlin-stdlib 1.6.21 (jar)
+- Square.OkHttp3 4.9.3.2
+- Square.OkHttp3.UrlConnection 4.9.3.2
+- Square.OkIO 2.10.0.5
 - build : NuGetizer 0.9.0
 - test : fix pin
 - test : Serilog 2.12.0
