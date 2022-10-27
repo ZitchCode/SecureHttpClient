@@ -1,6 +1,7 @@
 ## 2.0.1
 - add net6.0 target and remove net6.0-windows target in libs
 - get rid of singleproject/usemaui in csproj when possible
+- test : add again testrunner.net
 
 ## 2.0.0
 - vs : 17.3.6 (xamarin.vs 17.3.0.308 ; xamarin.android 13.0.0.0 ; xamarin.ios 16.0.0.75)
