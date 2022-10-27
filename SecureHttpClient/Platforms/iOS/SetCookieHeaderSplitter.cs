@@ -1,3 +1,5 @@
+#if __IOS__
+
 namespace SecureHttpClient
 {
     /// <summary>
@@ -59,3 +61,5 @@ namespace SecureHttpClient
         }
     }
 }
+
+#endif

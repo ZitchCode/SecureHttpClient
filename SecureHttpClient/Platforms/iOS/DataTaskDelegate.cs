@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if __IOS__
+
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Security.Authentication;
@@ -244,3 +246,5 @@ namespace SecureHttpClient
         }
     }
 }
+
+#endif

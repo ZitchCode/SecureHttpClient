@@ -1,4 +1,6 @@
-﻿using Foundation;
+﻿#if __IOS__
+
+using Foundation;
 using ObjCRuntime;
 using Security;
 
@@ -64,3 +66,5 @@ namespace SecureHttpClient
         }
     }
 }
+
+#endif

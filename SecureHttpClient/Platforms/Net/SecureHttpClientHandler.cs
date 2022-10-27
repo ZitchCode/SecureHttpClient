@@ -1,3 +1,5 @@
+#if (!__ANDROID__ && !__IOS__)
+
 using System;
 using System.Net;
 using System.Net.Http;
@@ -118,3 +120,5 @@ namespace SecureHttpClient
         }
     }
 }
+
+#endif

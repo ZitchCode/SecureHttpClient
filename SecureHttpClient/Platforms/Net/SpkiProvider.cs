@@ -1,4 +1,6 @@
-﻿using System.Security.Cryptography;
+﻿#if (!__ANDROID__ && !__IOS__)
+
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
 namespace SecureHttpClient
@@ -14,3 +16,5 @@ namespace SecureHttpClient
         }
     }
 }
+
+#endif

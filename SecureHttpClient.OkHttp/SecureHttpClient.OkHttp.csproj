@@ -2,28 +2,26 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net6.0-android31.0</TargetFrameworks>
-		<UseMaui>true</UseMaui>
-		<SingleProject>true</SingleProject>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
-  <ItemGroup>
-    <TransformFile Include="Transforms\Metadata.xml" />
-    <TransformFile Include="Transforms\EnumFields.xml" />
-    <TransformFile Include="Transforms\EnumMethods.xml" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="Square.OkHttp3" Version="4.9.3.2" />
-  </ItemGroup>
+	<ItemGroup>
+		<TransformFile Include="Transforms\Metadata.xml" />
+		<TransformFile Include="Transforms\EnumFields.xml" />
+		<TransformFile Include="Transforms\EnumMethods.xml" />
+	</ItemGroup>
 
-  <ItemGroup>
-	<AndroidLibrary Include="Jars\securehttpclient-okhttp.jar" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Square.OkHttp3" Version="4.9.3.2" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Include="java\buildjar.bat" />
-    <None Include="java\DecompressInterceptor.java" />
-  </ItemGroup>
+	<ItemGroup>
+		<AndroidLibrary Include="Jars\securehttpclient-okhttp.jar" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="java\buildjar.bat" />
+		<None Include="java\DecompressInterceptor.java" />
+	</ItemGroup>
   
 </Project>

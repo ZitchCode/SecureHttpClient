@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if __ANDROID__
+
+using System;
 using System.Security.Cryptography.X509Certificates;
 
 namespace SecureHttpClient
@@ -11,3 +13,5 @@ namespace SecureHttpClient
         }
     }
 }
+
+#endif
