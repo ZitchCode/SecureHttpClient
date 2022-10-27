@@ -79,14 +79,14 @@ namespace SecureHttpClient.Test
             await GetAsync(page);
         }
 
-        [Fact]
+        [Fact(Skip = "Certificate has expired, badssl.com needs to fix it.")]
         public async Task SslTest_Sha384Certificate()
         {
             const string page = @"https://sha384.badssl.com/";
             await GetAsync(page);
         }
 
-        [Fact]
+        [Fact(Skip = "Certificate has expired, badssl.com needs to fix it.")]
         public async Task SslTest_Sha512Certificate()
         {
             const string page = @"https://sha512.badssl.com/";

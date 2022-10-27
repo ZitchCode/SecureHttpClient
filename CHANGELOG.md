@@ -1,6 +1,7 @@
 ## 2.0.1
 - add net6.0 target and remove net6.0-windows target in libs
 - get rid of singleproject/usemaui in csproj when possible
+- fix tests
 - test : add again testrunner.net
 
 ## 2.0.0
