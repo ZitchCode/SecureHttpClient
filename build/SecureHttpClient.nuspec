@@ -14,6 +14,9 @@
     <tags>dotnet, maui, xamarin, ios, android, httpclient, security</tags>
     <repository url="https://github.com/tranb3r/securehttpclient" />
     <dependencies>
+      <group targetFramework="net6.0">
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.2" exclude="Build,Analyzers" />
+      </group>
       <group targetFramework="net6.0-android31.0">
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.2" exclude="Build,Analyzers" />
         <dependency id="Square.OkHttp3" version="4.9.3.2" exclude="Build,Analyzers" />
@@ -24,14 +27,11 @@
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.2" exclude="Build,Analyzers" />
         <dependency id="Portable.BouncyCastle" version="1.9.0" exclude="Build,Analyzers" />
       </group>
-      <group targetFramework="net6.0-windows10.0.19041.0">
-        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.2" exclude="Build,Analyzers" />
-      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="..\SecureHttpClient\bin\Release\net6.0-windows10.0.19041.0\SecureHttpClient.dll" target="lib\net6.0-windows10.0.19041.0" />
-    <file src="..\SecureHttpClient\bin\Release\net6.0-windows10.0.19041.0\SecureHttpClient.xml" target="lib\net6.0-windows10.0.19041.0" />
+    <file src="..\SecureHttpClient\bin\Release\net6.0\SecureHttpClient.dll" target="lib\net6.0" />
+    <file src="..\SecureHttpClient\bin\Release\net6.0\SecureHttpClient.xml" target="lib\net6.0" />
     <file src="..\SecureHttpClient\bin\Release\net6.0-android31.0\SecureHttpClient.dll" target="lib\net6.0-android31.0" />
     <file src="..\SecureHttpClient\bin\Release\net6.0-android31.0\SecureHttpClient.xml" target="lib\net6.0-android31.0" />
     <file src="..\SecureHttpClient.OkHttp\bin\Release\net6.0-android31.0\SecureHttpClient.OkHttp.dll" target="lib\net6.0-android31.0" />
