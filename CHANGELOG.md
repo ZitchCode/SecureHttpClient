@@ -7,7 +7,7 @@
 - fix tests
 - Microsoft.Extensions.Logging.Abstractions 7.0.0
 - test : Microsoft.Extensions.* 7.0.0
-- test : Newtonsoft.Json 13.0.2
+- test : System.Text.Json 7.0.1 (remove Newtonsoft.Json)
 
 ## 2.0.1
 - add net6.0 target and remove net6.0-windows target in libs

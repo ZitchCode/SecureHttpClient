@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Maui.Devices;
-using Newtonsoft.Json.Linq;
 using SecureHttpClient.Test.Helpers;
 using Xunit;
 
@@ -156,9 +156,9 @@ namespace SecureHttpClient.Test
             const string page = @"https://www.howsmyssl.com/a/check";
             var result = await GetAsync(page).ReceiveString();
 
-            var json = JToken.Parse(result);
-            var actualTlsVersion = json["tls_version"].ToString();
-            var actualRating = json["rating"].ToString();
+            var json = JsonDocument.Parse(result);
+            var actualTlsVersion = json.RootElement.GetProperty("tls_version").GetString();
+            var actualRating = json.RootElement.GetProperty("rating").GetString();
 
             Assert.Equal(expectedTlsVersion, actualTlsVersion);
             Assert.Equal(expectedRating, actualRating);

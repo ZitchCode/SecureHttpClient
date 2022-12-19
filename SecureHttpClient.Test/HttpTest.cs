@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Maui.Devices;
-using Newtonsoft.Json.Linq;
 using SecureHttpClient.Test.Helpers;
 using Xunit;
 
@@ -22,8 +22,8 @@ namespace SecureHttpClient.Test
         {
             const string page = @"https://httpbin.org/get";
             var result = await GetAsync(page).ReceiveString();
-            var json = JToken.Parse(result);
-            var url = json["url"].ToString();
+            var json = JsonDocument.Parse(result);
+            var url = json.RootElement.GetProperty("url").GetString();
             Assert.Equal(page, url);
         }
 
@@ -32,9 +32,9 @@ namespace SecureHttpClient.Test
         {
             const string page = @"https://httpbin.org/gzip";
             var result = await GetAsync(page).ReceiveString();
-            var json = JToken.Parse(result);
-            var url = json["gzipped"].ToString();
-            Assert.Equal("True", url);
+            var json = JsonDocument.Parse(result);
+            var url = json.RootElement.GetProperty("gzipped").GetBoolean();
+            Assert.True(url);
         }
 
         [Fact]
@@ -44,9 +44,9 @@ namespace SecureHttpClient.Test
             var req = new HttpRequestMessage(HttpMethod.Get, page);
             req.Headers.Add("Accept-Encoding", "gzip");
             var result = await SendAsync(req).ReceiveString();
-            var json = JToken.Parse(result);
-            var url = json["gzipped"].ToString();
-            Assert.Equal("True", url);
+            var json = JsonDocument.Parse(result);
+            var url = json.RootElement.GetProperty("gzipped").GetBoolean();
+            Assert.True(url);
         }
 
         [SkippableFact]
@@ -56,9 +56,9 @@ namespace SecureHttpClient.Test
 
             const string page = @"https://httpbin.org/deflate";
             var result = await GetAsync(page).ReceiveString();
-            var json = JToken.Parse(result);
-            var url = json["deflated"].ToString();
-            Assert.Equal("True", url);
+            var json = JsonDocument.Parse(result);
+            var url = json.RootElement.GetProperty("deflated").GetBoolean();
+            Assert.True(url);
         }
 
         [Fact]
@@ -76,8 +76,8 @@ namespace SecureHttpClient.Test
             const string final = @"https://httpbingo.org/get";
 
             var result = await GetAsync(page).ReceiveString();
-            var json = JToken.Parse(result);
-            var url = json["url"].ToString();
+            var json = JsonDocument.Parse(result);
+            var url = json.RootElement.GetProperty("url").GetString();
             Assert.Equal(final, url);
 
             var request = new HttpRequestMessage(HttpMethod.Get, page);
@@ -102,8 +102,8 @@ namespace SecureHttpClient.Test
         {
             const string page = @"https://httpbin.org/delay/5";
             var result = await GetAsync(page).ReceiveString();
-            var json = JToken.Parse(result);
-            var url = json["url"].ToString();
+            var json = JsonDocument.Parse(result);
+            var url = json.RootElement.GetProperty("url").GetString();
             Assert.Equal(page, url);
         }
 
@@ -137,8 +137,8 @@ namespace SecureHttpClient.Test
         {
             const string page = @"https://httpbin.org/cookies/set?k1=v1";
             var result = await GetAsync(page).ReceiveString();
-            var json = JToken.Parse(result);
-            var cookies = json["cookies"].ToObject<Dictionary<string, string>>();
+            var json = JsonDocument.Parse(result);
+            var cookies = json.RootElement.GetProperty("cookies").Deserialize<Dictionary<string, string>>();
             Assert.Contains(new KeyValuePair<string, string>("k1", "v1"), cookies);
         }
 
@@ -149,8 +149,8 @@ namespace SecureHttpClient.Test
             await GetAsync(page1);
             const string page2 = @"https://httpbin.org/cookies/set?k1=v2";
             var result = await GetAsync(page2).ReceiveString();
-            var json = JToken.Parse(result);
-            var cookies = json["cookies"].ToObject<Dictionary<string, string>>();
+            var json = JsonDocument.Parse(result);
+            var cookies = json.RootElement.GetProperty("cookies").Deserialize<Dictionary<string, string>>();
             Assert.Contains(new KeyValuePair<string, string>("k1", "v2"), cookies);
         }
 
@@ -165,8 +165,8 @@ namespace SecureHttpClient.Test
             Assert.Equal(new List<string> { cookie1, cookie2 }, respCookies);
             const string page2 = @"https://httpbin.org/cookies";
             var result = await GetAsync(page2).ReceiveString();
-            var json = JToken.Parse(result);
-            var cookies = json["cookies"].ToObject<Dictionary<string, string>>();
+            var json = JsonDocument.Parse(result);
+            var cookies = json.RootElement.GetProperty("cookies").Deserialize<Dictionary<string, string>>();
             Assert.Contains(new KeyValuePair<string, string>("k1", "v1"), cookies);
             Assert.Contains(new KeyValuePair<string, string>("k2", "v2"), cookies);
         }
@@ -180,8 +180,8 @@ namespace SecureHttpClient.Test
             await GetAsync(page1);
             const string page2 = @"https://httpbin.org/cookies/delete?k1";
             var result = await GetAsync(page2).ReceiveString();
-            var json = JToken.Parse(result);
-            var cookies = json["cookies"].ToObject<Dictionary<string, string>>();
+            var json = JsonDocument.Parse(result);
+            var cookies = json.RootElement.GetProperty("cookies").Deserialize<Dictionary<string, string>>();
             Assert.DoesNotContain(new KeyValuePair<string, string>("k1", "v1"), cookies);
         }
 
@@ -191,8 +191,8 @@ namespace SecureHttpClient.Test
             const string page = @"https://httpbin.org/cookies/set?k1=v1";
             DisableCookies();
             var result = await GetAsync(page).ReceiveString();
-            var json = JToken.Parse(result);
-            var cookies = json["cookies"].ToObject<Dictionary<string, string>>();
+            var json = JsonDocument.Parse(result);
+            var cookies = json.RootElement.GetProperty("cookies").Deserialize<Dictionary<string, string>>();
             Assert.Empty(cookies);
         }
 
@@ -236,8 +236,8 @@ namespace SecureHttpClient.Test
                 Content = new StringContent("test request body")
             };
             var result = await SendAsync(request).ReceiveString();
-            var json = JToken.Parse(result);
-            var url = json["url"].ToString();
+            var json = JsonDocument.Parse(result);
+            var url = json.RootElement.GetProperty("url").GetString();
             Assert.Equal(page, url);
         }
 
@@ -250,8 +250,8 @@ namespace SecureHttpClient.Test
                 Content = new StringContent("")
             };
             var result = await SendAsync(request).ReceiveString();
-            var json = JToken.Parse(result);
-            var url = json["url"].ToString();
+            var json = JsonDocument.Parse(result);
+            var url = json.RootElement.GetProperty("url").GetString();
             Assert.Equal(page, url);
         }
     }
