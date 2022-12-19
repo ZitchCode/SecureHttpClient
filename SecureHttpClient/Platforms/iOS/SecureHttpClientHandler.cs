@@ -79,7 +79,9 @@ namespace SecureHttpClient
             {
                 configuration.ConnectionProxyDictionary = new NSDictionary();
             }
+#pragma warning disable CA1416
             else if (Proxy is WebProxy webProxy)
+#pragma warning restore CA1416
             {
                 configuration.ConnectionProxyDictionary = GetProxyDictionary(webProxy);
             }
