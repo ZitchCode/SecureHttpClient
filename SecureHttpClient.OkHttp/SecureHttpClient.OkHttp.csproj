@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0-android31.0</TargetFrameworks>
+		<TargetFrameworks>net7.0-android33.0</TargetFrameworks>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
@@ -20,8 +20,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="java\buildjar.bat" />
-		<None Include="java\DecompressInterceptor.java" />
+		<AndroidJavaSource Remove="java\**" />
 	</ItemGroup>
   
 </Project>

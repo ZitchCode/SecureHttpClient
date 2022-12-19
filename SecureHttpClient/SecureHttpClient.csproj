@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0;net6.0-android31.0;net6.0-ios15.4</TargetFrameworks>
+		<TargetFrameworks>net7.0;net7.0-android33.0;net7.0-ios16.0</TargetFrameworks>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
@@ -38,7 +38,7 @@
 		<PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
 	</ItemGroup>
 
-	<ItemGroup Condition="$(TargetFramework) == 'net6.0'">
+	<ItemGroup Condition="$(TargetFramework) == 'net7.0'">
 		<Compile Include="Platforms\Net\**\*.cs" />
 	</ItemGroup>
 

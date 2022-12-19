@@ -14,30 +14,30 @@
     <tags>dotnet, maui, xamarin, ios, android, httpclient, security</tags>
     <repository url="https://github.com/tranb3r/securehttpclient" />
     <dependencies>
-      <group targetFramework="net6.0">
+      <group targetFramework="net7.0">
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.2" exclude="Build,Analyzers" />
       </group>
-      <group targetFramework="net6.0-android31.0">
+      <group targetFramework="net7.0-android33.0">
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.2" exclude="Build,Analyzers" />
         <dependency id="Square.OkHttp3" version="4.9.3.2" exclude="Build,Analyzers" />
         <dependency id="Square.OkHttp3.UrlConnection" version="4.9.3.2" exclude="Build,Analyzers" />
         <dependency id="Square.OkIO" version="2.10.0.5" exclude="Build,Analyzers" />
       </group>
-      <group targetFramework="net6.0-ios15.4">
+      <group targetFramework="net7.0-ios16.0">
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.2" exclude="Build,Analyzers" />
         <dependency id="Portable.BouncyCastle" version="1.9.0" exclude="Build,Analyzers" />
       </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="..\SecureHttpClient\bin\Release\net6.0\SecureHttpClient.dll" target="lib\net6.0" />
-    <file src="..\SecureHttpClient\bin\Release\net6.0\SecureHttpClient.xml" target="lib\net6.0" />
-    <file src="..\SecureHttpClient\bin\Release\net6.0-android31.0\SecureHttpClient.dll" target="lib\net6.0-android31.0" />
-    <file src="..\SecureHttpClient\bin\Release\net6.0-android31.0\SecureHttpClient.xml" target="lib\net6.0-android31.0" />
-    <file src="..\SecureHttpClient.OkHttp\bin\Release\net6.0-android31.0\SecureHttpClient.OkHttp.dll" target="lib\net6.0-android31.0" />
-    <file src="..\SecureHttpClient.OkHttp\bin\Release\net6.0-android31.0\SecureHttpClient.OkHttp.xml" target="lib\net6.0-android31.0" />
-    <file src="..\SecureHttpClient.OkHttp\bin\Release\net6.0-android31.0\SecureHttpClient.OkHttp.aar" target="lib\net6.0-android31.0" />
-    <file src="..\SecureHttpClient\bin\Release\net6.0-ios15.4\SecureHttpClient.dll" target="lib\net6.0-ios15.4" />
-    <file src="..\SecureHttpClient\bin\Release\net6.0-ios15.4\SecureHttpClient.xml" target="lib\net6.0-ios15.4" />
+    <file src="..\SecureHttpClient\bin\Release\net7.0\SecureHttpClient.dll" target="lib\net7.0" />
+    <file src="..\SecureHttpClient\bin\Release\net7.0\SecureHttpClient.xml" target="lib\net7.0" />
+    <file src="..\SecureHttpClient\bin\Release\net7.0-android33.0\SecureHttpClient.dll" target="lib\net7.0-android33.0" />
+    <file src="..\SecureHttpClient\bin\Release\net7.0-android33.0\SecureHttpClient.xml" target="lib\net7.0-android33.0" />
+    <file src="..\SecureHttpClient.OkHttp\bin\Release\net7.0-android33.0\SecureHttpClient.OkHttp.dll" target="lib\net7.0-android33.0" />
+    <file src="..\SecureHttpClient.OkHttp\bin\Release\net7.0-android33.0\SecureHttpClient.OkHttp.xml" target="lib\net7.0-android33.0" />
+    <file src="..\SecureHttpClient.OkHttp\bin\Release\net7.0-android33.0\SecureHttpClient.OkHttp.aar" target="lib\net7.0-android33.0" />
+    <file src="..\SecureHttpClient\bin\Release\net7.0-ios16.0\SecureHttpClient.dll" target="lib\net7.0-ios16.0" />
+    <file src="..\SecureHttpClient\bin\Release\net7.0-ios16.0\SecureHttpClient.xml" target="lib\net7.0-ios16.0" />
   </files>
 </package>
