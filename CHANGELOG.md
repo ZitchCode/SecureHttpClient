@@ -3,6 +3,7 @@
 - donet sdk 7.0.101
 - target net7.0
 - C# 11.0
+- xcode 14.1 (ios 16.1)
 - fix wrong architecture for ios dll in nuget
 - fix tests
 - Microsoft.Extensions.Logging.Abstractions 7.0.0
