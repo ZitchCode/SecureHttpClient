@@ -8,7 +8,7 @@ namespace SecureHttpClient.Test
     {
         private const string Hostname = @"www.howsmyssl.com";
         private const string Page = @"https://www.howsmyssl.com/a/check";
-        private static readonly string[] PinsOk = { @"sha256/QgUichMmcfj82ufTqvYVdH0Jab6TVToQAUNObrA5FfA=" };
+        private static readonly string[] PinsOk = { @"sha256/sTnHCTGOMMXeNeF0dv3zohcxaZAo73XUr1aa717gmGc=" };
         private static readonly string[] PinsKo = { @"sha256/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=" };
 
         private const string Hostname2 = @"github.com";
@@ -18,7 +18,7 @@ namespace SecureHttpClient.Test
 
         private const string Hostname3 = @"ecc256.badssl.com";
         private const string Page3 = @"https://ecc256.badssl.com/";
-        private static readonly string[] Pins3Ok = { @"sha256/swkREYaQfgevmiAHsB9iQGH4bsI9fPy2t3DOt2Trehk=" };
+        private static readonly string[] Pins3Ok = { @"sha256/nwrzqrMDZtW9yckUHkur/uyXc0zhjuwVBZ5BUgkVF/g=" };
         private static readonly string[] Pins3Ko = { @"sha256/zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz=" };
 
         public CertificatePinnerTest(TestFixture testFixture) : base(testFixture)

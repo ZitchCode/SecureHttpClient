@@ -1,7 +1,0 @@
-﻿<linker>
-  <assembly fullname="Microsoft.Extensions.Logging" />
-  <assembly fullname="Microsoft.Extensions.Logging.Abstractions" />
-  <assembly fullname="Microsoft.Extensions.Options" />
-  <assembly fullname="SecureHttpClient" />
-  <assembly fullname="Xunit.SkippableFact" />
-</linker>

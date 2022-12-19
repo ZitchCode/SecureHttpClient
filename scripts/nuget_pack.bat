@@ -5,18 +5,16 @@ set Z_LibName=SecureHttpClient
 echo LibName: %Z_LibName%
 set /p Z_Version=<..\version.txt
 echo Version: %Z_Version%
+set Z_AndroidSdkDirectory=D:\android\sdk
+echo AndroidSdkDirectory: %Z_AndroidSdkDirectory%
 
 echo -- CLEAN ---------------------------------------------------------------------------------------------------------------------------------------------------
-msbuild /v:m /nowarn:VSX1000 ../%Z_LibName%/%Z_LibName%.csproj /p:Configuration=Release /t:Clean
-
-echo -- RESTORE -------------------------------------------------------------------------------------------------------------------------------------------------
-msbuild /v:m ../%Z_LibName%/%Z_LibName%.csproj /p:Configuration=Release /t:Restore
+dotnet clean -v m ../%Z_LibName%/%Z_LibName%.csproj -c Release
 
 echo -- BUILD ---------------------------------------------------------------------------------------------------------------------------------------------------
-msbuild /v:m /nowarn:VSX1000 ../%Z_LibName%/%Z_LibName%.csproj /p:Configuration=Release /t:Build /p:Version=%Z_Version%;AssemblyVersion=%Z_Version%;AssemblyFileVersion=%Z_Version%
+dotnet build -v m ../%Z_LibName%/%Z_LibName%.csproj -c Release -p:AndroidSdkDirectory=%Z_AndroidSdkDirectory% -p:Version=%Z_Version% -p:AssemblyVersion=%Z_Version% -p:AssemblyFileVersion=%Z_Version%
 
 echo -- PACK ----------------------------------------------------------------------------------------------------------------------------------------------------
-msbuild /v:m ../%Z_LibName%/%Z_LibName%.csproj /p:Configuration=Release /t:Pack /p:NoBuild=true /p:PackageVersion=%Z_Version%
-move ..\%Z_LibName%\bin\Release\%Z_LibName%.%Z_Version%.nupkg ..\ >nul
+dotnet pack -v m ../%Z_LibName%/%Z_LibName%.csproj -c Release -p:AndroidSdkDirectory=%Z_AndroidSdkDirectory% --no-build -o ..\ -p:PackageVersion=%Z_Version% -p:NuspecFile=..\build\SecureHttpClient.nuspec -p:NuspecProperties=version=%Z_Version%
 
 echo -- DONE !! -------------------------------------------------------------------------------------------------------------------------------------------------

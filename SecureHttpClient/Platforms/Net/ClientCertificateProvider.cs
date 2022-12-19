@@ -1,4 +1,4 @@
-﻿#if NETSTANDARD2_1
+﻿#if (!__ANDROID__ && !__IOS__)
 
 using System.Security.Cryptography.X509Certificates;
 

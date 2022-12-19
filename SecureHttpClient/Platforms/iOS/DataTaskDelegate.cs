@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Security.Authentication;
 using Foundation;
 using SecureHttpClient.CertificatePinning;
-using Security;
 using System.Security.Cryptography.X509Certificates;
 
 namespace SecureHttpClient
@@ -172,10 +171,10 @@ namespace SecureHttpClient
                 if (_certificatePinner != null && _certificatePinner.HasPin(hostname))
                 {
                     var serverTrust = challenge.ProtectionSpace.ServerSecTrust;
-                    var status = serverTrust.Evaluate();
-                    if (status == SecTrustResult.Proceed || status == SecTrustResult.Unspecified)
+                    var status = serverTrust.Evaluate(out _);
+                    if (status)
                     {
-                        var serverCertificate = serverTrust[0];
+                        var serverCertificate = serverTrust.GetCertificateChain()[0];
                         var x509Certificate = serverCertificate.ToX509Certificate2();
                         var match = _certificatePinner.Check(hostname, x509Certificate);
                         if (match)

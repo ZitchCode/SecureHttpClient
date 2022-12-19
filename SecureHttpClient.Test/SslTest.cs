@@ -1,8 +1,8 @@
 ﻿using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+using Microsoft.Maui.Devices;
 using SecureHttpClient.Test.Helpers;
-using Xamarin.Essentials;
 using Xunit;
 
 namespace SecureHttpClient.Test
@@ -79,14 +79,14 @@ namespace SecureHttpClient.Test
             await GetAsync(page);
         }
 
-        [Fact]
+        [Fact(Skip = "Certificate has expired, badssl.com needs to fix it.")]
         public async Task SslTest_Sha384Certificate()
         {
             const string page = @"https://sha384.badssl.com/";
             await GetAsync(page);
         }
 
-        [Fact]
+        [Fact(Skip = "Certificate has expired, badssl.com needs to fix it.")]
         public async Task SslTest_Sha512Certificate()
         {
             const string page = @"https://sha512.badssl.com/";
@@ -156,9 +156,9 @@ namespace SecureHttpClient.Test
             const string page = @"https://www.howsmyssl.com/a/check";
             var result = await GetAsync(page).ReceiveString();
 
-            var json = JToken.Parse(result);
-            var actualTlsVersion = json["tls_version"].ToString();
-            var actualRating = json["rating"].ToString();
+            var json = JsonDocument.Parse(result);
+            var actualTlsVersion = json.RootElement.GetProperty("tls_version").GetString();
+            var actualRating = json.RootElement.GetProperty("rating").GetString();
 
             Assert.Equal(expectedTlsVersion, actualTlsVersion);
             Assert.Equal(expectedRating, actualRating);

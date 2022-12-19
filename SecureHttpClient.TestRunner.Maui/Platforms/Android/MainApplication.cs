@@ -1,17 +1,23 @@
-﻿using Android.App;
-using Android.OS;
+﻿using System;
+using Android.App;
 using Android.Runtime;
+using Microsoft.Maui;
+using Microsoft.Maui.Hosting;
 using Serilog;
 using Serilog.Core;
 using Xunit;
-using Xunit.Runners.UI;
 
-namespace SecureHttpClient.TestRunner.Android
+namespace SecureHttpClient.TestRunner.Maui
 {
-    [Activity(Label = "SecureHttpClient.TestRunner.Android", MainLauncher = true, Theme = "@android:style/Theme.Material.Light")]
-    public class MainActivity : RunnerActivity
+    [Application]
+    public class MainApplication : MauiApplication
     {
-        protected override void OnCreate(Bundle bundle)
+        public MainApplication(IntPtr handle, JniHandleOwnership ownership)
+            : base(handle, ownership)
+        {
+        }
+
+        protected override MauiApp CreateMauiApp()
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
@@ -21,9 +27,7 @@ namespace SecureHttpClient.TestRunner.Android
 
             AndroidEnvironment.UnhandledExceptionRaiser += OnAndroidEnvironmentUnhandledExceptionRaiser;
 
-            AddTestAssembly(typeof(Test.HttpTest).Assembly);
-            AutoStart = true;
-            base.OnCreate(bundle);
+            return MauiProgram.CreateMauiApp();
         }
 
         private static void OnAndroidEnvironmentUnhandledExceptionRaiser(object sender, RaiseThrowableEventArgs e)
@@ -31,12 +35,5 @@ namespace SecureHttpClient.TestRunner.Android
             Log.Fatal(e.Exception, "AndroidEnvironment.UnhandledExceptionRaiser");
             Assert.True(false, "AndroidEnvironment.UnhandledExceptionRaiser");
         }
-
-        protected override void OnStop()
-        {
-            Log.CloseAndFlush();
-            base.OnStop();
-        }
     }
 }
-

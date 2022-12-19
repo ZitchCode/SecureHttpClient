@@ -14,13 +14,14 @@ Usage:
 
 Tested on the following platforms:
 - Android 5-13 (api 21-33)
-- iOS 16.0
-- .net 6.0
+- iOS 16.1
+- .net 7.0
 
 About cookies and redirects:
 - SecureHttpClient handles cookies and redirects, but the behavior can differ a bit from one platform to another, because of different implementations in the native libraries used by SecureHttpClient.
 - for identical behavior between platforms, it's recommended to use [Flurl](https://github.com/tmenier/Flurl) on top of SecureHttpClient, and let [Flurl](https://github.com/tmenier/Flurl) handle cookies and redirects.
 
 Supported frameworks:
-- version 1 ([master](https://github.com/tranb3r/SecureHttpClient)): MonoAndroid ; Xamarin.iOS ; NetStandard
-- version 2 ([maui](https://github.com/tranb3r/SecureHttpClient/tree/maui)): net6.0-android ; net6.0-ios ; net6.0-windows
+- version 1.x: MonoAndroid ; Xamarin.iOS ; NetStandard
+- version 2.0: net6.0-android ; net6.0-ios ; net6.0-windows
+- version 2.1: net7.0-android ; net7.0-ios ; net7.0-windows

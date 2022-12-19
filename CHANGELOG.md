@@ -1,3 +1,39 @@
+## 2.1.0
+- vs : 17.4.3 (xamarin.vs 17.4.0.312 ; xamarin.android 13.1.0.1 ; xamarin.ios 16.1.1.27 ; maui 7.0.52/7.0.100)
+- donet sdk 7.0.101
+- target net7.0
+- C# 11.0
+- xcode 14.1 (ios 16.1)
+- fix wrong architecture for ios dll in nuget
+- fix tests
+- Microsoft.Extensions.Logging.Abstractions 7.0.0
+- test : Microsoft.Extensions.* 7.0.0
+- test : System.Text.Json 7.0.1 (remove Newtonsoft.Json)
+
+## 2.0.1
+- add net6.0 target and remove net6.0-windows target in libs
+- get rid of singleproject/usemaui in csproj when possible
+- fix tests
+- test : add again testrunner.net
+
+## 2.0.0
+- vs : 17.3.6 (xamarin.vs 17.3.0.308 ; xamarin.android 13.0.0.0 ; xamarin.ios 16.0.0.75)
+- dotnet sdk 6.0.400
+- xcode 14.0.1 (ios 16.0)
+- migrate projects to net6.0-android31.0, net6.0-ios15.4, net6.0-windows10.0.19041.0
+- kotlin-stdlib 1.6.21 (jar)
+- Microsoft.Extensions.Logging.Abstractions 6.0.2
+- Square.OkHttp3 4.9.3.2
+- Square.OkHttp3.UrlConnection 4.9.3.2
+- Square.OkIO 2.10.0.5
+- build : use nuspec file instead of NuGetizer
+- test : migrate testrunner to maui single project
+- test : fix pins
+- test : add spkifingerprint tests
+- test : Shiny.Xunit.Runners.Maui 1.0.0
+- test : Serilog.Sinks.Xamarin 1.0.0
+- test : xunit 2.4.2
+
 ## 1.18.8
 - vs : 17.3.6 (xamarin.vs 17.3.0.308 ; xamarin.android 13.0.0.0 ; xamarin.ios 16.0.0.75)
 - xcode 14.0.1 (ios 16.0)
