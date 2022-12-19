@@ -6,12 +6,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<TransformFile Include="Transforms\Metadata.xml" />
-		<TransformFile Include="Transforms\EnumFields.xml" />
-		<TransformFile Include="Transforms\EnumMethods.xml" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Square.OkHttp3" Version="4.9.3.2" />
 	</ItemGroup>
 

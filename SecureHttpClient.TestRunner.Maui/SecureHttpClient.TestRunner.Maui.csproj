@@ -52,8 +52,4 @@
 	  <ProjectReference Include="..\SecureHttpClient.Test\SecureHttpClient.Test.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<AndroidResource Include="Platforms\Android\Resources\xml\network_security_config.xml" />
-	</ItemGroup>
-
 </Project>
