@@ -2,7 +2,9 @@
 - vs : 17.4.3 (xamarin.vs 17.4.0.312 ; xamarin.android 13.1.0.1 ; xamarin.ios 16.1.1.27 ; maui 7.0.52/7.0.100)
 - donet sdk 7.0.101
 - target net7.0
+- C# 11.0
 - fix wrong architecture for ios dll in nuget
+- fix tests
 
 ## 2.0.1
 - add net6.0 target and remove net6.0-windows target in libs
