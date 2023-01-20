@@ -1,3 +1,6 @@
+## 2.1.1
+- test : fix pin
+
 ## 2.1.0
 - vs : 17.4.3 (xamarin.vs 17.4.0.312 ; xamarin.android 13.1.0.1 ; xamarin.ios 16.1.1.27 ; maui 7.0.52/7.0.100)
 - donet sdk 7.0.101
