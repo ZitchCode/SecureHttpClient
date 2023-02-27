@@ -13,12 +13,12 @@ namespace SecureHttpClient.Test
 
         private const string Hostname2 = @"github.com";
         private const string Page2 = @"https://github.com";
-        private static readonly string[] Pins2Ok = { @"sha256//3ftdeWqIAONye/CeEQuLGvtlw4MPnQmKgyPLugFbK8=" };
+        private static readonly string[] Pins2Ok = { @"sha256/YH8+l6PDvIo1Q5o6varvw2edPgfyJFY5fHuSlsVdvdc=" };
         private static readonly string[] Pins2Ko = { @"sha256/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy=" };
 
         private const string Hostname3 = @"ecc256.badssl.com";
         private const string Page3 = @"https://ecc256.badssl.com/";
-        private static readonly string[] Pins3Ok = { @"sha256/nwrzqrMDZtW9yckUHkur/uyXc0zhjuwVBZ5BUgkVF/g=" };
+        private static readonly string[] Pins3Ok = { @"sha256/QXZd+SUr01R/fit9MKywkH37cuRuyTyos1HJezhHQD0=" };
         private static readonly string[] Pins3Ko = { @"sha256/zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz=" };
 
         public CertificatePinnerTest(TestFixture testFixture) : base(testFixture)
