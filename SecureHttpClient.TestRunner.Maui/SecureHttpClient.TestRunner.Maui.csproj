@@ -30,7 +30,16 @@
 		<RunAOTCompilation>true</RunAOTCompilation>
 		<AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
 		<AndroidAotAdditionalArguments>no-write-symbols,nodebug</AndroidAotAdditionalArguments>
+		<TrimMode>full</TrimMode>
 	</PropertyGroup>
+
+	<ItemGroup Condition="'$(Configuration)|$([MSBuild]::GetTargetPlatformIdentifier($(TargetFramework)))'=='Release|android'">
+		<TrimmerRootAssembly Include="SecureHttpClient.Test" />
+		<TrimmerRootAssembly Include="xunit.core" />
+		<TrimmerRootAssembly Include="xunit.execution.dotnet" />
+		<TrimmerRootAssembly Include="xunit.runners.maui" />
+		<TrimmerRootAssembly Include="Xunit.SkippableFact" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Shiny.Xunit.Runners.Maui" Version="1.0.0" />

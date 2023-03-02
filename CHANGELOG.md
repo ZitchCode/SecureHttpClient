@@ -2,6 +2,7 @@
 - vs : 17.5.0 (maui 7.0.59 ; android 33.0.26 ; ios 16.2.1024)
 - dotnet sdk 7.0.200
 - test : fix pin
+- test trimmode full
 
 ## 2.1.0
 - vs : 17.4.3 (xamarin.vs 17.4.0.312 ; xamarin.android 13.1.0.1 ; xamarin.ios 16.1.1.27 ; maui 7.0.52/7.0.100)
