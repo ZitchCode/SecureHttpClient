@@ -1,6 +1,7 @@
 ## 2.1.1
 - vs : 17.5.0 (maui 7.0.59 ; android 33.0.26 ; ios 16.2.1024)
 - dotnet sdk 7.0.200
+- xcode 14.2 (ios 16.2)
 - test : fix pin
 - test trimmode full
 
