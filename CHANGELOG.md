@@ -1,6 +1,7 @@
 ## 2.1.2
 - vs : 17.5.4 (maui 7.0.81 ; android 33.0.46 ; ios 16.2.2035)
 - dotnet sdk 7.0.203
+- add headers order (android only)
 
 ## 2.1.1
 - vs : 17.5.0 (maui 7.0.59 ; android 33.0.26 ; ios 16.2.1024)

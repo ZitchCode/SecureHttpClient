@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Maui.Devices;
+using SecureHttpClient.Extensions;
 using SecureHttpClient.Test.Helpers;
 using Xunit;
 
@@ -47,6 +48,45 @@ namespace SecureHttpClient.Test
             var json = JsonDocument.Parse(result);
             var url = json.RootElement.GetProperty("gzipped").GetBoolean();
             Assert.True(url);
+        }
+
+        [Fact]
+        public async Task HttpTest_Headers()
+        {
+            const string page = @"https://postman-echo.com/get";
+            var req = new HttpRequestMessage(HttpMethod.Get, page);
+            req.Headers.Add("header1", "value1");
+            req.Headers.Add("header2", "value2");
+            req.Headers.Add("header3", "value3");
+            var result = await SendAsync(req).ReceiveString();
+            var json = JsonDocument.Parse(result);
+            var headers = json.RootElement.GetProperty("headers").Deserialize<Dictionary<string, string>>().Select(kv => kv.Key).ToList();
+            var index1 = headers.IndexOf("header1");
+            var index2 = headers.IndexOf("header2");
+            var index3 = headers.IndexOf("header3");
+            Assert.Equal(1, index2 - index1);
+            Assert.Equal(1, index3 - index2);
+        }
+
+        [SkippableFact]
+        public async Task HttpTest_HeadersOrder()
+        {
+            Skip.If(DeviceInfo.Platform != DevicePlatform.Android, "Only on Android");
+
+            const string page = @"https://postman-echo.com/get";
+            var req = new HttpRequestMessage(HttpMethod.Get, page);
+            req.Headers.Add("header1", "value1");
+            req.Headers.Add("header2", "value2");
+            req.Headers.Add("header3", "value3");
+            req.SetHeadersOrder("header3", "header2", "header1");
+            var result = await SendAsync(req).ReceiveString();
+            var json = JsonDocument.Parse(result);
+            var headers = json.RootElement.GetProperty("headers").Deserialize<Dictionary<string, string>>().Select(kv => kv.Key).ToList();
+            var index1 = headers.IndexOf("header1");
+            var index2 = headers.IndexOf("header2");
+            var index3 = headers.IndexOf("header3");
+            Assert.Equal(1, index2 - index3);
+            Assert.Equal(1, index1 - index2);
         }
 
         [SkippableFact]

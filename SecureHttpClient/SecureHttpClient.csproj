@@ -13,6 +13,7 @@
 
 	<ItemGroup>
 		<None Include="**\*.cs;**\*.xml;**\*.axml;**\*.png" Exclude="obj\**\*.*;bin\**\*.*;bin;obj" />
+		<Compile Include="Extensions\**\*.cs" />
 		<Compile Include="Abstractions\**\*.cs" />
 		<Compile Include="CertificatePinning\**\*.cs" />
 	</ItemGroup>

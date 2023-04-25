@@ -17,6 +17,7 @@ using SecureHttpClient.OkHttp;
 using Microsoft.Extensions.Logging;
 using System.Security.Authentication;
 using Java.Net;
+using SecureHttpClient.Extensions;
 
 namespace SecureHttpClient
 {
@@ -113,7 +114,8 @@ namespace SecureHttpClient
                 .WriteTimeout(100, TimeUnit.Seconds)
                 .ReadTimeout(100, TimeUnit.Seconds)
                 .FollowRedirects(AllowAutoRedirect)
-                .AddInterceptor(new DecompressInterceptor());
+                .AddInterceptor(new DecompressInterceptor())
+                .AddNetworkInterceptor(new HeadersOrderInterceptor());
 
             if (UseCookies)
             {
@@ -179,6 +181,12 @@ namespace SecureHttpClient
             {
                 var headerSeparator = name == "User-Agent" ? " " : ",";
                 builder.AddHeader(name, string.Join(headerSeparator, values));
+            }
+
+            var headersOrder = request.GetHeadersOrder();
+            if (headersOrder != null)
+            {
+                builder.AddHeader("securehttpclient-headers-order", string.Join(';', headersOrder));
             }
 
             cancellationToken.ThrowIfCancellationRequested();
