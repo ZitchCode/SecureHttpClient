@@ -4,6 +4,7 @@
 - Square.OkHttp3 4.11.0
 - Square.OkHttp3.UrlConnection 4.11.0
 - Square.OkIO 3.2.0
+- test : use httpbingo instead of httpbin
 - test : Serilog.Extensions.Logging 7.0.0
 - test : System.Text.Json 7.0.2
 

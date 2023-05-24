@@ -21,7 +21,7 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task HttpTest_Get()
         {
-            const string page = @"https://httpbin.org/get";
+            const string page = @"https://httpbingo.org/get";
             var result = await GetAsync(page).ReceiveString();
             var json = JsonDocument.Parse(result);
             var url = json.RootElement.GetProperty("url").GetString();
@@ -31,7 +31,7 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task HttpTest_Gzip()
         {
-            const string page = @"https://httpbin.org/gzip";
+            const string page = @"https://httpbingo.org/gzip";
             var result = await GetAsync(page).ReceiveString();
             var json = JsonDocument.Parse(result);
             var url = json.RootElement.GetProperty("gzipped").GetBoolean();
@@ -41,7 +41,7 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task HttpTest_Gzip_WithRequestHeader()
         {
-            const string page = @"https://httpbin.org/gzip";
+            const string page = @"https://httpbingo.org/gzip";
             var req = new HttpRequestMessage(HttpMethod.Get, page);
             req.Headers.Add("Accept-Encoding", "gzip");
             var result = await SendAsync(req).ReceiveString();
@@ -94,7 +94,7 @@ namespace SecureHttpClient.Test
         {
             Skip.If(DeviceInfo.Platform != DevicePlatform.Android && DeviceInfo.Platform != DevicePlatform.iOS, "Failing on .Net");
 
-            const string page = @"https://httpbin.org/deflate";
+            const string page = @"https://httpbingo.org/deflate";
             var result = await GetAsync(page).ReceiveString();
             var json = JsonDocument.Parse(result);
             var url = json.RootElement.GetProperty("deflated").GetBoolean();
@@ -104,7 +104,7 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task HttpTest_Utf8()
         {
-            const string page = @"https://httpbin.org/encoding/utf8";
+            const string page = @"https://httpbingo.org/encoding/utf8";
             var result = await GetAsync(page).ReceiveString();
             Assert.Contains("∮ E⋅da = Q,  n → ∞, ∑ f(i) = ∏ g(i)", result);
         }
@@ -140,7 +140,7 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task HttpTest_Delay()
         {
-            const string page = @"https://httpbin.org/delay/5";
+            const string page = @"https://httpbingo.org/delay/5";
             var result = await GetAsync(page).ReceiveString();
             var json = JsonDocument.Parse(result);
             var url = json.RootElement.GetProperty("url").GetString();
@@ -150,7 +150,7 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task HttpTest_Stream()
         {
-            const string page = @"https://httpbin.org/stream/50";
+            const string page = @"https://httpbingo.org/stream/50";
             var result = await GetAsync(page).ReceiveString();
             var nbLines = result.Split('\n').Length - 1;
             Assert.Equal(50, nbLines);
@@ -159,7 +159,7 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task HttpTest_Bytes()
         {
-            const string page = @"https://httpbin.org/bytes/1024";
+            const string page = @"https://httpbingo.org/bytes/1024";
             var result = await GetAsync(page).ReceiveBytes();
             Assert.Equal(1024, result.Length);
         }
@@ -167,7 +167,7 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task HttpTest_StreamBytes()
         {
-            const string page = @"https://httpbin.org/stream-bytes/1024";
+            const string page = @"https://httpbingo.org/stream-bytes/1024";
             var result = await GetAsync(page).ReceiveBytes();
             Assert.Equal(1024, result.Length);
         }
@@ -175,22 +175,22 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task HttpTest_SetCookie()
         {
-            const string page = @"https://httpbin.org/cookies/set?k1=v1";
+            const string page = @"https://httpbingo.org/cookies/set?k1=v1";
             var result = await GetAsync(page).ReceiveString();
             var json = JsonDocument.Parse(result);
-            var cookies = json.RootElement.GetProperty("cookies").Deserialize<Dictionary<string, string>>();
+            var cookies = json.RootElement.Deserialize<Dictionary<string, string>>();
             Assert.Contains(new KeyValuePair<string, string>("k1", "v1"), cookies);
         }
 
         [Fact]
         public async Task HttpTest_SetCookieAgain()
         {
-            const string page1 = @"https://httpbin.org/cookies/set?k1=v1";
+            const string page1 = @"https://httpbingo.org/cookies/set?k1=v1";
             await GetAsync(page1);
-            const string page2 = @"https://httpbin.org/cookies/set?k1=v2";
+            const string page2 = @"https://httpbingo.org/cookies/set?k1=v2";
             var result = await GetAsync(page2).ReceiveString();
             var json = JsonDocument.Parse(result);
-            var cookies = json.RootElement.GetProperty("cookies").Deserialize<Dictionary<string, string>>();
+            var cookies = json.RootElement.Deserialize<Dictionary<string, string>>();
             Assert.Contains(new KeyValuePair<string, string>("k1", "v2"), cookies);
         }
 
@@ -199,14 +199,14 @@ namespace SecureHttpClient.Test
         {
             const string cookie1 = "k1=v1; Path=/; expires=Sat, 01-Jan-2050 00:00:00 GMT";
             const string cookie2 = "k2=v2; Path=/; expires=Fri, 01-Jan-2049 00:00:00 GMT";
-            var page1 = $@"https://httpbin.org/response-headers?Set-Cookie={WebUtility.UrlEncode(cookie1)}&Set-Cookie={WebUtility.UrlEncode(cookie2)}";
+            var page1 = $@"https://httpbingo.org/response-headers?Set-Cookie={WebUtility.UrlEncode(cookie1)}&Set-Cookie={WebUtility.UrlEncode(cookie2)}";
             var response1 = await GetAsync(page1);
             response1.Headers.TryGetValues("set-cookie", out var respCookies);
             Assert.Equal(new List<string> { cookie1, cookie2 }, respCookies);
-            const string page2 = @"https://httpbin.org/cookies";
+            const string page2 = @"https://httpbingo.org/cookies";
             var result = await GetAsync(page2).ReceiveString();
             var json = JsonDocument.Parse(result);
-            var cookies = json.RootElement.GetProperty("cookies").Deserialize<Dictionary<string, string>>();
+            var cookies = json.RootElement.Deserialize<Dictionary<string, string>>();
             Assert.Contains(new KeyValuePair<string, string>("k1", "v1"), cookies);
             Assert.Contains(new KeyValuePair<string, string>("k2", "v2"), cookies);
         }
@@ -216,23 +216,23 @@ namespace SecureHttpClient.Test
         {
             Skip.If(DeviceInfo.Platform == DevicePlatform.Android && DeviceInfo.Version.Major == 7, "Failing on Android 24-25");
 
-            const string page1 = @"https://httpbin.org/cookies/set?k1=v1";
+            const string page1 = @"https://httpbingo.org/cookies/set?k1=v1";
             await GetAsync(page1);
-            const string page2 = @"https://httpbin.org/cookies/delete?k1";
+            const string page2 = @"https://httpbingo.org/cookies/delete?k1";
             var result = await GetAsync(page2).ReceiveString();
             var json = JsonDocument.Parse(result);
-            var cookies = json.RootElement.GetProperty("cookies").Deserialize<Dictionary<string, string>>();
+            var cookies = json.RootElement.Deserialize<Dictionary<string, string>>();
             Assert.DoesNotContain(new KeyValuePair<string, string>("k1", "v1"), cookies);
         }
 
         [Fact]
         public async Task HttpTest_DoNotUseCookies()
         {
-            const string page = @"https://httpbin.org/cookies/set?k1=v1";
+            const string page = @"https://httpbingo.org/cookies/set?k1=v1";
             DisableCookies();
             var result = await GetAsync(page).ReceiveString();
             var json = JsonDocument.Parse(result);
-            var cookies = json.RootElement.GetProperty("cookies").Deserialize<Dictionary<string, string>>();
+            var cookies = json.RootElement.Deserialize<Dictionary<string, string>>();
             Assert.Empty(cookies);
         }
 
@@ -253,7 +253,7 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task HttpTest_Timeout()
         {
-            const string page = @"https://httpbin.org/delay/5";
+            const string page = @"https://httpbingo.org/delay/5";
             SetTimeout(1);
             await Assert.ThrowsAsync<TaskCanceledException>(() => GetAsync(page));
         }
@@ -284,7 +284,7 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task HttpTest_GetWithEmptyRequestBody()
         {
-            const string page = @"https://httpbin.org/get";
+            const string page = @"https://httpbingo.org/get";
             var request = new HttpRequestMessage(HttpMethod.Get, page)
             {
                 Content = new StringContent("")
