@@ -1,6 +1,9 @@
 ## 2.1.3
 - vs : 17.5.4 (maui 7.0.86 ; android 33.0.46 ; ios 16.4.7054)
 - dotnet sdk 7.0.302
+- Square.OkHttp3 4.11.0
+- Square.OkHttp3.UrlConnection 4.11.0
+- Square.OkIO 3.2.0
 - test : Serilog.Extensions.Logging 7.0.0
 - test : System.Text.Json 7.0.2
 
