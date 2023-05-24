@@ -1,3 +1,9 @@
+## 2.1.3
+- vs : 17.5.4 (maui 7.0.86 ; android 33.0.46 ; ios 16.4.7054)
+- dotnet sdk 7.0.302
+- test : Serilog.Extensions.Logging 7.0.0
+- test : System.Text.Json 7.0.2
+
 ## 2.1.2
 - vs : 17.5.4 (maui 7.0.81 ; android 33.0.46 ; ios 16.2.2035)
 - dotnet sdk 7.0.203
