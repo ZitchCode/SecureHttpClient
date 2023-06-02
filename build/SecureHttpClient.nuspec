@@ -19,9 +19,9 @@
       </group>
       <group targetFramework="net7.0-android33.0">
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="7.0.0" exclude="Build,Analyzers" />
-        <dependency id="Square.OkHttp3" version="4.11.0" exclude="Build,Analyzers" />
-        <dependency id="Square.OkHttp3.UrlConnection" version="4.11.0" exclude="Build,Analyzers" />
-        <dependency id="Square.OkIO" version="3.2.0" exclude="Build,Analyzers" />
+        <dependency id="Square.OkHttp3" version="4.11.0.1" exclude="Build,Analyzers" />
+        <dependency id="Square.OkHttp3.UrlConnection" version="4.11.0.1" exclude="Build,Analyzers" />
+        <dependency id="Square.OkIO" version="3.3.0.1" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="net7.0-ios16.2">
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="7.0.0" exclude="Build,Analyzers" />
