@@ -31,20 +31,22 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$([MSBuild]::GetTargetPlatformIdentifier($(TargetFramework)))'=='Release|android'">
+		<AndroidManifest>Platforms\Android\AndroidManifest.xml</AndroidManifest>
 	    <AndroidLinkTool>r8</AndroidLinkTool>
 		<RunAOTCompilation>true</RunAOTCompilation>
 		<AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
 		<AndroidAotAdditionalArguments>no-write-symbols,nodebug</AndroidAotAdditionalArguments>
 		<TrimMode>full</TrimMode>
+		<JsonSerializerIsReflectionEnabledByDefault>true</JsonSerializerIsReflectionEnabledByDefault>
 		<AndroidStripILAfterAOT>true</AndroidStripILAfterAOT>
 	</PropertyGroup>
 
 	<ItemGroup Condition="'$(Configuration)|$([MSBuild]::GetTargetPlatformIdentifier($(TargetFramework)))'=='Release|android'">
-		<TrimmerRootAssembly Include="SecureHttpClient.Test" />
-		<TrimmerRootAssembly Include="xunit.core" />
-		<TrimmerRootAssembly Include="xunit.execution.dotnet" />
-		<TrimmerRootAssembly Include="xunit.runners.maui" />
-		<TrimmerRootAssembly Include="Xunit.SkippableFact" />
+		<TrimmerRootAssembly Include="SecureHttpClient.Test" RootMode="All" />
+		<TrimmerRootAssembly Include="xunit.core" RootMode="All" />
+		<TrimmerRootAssembly Include="xunit.execution.dotnet" RootMode="All" />
+		<TrimmerRootAssembly Include="xunit.runners.maui" RootMode="All" />
+		<TrimmerRootAssembly Include="Xunit.SkippableFact" RootMode="All" />
 	</ItemGroup>
 
 	<ItemGroup>
