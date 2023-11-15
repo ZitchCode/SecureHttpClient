@@ -5,6 +5,7 @@
 - C# 12.0
 - android 14 (api 34)
 - xcode 15.0 (ios 17.0)
+- Microsoft.Extensions.Logging.Abstractions 8.0.0
 - Square.OkHttp3 4.11.0.3
 - Square.OkHttp3.UrlConnection 4.11.0.3
 - Square.OkIO 3.5.0.1

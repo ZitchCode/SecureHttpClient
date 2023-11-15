@@ -15,10 +15,10 @@
     <repository url="https://github.com/tranb3r/securehttpclient" />
     <dependencies>
       <group targetFramework="net8.0">
-        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="7.0.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="8.0.0" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="net8.0-android34.0">
-        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="7.0.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="8.0.0" exclude="Build,Analyzers" />
         <dependency id="Square.OkHttp3" version="4.11.0.3" exclude="Build,Analyzers" />
         <dependency id="Square.OkHttp3.UrlConnection" version="4.11.0.3" exclude="Build,Analyzers" />
         <dependency id="Square.OkIO" version="3.5.0.1" exclude="Build,Analyzers" />
