@@ -10,6 +10,13 @@
 - Square.OkHttp3.UrlConnection 4.11.0.3
 - Square.OkIO 3.5.0.1
 - test : fix pin
+- test : Microsoft.Extensions.* 8.0.0
+- test : Serilog 3.1.1
+- test : Serilog.Extensions.Logging 8.0.0
+- test : Serilog.Sinks.Console 5.0.0
+- test : System.Text.Json 8.0.0
+- test : xunit 2.6.1
+- test : xunit.runner.utility 2.6.1
 
 ## 2.1.3
 - vs : 17.5.4 (maui 7.0.86 ; android 33.0.46 ; ios 16.4.7054)
