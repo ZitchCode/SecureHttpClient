@@ -1,3 +1,11 @@
+## 2.2.0
+- vs : 17.8.0 (dotnet sdk 8.0.100 ; maui 8.0.3 ; android 34.0.43 ; ios 17.0.8478)
+- dotnet sdk 8.0.100
+- target net8
+- C# 12.0
+- android 14 (api 34)
+- xcode 15.0 (ios 17.0)
+
 ## 2.1.3
 - vs : 17.5.4 (maui 7.0.86 ; android 33.0.46 ; ios 16.4.7054)
 - dotnet sdk 7.0.302

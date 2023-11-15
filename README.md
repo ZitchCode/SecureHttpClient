@@ -13,9 +13,9 @@ Usage:
 - for advanced usage examples, look into the SecureHttpClient.Test folder.
 
 Tested on the following platforms:
-- Android 5-13 (api 21-33)
-- iOS 16.2
-- .net 7.0
+- Android 5-14 (api 21-34)
+- iOS 17.0
+- .net 8.0
 
 About cookies and redirects:
 - SecureHttpClient handles cookies and redirects, but the behavior can differ a bit from one platform to another, because of different implementations in the native libraries used by SecureHttpClient.
@@ -25,3 +25,4 @@ Supported frameworks:
 - version 1.x: MonoAndroid ; Xamarin.iOS ; NetStandard
 - version 2.0: net6.0-android ; net6.0-ios ; net6.0-windows
 - version 2.1: net7.0-android ; net7.0-ios ; net7.0-windows
+- version 2.2: net8.0-android ; net8.0-ios ; net8.0-windows
