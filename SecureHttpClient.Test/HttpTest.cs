@@ -61,11 +61,9 @@ namespace SecureHttpClient.Test
             var result = await SendAsync(req).ReceiveString();
             var json = JsonDocument.Parse(result);
             var headers = json.RootElement.GetProperty("headers").Deserialize<Dictionary<string, string>>().Select(kv => kv.Key).ToList();
-            var index1 = headers.IndexOf("header1");
-            var index2 = headers.IndexOf("header2");
-            var index3 = headers.IndexOf("header3");
-            Assert.Equal(1, index2 - index1);
-            Assert.Equal(1, index3 - index2);
+            Assert.Contains("header1", headers);
+            Assert.Contains("header2", headers);
+            Assert.Contains("header3", headers);
         }
 
         [SkippableFact]

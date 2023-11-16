@@ -41,6 +41,10 @@
 		<AndroidStripILAfterAOT>true</AndroidStripILAfterAOT>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$([MSBuild]::GetTargetPlatformIdentifier($(TargetFramework)))'=='Debug|ios'">
+		<MtouchDebug>True</MtouchDebug>
+	</PropertyGroup>
+
 	<ItemGroup Condition="'$(Configuration)|$([MSBuild]::GetTargetPlatformIdentifier($(TargetFramework)))'=='Release|android'">
 		<TrimmerRootAssembly Include="SecureHttpClient.Test" RootMode="All" />
 		<TrimmerRootAssembly Include="xunit.core" RootMode="All" />
