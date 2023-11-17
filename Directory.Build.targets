@@ -1,5 +1,5 @@
 <Project>
 	<ItemGroup>
-		<PackageReference Update="SecureHttpClient" Version="2.1.3" />
+		<PackageReference Update="SecureHttpClient" Version="2.2.0" />
 	</ItemGroup>
 </Project>
