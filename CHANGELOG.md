@@ -1,4 +1,7 @@
 ## 2.2.1
+- Square.OkHttp3 4.12.0
+- Square.OkHttp3.UrlConnection 4.12.0
+- Square.OkIO 3.6.0
 - test : xunit 2.6.2
 - test : xunit.runner.utility 2.6.2
 
