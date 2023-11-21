@@ -1,3 +1,7 @@
+## 2.2.1
+- test : xunit 2.6.2
+- test : xunit.runner.utility 2.6.2
+
 ## 2.2.0
 - vs : 17.8.0 (dotnet sdk 8.0.100 ; maui 8.0.3 ; android 34.0.43 ; ios 17.0.8478)
 - dotnet sdk 8.0.100
