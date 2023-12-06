@@ -1,4 +1,5 @@
-## 2.2.2
+## 2.3.0
+- add brotli (not on android yet)
 - test : fix pin
 
 ## 2.2.1

@@ -97,6 +97,18 @@ namespace SecureHttpClient.Test
             Assert.True(url);
         }
 
+        [SkippableFact]
+        public async Task HttpTest_Brotli()
+        {
+            Skip.If(DeviceInfo.Platform == DevicePlatform.Android, "Not supported yet on android, missing okhttp-brotli binding");
+
+            const string page = @"https://httpbin.org/brotli";
+            var result = await GetAsync(page).ReceiveString();
+            var json = JsonDocument.Parse(result);
+            var url = json.RootElement.GetProperty("brotli").GetBoolean();
+            Assert.True(url);
+        }
+
         [Fact]
         public async Task HttpTest_Utf8()
         {

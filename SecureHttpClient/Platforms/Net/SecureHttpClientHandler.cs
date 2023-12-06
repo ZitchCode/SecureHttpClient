@@ -30,7 +30,7 @@ namespace SecureHttpClient
             _certificatePinner = new Lazy<CertificatePinner>(() => new CertificatePinner(logger));
 
             // Set Accept-Encoding headers and take care of decompression if needed
-            AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+            AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli;
             MaxAutomaticRedirections = 10;
         }
 
