@@ -90,8 +90,6 @@ namespace SecureHttpClient.Test
         [SkippableFact]
         public async Task HttpTest_Deflate()
         {
-            Skip.If(DeviceInfo.Platform != DevicePlatform.Android && DeviceInfo.Platform != DevicePlatform.iOS, "Failing on .Net");
-
             const string page = @"https://httpbingo.org/deflate";
             var result = await GetAsync(page).ReceiveString();
             var json = JsonDocument.Parse(result);
