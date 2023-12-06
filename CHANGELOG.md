@@ -1,3 +1,6 @@
+## 2.2.2
+- test : fix pin
+
 ## 2.2.1
 - Square.OkHttp3 4.12.0
 - Square.OkHttp3.UrlConnection 4.12.0
