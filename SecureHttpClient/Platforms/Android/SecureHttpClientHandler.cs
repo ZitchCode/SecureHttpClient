@@ -222,7 +222,8 @@ namespace SecureHttpClient
             var ret = new HttpResponseMessage((HttpStatusCode) resp.Code())
             {
                 RequestMessage = request,
-                ReasonPhrase = resp.Message()
+                ReasonPhrase = resp.Message(),
+                Version = GetVersion(resp.Protocol())
             };
             ret.RequestMessage.RequestUri = new Uri(resp.Request().Url().Url().ToString()); // should point to the request leading to the final response (in case of redirects)
 
@@ -244,6 +245,23 @@ namespace SecureHttpClient
             }
 
             return ret;
+        }
+
+        private static Version GetVersion(Protocol protocol)
+        {
+            if (protocol == Protocol.Http10)
+            {
+                return HttpVersion.Version10;
+            }
+            if (protocol == Protocol.Http11)
+            {
+                return HttpVersion.Version11;
+            }
+            if (protocol == Protocol.Http2 || protocol == Protocol.H2PriorKnowledge)
+            {
+                return HttpVersion.Version20;
+            }
+            return HttpVersion.Unknown;
         }
     }
 }

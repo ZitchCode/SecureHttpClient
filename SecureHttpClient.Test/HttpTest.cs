@@ -244,18 +244,19 @@ namespace SecureHttpClient.Test
             Assert.Empty(cookies);
         }
 
-        [Fact(Skip = "Page does not exist anymore, needs to be fixed")]
+        [SkippableFact]
         public async Task HttpTest_Protocol()
         {
-            const string page = @"https://http2.golang.org/reqinfo";
+            Skip.If(DeviceInfo.Platform == DevicePlatform.iOS, "Need help to get http version from NSHttpUrlResponse");
+
+            const string page = @"https://httpbingo.org/get";
             var request = new HttpRequestMessage(HttpMethod.Get, page);
             if (DeviceInfo.Platform != DevicePlatform.Android && DeviceInfo.Platform != DevicePlatform.iOS)
             {
                 request.Version = new Version(2, 0);
             }
-            var response = await SendAsync(request).ReceiveString();
-            var protocol = response.Split('\n').Single(str => str.StartsWith("Protocol:"));
-            Assert.Contains("HTTP/2.0", protocol);
+            var response = await SendAsync(request);
+            Assert.Equal(HttpVersion.Version20, response.Version);
         }
 
         [Fact]

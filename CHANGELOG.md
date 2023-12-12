@@ -1,5 +1,6 @@
 ## 2.3.0
 - add brotli (not on android yet)
+- set response version on android
 - test : fix pin
 
 ## 2.2.1
