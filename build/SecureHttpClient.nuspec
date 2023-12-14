@@ -13,6 +13,7 @@
     <copyright>Copyright 2022</copyright>
     <tags>dotnet, maui, xamarin, ios, android, httpclient, security</tags>
     <repository url="https://github.com/tranb3r/securehttpclient" />
+	<readme>README.md</readme>
     <dependencies>
       <group targetFramework="net8.0">
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="8.0.0" exclude="Build,Analyzers" />
@@ -39,5 +40,6 @@
     <file src="..\SecureHttpClient.OkHttp\bin\Release\net8.0-android34.0\SecureHttpClient.OkHttp.aar" target="lib\net8.0-android34.0" />
     <file src="..\SecureHttpClient\bin\Release\net8.0-ios17.0\SecureHttpClient.dll" target="lib\net8.0-ios17.0" />
     <file src="..\SecureHttpClient\bin\Release\net8.0-ios17.0\SecureHttpClient.xml" target="lib\net8.0-ios17.0" />
+	<file src="..\README.md" target="." />
   </files>
 </package>
