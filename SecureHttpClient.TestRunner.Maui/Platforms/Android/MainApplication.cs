@@ -33,7 +33,7 @@ namespace SecureHttpClient.TestRunner.Maui
         private static void OnAndroidEnvironmentUnhandledExceptionRaiser(object sender, RaiseThrowableEventArgs e)
         {
             Log.Fatal(e.Exception, "AndroidEnvironment.UnhandledExceptionRaiser");
-            Assert.True(false, "AndroidEnvironment.UnhandledExceptionRaiser");
+            Assert.Fail("AndroidEnvironment.UnhandledExceptionRaiser");
         }
     }
 }
