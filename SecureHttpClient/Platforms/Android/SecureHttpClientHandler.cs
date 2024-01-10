@@ -173,14 +173,18 @@ namespace SecureHttpClient
                 .Url(url);
 
             var keyValuePairs = request.Headers
-                .Union(request.Content != null ?
-                    request.Content.Headers :
-                    Enumerable.Empty<KeyValuePair<string, IEnumerable<string>>>());
+                .Union(request.Content?.Headers ?? Enumerable.Empty<KeyValuePair<string, IEnumerable<string>>>())
+                .ToArray();
 
             foreach (var (name, values) in keyValuePairs)
             {
                 var headerSeparator = name == "User-Agent" ? " " : ",";
                 builder.AddHeader(name, string.Join(headerSeparator, values));
+            }
+
+            if (!keyValuePairs.Any(kv => kv.Key.Equals("Accept-Encoding", StringComparison.OrdinalIgnoreCase)))
+            {
+                builder.AddHeader("Accept-Encoding", "gzip, deflate, br");
             }
 
             var headersOrder = request.GetHeadersOrder();

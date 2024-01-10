@@ -29,17 +29,19 @@ namespace SecureHttpClient.Test
         }
 
         [Fact]
-        public async Task HttpTest_Gzip()
+        public async Task HttpTest_Compression_Gzip_WithoutRequestHeader()
         {
             const string page = @"https://httpbingo.org/gzip";
             var result = await GetAsync(page).ReceiveString();
             var json = JsonDocument.Parse(result);
             var url = json.RootElement.GetProperty("gzipped").GetBoolean();
             Assert.True(url);
+            var requestEncoding = json.RootElement.GetProperty("headers").GetProperty("Accept-Encoding")[0].GetString();
+            Assert.Contains("gzip", requestEncoding);
         }
 
         [Fact]
-        public async Task HttpTest_Gzip_WithRequestHeader()
+        public async Task HttpTest_Compression_Gzip_WithRequestHeader()
         {
             const string page = @"https://httpbingo.org/gzip";
             var req = new HttpRequestMessage(HttpMethod.Get, page);
@@ -48,6 +50,60 @@ namespace SecureHttpClient.Test
             var json = JsonDocument.Parse(result);
             var url = json.RootElement.GetProperty("gzipped").GetBoolean();
             Assert.True(url);
+            var requestEncoding = json.RootElement.GetProperty("headers").GetProperty("Accept-Encoding")[0].GetString();
+            Assert.Contains("gzip", requestEncoding);
+        }
+
+        [Fact]
+        public async Task HttpTest_Compression_Deflate_WithoutRequestHeader()
+        {
+            const string page = @"https://httpbingo.org/deflate";
+            var result = await GetAsync(page).ReceiveString();
+            var json = JsonDocument.Parse(result);
+            var url = json.RootElement.GetProperty("deflated").GetBoolean();
+            Assert.True(url);
+            var requestEncoding = json.RootElement.GetProperty("headers").GetProperty("Accept-Encoding")[0].GetString();
+            Assert.Contains("deflate", requestEncoding);
+        }
+
+        [Fact]
+        public async Task HttpTest_Compression_Deflate_WithRequestHeader()
+        {
+            const string page = @"https://httpbingo.org/deflate";
+            var req = new HttpRequestMessage(HttpMethod.Get, page);
+            req.Headers.Add("Accept-Encoding", "deflate");
+            var result = await SendAsync(req).ReceiveString();
+            var json = JsonDocument.Parse(result);
+            var url = json.RootElement.GetProperty("deflated").GetBoolean();
+            Assert.True(url);
+            var requestEncoding = json.RootElement.GetProperty("headers").GetProperty("Accept-Encoding")[0].GetString();
+            Assert.Contains("deflate", requestEncoding);
+        }
+
+        [Fact]
+        public async Task HttpTest_Compression_Brotli_WithoutRequestHeader()
+        {
+            const string page = @"https://httpbin.org/brotli";
+            var result = await GetAsync(page).ReceiveString();
+            var json = JsonDocument.Parse(result);
+            var url = json.RootElement.GetProperty("brotli").GetBoolean();
+            Assert.True(url);
+            var requestEncoding = json.RootElement.GetProperty("headers").GetProperty("Accept-Encoding").GetString();
+            Assert.Contains("br", requestEncoding);
+        }
+
+        [Fact]
+        public async Task HttpTest_Compression_Brotli_WithRequestHeader()
+        {
+            const string page = @"https://httpbin.org/brotli";
+            var req = new HttpRequestMessage(HttpMethod.Get, page);
+            req.Headers.Add("Accept-Encoding", "br");
+            var result = await SendAsync(req).ReceiveString();
+            var json = JsonDocument.Parse(result);
+            var url = json.RootElement.GetProperty("brotli").GetBoolean();
+            Assert.True(url);
+            var requestEncoding = json.RootElement.GetProperty("headers").GetProperty("Accept-Encoding").GetString();
+            Assert.Contains("br", requestEncoding);
         }
 
         [Fact]
@@ -85,28 +141,6 @@ namespace SecureHttpClient.Test
             var index3 = headers.IndexOf("header3");
             Assert.Equal(1, index2 - index3);
             Assert.Equal(1, index1 - index2);
-        }
-
-        [SkippableFact]
-        public async Task HttpTest_Deflate()
-        {
-            const string page = @"https://httpbingo.org/deflate";
-            var result = await GetAsync(page).ReceiveString();
-            var json = JsonDocument.Parse(result);
-            var url = json.RootElement.GetProperty("deflated").GetBoolean();
-            Assert.True(url);
-        }
-
-        [SkippableFact]
-        public async Task HttpTest_Brotli()
-        {
-            Skip.If(DeviceInfo.Platform == DevicePlatform.Android, "Not supported yet on android, missing okhttp-brotli binding");
-
-            const string page = @"https://httpbin.org/brotli";
-            var result = await GetAsync(page).ReceiveString();
-            var json = JsonDocument.Parse(result);
-            var url = json.RootElement.GetProperty("brotli").GetBoolean();
-            Assert.True(url);
         }
 
         [Fact]

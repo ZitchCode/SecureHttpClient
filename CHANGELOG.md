@@ -1,5 +1,5 @@
 ## 2.3.0
-- add brotli (not on android yet)
+- add brotli
 - set response version on android
 - build : add readme to nuspec
 - test : fix pin

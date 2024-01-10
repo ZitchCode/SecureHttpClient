@@ -13,6 +13,8 @@ import okio.InflaterSource;
 import okio.Source;
 import okio.Okio;
 
+import org.brotli.dec.BrotliInputStream;
+
 public class DecompressInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
@@ -31,9 +33,21 @@ public class DecompressInterceptor implements Interceptor {
             return response;
         }
 
-        Source source = response.header("Content-Encoding").equals("gzip")
-			? new GzipSource(response.body().source())
-			: new InflaterSource(response.body().source(), new Inflater());
+        Source source = null;
+		switch(response.header("Content-Encoding").toLowerCase()) {
+            case "gzip": {
+				source = new GzipSource(response.body().source());
+				break;
+			}
+            case "deflate": {
+				source = new InflaterSource(response.body().source(), new Inflater());
+				break;
+			}
+            case "br": {
+				source = Okio.source(new BrotliInputStream(response.body().source().inputStream()));
+				break;
+			}
+        }
 
         String bodyString = Okio.buffer(source).readUtf8();
 
@@ -51,6 +65,9 @@ public class DecompressInterceptor implements Interceptor {
     }
 
     private Boolean isCompressed(Response response) {
-        return response.header("Content-Encoding") != null && (response.header("Content-Encoding").equals("gzip") || response.header("Content-Encoding").equals("deflate"));
+        return response.header("Content-Encoding") != null
+            && (response.header("Content-Encoding").toLowerCase().equals("gzip") 
+                || response.header("Content-Encoding").toLowerCase().equals("deflate") 
+                || response.header("Content-Encoding").toLowerCase().equals("br"));
     }
 }
