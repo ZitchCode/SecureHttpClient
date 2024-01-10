@@ -59,6 +59,10 @@
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
 		<PackageReference Include="Serilog.Sinks.Xamarin" Version="1.0.0" />
+
+		<!-- Fix build -->
+		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="1.9.21.1" />
+		<!-- Fix build -->
 	</ItemGroup>
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">

@@ -2,6 +2,9 @@
 - add brotli
 - set response version on android
 - build : add readme to nuspec
+- Square.OkHttp3 4.12.0.1
+- Square.OkHttp3.UrlConnection 4.12.0.1
+- Square.OkIO 3.6.0.1
 - test : fix pin
 
 ## 2.2.1
