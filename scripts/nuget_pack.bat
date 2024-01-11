@@ -1,5 +1,7 @@
 @echo off
 
+SETLOCAL
+
 echo -- INIT ----------------------------------------------------------------------------------------------------------------------------------------------------
 set Z_LibName=SecureHttpClient
 echo LibName: %Z_LibName%
@@ -18,3 +20,4 @@ echo -- PACK -------------------------------------------------------------------
 dotnet pack -v m ../%Z_LibName%/%Z_LibName%.csproj -c Release -p:AndroidSdkDirectory=%Z_AndroidSdkDirectory% --no-build -o ..\ -p:PackageVersion=%Z_Version% -p:NuspecFile=..\build\SecureHttpClient.nuspec -p:NuspecProperties=version=%Z_Version%
 
 echo -- DONE !! -------------------------------------------------------------------------------------------------------------------------------------------------
+ENDLOCAL
