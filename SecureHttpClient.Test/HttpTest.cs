@@ -57,7 +57,7 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task HttpTest_Compression_Deflate_WithoutRequestHeader()
         {
-            const string page = @"https://httpbingo.org/deflate";
+            const string page = @"https://httpbingo.org/deflate"; // has zlib header (RFC 1951)
             var result = await GetAsync(page).ReceiveString();
             var json = JsonDocument.Parse(result);
             var url = json.RootElement.GetProperty("deflated").GetBoolean();

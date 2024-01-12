@@ -1,6 +1,8 @@
 ## 2.3.0
 - add brotli
 - set response version on android
+- fix resource not closed in android decompressinterceptor
+- fix deflate in android decompressinterceptor (rfc 1950 vs 1951)
 - build : add readme to nuspec
 - Square.OkHttp3 4.12.0.1
 - Square.OkHttp3.UrlConnection 4.12.0.1

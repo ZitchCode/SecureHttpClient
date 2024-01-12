@@ -1,19 +1,20 @@
 package securehttpclient.okhttp;
 
+import java.io.EOFException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.BufferedInputStream;
 import java.util.zip.Inflater;
+import java.util.zip.InflaterInputStream;
+import java.util.zip.GZIPInputStream;
+import org.brotli.dec.BrotliInputStream;
 
 import okhttp3.Headers;
 import okhttp3.Interceptor;
-import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import okio.GzipSource;
-import okio.InflaterSource;
-import okio.Source;
+import okio.BufferedSource;
 import okio.Okio;
-
-import org.brotli.dec.BrotliInputStream;
 
 public class DecompressInterceptor implements Interceptor {
     @Override
@@ -33,25 +34,44 @@ public class DecompressInterceptor implements Interceptor {
             return response;
         }
 
-        Source source = null;
+        BufferedSource source = response.body().source();
+        InputStream inputStream = null;
+
 		switch(response.header("Content-Encoding").toLowerCase()) {
             case "gzip": {
-				source = new GzipSource(response.body().source());
+                inputStream = new GZIPInputStream(source.inputStream());
 				break;
 			}
             case "deflate": {
-				source = new InflaterSource(response.body().source(), new Inflater());
+                boolean hasZlibHeader = false;
+                BufferedInputStream bufferedInputStream = new BufferedInputStream(source.inputStream());
+                try {
+                    source.require(2); // throws EOFException if size < 2
+                    byte[] headerBytes = new byte[2];
+                    bufferedInputStream.mark(0);
+                    bufferedInputStream.read(headerBytes);
+                    bufferedInputStream.reset();
+                    hasZlibHeader = (headerBytes[0] & 0xFF) == 0x78 && (headerBytes[1] & 0xFF) <= 0xDA;
+                } catch (EOFException e) {
+                }
+                if (hasZlibHeader) {
+                    // zlib decompression (rfc 1951)
+                    inputStream = new InflaterInputStream(bufferedInputStream, new Inflater());
+                } else {
+                    // raw deflate decompression (rfc 1950)
+                    inputStream = new InflaterInputStream(bufferedInputStream, new Inflater(true));
+                }
 				break;
 			}
             case "br": {
-				source = Okio.source(new BrotliInputStream(response.body().source().inputStream()));
+				inputStream = new BrotliInputStream(source.inputStream());
 				break;
 			}
         }
 
-        String bodyString = Okio.buffer(source).readUtf8();
-
-        ResponseBody responseBody = ResponseBody.create(bodyString, response.body().contentType());
+        byte[] bodyBytes = Okio.buffer(Okio.source(inputStream)).readByteArray();
+        ResponseBody responseBody = ResponseBody.create(bodyBytes, response.body().contentType());
+        inputStream.close();
 
         Headers strippedHeaders = response.headers().newBuilder()
                 .removeAll("Content-Encoding")
@@ -65,9 +85,8 @@ public class DecompressInterceptor implements Interceptor {
     }
 
     private Boolean isCompressed(Response response) {
-        return response.header("Content-Encoding") != null
-            && (response.header("Content-Encoding").toLowerCase().equals("gzip") 
-                || response.header("Content-Encoding").toLowerCase().equals("deflate") 
-                || response.header("Content-Encoding").toLowerCase().equals("br"));
+        String contentEncoding = response.header("Content-Encoding");
+        return contentEncoding != null 
+            && (contentEncoding.equalsIgnoreCase("gzip") || contentEncoding.equalsIgnoreCase("deflate") || contentEncoding.equalsIgnoreCase("br"));
     }
 }
