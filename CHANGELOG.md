@@ -1,3 +1,7 @@
+## 2.2.3
+- vs : 17.8.4 (dotnet sdk 8.0.101 ; maui 8.0.3 ; android 34.0.43 ; ios 17.0.8478)
+- dotnet sdk 8.0.101
+
 ## 2.2.2
 - add brotli
 - set response version on android
