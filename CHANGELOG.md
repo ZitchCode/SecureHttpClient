@@ -1,4 +1,4 @@
-## 2.3.0
+## 2.2.2
 - add brotli
 - set response version on android
 - fix resource not closed in android decompressinterceptor
