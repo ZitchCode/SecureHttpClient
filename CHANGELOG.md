@@ -1,6 +1,10 @@
 ## 2.2.3
 - vs : 17.8.4 (dotnet sdk 8.0.101 ; maui 8.0.3 ; android 34.0.43 ; ios 17.0.8478)
 - dotnet sdk 8.0.101
+- test : Serilog.Sinks.Console 5.0.1
+- test : System.Text.Json 8.0.1
+- test : xunit 2.6.6
+- test : xunit.runner.utility 2.6.6
 
 ## 2.2.2
 - add brotli
