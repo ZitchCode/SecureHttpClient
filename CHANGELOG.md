@@ -2,6 +2,7 @@
 - vs : 17.8.5 (dotnet sdk 8.0.101 ; maui 8.0.3 ; android 34.0.43 ; ios 17.2.8004)
 - dotnet sdk 8.0.101
 - xcode 15.2 (ios 17.2)
+- test : Microsoft.Maui.* 8.0.6
 - test : Serilog.Sinks.Console 5.0.1
 - test : System.Text.Json 8.0.1
 - test : xunit 2.6.6
