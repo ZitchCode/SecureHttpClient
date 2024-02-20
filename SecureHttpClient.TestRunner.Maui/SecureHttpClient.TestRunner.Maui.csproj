@@ -77,11 +77,4 @@
 	  <ProjectReference Include="..\SecureHttpClient.Test\SecureHttpClient.Test.csproj" />
 	</ItemGroup>
 
-	<!-- https://github.com/dotnet/runtime/issues/96804 -->
-	<Target Name="UpdateRuntimePackVersion" BeforeTargets="ProcessFrameworkReferences">
-		<ItemGroup>
-			<KnownRuntimePack Condition="%(RuntimePackLabels) == 'Mono'" LatestRuntimeFrameworkVersion="8.0.0" />
-		</ItemGroup>
-	</Target>
-
 </Project>

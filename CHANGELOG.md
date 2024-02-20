@@ -1,6 +1,5 @@
 ## 2.2.3
-- vs : 17.8.5 (dotnet sdk 8.0.101 ; maui 8.0.3 ; android 34.0.43 ; ios 17.2.8004)
-- dotnet sdk 8.0.101
+- vs : 17.9.0 (dotnet sdk 8.0.200 ; maui 8.0.6 ; android 34.0.52 ; ios 17.2.8004)
 - xcode 15.2 (ios 17.2)
 - BouncyCastle.Cryptography 2.2.1 (instead of Portable.BouncyCastle)
 - test : Microsoft.Maui.* 8.0.6
