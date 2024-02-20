@@ -26,7 +26,7 @@
       </group>
       <group targetFramework="net8.0-ios17.0">
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="8.0.0" exclude="Build,Analyzers" />
-        <dependency id="BouncyCastle.Cryptography" version="2.2.1" exclude="Build,Analyzers" />
+        <dependency id="BouncyCastle.Cryptography" version="2.3.0" exclude="Build,Analyzers" />
       </group>
     </dependencies>
   </metadata>
