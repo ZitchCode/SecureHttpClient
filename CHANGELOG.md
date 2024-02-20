@@ -4,7 +4,7 @@
 - BouncyCastle.Cryptography 2.3.0 (instead of Portable.BouncyCastle)
 - test : Microsoft.Maui.* 8.0.7
 - test : Serilog.Sinks.Console 5.0.1
-- test : System.Text.Json 8.0.1
+- test : System.Text.Json 8.0.2
 - test : xunit 2.7.0
 - test : xunit.runner.utility 2.7.0
 
