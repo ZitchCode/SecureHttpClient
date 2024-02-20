@@ -2,7 +2,7 @@
 - vs : 17.9.0 (dotnet sdk 8.0.200 ; maui 8.0.6 ; android 34.0.52 ; ios 17.2.8004)
 - xcode 15.2 (ios 17.2)
 - BouncyCastle.Cryptography 2.2.1 (instead of Portable.BouncyCastle)
-- test : Microsoft.Maui.* 8.0.6
+- test : Microsoft.Maui.* 8.0.7
 - test : Serilog.Sinks.Console 5.0.1
 - test : System.Text.Json 8.0.1
 - test : xunit 2.6.6
