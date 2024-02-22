@@ -24,7 +24,7 @@
         <dependency id="Square.OkHttp3.UrlConnection" version="4.12.0.1" exclude="Build,Analyzers" />
         <dependency id="Square.OkIO" version="3.6.0.1" exclude="Build,Analyzers" />
       </group>
-      <group targetFramework="net8.0-ios17.0">
+      <group targetFramework="net8.0-ios17.2">
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="8.0.0" exclude="Build,Analyzers" />
         <dependency id="BouncyCastle.Cryptography" version="2.3.0" exclude="Build,Analyzers" />
       </group>
@@ -38,8 +38,8 @@
     <file src="..\SecureHttpClient.OkHttp\bin\Release\net8.0-android34.0\SecureHttpClient.OkHttp.dll" target="lib\net8.0-android34.0" />
     <file src="..\SecureHttpClient.OkHttp\bin\Release\net8.0-android34.0\SecureHttpClient.OkHttp.xml" target="lib\net8.0-android34.0" />
     <file src="..\SecureHttpClient.OkHttp\bin\Release\net8.0-android34.0\SecureHttpClient.OkHttp.aar" target="lib\net8.0-android34.0" />
-    <file src="..\SecureHttpClient\bin\Release\net8.0-ios17.0\SecureHttpClient.dll" target="lib\net8.0-ios17.0" />
-    <file src="..\SecureHttpClient\bin\Release\net8.0-ios17.0\SecureHttpClient.xml" target="lib\net8.0-ios17.0" />
+    <file src="..\SecureHttpClient\bin\Release\net8.0-ios17.2\SecureHttpClient.dll" target="lib\net8.0-ios17.2" />
+    <file src="..\SecureHttpClient\bin\Release\net8.0-ios17.2\SecureHttpClient.xml" target="lib\net8.0-ios17.2" />
 	<file src="..\README.md" target="." />
   </files>
 </package>
