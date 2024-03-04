@@ -1,5 +1,6 @@
 ## 2.2.4
 - ios 17.2
+- add code of conduct
 - test : fix pin
 
 ## 2.2.3
