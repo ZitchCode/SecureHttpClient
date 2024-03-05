@@ -2,6 +2,7 @@
 - ios 17.2
 - add code of conduct
 - add nuget package icon
+- enable deterministic build
 - generate symbols package
 - test : fix pin
 

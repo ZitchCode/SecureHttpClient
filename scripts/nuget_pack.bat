@@ -14,7 +14,7 @@ echo -- CLEAN ------------------------------------------------------------------
 dotnet clean -v m ../%Z_LibName%/%Z_LibName%.csproj -c Release
 
 echo -- BUILD ---------------------------------------------------------------------------------------------------------------------------------------------------
-dotnet build -v m ../%Z_LibName%/%Z_LibName%.csproj -c Release -p:AndroidSdkDirectory=%Z_AndroidSdkDirectory% -p:Version=%Z_Version% -p:AssemblyVersion=%Z_Version% -p:AssemblyFileVersion=%Z_Version%
+dotnet build -v m ../%Z_LibName%/%Z_LibName%.csproj -c Release -p:AndroidSdkDirectory=%Z_AndroidSdkDirectory% -p:Version=%Z_Version% -p:AssemblyVersion=%Z_Version% -p:AssemblyFileVersion=%Z_Version% -p:ContinuousIntegrationBuild=true
 
 echo -- PACK ----------------------------------------------------------------------------------------------------------------------------------------------------
 dotnet pack -v m ../%Z_LibName%/%Z_LibName%.csproj -c Release -p:AndroidSdkDirectory=%Z_AndroidSdkDirectory% --no-build -o ..\ -p:PackageVersion=%Z_Version% -p:NuspecFile=..\build\SecureHttpClient.nuspec -p:NuspecProperties=version=%Z_Version% -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
