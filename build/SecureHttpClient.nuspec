@@ -5,14 +5,14 @@
     <version>$version$</version>
     <title>SecureHttpClient</title>
     <authors>tranb3r</authors>
-    <owners>tranb3r</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
-    <projectUrl>https://github.com/tranb3r/securehttpclient</projectUrl>
+    <projectUrl>https://github.com/ZitchCode/SecureHttpClient</projectUrl>
     <description>Cross-platform HttpClientHandler with additional security features (certificate pinning, TLS1.2+, client certificates)</description>
-    <copyright>Copyright 2022</copyright>
-    <tags>dotnet, maui, xamarin, ios, android, httpclient, security</tags>
-    <repository url="https://github.com/tranb3r/securehttpclient" />
+    <releaseNotes>https://github.com/ZitchCode/SecureHttpClient/CHANGELOG.md</releaseNotes>
+    <copyright>Copyright 2024 ZitchCode</copyright>
+    <tags>.net dotnet-maui xamarin dotnet maui cross-platform ios android windows httpclient security certificate pinning</tags>
+    <repository type="git" url="https://github.com/ZitchCode/SecureHttpClient.git" />
 	<readme>README.md</readme>
     <dependencies>
       <group targetFramework="net8.0">
