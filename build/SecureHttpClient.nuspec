@@ -34,13 +34,17 @@
   <files>
     <file src="..\SecureHttpClient\bin\Release\net8.0\SecureHttpClient.dll" target="lib\net8.0" />
     <file src="..\SecureHttpClient\bin\Release\net8.0\SecureHttpClient.xml" target="lib\net8.0" />
+    <file src="..\SecureHttpClient\bin\Release\net8.0\SecureHttpClient.pdb" target="lib\net8.0" />
     <file src="..\SecureHttpClient\bin\Release\net8.0-android34.0\SecureHttpClient.dll" target="lib\net8.0-android34.0" />
     <file src="..\SecureHttpClient\bin\Release\net8.0-android34.0\SecureHttpClient.xml" target="lib\net8.0-android34.0" />
+    <file src="..\SecureHttpClient\bin\Release\net8.0-android34.0\SecureHttpClient.pdb" target="lib\net8.0-android34.0" />
     <file src="..\SecureHttpClient.OkHttp\bin\Release\net8.0-android34.0\SecureHttpClient.OkHttp.dll" target="lib\net8.0-android34.0" />
     <file src="..\SecureHttpClient.OkHttp\bin\Release\net8.0-android34.0\SecureHttpClient.OkHttp.xml" target="lib\net8.0-android34.0" />
     <file src="..\SecureHttpClient.OkHttp\bin\Release\net8.0-android34.0\SecureHttpClient.OkHttp.aar" target="lib\net8.0-android34.0" />
+    <file src="..\SecureHttpClient.OkHttp\bin\Release\net8.0-android34.0\SecureHttpClient.OkHttp.pdb" target="lib\net8.0-android34.0" />
     <file src="..\SecureHttpClient\bin\Release\net8.0-ios17.2\SecureHttpClient.dll" target="lib\net8.0-ios17.2" />
     <file src="..\SecureHttpClient\bin\Release\net8.0-ios17.2\SecureHttpClient.xml" target="lib\net8.0-ios17.2" />
+    <file src="..\SecureHttpClient\bin\Release\net8.0-ios17.2\SecureHttpClient.pdb" target="lib\net8.0-ios17.2" />
 	<file src="..\README.md" target="." />
     <file src="..\icon.png" target="." />
   </files>
