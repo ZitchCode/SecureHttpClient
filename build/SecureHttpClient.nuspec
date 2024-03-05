@@ -42,5 +42,6 @@
     <file src="..\SecureHttpClient\bin\Release\net8.0-ios17.2\SecureHttpClient.dll" target="lib\net8.0-ios17.2" />
     <file src="..\SecureHttpClient\bin\Release\net8.0-ios17.2\SecureHttpClient.xml" target="lib\net8.0-ios17.2" />
 	<file src="..\README.md" target="." />
+    <file src="..\icon.png" target="." />
   </files>
 </package>
