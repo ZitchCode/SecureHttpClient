@@ -4,6 +4,7 @@
 - add nuget package icon
 - enable deterministic build
 - generate symbols package
+- update readme file
 - test : fix pin
 
 ## 2.2.3
