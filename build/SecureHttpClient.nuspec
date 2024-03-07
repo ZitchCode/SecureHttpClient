@@ -9,7 +9,7 @@
     <license type="expression">MIT</license>
     <projectUrl>https://github.com/ZitchCode/SecureHttpClient</projectUrl>
     <description>Cross-platform HttpClientHandler with additional security features (certificate pinning, TLS1.2+, client certificates)</description>
-    <releaseNotes>https://github.com/ZitchCode/SecureHttpClient/CHANGELOG.md</releaseNotes>
+    <releaseNotes>https://github.com/ZitchCode/SecureHttpClient/releases</releaseNotes>
     <copyright>Copyright 2024 ZitchCode</copyright>
     <tags>.net dotnet-maui xamarin dotnet maui cross-platform ios android windows httpclient security certificate pinning</tags>
     <repository type="git" url="https://github.com/ZitchCode/SecureHttpClient.git" />
