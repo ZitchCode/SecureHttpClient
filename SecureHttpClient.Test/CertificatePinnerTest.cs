@@ -13,7 +13,7 @@ namespace SecureHttpClient.Test
 
         private const string Hostname2 = @"github.com";
         private const string Page2 = @"https://github.com";
-        private static readonly string[] Pins2Ok = { @"sha256/YH8+l6PDvIo1Q5o6varvw2edPgfyJFY5fHuSlsVdvdc=" };
+        private static readonly string[] Pins2Ok = { @"sha256/Gs+dT9kUC17nDYZXH52mKzGnlUU/Q5mS0UruTQW3H0U=" };
         private static readonly string[] Pins2Ko = { @"sha256/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy=" };
 
         private const string Hostname3 = @"ecc256.badssl.com";
