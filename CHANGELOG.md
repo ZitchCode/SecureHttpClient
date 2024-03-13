@@ -1,5 +1,8 @@
 ## 2.2.5
-- vs : 17.9.0 (dotnet sdk 8.0.200 ; maui 8.0.6 ; android 34.0.52 ; ios 17.2.8004)
+- vs : 17.9.3 (dotnet sdk 8.0.202 ; maui 8.0.7 ; android 34.0.52 ; ios 17.2.8004)
+- Microsoft.Extensions.Logging.Abstractions 8.0.1
+- test : Microsoft.Maui.* 8.0.10
+- test : System.Text.Json 8.0.3
 
 ## 2.2.4
 - ios 17.2
