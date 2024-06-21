@@ -5,6 +5,7 @@
 - test : Microsoft.Maui.* 8.0.60
 - test : Serilog 4.0.0
 - test : Serilog.Sinks.Console 6.0.0
+- test : Serilog.Sinks.Debug 3.0.0
 - test : xunit 2.8.1
 - test : xunit.runner.utility 2.8.1
 
