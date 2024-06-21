@@ -62,7 +62,7 @@ namespace SecureHttpClient.TestRunner.Net
             runner.OnTestSkipped = OnTestSkipped;
 
             Log.Debug($"Processing {testAssembly.FullName}...");
-            runner.Start();
+            runner.Start(new AssemblyRunnerStartOptions());
 
             _finished.WaitOne();
             _finished.Dispose();
