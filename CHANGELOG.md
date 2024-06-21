@@ -3,6 +3,8 @@
 - android workload 34.0.95 ; ios workload 17.2.8053
 - BouncyCastle.Cryptography 2.4.0
 - test : Microsoft.Maui.* 8.0.60
+- test : Serilog 4.0.0
+- test : Serilog.Sinks.Console 6.0.0
 
 ## 2.2.5
 - vs : 17.9.3 (dotnet sdk 8.0.202 ; maui 8.0.7 ; android 34.0.52 ; ios 17.2.8004)
