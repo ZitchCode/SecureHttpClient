@@ -2,6 +2,9 @@
 - vs : 17.10.0 (dotnet sdk 8.0.300)
 - android workload 34.0.95 ; ios workload 17.2.8053
 - BouncyCastle.Cryptography 2.4.0
+- Square.OkHttp3 4.12.0.4
+- Square.OkHttp3.UrlConnection 4.12.0.4
+- Square.OkIO 3.9.0
 - test : Microsoft.Maui.* 8.0.60
 - test : Serilog 4.0.0
 - test : Serilog.Sinks.Console 6.0.0
