@@ -5,6 +5,7 @@
 - Square.OkHttp3 4.12.0.4
 - Square.OkHttp3.UrlConnection 4.12.0.4
 - Square.OkIO 3.9.0
+- kotlin-stdlib 2.0.0 (jar)
 - test : Microsoft.Maui.* 8.0.60
 - test : Serilog 4.0.0
 - test : Serilog.Sinks.Console 6.0.0

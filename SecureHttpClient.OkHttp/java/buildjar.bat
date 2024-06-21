@@ -3,7 +3,7 @@
 SETLOCAL
 set Version_Okhttp=4.12.0
 set Version_Okio=3.9.0
-set Version_KotlinStdlib=1.9.23
+set Version_KotlinStdlib=2.0.0
 set Version_Brotli=0.1.2
 
 echo -- CLEAN ---------------------------------------------------------------------------------------------------------------------------------------------------
