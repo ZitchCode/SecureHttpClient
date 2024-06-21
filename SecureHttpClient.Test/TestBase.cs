@@ -14,6 +14,7 @@ namespace SecureHttpClient.Test
         {
             _secureHttpClientHandler = fixture.ServiceProvider.GetRequiredService<HttpClientHandler>() as SecureHttpClientHandler;
             _httpClient = new HttpClient(_secureHttpClientHandler);
+            _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:115.0) Gecko/20100101 Firefox/115.0");
         }
 
         protected async Task<HttpResponseMessage> GetAsync(string page, bool ensureSuccessStatusCode = true)

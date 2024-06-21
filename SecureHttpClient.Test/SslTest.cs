@@ -123,7 +123,7 @@ namespace SecureHttpClient.Test
             await GetAsync(page);
         }
 
-        [Fact]
+        [Fact(Skip = "Certificate has expired, badssl.com need to fix it.")]
         public async Task SslTest_Rsa8192Certificate()
         {
             const string page = @"https://rsa8192.badssl.com/";
