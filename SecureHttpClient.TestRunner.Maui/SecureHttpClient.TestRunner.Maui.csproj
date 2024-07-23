@@ -54,8 +54,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.60" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.60" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.70" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.70" />
 		<PackageReference Include="Shiny.Xunit.Runners.Maui" Version="1.0.0" />
 	</ItemGroup>
 
@@ -63,7 +63,7 @@
 		<PackageReference Include="Serilog.Sinks.Xamarin" Version="1.0.0" />
 
 		<!-- Fix build -->
-		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="2.0.0" />
+		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="2.0.0.1" />
 		<!-- Fix build -->
 	</ItemGroup>
 

@@ -1,5 +1,6 @@
 ## 2.2.7
 - vs : 17.10.4 (dotnet sdk 8.0.303)
+- test : Microsoft.Maui.* 8.0.70
 - test : System.Text.Json 8.0.4
 - test : xunit 2.9.0
 - test : xunit.runner.utility 2.9.0
