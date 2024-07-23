@@ -1,4 +1,5 @@
 ## 2.2.7
+- vs : 17.10.4 (dotnet sdk 8.0.303)
 - test : System.Text.Json 8.0.4
 
 ## 2.2.6
