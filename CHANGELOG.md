@@ -1,3 +1,6 @@
+## 2.2.7
+- test : System.Text.Json 8.0.4
+
 ## 2.2.6
 - vs : 17.10.0 (dotnet sdk 8.0.300)
 - android workload 34.0.95 ; ios workload 17.2.8053
