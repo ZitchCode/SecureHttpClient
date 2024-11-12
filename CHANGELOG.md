@@ -3,8 +3,7 @@
 - iOS 17.5
 - test : Microsoft.Maui.* 8.0.70
 - test : System.Text.Json 8.0.4
-- test : xunit 2.9.0
-- test : xunit.runner.utility 2.9.0
+- test : xunit & xunit.runner.utility 2.9.2
 
 ## 2.2.6
 - vs : 17.10.0 (dotnet sdk 8.0.300)
