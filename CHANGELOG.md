@@ -1,6 +1,5 @@
 ## 2.2.7
-- vs : 17.11.2 (dotnet sdk 8.0.400 ; android 34.0.113 ; ios 17.5.8020)
-- iOS 17.5
+- vs : 17.11.5 (dotnet sdk 8.0.403 ; android 34.0.113 ; ios 18.0.8303)
 - test : Microsoft.Maui.* 8.0.70
 - test : System.Text.Json 8.0.5
 - test : xunit & xunit.runner.utility 2.9.2
