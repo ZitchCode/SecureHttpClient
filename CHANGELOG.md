@@ -2,6 +2,7 @@
 - vs : 17.11.5 (dotnet sdk 8.0.403 ; android 34.0.113 ; ios 18.0.8303)
 - Microsoft.Extensions.Logging.Abstractions 8.0.2
 - test : Microsoft.Maui.* 8.0.93
+- test : Serilog 4.1.0
 - test : System.Text.Json 8.0.5
 - test : xunit & xunit.runner.utility 2.9.2
 
