@@ -9,6 +9,9 @@
 		<SingleProject>true</SingleProject>
 		<SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
 
+		<!-- ILxxxx is for trimmer -->
+		<NoWarn>$(NoWarn);IL2026;IL2104</NoWarn>
+
 		<!-- Display name -->
 		<ApplicationTitle>SecureHttpClient.TestRunner.Maui</ApplicationTitle>
 
