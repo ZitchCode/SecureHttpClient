@@ -1,5 +1,6 @@
 <Project>
   <PropertyGroup>
-    <LangVersion>12.0</LangVersion>
+    <LangVersion>13.0</LangVersion>
+    <MauiVersion>9.0.0</MauiVersion>
   </PropertyGroup>
 </Project>
