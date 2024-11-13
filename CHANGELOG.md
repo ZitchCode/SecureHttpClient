@@ -5,7 +5,10 @@
 - ios 18.0.9617
 - C# 13.0
 - Microsoft.Extensions.Logging.Abstractions 9.0.0
+- test : Microsoft.Extensions.DependencyInjection 9.0.0
+- test : Microsoft.Extensions.Logging 9.0.0
 - test : Microsoft.Maui.* 9.0.0
+- test : System.Text.Json 9.0.0
 
 ## 2.2.7
 - vs : 17.11.5 (dotnet sdk 8.0.403 ; android 34.0.113 ; ios 18.0.8303)
