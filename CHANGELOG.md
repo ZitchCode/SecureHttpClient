@@ -4,6 +4,7 @@
 - android 35.0.7
 - ios 18.0.9617
 - C# 13.0
+- Microsoft.Extensions.Logging.Abstractions 9.0.0
 - test : Microsoft.Maui.* 9.0.0
 
 ## 2.2.7

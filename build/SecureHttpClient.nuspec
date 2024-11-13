@@ -17,16 +17,16 @@
     <icon>icon.png</icon>	
     <dependencies>
       <group targetFramework="net9.0">
-        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="8.0.2" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="9.0.0" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="net9.0-android35.0">
-        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="8.0.2" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="9.0.0" exclude="Build,Analyzers" />
         <dependency id="Square.OkHttp3" version="4.12.0.7" exclude="Build,Analyzers" />
         <dependency id="Square.OkHttp3.UrlConnection" version="4.12.0.7" exclude="Build,Analyzers" />
         <dependency id="Square.OkIO" version="3.9.1.1" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="net9.0-ios18.0">
-        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="8.0.2" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="9.0.0" exclude="Build,Analyzers" />
         <dependency id="BouncyCastle.Cryptography" version="2.4.0" exclude="Build,Analyzers" />
       </group>
     </dependencies>
