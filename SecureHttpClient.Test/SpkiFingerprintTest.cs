@@ -19,7 +19,7 @@ namespace SecureHttpClient.Test
 
             var certPem = await ResourceHelper.GetStringAsync(resource);
             var certBytes = System.Text.Encoding.ASCII.GetBytes(certPem);
-            var certificate = new X509Certificate2(certBytes);
+            var certificate = X509CertificateLoader.LoadCertificate(certBytes);
             var actual = SpkiFingerprint.Compute(certificate);
             Assert.Equal(expected, actual);
         }

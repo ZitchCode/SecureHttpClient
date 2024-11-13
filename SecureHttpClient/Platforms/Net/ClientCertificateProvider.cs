@@ -40,7 +40,7 @@ namespace SecureHttpClient
         /// <param name="passphrase">The passphrase that protects the private key.</param>
         public void Import(byte[] certificate, string passphrase)
         {
-            Certificates.Add(new X509Certificate2(certificate, passphrase));
+            Certificates.Add(X509CertificateLoader.LoadPkcs12(certificate, passphrase));
         }
     }
 }

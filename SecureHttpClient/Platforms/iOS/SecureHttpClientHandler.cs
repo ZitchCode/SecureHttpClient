@@ -68,7 +68,7 @@ namespace SecureHttpClient
             _trustedRoots = new X509Certificate2Collection();
             foreach (var cert in certificates)
             {
-                _trustedRoots.Import(cert);
+                _trustedRoots.Add(X509CertificateLoader.LoadCertificate(cert));
             }
         }
 
