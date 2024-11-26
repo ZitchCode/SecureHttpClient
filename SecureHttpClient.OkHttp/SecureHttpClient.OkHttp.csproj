@@ -2,6 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net9.0-android35.0</TargetFrameworks>
+		<IsAotCompatible>true</IsAotCompatible>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
 

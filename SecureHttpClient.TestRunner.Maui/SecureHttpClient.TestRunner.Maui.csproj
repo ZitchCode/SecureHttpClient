@@ -8,6 +8,7 @@
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
+		<IsAotCompatible>true</IsAotCompatible>
 
 		<!-- ILxxxx is for trimmer -->
 		<NoWarn>$(NoWarn);IL2026;IL2104</NoWarn>
@@ -40,7 +41,7 @@
 		<AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
 		<AndroidAotAdditionalArguments>no-write-symbols,nodebug</AndroidAotAdditionalArguments>
 		<TrimMode>full</TrimMode>
-		<JsonSerializerIsReflectionEnabledByDefault>true</JsonSerializerIsReflectionEnabledByDefault>
+		<PublishTrimmed>true</PublishTrimmed>
 		<AndroidStripILAfterAOT>true</AndroidStripILAfterAOT>
 	</PropertyGroup>
 

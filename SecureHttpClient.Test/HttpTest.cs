@@ -116,7 +116,7 @@ namespace SecureHttpClient.Test
             req.Headers.Add("header3", "value3");
             var result = await SendAsync(req).ReceiveString();
             var json = JsonDocument.Parse(result);
-            var headers = json.RootElement.GetProperty("headers").Deserialize<Dictionary<string, string>>().Select(kv => kv.Key).ToList();
+            var headers = json.RootElement.GetProperty("headers").GetDictionary().Select(kv => kv.Key).ToList();
             Assert.Contains("header1", headers);
             Assert.Contains("header2", headers);
             Assert.Contains("header3", headers);
@@ -135,7 +135,7 @@ namespace SecureHttpClient.Test
             req.SetHeadersOrder("header3", "header2", "header1");
             var result = await SendAsync(req).ReceiveString();
             var json = JsonDocument.Parse(result);
-            var headers = json.RootElement.GetProperty("headers").Deserialize<Dictionary<string, string>>().Select(kv => kv.Key).ToList();
+            var headers = json.RootElement.GetProperty("headers").GetDictionary().Select(kv => kv.Key).ToList();
             var index1 = headers.IndexOf("header1");
             var index2 = headers.IndexOf("header2");
             var index3 = headers.IndexOf("header3");
@@ -220,7 +220,7 @@ namespace SecureHttpClient.Test
             const string page = @"https://httpbingo.org/cookies/set?k1=v1";
             var result = await GetAsync(page).ReceiveString();
             var json = JsonDocument.Parse(result);
-            var cookies = json.RootElement.Deserialize<Dictionary<string, string>>();
+            var cookies = json.RootElement.GetDictionary();
             Assert.Contains(new KeyValuePair<string, string>("k1", "v1"), cookies);
         }
 
@@ -232,7 +232,7 @@ namespace SecureHttpClient.Test
             const string page2 = @"https://httpbingo.org/cookies/set?k1=v2";
             var result = await GetAsync(page2).ReceiveString();
             var json = JsonDocument.Parse(result);
-            var cookies = json.RootElement.Deserialize<Dictionary<string, string>>();
+            var cookies = json.RootElement.GetDictionary();
             Assert.Contains(new KeyValuePair<string, string>("k1", "v2"), cookies);
         }
 
@@ -248,7 +248,7 @@ namespace SecureHttpClient.Test
             const string page2 = @"https://httpbingo.org/cookies";
             var result = await GetAsync(page2).ReceiveString();
             var json = JsonDocument.Parse(result);
-            var cookies = json.RootElement.Deserialize<Dictionary<string, string>>();
+            var cookies = json.RootElement.GetDictionary();
             Assert.Contains(new KeyValuePair<string, string>("k1", "v1"), cookies);
             Assert.Contains(new KeyValuePair<string, string>("k2", "v2"), cookies);
         }
@@ -263,7 +263,7 @@ namespace SecureHttpClient.Test
             const string page2 = @"https://httpbingo.org/cookies/delete?k1";
             var result = await GetAsync(page2).ReceiveString();
             var json = JsonDocument.Parse(result);
-            var cookies = json.RootElement.Deserialize<Dictionary<string, string>>();
+            var cookies = json.RootElement.GetDictionary();
             Assert.DoesNotContain(new KeyValuePair<string, string>("k1", "v1"), cookies);
         }
 
@@ -274,7 +274,7 @@ namespace SecureHttpClient.Test
             DisableCookies();
             var result = await GetAsync(page).ReceiveString();
             var json = JsonDocument.Parse(result);
-            var cookies = json.RootElement.Deserialize<Dictionary<string, string>>();
+            var cookies = json.RootElement.GetDictionary();
             Assert.Empty(cookies);
         }
 

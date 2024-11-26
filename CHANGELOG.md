@@ -1,4 +1,5 @@
 ## 2.3.1
+- set isAotCompatible=true
 - test : Microsoft.Maui.* 9.0.10
 
 ## 2.3.0

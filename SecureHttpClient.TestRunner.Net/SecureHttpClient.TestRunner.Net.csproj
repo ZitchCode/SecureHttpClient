@@ -3,6 +3,11 @@
 	<PropertyGroup>
 		<TargetFramework>net9.0</TargetFramework>
 		<OutputType>Exe</OutputType>
+		<IsAotCompatible>true</IsAotCompatible>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
+		<PublishAot>true</PublishAot>
 	</PropertyGroup>
 
 	<ItemGroup>
