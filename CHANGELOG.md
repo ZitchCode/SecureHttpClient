@@ -1,3 +1,6 @@
+## 2.3.1
+- test : Microsoft.Maui.* 9.0.10
+
 ## 2.3.0
 - vs : 17.12.0
 - dotnet sdk 9.0.100
