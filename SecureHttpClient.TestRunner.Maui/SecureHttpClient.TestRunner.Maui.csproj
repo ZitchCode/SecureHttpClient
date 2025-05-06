@@ -42,7 +42,7 @@
 		<AndroidAotAdditionalArguments>no-write-symbols,nodebug</AndroidAotAdditionalArguments>
 		<TrimMode>full</TrimMode>
 		<PublishTrimmed>true</PublishTrimmed>
-		<AndroidStripILAfterAOT>true</AndroidStripILAfterAOT>
+		<AndroidStripILAfterAOT>false</AndroidStripILAfterAOT>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$([MSBuild]::GetTargetPlatformIdentifier($(TargetFramework)))'=='Debug|ios'">
