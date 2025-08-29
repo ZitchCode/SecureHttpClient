@@ -8,17 +8,17 @@ namespace SecureHttpClient.Test
     {
         private const string Hostname = @"www.howsmyssl.com";
         private const string Page = @"https://www.howsmyssl.com/a/check";
-        private static readonly string[] PinsOk = { @"sha256/KKplOzUVa+5zlQKc746S0JKhIFdoTM2l1a+rWyKCS8M=" };
+        private static readonly string[] PinsOk = { @"sha256/bqBWe20CwEsdAX5HWKSzlButAuHPLD5ezsGrTlP+PNE=" };
         private static readonly string[] PinsKo = { @"sha256/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=" };
 
         private const string Hostname2 = @"github.com";
         private const string Page2 = @"https://github.com";
-        private static readonly string[] Pins2Ok = { @"sha256/Gs+dT9kUC17nDYZXH52mKzGnlUU/Q5mS0UruTQW3H0U=" };
+        private static readonly string[] Pins2Ok = { @"sha256/e4wu8h9eLNeNUg6cVb5gGWM0PsiM9M3i3E32qKOkBwY=" };
         private static readonly string[] Pins2Ko = { @"sha256/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy=" };
 
         private const string Hostname3 = @"ecc256.badssl.com";
         private const string Page3 = @"https://ecc256.badssl.com/";
-        private static readonly string[] Pins3Ok = { @"sha256/TFE7uYfWbntDS4QhyoioxRZ8AvbfJBmr8/FaF5iBy5o=" };
+        private static readonly string[] Pins3Ok = { @"sha256/ohV8JZQpc4OW0JpLAA7A+X4/EY4jFw7oWq2e02WMuag=" };
         private static readonly string[] Pins3Ko = { @"sha256/zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz=" };
 
         public CertificatePinnerTest(TestFixture testFixture) : base(testFixture)

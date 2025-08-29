@@ -1,5 +1,6 @@
 ## 2.3.2
 - build: disable AndroidStripILAfterAOT
+- test : fix tests
 
 ## 2.3.1
 - set isAotCompatible=true

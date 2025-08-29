@@ -150,7 +150,7 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task SslTest_HowsMySsl()
         {
-            var expectedTlsVersion = (DeviceInfo.Platform == DevicePlatform.iOS || (DeviceInfo.Platform == DevicePlatform.Android && DeviceInfo.Version.Major >= 10)) ? "TLS 1.3" : "TLS 1.2";
+            const string expectedTlsVersion = "TLS 1.3";
             const string expectedRating = "Probably Okay";
 
             const string page = @"https://www.howsmyssl.com/a/check";
