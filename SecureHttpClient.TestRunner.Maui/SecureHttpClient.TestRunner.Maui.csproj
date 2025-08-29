@@ -60,7 +60,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Shiny.Xunit.Runners.Maui" Version="1.0.0" />
-		<PackageReference Include="xunit.runner.utility" Version="2.9.2" />
+		<PackageReference Include="xunit.runner.utility" Version="2.9.3" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">

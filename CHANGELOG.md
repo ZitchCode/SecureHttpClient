@@ -4,7 +4,16 @@
 - android 35.0.78
 - ios 18.5.9214
 - build: disable AndroidStripILAfterAOT
+- BouncyCastle.Cryptography 2.6.2
+- Microsoft.Extensions.Logging.Abstractions 9.0.8
+- test : Microsoft.Extensions.DependencyInjection 9.0.8
+- test : Microsoft.Extensions.Logging 9.0.8
 - test : Microsoft.Maui.* 9.0.100
+- test : Serilog 4.3.0
+- test : Serilog.Extensions.Logging 9.0.2
+- test : System.Text.Json 9.0.8
+- test : xunit & xunit.runner.utility 2.9.3
+- test : Xunit.SkippableFact 1.5.23
 - test : fix tests
 
 ## 2.3.1
