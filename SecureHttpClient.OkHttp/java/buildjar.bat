@@ -1,9 +1,9 @@
 @echo off
 
 SETLOCAL
-set Version_Okhttp=4.12.0
-set Version_Okio=3.9.1
-set Version_KotlinStdlib=2.0.21
+set Version_Okhttp=5.1.0
+set Version_Okio=3.16.0
+set Version_KotlinStdlib=2.2.10
 set Version_Brotli=0.1.2
 
 echo -- CLEAN ---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -11,7 +11,7 @@ for /d /r . %%d in (jars,src) do @if exist "%%d" rd /s/q "%%d"
 
 echo -- DOWNLOAD JARS -------------------------------------------------------------------------------------------------------------------------------------------
 mkdir jars
-bitsadmin.exe /transfer "Download okhttp %Version_Okhttp%" https://repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/%Version_Okhttp%/okhttp-%Version_Okhttp%.jar "%~dp0\jars\okhttp-%Version_Okhttp%.jar"
+bitsadmin.exe /transfer "Download okhttp-jvm %Version_Okhttp%" https://repo1.maven.org/maven2/com/squareup/okhttp3/okhttp-jvm/%Version_Okhttp%/okhttp-jvm-%Version_Okhttp%.jar "%~dp0\jars\okhttp-jvm-%Version_Okhttp%.jar"
 bitsadmin.exe /transfer "Download okio %Version_Okio%" https://repo1.maven.org/maven2/com/squareup/okio/okio/%Version_Okio%/okio-%Version_Okio%.jar "%~dp0\jars\okio-%Version_Okio%.jar"
 bitsadmin.exe /transfer "Download okio-jvm %Version_Okio%" https://repo1.maven.org/maven2/com/squareup/okio/okio-jvm/%Version_Okio%/okio-jvm-%Version_Okio%.jar "%~dp0\jars\okio-jvm-%Version_Okio%.jar"
 bitsadmin.exe /transfer "Download kotlin-stdlib %Version_KotlinStdlib%" https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/%Version_KotlinStdlib%/kotlin-stdlib-%Version_KotlinStdlib%.jar "%~dp0\jars\kotlin-stdlib-%Version_KotlinStdlib%.jar"

@@ -18,6 +18,7 @@ using Microsoft.Extensions.Logging;
 using System.Security.Authentication;
 using Java.Net;
 using SecureHttpClient.Extensions;
+using Square.OkHttp3.Java.Net.Cookiejar;
 
 namespace SecureHttpClient
 {
