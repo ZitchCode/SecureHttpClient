@@ -1,5 +1,10 @@
 ## 2.3.2
+- vs : 17.14.12
+- dotnet sdk 9.0.304 (rollback from net10-preview)
+- android 35.0.78
+- ios 18.5.9214
 - build: disable AndroidStripILAfterAOT
+- test : Microsoft.Maui.* 9.0.100
 - test : fix tests
 
 ## 2.3.1
