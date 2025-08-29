@@ -17,9 +17,6 @@ bitsadmin.exe /transfer "Download okio-jvm %Version_Okio%" https://repo1.maven.o
 bitsadmin.exe /transfer "Download kotlin-stdlib %Version_KotlinStdlib%" https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/%Version_KotlinStdlib%/kotlin-stdlib-%Version_KotlinStdlib%.jar "%~dp0\jars\kotlin-stdlib-%Version_KotlinStdlib%.jar"
 bitsadmin.exe /transfer "Download org.brotli.dec %Version_Brotli%" https://repo1.maven.org/maven2/org/brotli/dec/%Version_Brotli%/dec-%Version_Brotli%.jar "%~dp0\jars\org.brotli.dec-%Version_Brotli%.jar"
 
-echo -- COPY IMPORTS --------------------------------------------------------------------------------------------------------------------------------------------
-copy "%~dp0\jars\org.brotli.dec-%Version_Brotli%.jar" ..\import\org.brotli.dec-%Version_Brotli%.jar
-
 echo -- BUILD JAVA ----------------------------------------------------------------------------------------------------------------------------------------------
 javac -Xlint:all -classpath jars/* *.java
 

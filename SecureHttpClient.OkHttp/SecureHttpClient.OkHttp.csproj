@@ -8,14 +8,11 @@
 
 	<ItemGroup>
 		<PackageReference Include="Square.OkHttp3.JVM" Version="5.1.0.2" />
+		<PackageReference Include="Xamarin.Brotli.Dec" Version="0.1.2.9" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<AndroidLibrary Include="Jars\securehttpclient-okhttp.jar" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<AndroidLibrary Update="import\org.brotli.dec-0.1.2.jar" Bind="false" />
 	</ItemGroup>
 
 	<ItemGroup>

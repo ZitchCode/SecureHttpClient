@@ -9,6 +9,7 @@
 - Square.OkHttp3.JVM 5.1.0.2 (replaces Square.OkHttp3)
 - Square.OkHttp3.JavaNetCookieJar 5.1.0.2 (replaces Square.OkHttp3.UrlConnection)
 - Square.OkIO 3.16.0
+- Xamarin.Brotli.Dec 0.1.2.9 (replaces manual jar import)
 - test : Microsoft.Extensions.DependencyInjection 9.0.8
 - test : Microsoft.Extensions.Logging 9.0.8
 - test : Microsoft.Maui.* 9.0.100
