@@ -100,11 +100,9 @@ namespace SecureHttpClient.Test
             await GetAsync(page);
         }
 
-        [SkippableFact]
+        [Fact]
         public async Task SslTest_Ecc384Certificate()
         {
-            Skip.If(DeviceInfo.Platform == DevicePlatform.Android && DeviceInfo.Version.Major == 7 && DeviceInfo.Version.Minor == 0, "Failing on Android 24");
-
             const string page = @"https://ecc384.badssl.com/";
             await GetAsync(page);
         }
@@ -137,7 +135,7 @@ namespace SecureHttpClient.Test
             await Assert.ThrowsAsync<HttpRequestException>(() => GetAsync(page));
         }
 
-        [SkippableFact]
+        [Fact]
         public async Task SslTest_ClientCertificate()
         {
             const string page = @"https://client.badssl.com/";
@@ -150,7 +148,7 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task SslTest_HowsMySsl()
         {
-            const string expectedTlsVersion = "TLS 1.3";
+            var expectedTlsVersion = (DeviceInfo.Platform == DevicePlatform.Android && DeviceInfo.Version.Major < 10) ? "TLS 1.2" : "TLS 1.3";
             const string expectedRating = "Probably Okay";
 
             const string page = @"https://www.howsmyssl.com/a/check";

@@ -1,3 +1,6 @@
+## 2.3.3
+- drop support of old android versions
+
 ## 2.3.2
 - vs : 17.14.12
 - dotnet sdk 9.0.304 (rollback from net10-preview)

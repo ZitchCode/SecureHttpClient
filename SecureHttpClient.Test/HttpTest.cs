@@ -253,11 +253,9 @@ namespace SecureHttpClient.Test
             Assert.Contains(new KeyValuePair<string, string>("k2", "v2"), cookies);
         }
 
-        [SkippableFact]
+        [Fact]
         public async Task HttpTest_DeleteCookie()
         {
-            Skip.If(DeviceInfo.Platform == DevicePlatform.Android && DeviceInfo.Version.Major == 7, "Failing on Android 24-25");
-
             const string page1 = @"https://httpbingo.org/cookies/set?k1=v1";
             await GetAsync(page1);
             const string page2 = @"https://httpbingo.org/cookies/delete?k1";

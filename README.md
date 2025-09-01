@@ -19,7 +19,7 @@ SecureHttpClient is a dotnet cross-platform HttpClientHandler library, with addi
 [![NuGet](https://img.shields.io/nuget/v/SecureHttpClient)](https://www.nuget.org/packages/SecureHttpClient/)
 
 The most recent version is available (and is tested) on the following platforms:
-- Android 5-16 (API 21-36)
+- Android 8-16 (API 26-36)
 - iOS 18.5
 - .net 9.0
 
