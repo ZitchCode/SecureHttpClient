@@ -7,16 +7,18 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Square.OkHttp3.JVM" Version="5.1.0.2" />
+		<PackageReference Include="Square.OkHttp3.Android" Version="5.1.0.2" />
 		<PackageReference Include="Xamarin.Brotli.Dec" Version="0.1.2.9" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<AndroidLibrary Include="Jars\securehttpclient-okhttp.jar" />
+		<AndroidLibrary Include="Jars\securehttpclient-javanetcookiejar.jar" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<AndroidJavaSource Remove="java\**" />
+		<AndroidJavaSource Remove="kt\**" />
 	</ItemGroup>
   
 </Project>

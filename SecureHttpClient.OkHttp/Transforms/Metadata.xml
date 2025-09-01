@@ -1,3 +1,4 @@
 ﻿<metadata>
   <attr path="/api/package[@name='securehttpclient.okhttp']" name="managedName">SecureHttpClient.OkHttp</attr>
+  <attr path="/api/package[@name='okhttp3.java.net.cookiejar']" name="managedName">SecureHttpClient.OkHttp</attr>
 </metadata>
