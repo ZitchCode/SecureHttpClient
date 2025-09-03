@@ -215,7 +215,7 @@ namespace SecureHttpClient.Test
         }
 
         [Fact]
-        public async Task HttpTest_SetCookie()
+        public async Task HttpTest_Cookies_SetCookie()
         {
             const string page = @"https://httpbingo.org/cookies/set?k1=v1";
             var result = await GetAsync(page).ReceiveString();
@@ -225,7 +225,7 @@ namespace SecureHttpClient.Test
         }
 
         [Fact]
-        public async Task HttpTest_SetCookieAgain()
+        public async Task HttpTest_Cookies_SetCookieAgain()
         {
             const string page1 = @"https://httpbingo.org/cookies/set?k1=v1";
             await GetAsync(page1);
@@ -237,7 +237,7 @@ namespace SecureHttpClient.Test
         }
 
         [Fact]
-        public async Task HttpTest_SetCookies()
+        public async Task HttpTest_Cookies_SetCookies()
         {
             const string cookie1 = "k1=v1; Path=/; expires=Sat, 01-Jan-2050 00:00:00 GMT";
             const string cookie2 = "k2=v2; Path=/; expires=Fri, 01-Jan-2049 00:00:00 GMT";
@@ -254,7 +254,7 @@ namespace SecureHttpClient.Test
         }
 
         [Fact]
-        public async Task HttpTest_DeleteCookie()
+        public async Task HttpTest_Cookies_DeleteCookie()
         {
             const string page1 = @"https://httpbingo.org/cookies/set?k1=v1";
             await GetAsync(page1);
@@ -266,7 +266,7 @@ namespace SecureHttpClient.Test
         }
 
         [Fact]
-        public async Task HttpTest_DoNotUseCookies()
+        public async Task HttpTest_Cookies_DoNotUseCookies()
         {
             const string page = @"https://httpbingo.org/cookies/set?k1=v1";
             DisableCookies();

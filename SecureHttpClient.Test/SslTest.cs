@@ -63,11 +63,9 @@ namespace SecureHttpClient.Test
             await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(page));
         }
 
-        [SkippableFact]
+        [Fact(Skip = "Mobile apps usually skip revocation checks")]
         public async Task SslTest_RevokedCertificate()
         {
-            Skip.IfNot(DeviceInfo.Platform == DevicePlatform.iOS, "Unsupported on Android and .Net");
-
             const string page = @"https://revoked.badssl.com/";
             await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(page));
         }
