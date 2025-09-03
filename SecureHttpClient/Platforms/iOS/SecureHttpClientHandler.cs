@@ -74,7 +74,7 @@ namespace SecureHttpClient
 
         private void InitSession()
         {
-            using var configuration = NSUrlSessionConfiguration.DefaultSessionConfiguration;
+            using var configuration = NSUrlSessionConfiguration.EphemeralSessionConfiguration;
             if (!UseProxy)
             {
                 configuration.ConnectionProxyDictionary = new NSDictionary();

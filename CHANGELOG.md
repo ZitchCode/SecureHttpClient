@@ -2,6 +2,7 @@
 - drop support of old android versions
 - use Square.OkHttp3.Android instead of Square.OkHttp3.JVM
 - remove Square.OkHtt3.JavaNetCookieJar (incompatible with Square.OkHttp3.Android)
+- fix cookies management on ios
 
 ## 2.3.2
 - vs : 17.14.12
