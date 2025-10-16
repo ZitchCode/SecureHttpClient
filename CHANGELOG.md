@@ -3,6 +3,7 @@
 - dotnet sdk 9.0.306
 - android 35.0.105
 - ios 26.0.9752
+- test : fix pin
 - test : Microsoft.Extensions.DependencyInjection 9.0.10
 - test : Microsoft.Extensions.Logging 9.0.10
 - test : Microsoft.Maui.* 9.0.111
