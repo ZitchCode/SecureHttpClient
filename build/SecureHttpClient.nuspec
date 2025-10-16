@@ -17,16 +17,16 @@
     <icon>icon.png</icon>	
     <dependencies>
       <group targetFramework="net9.0">
-        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="9.0.8" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="9.0.10" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="net9.0-android35.0">
-        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="9.0.8" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="9.0.10" exclude="Build,Analyzers" />
         <dependency id="Square.OkHttp3.Android" version="5.1.0.2" exclude="Build,Analyzers" />
         <dependency id="Square.OkIO" version="3.16.0" exclude="Build,Analyzers" />
         <dependency id="Xamarin.Brotli.Dec" version="0.1.2.9" exclude="Build,Analyzers" />
       </group>
-      <group targetFramework="net9.0-ios18.5">
-        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="9.0.8" exclude="Build,Analyzers" />
+      <group targetFramework="net9.0-ios26.0">
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="9.0.10" exclude="Build,Analyzers" />
         <dependency id="BouncyCastle.Cryptography" version="2.6.2" exclude="Build,Analyzers" />
       </group>
     </dependencies>
@@ -42,9 +42,9 @@
     <file src="..\SecureHttpClient.OkHttp\bin\Release\net9.0-android35.0\SecureHttpClient.OkHttp.xml" target="lib\net9.0-android35.0" />
     <file src="..\SecureHttpClient.OkHttp\bin\Release\net9.0-android35.0\SecureHttpClient.OkHttp.aar" target="lib\net9.0-android35.0" />
     <file src="..\SecureHttpClient.OkHttp\bin\Release\net9.0-android35.0\SecureHttpClient.OkHttp.pdb" target="lib\net9.0-android35.0" />
-    <file src="..\SecureHttpClient\bin\Release\net9.0-ios18.5\SecureHttpClient.dll" target="lib\net9.0-ios18.5" />
-    <file src="..\SecureHttpClient\bin\Release\net9.0-ios18.5\SecureHttpClient.xml" target="lib\net9.0-ios18.5" />
-    <file src="..\SecureHttpClient\bin\Release\net9.0-ios18.5\SecureHttpClient.pdb" target="lib\net9.0-ios18.5" />
+    <file src="..\SecureHttpClient\bin\Release\net9.0-ios26.0\SecureHttpClient.dll" target="lib\net9.0-ios26.0" />
+    <file src="..\SecureHttpClient\bin\Release\net9.0-ios26.0\SecureHttpClient.xml" target="lib\net9.0-ios26.0" />
+    <file src="..\SecureHttpClient\bin\Release\net9.0-ios26.0\SecureHttpClient.pdb" target="lib\net9.0-ios26.0" />
 	<file src="..\README.md" target="." />
     <file src="..\icon.png" target="." />
   </files>

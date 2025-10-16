@@ -1,3 +1,13 @@
+## 2.3.4
+- vs : 17.14.17
+- dotnet sdk 9.0.306
+- android 35.0.105
+- ios 26.0.9752
+- test : Microsoft.Extensions.DependencyInjection 9.0.10
+- test : Microsoft.Extensions.Logging 9.0.10
+- test : Microsoft.Maui.* 9.0.111
+- test : System.Text.Json 9.0.10
+
 ## 2.3.3
 - drop support of old android versions
 - use Square.OkHttp3.Android instead of Square.OkHttp3.JVM
@@ -6,7 +16,7 @@
 
 ## 2.3.2
 - vs : 17.14.12
-- dotnet sdk 9.0.304 (rollback from net10-preview)
+- dotnet sdk 9.0.304
 - android 35.0.78
 - ios 18.5.9214
 - build: disable AndroidStripILAfterAOT
