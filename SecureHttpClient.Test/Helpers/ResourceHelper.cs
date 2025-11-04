@@ -7,16 +7,17 @@ namespace SecureHttpClient.Test.Helpers
 {
     public static class ResourceHelper
     {
-        public static Task<string> GetStringAsync(string resource)
+        public static async Task<string> GetStringAsync(string resource)
         {
-            using var resourceStream = GetResourceStream(resource);
+            await using var resourceStream = GetResourceStream(resource);
             using var reader = new StreamReader(resourceStream);
-            return reader.ReadToEndAsync();
+            var res = await reader.ReadToEndAsync();
+            return res;
         }
 
         public static async Task<byte[]> GetBytesAsync(string resource)
         {
-            using var resourceStream = GetResourceStream(resource);
+            await using var resourceStream = GetResourceStream(resource);
             using var memoryStream = new MemoryStream();
             await resourceStream.CopyToAsync(memoryStream);
             return memoryStream.ToArray();
