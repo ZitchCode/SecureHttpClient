@@ -17,7 +17,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Essentials" Version="$(MauiVersion)" />
 		<PackageReference Include="Serilog" Version="4.3.0" />
-		<PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
 		<PackageReference Include="xunit.runner.utility" Version="2.9.3" />
 	</ItemGroup>
 

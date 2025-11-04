@@ -1,5 +1,6 @@
 ## 2.3.5
 - support domain patterns in certificate pinning
+- test : Serilog.Sinks.Console 6.1.1
 
 ## 2.3.4
 - vs : 17.14.17
