@@ -1,5 +1,6 @@
 ## 2.3.5
 - support domain patterns in certificate pinning
+- test : Microsoft.Maui.* 9.0.120
 - test : Serilog.Sinks.Console 6.1.1
 
 ## 2.3.4
