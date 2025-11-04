@@ -54,6 +54,7 @@ namespace SecureHttpClient
         public virtual void AddCertificatePinner(string hostname, string[] pins)
         {
             _logger?.LogDebug($"Add CertificatePinner: hostname:{hostname}, pins:{string.Join("|", pins)}");
+            CertificatePinning.CertificatePinner.ValidatePattern(hostname); // will throw c# exception instead of java exception if pattern is invalid
             _certificatePinnerBuilder.Value.Add(hostname, pins);
         }
 

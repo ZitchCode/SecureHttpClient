@@ -1,3 +1,6 @@
+## 2.3.5
+- support domain patterns in certificate pinning
+
 ## 2.3.4
 - vs : 17.14.17
 - dotnet sdk 9.0.306

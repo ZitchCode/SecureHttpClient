@@ -46,6 +46,8 @@ var html = await response.Content.ReadAsStringAsync();
 
 ## Certificate pining
 
+### Usage
+
 After creating a `SecureHttpClientHandler` object, call `AddCertificatePinner` to add one or more certificate pinner.
 
 The request will fail if the certificate pin is not correct.
@@ -64,6 +66,21 @@ var httpClient = new HttpClient(secureHttpClientHandler);
 var response = await httpClient.GetAsync("https://www.github.com");
 var html = await response.Content.ReadAsStringAsync();
 ```
+
+### Domain patterns
+
+`SecureHttpClient` behaves the same as `OkHttp`: pinning is per-hostname and/or per-wildcard pattern.
+
+To pin both `example.com` and `www.example.com` you must configure both hostnames. Or you may use patterns to match sets of related domain names. The following forms are permitted:
+- Full domain name: you may pin an exact domain name like `www.example.com`. It won't match additional prefixes (`abc.www.example.com`) or suffixes (`example.com`).
+- Any number of subdomains: Use two asterisks like `**.example.com` to match any number of prefixes (`abc.www.example.com`, `www.example.com`) including no prefix at all (`example.com`). For most applications this is the best way to configure certificate pinning.
+- Exactly one subdomain: Use a single asterisk like `*.example.com` to match exactly one prefix (`www.example.com`, `api.example.com`). Be careful with this approach as no pinning will be enforced if additional prefixes are present, or if no prefixes are present.
+
+Note that any other form is unsupported. You may not use asterisks in any position other than the leftmost label.
+
+If multiple patterns match a hostname, any match is sufficient. For example, suppose pin A applies to *.example.com and pin B applies to `api.example.com`. Handshakes for `api.example.com` are valid if either A's or B's certificate is in the chain.
+
+### Compute the pin
 
 In order to compute the pin (SPKI fingerprint of the server's SSL certificate), you can execute the following command (here for `www.github.com` host):
 ```shell

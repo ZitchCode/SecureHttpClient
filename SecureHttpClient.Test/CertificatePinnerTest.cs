@@ -1,5 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
 using SecureHttpClient.Test.Helpers;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace SecureHttpClient.Test
@@ -7,6 +8,9 @@ namespace SecureHttpClient.Test
     public class CertificatePinnerTest : TestBase, IClassFixture<TestFixture>
     {
         private const string Hostname = @"www.howsmyssl.com";
+        private const string Wildcard1 = @"*.howsmyssl.com";
+        private const string Wildcard2 = @"**.howsmyssl.com";
+        private const string InvalidPattern = @"*.*.howsmyssl.com";
         private const string Page = @"https://www.howsmyssl.com/a/check";
         private static readonly string[] PinsOk = { @"sha256/kXo1ykvfYulcwtgnY1/sOcAF+b8pHUNGzYsXaNADPpE=" };
         private static readonly string[] PinsKo = { @"sha256/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=" };
@@ -81,6 +85,73 @@ namespace SecureHttpClient.Test
         {
             AddCertificatePinner(Hostname3, Pins3Ko);
             await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(Page3));
+        }
+
+        [Fact]
+        public void CertificatePinnerTest_InvalidPattern()
+        {
+            Assert.Throws<ArgumentException>(() => AddCertificatePinner(InvalidPattern, PinsOk));
+        }
+
+        [Fact]
+        public async Task CertificatePinnerTest_Wildcard1_Success()
+        {
+            AddCertificatePinner(Wildcard1, PinsOk);
+            await GetAsync(Page);
+        }
+
+        [Fact]
+        public async Task CertificatePinnerTest_Wildcard2_Success()
+        {
+            AddCertificatePinner(Wildcard2, PinsOk);
+            await GetAsync(Page);
+        }
+
+        [Fact]
+        public async Task CertificatePinnerTest_Merge_Success()
+        {
+            AddCertificatePinner(Wildcard1, PinsKo);
+            AddCertificatePinner(Hostname, PinsOk);
+            await GetAsync(Page);
+        }
+
+        [Fact]
+        public async Task CertificatePinnerTest_Wildcard1_Failure()
+        {
+            AddCertificatePinner(Wildcard1, PinsKo);
+            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(Page));
+        }
+
+        [Fact]
+        public async Task CertificatePinnerTest_Wildcard2_Failure()
+        {
+            AddCertificatePinner(Wildcard2, PinsKo);
+            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(Page));
+        }
+
+        [Fact]
+        public async Task CertificatePinnerTest_Merge_Failure()
+        {
+            AddCertificatePinner(Wildcard1, PinsKo);
+            AddCertificatePinner(Hostname, PinsKo);
+            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(Page));
+        }
+
+        [Theory]
+        [InlineData("abc.example.com", "abc.example.com", true)]
+        [InlineData("abc.example.com", "def.example.com", false)]
+        [InlineData("*.example.com", "abc.example.com", true)]
+        [InlineData("*.example.com", "example.com", false)]
+        [InlineData("*.example.com", "abc.def.example.com", false)]
+        [InlineData("*.example.com", "abc.example.org", false)]
+        [InlineData("**.example.com", "example.com", true)]
+        [InlineData("**.example.com", "abc.example.com", true)]
+        [InlineData("**.example.com", "abc.def.example.com", true)]
+        [InlineData("**.example.com", "abc.def.example.org", false)]
+        public void CertificatePinnerTest_MatchesPattern(string pattern, string hostname, bool expected)
+        {
+            var actual = CertificatePinning.CertificatePinner.MatchesPattern(pattern, hostname);
+            Assert.Equal(expected, actual);
         }
     }
 }
