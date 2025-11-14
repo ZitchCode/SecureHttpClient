@@ -54,7 +54,9 @@ namespace SecureHttpClient.TestRunner.Net
             _finished = new ManualResetEvent(false);
 
             // Run tests
+#pragma warning disable IL3000
             using var runner = AssemblyRunner.WithoutAppDomain(testAssembly.Location);
+#pragma warning restore IL3000
             runner.OnDiscoveryComplete = OnDiscoveryComplete;
             runner.OnExecutionComplete = OnExecutionComplete;
             runner.OnTestFailed = OnTestFailed;

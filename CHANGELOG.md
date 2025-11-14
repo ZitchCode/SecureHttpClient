@@ -1,3 +1,14 @@
+## 2.4.0
+- vs 18.0.0
+- dotnet sdk 10.0.100
+- android 36.1.2
+- ios 26.1.10494
+- C# 14.0
+- Microsoft.Extensions.Logging.Abstractions 10.0.0
+- test : Microsoft.Extensions.DependencyInjection 10.0.0
+- test : Microsoft.Extensions.Logging 10.0.0
+- test : Microsoft.Maui.* 10.0.10
+
 ## 2.3.5
 - support domain patterns in certificate pinning
 - test : Microsoft.Maui.* 9.0.120
