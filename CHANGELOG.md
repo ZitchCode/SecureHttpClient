@@ -1,3 +1,6 @@
+## 2.4.1
+- test : fix pin
+
 ## 2.4.0
 - vs 18.0.0
 - dotnet sdk 10.0.100
