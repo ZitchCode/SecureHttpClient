@@ -7,7 +7,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Square.OkHttp3.Android" Version="5.1.0.2" />
+		<PackageReference Include="Square.OkHttp3.Android" Version="5.2.1" />
 		<PackageReference Include="Xamarin.Brotli.Dec" Version="0.1.2.9" />
 	</ItemGroup>
 
