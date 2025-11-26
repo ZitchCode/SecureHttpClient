@@ -2,6 +2,7 @@
 - Square.OkHttp3.Android 5.2.1
 - Square.OkIO 3.16.2
 - test : fix pin
+- test : Serilog.Extensions.Logging 10.0.0
 
 ## 2.4.0
 - vs 18.0.0
