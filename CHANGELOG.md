@@ -1,4 +1,5 @@
 ## 2.4.1
+- vs 18.0.2
 - Square.OkHttp3.Android 5.2.1
 - Square.OkIO 3.16.2
 - test : fix pin
