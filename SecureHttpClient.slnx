@@ -1,0 +1,110 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Ad-Hoc" />
+    <BuildType Name="AppStore" />
+    <BuildType Name="Debug" />
+    <BuildType Name="Release" />
+    <Platform Name="Any CPU" />
+    <Platform Name="ARM" />
+    <Platform Name="ARM64" />
+    <Platform Name="iPhone" />
+    <Platform Name="iPhoneSimulator" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Build/">
+    <File Path="build/SecureHttpClient.nuspec" />
+    <File Path="CHANGELOG.md" />
+    <File Path="CODE_OF_CONDUCT.md" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Build.targets" />
+    <File Path="global.json" />
+    <File Path="README.md" />
+    <File Path="scripts/clean.bat" />
+    <File Path="scripts/nuget_pack.bat" />
+    <File Path="version.txt" />
+  </Folder>
+  <Folder Name="/Libraries/">
+    <Project Path="SecureHttpClient.OkHttp/SecureHttpClient.OkHttp.csproj">
+      <BuildType Solution="Ad-Hoc|*" Project="Debug" />
+      <BuildType Solution="AppStore|*" Project="Debug" />
+    </Project>
+    <Project Path="SecureHttpClient/SecureHttpClient.csproj">
+      <BuildDependency Project="SecureHttpClient.OkHttp/SecureHttpClient.OkHttp.csproj" />
+      <BuildType Solution="Ad-Hoc|Any CPU" Project="Debug" />
+      <BuildType Solution="Ad-Hoc|ARM" Project="Release" />
+      <BuildType Solution="Ad-Hoc|ARM64" Project="Release" />
+      <BuildType Solution="Ad-Hoc|iPhone" Project="Debug" />
+      <BuildType Solution="Ad-Hoc|iPhoneSimulator" Project="Debug" />
+      <BuildType Solution="Ad-Hoc|x64" Project="Release" />
+      <BuildType Solution="Ad-Hoc|x86" Project="Release" />
+      <BuildType Solution="AppStore|Any CPU" Project="Debug" />
+      <BuildType Solution="AppStore|ARM" Project="Release" />
+      <BuildType Solution="AppStore|ARM64" Project="Release" />
+      <BuildType Solution="AppStore|iPhone" Project="Debug" />
+      <BuildType Solution="AppStore|iPhoneSimulator" Project="Debug" />
+      <BuildType Solution="AppStore|x64" Project="Release" />
+      <BuildType Solution="AppStore|x86" Project="Release" />
+    </Project>
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="SecureHttpClient.Test/SecureHttpClient.Test.csproj">
+      <BuildType Solution="Ad-Hoc|Any CPU" Project="Release" />
+      <BuildType Solution="Ad-Hoc|ARM" Project="Debug" />
+      <BuildType Solution="Ad-Hoc|ARM64" Project="Debug" />
+      <BuildType Solution="Ad-Hoc|iPhone" Project="Release" />
+      <BuildType Solution="Ad-Hoc|iPhoneSimulator" Project="Release" />
+      <BuildType Solution="Ad-Hoc|x64" Project="Debug" />
+      <BuildType Solution="Ad-Hoc|x86" Project="Debug" />
+      <BuildType Solution="AppStore|Any CPU" Project="Release" />
+      <BuildType Solution="AppStore|ARM" Project="Debug" />
+      <BuildType Solution="AppStore|ARM64" Project="Debug" />
+      <BuildType Solution="AppStore|iPhone" Project="Release" />
+      <BuildType Solution="AppStore|iPhoneSimulator" Project="Release" />
+      <BuildType Solution="AppStore|x64" Project="Debug" />
+      <BuildType Solution="AppStore|x86" Project="Debug" />
+    </Project>
+    <Project Path="SecureHttpClient.TestRunner.Maui/SecureHttpClient.TestRunner.Maui.csproj">
+      <BuildType Solution="Ad-Hoc|*" Project="Debug" />
+      <BuildType Solution="AppStore|*" Project="Debug" />
+      <Deploy />
+    </Project>
+    <Project Path="SecureHttpClient.TestRunner.Net/SecureHttpClient.TestRunner.Net.csproj">
+      <BuildType Solution="Ad-Hoc|*" Project="Debug" />
+      <BuildType Solution="AppStore|*" Project="Debug" />
+    </Project>
+  </Folder>
+  <Properties Name="MonoDevelopProperties">
+    <Property Name="$0.CSharpFormattingPolicy" Value="$3" />
+    <Property Name="$0.DotNetNamingPolicy" Value="$1" />
+    <Property Name="$0.TextStylePolicy" Value="$4" />
+    <Property Name="$1.DirectoryNamespaceAssociation" Value="PrefixedHierarchical" />
+    <Property Name="$1.ResourceNamePolicy" Value="FileFormatDefault" />
+    <Property Name="$2.inheritsSet" Value="null" />
+    <Property Name="$2.scope" Value="text/x-csharp" />
+    <Property Name="$3.AfterDelegateDeclarationParameterComma" Value="True" />
+    <Property Name="$3.AlignToFirstIndexerDeclarationParameter" Value="False" />
+    <Property Name="$3.AlignToFirstMethodDeclarationParameter" Value="False" />
+    <Property Name="$3.ArrayInitializerBraceStyle" Value="NextLine" />
+    <Property Name="$3.AutoPropertyFormatting" Value="ForceOneLine" />
+    <Property Name="$3.BeforeConstructorDeclarationParentheses" Value="False" />
+    <Property Name="$3.BeforeDelegateDeclarationParentheses" Value="False" />
+    <Property Name="$3.BeforeIndexerDeclarationBracket" Value="False" />
+    <Property Name="$3.BeforeMethodCallParentheses" Value="False" />
+    <Property Name="$3.BeforeMethodDeclarationParentheses" Value="False" />
+    <Property Name="$3.EmbeddedStatementPlacement" Value="SameLine" />
+    <Property Name="$3.EventBraceStyle" Value="NextLine" />
+    <Property Name="$3.IndentPreprocessorDirectives" Value="False" />
+    <Property Name="$3.inheritsScope" Value="text/x-csharp" />
+    <Property Name="$3.inheritsSet" Value="Mono" />
+    <Property Name="$3.NewParentheses" Value="False" />
+    <Property Name="$3.PropertyBraceStyle" Value="NextLine" />
+    <Property Name="$3.scope" Value="text/x-csharp" />
+    <Property Name="$3.SpacesBeforeBrackets" Value="False" />
+    <Property Name="$4.FileWidth" Value="120" />
+    <Property Name="$4.inheritsScope" Value="text/plain" />
+    <Property Name="$4.inheritsSet" Value="VisualStudio" />
+    <Property Name="$4.scope" Value="text/plain" />
+    <Property Name="Policies" Value="$0" />
+  </Properties>
+</Solution>
