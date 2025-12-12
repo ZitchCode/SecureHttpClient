@@ -1,8 +1,8 @@
 @echo off
 
 SETLOCAL
-set Version_Okhttp=5.2.1
-set Version_Okio=3.16.2
+set Version_Okhttp=5.3.2
+set Version_Okio=3.16.4
 set Version_KotlinStdlib=2.2.21
 set Version_Brotli=0.1.2
 

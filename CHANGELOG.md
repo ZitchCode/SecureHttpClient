@@ -2,6 +2,8 @@
 - vs 18.1.0
 - dotnet sdk 10.0.101
 - ios 26.1.10502
+- Square.OkHttp3.Android 5.3.2
+- Square.OkIO 3.16.4
 - Microsoft.Extensions.* 10.0.1
 - test : Microsoft.Maui.* 10.0.11
 
