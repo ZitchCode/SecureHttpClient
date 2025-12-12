@@ -1,3 +1,9 @@
+## 2.4.2
+- vs 18.1.0
+- dotnet sdk 10.0.101
+- ios 26.1.10502
+- test : Microsoft.Maui.* 10.0.11
+
 ## 2.4.1
 - vs 18.0.2
 - Square.OkHttp3.Android 5.2.1
