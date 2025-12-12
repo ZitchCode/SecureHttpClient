@@ -2,6 +2,7 @@
 - vs 18.1.0
 - dotnet sdk 10.0.101
 - ios 26.1.10502
+- Microsoft.Extensions.* 10.0.1
 - test : Microsoft.Maui.* 10.0.11
 
 ## 2.4.1
