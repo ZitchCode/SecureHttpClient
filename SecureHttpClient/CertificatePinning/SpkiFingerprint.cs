@@ -9,7 +9,7 @@ namespace SecureHttpClient.CertificatePinning
         public static string Compute(X509Certificate2 certificate)
         {
             // Extract SPKI (der-encoded)
-            var spki = SpkiProvider.GetSpki(certificate);
+            var spki = certificate.PublicKey.ExportSubjectPublicKeyInfo();
 
             // Compute spki fingerprint (sha256)
             using var digester = SHA256.Create();

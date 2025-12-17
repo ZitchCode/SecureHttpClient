@@ -1,3 +1,6 @@
+## 2.4.3
+- remove BouncyCastle.Cryptography dependency (use .net to extract spki)
+
 ## 2.4.2
 - vs 18.1.0
 - dotnet sdk 10.0.101
