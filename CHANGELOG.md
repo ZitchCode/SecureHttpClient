@@ -3,6 +3,7 @@
 - ios 26.2.10191
 - remove BouncyCastle.Cryptography dependency (use .net to extract spki)
 - test : fix client certificate
+- test : Microsoft.Maui.* 10.0.20
 
 ## 2.4.2
 - vs 18.1.0
