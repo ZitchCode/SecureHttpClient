@@ -1,4 +1,6 @@
 ## 2.4.3
+- vs 18.1.1
+- ios 26.2.10191
 - remove BouncyCastle.Cryptography dependency (use .net to extract spki)
 - test : fix client certificate
 

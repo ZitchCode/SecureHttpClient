@@ -25,7 +25,7 @@
         <dependency id="Square.OkIO" version="3.16.4" exclude="Build,Analyzers" />
         <dependency id="Xamarin.Brotli.Dec" version="0.1.2.9" exclude="Build,Analyzers" />
       </group>
-      <group targetFramework="net10.0-ios26.1">
+      <group targetFramework="net10.0-ios26.2">
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="10.0.1" exclude="Build,Analyzers" />
       </group>
     </dependencies>
@@ -41,9 +41,9 @@
     <file src="..\SecureHttpClient.OkHttp\bin\Release\net10.0-android36.1\SecureHttpClient.OkHttp.xml" target="lib\net10.0-android36.1" />
     <file src="..\SecureHttpClient.OkHttp\bin\Release\net10.0-android36.1\SecureHttpClient.OkHttp.aar" target="lib\net10.0-android36.1" />
     <file src="..\SecureHttpClient.OkHttp\bin\Release\net10.0-android36.1\SecureHttpClient.OkHttp.pdb" target="lib\net10.0-android36.1" />
-    <file src="..\SecureHttpClient\bin\Release\net10.0-ios26.1\SecureHttpClient.dll" target="lib\net10.0-ios26.1" />
-    <file src="..\SecureHttpClient\bin\Release\net10.0-ios26.1\SecureHttpClient.xml" target="lib\net10.0-ios26.1" />
-    <file src="..\SecureHttpClient\bin\Release\net10.0-ios26.1\SecureHttpClient.pdb" target="lib\net10.0-ios26.1" />
+    <file src="..\SecureHttpClient\bin\Release\net10.0-ios26.2\SecureHttpClient.dll" target="lib\net10.0-ios26.2" />
+    <file src="..\SecureHttpClient\bin\Release\net10.0-ios26.2\SecureHttpClient.xml" target="lib\net10.0-ios26.2" />
+    <file src="..\SecureHttpClient\bin\Release\net10.0-ios26.2\SecureHttpClient.pdb" target="lib\net10.0-ios26.2" />
 	<file src="..\README.md" target="." />
     <file src="..\icon.png" target="." />
   </files>
