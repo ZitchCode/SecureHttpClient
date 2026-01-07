@@ -1,0 +1,95 @@
+is_global = true
+
+# Code Quality Rules
+
+# CA1031: Do not catch general exception types
+# Justification: HTTP handlers need to catch general exceptions for proper error handling
+dotnet_diagnostic.CA1031.severity = suggestion
+
+# CA1062: Validate arguments of public methods
+# Justification: We validate where necessary, but not all public methods need validation
+dotnet_diagnostic.CA1062.severity = suggestion
+
+# CA1303: Do not pass literals as localized parameters
+# Justification: This library is not localized
+dotnet_diagnostic.CA1303.severity = none
+
+# CA1308: Normalize strings to uppercase
+# Justification: Some protocols require lowercase
+dotnet_diagnostic.CA1308.severity = suggestion
+
+# CA1710: Identifiers should have correct suffix
+# Justification: Not all collections need Collection suffix
+dotnet_diagnostic.CA1710.severity = suggestion
+
+# CA1716: Identifiers should not match keywords
+# Justification: Some matching is acceptable in context
+dotnet_diagnostic.CA1716.severity = suggestion
+
+# CA1720: Identifiers should not contain type names
+# Justification: Sometimes type names in identifiers improve clarity
+dotnet_diagnostic.CA1720.severity = suggestion
+
+# CA1724: Type names should not match namespaces
+# Justification: Some matches are acceptable
+dotnet_diagnostic.CA1724.severity = suggestion
+
+# CA2007: Do not directly await a Task
+# Justification: ConfigureAwait(false) is used where needed, but not everywhere
+dotnet_diagnostic.CA2007.severity = suggestion
+
+# CA2227: Collection properties should be read only
+# Justification: Some collections need to be settable
+dotnet_diagnostic.CA2227.severity = suggestion
+
+# Design Rules
+
+# CA1054: URI parameters should not be strings
+# Justification: URIs as strings are common in HTTP client APIs
+dotnet_diagnostic.CA1054.severity = suggestion
+
+# CA1055: URI return values should not be strings
+dotnet_diagnostic.CA1055.severity = suggestion
+
+# CA1056: URI properties should not be strings
+dotnet_diagnostic.CA1056.severity = suggestion
+
+# Performance Rules
+
+# CA1812: Avoid uninstantiated internal classes
+# Justification: Some internal classes are instantiated through reflection or platform-specific code
+dotnet_diagnostic.CA1812.severity = suggestion
+
+# CA1822: Mark members as static
+# Justification: Instance methods may be required for inheritance or interface implementation
+dotnet_diagnostic.CA1822.severity = suggestion
+
+# CA1848: Use the LoggerMessage delegates
+# Justification: Not all logging scenarios benefit from LoggerMessage
+dotnet_diagnostic.CA1848.severity = suggestion
+
+# Reliability Rules
+
+# CA2000: Dispose objects before losing scope
+# Justification: Some objects are intentionally not disposed in their creation scope
+dotnet_diagnostic.CA2000.severity = suggestion
+
+# Security Rules
+
+# CA5350: Do Not Use Weak Cryptographic Algorithms
+dotnet_diagnostic.CA5350.severity = warning
+
+# CA5351: Do Not Use Broken Cryptographic Algorithms
+dotnet_diagnostic.CA5351.severity = error
+
+# CA5359: Do Not Disable Certificate Validation
+dotnet_diagnostic.CA5359.severity = error
+
+# CA5386: Avoid hardcoding SecurityProtocolType value
+dotnet_diagnostic.CA5386.severity = warning
+
+# Usage Rules
+
+# CA2234: Pass System.Uri objects instead of strings
+# Justification: String URIs are common in HTTP APIs
+dotnet_diagnostic.CA2234.severity = suggestion

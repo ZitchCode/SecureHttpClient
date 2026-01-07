@@ -7,6 +7,10 @@ on:
     branches: [ main, develop ]
   workflow_dispatch:
 
+# Set default permissions to read-only for security
+permissions:
+  contents: read
+
 env:
   DOTNET_VERSION: '10.0.x'
   CONFIGURATION: 'Release'
@@ -15,6 +19,8 @@ jobs:
   build-windows:
     name: Build & Test (.NET Windows)
     runs-on: windows-latest
+    permissions:
+      contents: read
     
     steps:
     - name: Checkout code
@@ -50,6 +56,8 @@ jobs:
   build-macos:
     name: Build (.NET macOS)
     runs-on: macos-latest
+    permissions:
+      contents: read
     
     steps:
     - name: Checkout code
@@ -71,6 +79,8 @@ jobs:
   code-quality:
     name: Code Quality Checks
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     
     steps:
     - name: Checkout code
