@@ -116,3 +116,105 @@ var html = await flurlSession
 ## Advanced usage
 
 For more advanced usage (logging, client certificates, cookies ordering...), have a look into the SecureHttpClient.Test folder for more code examples.
+
+## Troubleshooting
+
+### Certificate Pinning Issues
+
+**Problem**: Certificate pin validation fails
+
+**Solutions**:
+- Verify the pin is correct using the openssl command provided in the documentation
+- Check if the certificate has been rotated/renewed
+- Ensure you're using the correct hostname pattern (exact, `*.domain`, or `**.domain`)
+- Test the connection without pinning first to ensure basic connectivity works
+
+**Problem**: Certificate pins need updating after server certificate renewal
+
+**Solutions**:
+- Always maintain backup pins for certificate rotation
+- Monitor certificate expiration dates
+- Plan app updates before certificates expire
+
+### Platform-Specific Issues
+
+**Android**:
+- Ensure Android SDK is properly configured
+- Verify minimum API level is 26 (Android 8.0) or higher
+- Check that network security configuration doesn't conflict with pinning
+
+**iOS**:
+- Ensure minimum iOS version is 15.0 or higher
+- Check App Transport Security (ATS) settings in Info.plist
+- Verify keychain access permissions for client certificates
+
+**Windows/.NET**:
+- Ensure .NET 10.0 runtime is installed
+- Check that Windows certificate store is accessible
+- Verify proxy settings if behind corporate proxy
+
+### Connection Issues
+
+**Problem**: Timeout errors or slow connections
+
+**Solutions**:
+- Check network connectivity
+- Verify firewall settings
+- Adjust timeout settings if needed:
+  ```csharp
+  httpClient.Timeout = TimeSpan.FromSeconds(30);
+  ```
+
+**Problem**: SSL/TLS handshake failures
+
+**Solutions**:
+- Ensure server supports TLS 1.2 or higher
+- Check if certificate chain is complete on server
+- Verify system time is correct (affects certificate validation)
+
+### Build Issues
+
+**Problem**: Missing workload errors when building
+
+**Solutions**:
+```bash
+# Install required workloads
+dotnet workload restore
+# Or install specific workloads
+dotnet workload install maui android ios
+```
+
+**Problem**: Build fails with "NETSDK1147" error
+
+**Solutions**:
+- If only targeting Windows/.NET, build specific framework:
+  ```bash
+  dotnet build SecureHttpClient/SecureHttpClient.csproj -f net10.0
+  ```
+- For mobile platforms, install required workloads
+
+### Common Mistakes
+
+1. **Not handling certificate pinning failures gracefully**: Always handle exceptions and provide fallback or user feedback
+2. **Disabling certificate validation in production**: Never set `ServerCertificateCustomValidationCallback` to always return true
+3. **Logging sensitive data**: Be careful not to log request/response bodies containing sensitive information
+4. **Not testing on all target platforms**: Behavior can differ between Android, iOS, and Windows
+
+## Getting Help
+
+- 📖 Check the [CONTRIBUTING.md](CONTRIBUTING.md) guide
+- 🔒 Review [SECURITY.md](SECURITY.md) for security-related questions
+- 🐛 Report bugs via [GitHub Issues](https://github.com/ZitchCode/SecureHttpClient/issues)
+- 💬 Ask questions in [GitHub Discussions](https://github.com/ZitchCode/SecureHttpClient/discussions)
+
+## Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute to this project.
+
+## Security
+
+Security is a top priority for this project. Please review our [Security Policy](SECURITY.md) for information on supported versions, security features, and how to report vulnerabilities.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
