@@ -88,6 +88,13 @@ In order to compute the pin (SPKI fingerprint of the server's SSL certificate), 
 openssl s_client -connect www.github.com:443 -servername www.github.com | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | openssl x509 -noout -pubkey | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
 ```
 
+You can also use the C# helpers available in SecureHttpClient:
+```csharp
+var certificate = CertificateHelper.GetCertificate("www.github.com");
+var spkiFingerprint = CertificateHelper.GetSpkiFingerprint(certificate);
+Console.Writeline(spkiFingerprint);
+```
+
 ## Cookies and Redirect
 
 SecureHttpClient handles cookies and redirects, but the behavior can differ a bit from one platform to another, because of different implementations in the native libraries used internally.
