@@ -52,7 +52,7 @@ namespace SecureHttpClient.CertificatePinning
             }
 
             // Compute spki fingerprint
-            var spkiFingerprint = SpkiFingerprint.Compute(certificate);
+            var spkiFingerprint = CertificateHelper.GetSpkiFingerprint(certificate);
 
             // Check pin
             var match = Array.IndexOf(pins, spkiFingerprint) > -1;

@@ -2,6 +2,7 @@
 - vs 18.2.1
 - dotnet sdk 10.0.102
 - android 36.1.12
+- expose CertificateHelper methods
 - Microsoft.Extensions.* 10.0.2
 - Square.OkHttp3.Android 5.3.2.1
 - Square.OkIO 3.16.4.1
