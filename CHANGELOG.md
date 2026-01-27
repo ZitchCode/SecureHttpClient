@@ -3,6 +3,9 @@
 - dotnet sdk 10.0.102
 - android 36.1.12
 - Microsoft.Extensions.* 10.0.2
+- Square.OkHttp3.Android 5.3.2.1
+- Square.OkIO 3.16.4.1
+- Xamarin.Brotli.Dec 0.1.2.10
 - test : Microsoft.Maui.* 10.0.30
 - test : Xunit.SkippableFact 1.5.61
 

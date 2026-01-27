@@ -30,8 +30,8 @@
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
 		<Compile Include="Platforms\Android\**\*.cs" />
 		<ProjectReference Include="..\SecureHttpClient.OkHttp\SecureHttpClient.OkHttp.csproj" />
-		<PackageReference Include="Square.OkHttp3.Android" Version="5.3.2" />
-		<PackageReference Include="Square.OkIO" Version="3.16.4" />
+		<PackageReference Include="Square.OkHttp3.Android" Version="5.3.2.1" />
+		<PackageReference Include="Square.OkIO" Version="3.16.4.1" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
