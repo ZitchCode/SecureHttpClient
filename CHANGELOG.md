@@ -1,3 +1,9 @@
+## 2.4.4
+- vs 18.2.1
+- dotnet sdk 10.0.102
+- android 36.1.12
+- Microsoft.Extensions.* 10.0.2
+
 ## 2.4.3
 - vs 18.1.1
 - ios 26.2.10191
