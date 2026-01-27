@@ -3,6 +3,7 @@
 - dotnet sdk 10.0.102
 - android 36.1.12
 - Microsoft.Extensions.* 10.0.2
+- test : Microsoft.Maui.* 10.0.30
 - test : Xunit.SkippableFact 1.5.61
 
 ## 2.4.3
