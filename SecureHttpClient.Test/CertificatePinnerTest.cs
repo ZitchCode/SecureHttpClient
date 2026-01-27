@@ -5,136 +5,121 @@ using Xunit;
 
 namespace SecureHttpClient.Test
 {
-    public class CertificatePinnerTest : TestBase, IClassFixture<TestFixture>
+    public class CertificatePinnerTest : TestBase, IClassFixture<TestPinFixture>
     {
-        private const string Hostname = "www.howsmyssl.com";
-        private const string Wildcard1 = "*.howsmyssl.com";
-        private const string Wildcard2 = "**.howsmyssl.com";
-        private const string InvalidPattern = "*.*.howsmyssl.com";
-        private const string Page = "https://www.howsmyssl.com/a/check";
-        private static readonly string[] PinsOk = ["sha256/6ToiIE9b1hro92gx1pbb6saffAG3p0jRIN8M5wgT0GM="];
-        private static readonly string[] PinsKo = ["sha256/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx="];
+        private readonly TestPinFixture _fixture;
 
-        private const string Hostname2 = "github.com";
-        private const string Page2 = "https://github.com";
-        private static readonly string[] Pins2Ok = ["sha256/HKlrX9VOPI9IC6usNi99M9wgWigfPdJmPCF7IPg0BVE="];
-        private static readonly string[] Pins2Ko = ["sha256/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy="];
-
-        private const string Hostname3 = "ecc256.badssl.com";
-        private const string Page3 = "https://ecc256.badssl.com/";
-        private static readonly string[] Pins3Ok = ["sha256/5sHD7cOasciMsgZIFvJs56nfhmPpuoJ+Cot9ZS3harA="];
-        private static readonly string[] Pins3Ko = ["sha256/zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz="];
-
-        public CertificatePinnerTest(TestFixture testFixture) : base(testFixture)
+        public CertificatePinnerTest(TestPinFixture testFixture) : base(testFixture)
         {
+            _fixture = testFixture;
         }
 
         [Fact]
         public async Task CertificatePinnerTest_OneHost_Success()
         {
-            AddCertificatePinner(Hostname, PinsOk);
-            await GetAsync(Page);
+            AddCertificatePinner(_fixture.Hostname, _fixture.PinsOk);
+            await GetAsync(_fixture.Page);
         }
 
         [Fact]
         public async Task CertificatePinnerTest_OneHost_Failure()
         {
-            AddCertificatePinner(Hostname, PinsKo);
-            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(Page));
+            AddCertificatePinner(_fixture.Hostname, _fixture.PinsKo);
+            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(_fixture.Page));
         }
 
         [Fact]
         public async Task CertificatePinnerTest_TwoHosts_Success()
         {
-            AddCertificatePinner(Hostname, PinsOk);
-            AddCertificatePinner(Hostname2, Pins2Ok);
+            AddCertificatePinner(_fixture.Hostname, _fixture.PinsOk);
+            AddCertificatePinner(_fixture.Hostname2, _fixture.Pins2Ok);
 
-            await GetAsync(Page);
-            await GetAsync(Page2);
+            await GetAsync(_fixture.Page);
+            await GetAsync(_fixture.Page2);
         }
 
         [Fact]
         public async Task CertificatePinnerTest_TwoHosts_FirstHostFails()
         {
-            AddCertificatePinner(Hostname, PinsKo);
-            AddCertificatePinner(Hostname2, Pins2Ok);
+            AddCertificatePinner(_fixture.Hostname, _fixture.PinsKo);
+            AddCertificatePinner(_fixture.Hostname2, _fixture.Pins2Ok);
 
-            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(Page));
-            await GetAsync(Page2);
+            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(_fixture.Page));
+            await GetAsync(_fixture.Page2);
         }
 
         [Fact]
         public async Task CertificatePinnerTest_TwoHosts_SecondHostFails()
         {
-            AddCertificatePinner(Hostname, PinsOk);
-            AddCertificatePinner(Hostname2, Pins2Ko);
+            AddCertificatePinner(_fixture.Hostname, _fixture.PinsOk);
+            AddCertificatePinner(_fixture.Hostname2, _fixture.PinsKo);
 
-            await GetAsync(Page);
-            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(Page2));
+            await GetAsync(_fixture.Page);
+            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(_fixture.Page2));
         }
 
         [Fact]
         public async Task CertificatePinnerTest_EccCertificate_Success()
         {
-            AddCertificatePinner(Hostname3, Pins3Ok);
-            await GetAsync(Page3);
+            AddCertificatePinner(_fixture.Hostname3, _fixture.Pins3Ok);
+            await GetAsync(_fixture.Page3);
         }
 
         [Fact]
         public async Task CertificatePinnerTest_EccCertificate_Failure()
         {
-            AddCertificatePinner(Hostname3, Pins3Ko);
-            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(Page3));
+            AddCertificatePinner(_fixture.Hostname3, _fixture.PinsKo);
+            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(_fixture.Page3));
         }
 
         [Fact]
         public void CertificatePinnerTest_InvalidPattern()
         {
-            Assert.Throws<ArgumentException>(() => AddCertificatePinner(InvalidPattern, PinsOk));
+            Assert.Throws<ArgumentException>(() => AddCertificatePinner(_fixture.InvalidPattern, _fixture.PinsOk));
         }
 
         [Fact]
         public async Task CertificatePinnerTest_Wildcard1_Success()
         {
-            AddCertificatePinner(Wildcard1, PinsOk);
-            await GetAsync(Page);
+            AddCertificatePinner(_fixture.Wildcard1, _fixture.PinsOk);
+            await GetAsync(_fixture.Page);
         }
 
         [Fact]
         public async Task CertificatePinnerTest_Wildcard2_Success()
         {
-            AddCertificatePinner(Wildcard2, PinsOk);
-            await GetAsync(Page);
+            AddCertificatePinner(_fixture.Wildcard2, _fixture.PinsOk);
+            await GetAsync(_fixture.Page);
         }
 
         [Fact]
         public async Task CertificatePinnerTest_Merge_Success()
         {
-            AddCertificatePinner(Wildcard1, PinsKo);
-            AddCertificatePinner(Hostname, PinsOk);
-            await GetAsync(Page);
+            AddCertificatePinner(_fixture.Wildcard1, _fixture.PinsKo);
+            AddCertificatePinner(_fixture.Hostname, _fixture.PinsOk);
+            await GetAsync(_fixture.Page);
         }
 
         [Fact]
         public async Task CertificatePinnerTest_Wildcard1_Failure()
         {
-            AddCertificatePinner(Wildcard1, PinsKo);
-            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(Page));
+            AddCertificatePinner(_fixture.Wildcard1, _fixture.PinsKo);
+            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(_fixture.Page));
         }
 
         [Fact]
         public async Task CertificatePinnerTest_Wildcard2_Failure()
         {
-            AddCertificatePinner(Wildcard2, PinsKo);
-            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(Page));
+            AddCertificatePinner(_fixture.Wildcard2, _fixture.PinsKo);
+            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(_fixture.Page));
         }
 
         [Fact]
         public async Task CertificatePinnerTest_Merge_Failure()
         {
-            AddCertificatePinner(Wildcard1, PinsKo);
-            AddCertificatePinner(Hostname, PinsKo);
-            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(Page));
+            AddCertificatePinner(_fixture.Wildcard1, _fixture.PinsKo);
+            AddCertificatePinner(_fixture.Hostname, _fixture.PinsKo);
+            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(_fixture.Page));
         }
 
         [Theory]
