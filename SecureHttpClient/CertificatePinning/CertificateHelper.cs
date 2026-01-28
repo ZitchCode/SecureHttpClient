@@ -34,11 +34,18 @@ namespace SecureHttpClient.CertificatePinning
         }
 
         /// <summary>
-        /// Retrieves the X.509 certificate presented by a remote server during an SSL/TLS handshake on port 443.
+        /// Retrieves the Subject Public Key Info (SPKI) fingerprint of the TLS certificate presented by the specified host.
         /// </summary>
-        /// <param name="hostname">The DNS name of the remote server from which to retrieve the certificate.</param>
-        /// <returns>An X509Certificate2 object representing the server's SSL/TLS certificate.</returns>
-        public static async Task<X509Certificate2> GetCertificateAsync(string hostname)
+        /// <param name="hostname">The DNS name of the remote host from which to retrieve the TLS certificate. Cannot be null or empty.</param>
+        /// <returns>A task which result contains the SPKI fingerprint in the format "sha256/{base64}".</returns>
+        public static async Task<string> GetSpkiFingerprintAsync(string hostname)
+        {
+            var certificate = await GetCertificateAsync(hostname);
+            var spkiFingerprint = GetSpkiFingerprint(certificate);
+            return spkiFingerprint;
+        }
+
+        internal static async Task<X509Certificate2> GetCertificateAsync(string hostname)
         {
             using var tcpClient = new TcpClient();
             await tcpClient.ConnectAsync(hostname, 443);

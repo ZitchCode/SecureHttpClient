@@ -25,16 +25,13 @@ namespace SecureHttpClient.Test
 
         public async Task InitializeAsync()
         {
-            var certificate = await CertificateHelper.GetCertificateAsync(Hostname);
-            var pin = CertificateHelper.GetSpkiFingerprint(certificate);
+            var pin = await CertificateHelper.GetSpkiFingerprintAsync(Hostname);
             PinsOk = [pin];
 
-            var certificate2 = await CertificateHelper.GetCertificateAsync(Hostname2);
-            var pin2 = CertificateHelper.GetSpkiFingerprint(certificate2);
+            var pin2 = await CertificateHelper.GetSpkiFingerprintAsync(Hostname2);
             Pins2Ok = [pin2];
 
-            var certificate3 = await CertificateHelper.GetCertificateAsync(Hostname3);
-            var pin3 = CertificateHelper.GetSpkiFingerprint(certificate3);
+            var pin3 = await CertificateHelper.GetSpkiFingerprintAsync(Hostname3);
             Pins3Ok = [pin3];
         }
 
