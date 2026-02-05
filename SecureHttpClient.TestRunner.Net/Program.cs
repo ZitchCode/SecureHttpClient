@@ -21,7 +21,13 @@ namespace SecureHttpClient.TestRunner.Net
         private static int _testsSkipped;
         private static decimal _executionTime;
 
-        private static int Main(string[] args)
+        private static string Green(string text) => $"\x1b[32m{text}\x1b[0m";
+        private static string Yellow(string text) => $"\x1b[33m{text}\x1b[0m";
+        private static string Red(string text) => $"\x1b[31m{text}\x1b[0m";
+
+        private static readonly Lock LogLock = new();
+
+        private static int Main()
         {
             // Init logger
             Log.Logger = new LoggerConfiguration()
@@ -89,22 +95,31 @@ namespace SecureHttpClient.TestRunner.Net
 
         private static void OnTestFailed(TestFailedInfo info)
         {
-            Log.Error($"[FAIL] {info.TestDisplayName}: {info.ExceptionMessage}");
-            if (info.ExceptionStackTrace != null)
+            lock (LogLock)
             {
-                Log.Error(info.ExceptionStackTrace);
+                Log.Error($"{Red("[FAIL]")} {info.TestDisplayName}: {info.ExceptionMessage}");
+                if (info.ExceptionStackTrace != null)
+                {
+                    Log.Error(info.ExceptionStackTrace);
+                }
             }
             _result = 1;
         }
 
         private static void OnTestPassed(TestPassedInfo info)
         {
-            Log.Information($"[PASS] {info.TestDisplayName}");
+            lock (LogLock)
+            {
+                Log.Information($"{Green("[PASS]")} {info.TestDisplayName}");
+            }
         }
 
         private static void OnTestSkipped(TestSkippedInfo info)
         {
-            Log.Warning($"[SKIP] {info.TestDisplayName}: {info.SkipReason}");
+            lock (LogLock)
+            {
+                Log.Information($"{Yellow("[SKIP]")} {info.TestDisplayName}: {info.SkipReason}");
+            }
         }
     }
 }

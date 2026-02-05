@@ -1,3 +1,6 @@
+## 2.4.5
+- test : add colors to console test runner
+
 ## 2.4.4
 - vs 18.2.1
 - dotnet sdk 10.0.102
