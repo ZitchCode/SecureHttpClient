@@ -218,9 +218,7 @@ namespace SecureHttpClient.Test
         public async Task HttpTest_Cookies_SetCookie()
         {
             const string page = "https://httpbingo.org/cookies/set?k1=v1";
-            var result = await GetAsync(page).ReceiveString();
-            var json = JsonDocument.Parse(result);
-            var cookies = json.RootElement.GetDictionary();
+            var cookies = await GetCookiesAsync(page);
             Assert.Contains(new KeyValuePair<string, string>("k1", "v1"), cookies);
         }
 
@@ -230,9 +228,7 @@ namespace SecureHttpClient.Test
             const string page1 = "https://httpbingo.org/cookies/set?k1=v1";
             await GetAsync(page1);
             const string page2 = "https://httpbingo.org/cookies/set?k1=v2";
-            var result = await GetAsync(page2).ReceiveString();
-            var json = JsonDocument.Parse(result);
-            var cookies = json.RootElement.GetDictionary();
+            var cookies = await GetCookiesAsync(page2);
             Assert.Contains(new KeyValuePair<string, string>("k1", "v2"), cookies);
         }
 
@@ -246,9 +242,7 @@ namespace SecureHttpClient.Test
             response1.Headers.TryGetValues("set-cookie", out var respCookies);
             Assert.Equal(new List<string> { cookie1, cookie2 }, respCookies);
             const string page2 = "https://httpbingo.org/cookies";
-            var result = await GetAsync(page2).ReceiveString();
-            var json = JsonDocument.Parse(result);
-            var cookies = json.RootElement.GetDictionary();
+            var cookies = await GetCookiesAsync(page2);
             Assert.Contains(new KeyValuePair<string, string>("k1", "v1"), cookies);
             Assert.Contains(new KeyValuePair<string, string>("k2", "v2"), cookies);
         }
@@ -259,9 +253,7 @@ namespace SecureHttpClient.Test
             const string page1 = "https://httpbingo.org/cookies/set?k1=v1";
             await GetAsync(page1);
             const string page2 = "https://httpbingo.org/cookies/delete?k1";
-            var result = await GetAsync(page2).ReceiveString();
-            var json = JsonDocument.Parse(result);
-            var cookies = json.RootElement.GetDictionary();
+            var cookies = await GetCookiesAsync(page2);
             Assert.DoesNotContain(new KeyValuePair<string, string>("k1", "v1"), cookies);
         }
 
@@ -270,9 +262,7 @@ namespace SecureHttpClient.Test
         {
             const string page = "https://httpbingo.org/cookies/set?k1=v1";
             DisableCookies();
-            var result = await GetAsync(page).ReceiveString();
-            var json = JsonDocument.Parse(result);
-            var cookies = json.RootElement.GetDictionary();
+            var cookies = await GetCookiesAsync(page);
             Assert.Empty(cookies);
         }
 

@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
+using SecureHttpClient.Test.Helpers;
 
 namespace SecureHttpClient.Test
 {
@@ -68,6 +71,14 @@ namespace SecureHttpClient.Test
         protected void DisableCookies()
         {
             _secureHttpClientHandler.UseCookies = false;
+        }
+
+        protected async Task<Dictionary<string, string>> GetCookiesAsync(string page)
+        {
+            var result = await GetAsync(page).ReceiveString();
+            var json = JsonDocument.Parse(result);
+            var cookies = json.RootElement.GetProperty("cookies").GetDictionary();
+            return cookies;
         }
     }
 }
