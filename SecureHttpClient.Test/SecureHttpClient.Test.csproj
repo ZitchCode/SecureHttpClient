@@ -14,25 +14,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Essentials" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.3" />
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.3" />
-		<PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
-		<PackageReference Include="xunit" Version="2.9.3" />
-		<PackageReference Include="Xunit.SkippableFact" Version="1.5.61" />
+		<PackageReference Include="Microsoft.Maui.Essentials" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+		<PackageReference Include="Microsoft.Extensions.Logging" />
+		<PackageReference Include="Serilog.Extensions.Logging" />
+		<PackageReference Include="xunit" />
+		<PackageReference Include="Xunit.SkippableFact" />
 	</ItemGroup>
 
-	<Choose>
-		<When Condition=" '$(Configuration)'=='Release' ">
-			<ItemGroup>
-				<PackageReference Include="SecureHttpClient" />
-			</ItemGroup>
-		</When>
-		<When Condition=" '$(Configuration)'=='Debug' ">
-			<ItemGroup>
-				<ProjectReference Include="..\SecureHttpClient\SecureHttpClient.csproj" />
-			</ItemGroup>
-		</When>
-	</Choose>
- 
+	<ItemGroup>
+		<PackageReference Include="SecureHttpClient" Condition="'$(Configuration)'=='Release'" />
+		<ProjectReference Include="..\SecureHttpClient\SecureHttpClient.csproj" Condition="'$(Configuration)'=='Debug'" />
+	</ItemGroup>
+
 </Project>

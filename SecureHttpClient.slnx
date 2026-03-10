@@ -17,7 +17,7 @@
     <File Path="CHANGELOG.md" />
     <File Path="CODE_OF_CONDUCT.md" />
     <File Path="Directory.Build.props" />
-    <File Path="Directory.Build.targets" />
+    <File Path="Directory.Packages.props" />
     <File Path="global.json" />
     <File Path="README.md" />
     <File Path="scripts/clean.bat" />

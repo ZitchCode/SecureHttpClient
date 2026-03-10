@@ -1,0 +1,31 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- SecureHttpClient -->
+    <PackageVersion Include="SecureHttpClient" Version="2.4.4" />
+    <!-- Http -->
+    <PackageVersion Include="Square.OkHttp3.Android" Version="5.3.2.1" />
+    <PackageVersion Include="Square.OkIO" Version="3.16.4.1" />
+    <PackageVersion Include="Xamarin.Brotli.Dec" Version="0.1.2.10" />
+    <!-- MAUI -->
+    <PackageVersion Include="Microsoft.Maui.Controls" Version="10.0.30" />
+    <PackageVersion Include="Microsoft.Maui.Essentials" Version="10.0.30" />
+    <!-- Microsoft.Extensions -->
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
+    <!-- Serilog -->
+    <PackageVersion Include="Serilog" Version="4.3.0" />
+    <PackageVersion Include="Serilog.Extensions.Logging" Version="10.0.0" />
+    <PackageVersion Include="Serilog.Sinks.Console" Version="6.1.1" />
+    <PackageVersion Include="Serilog.Sinks.Debug" Version="3.0.0" />
+    <PackageVersion Include="Serilog.Sinks.Xamarin" Version="1.0.0" />
+    <!-- Testing -->
+    <PackageVersion Include="Shiny.Xunit.Runners.Maui" Version="1.0.0" />
+    <PackageVersion Include="xunit" Version="2.9.3" />
+    <PackageVersion Include="xunit.runner.utility" Version="2.9.3" />
+    <PackageVersion Include="Xunit.SkippableFact" Version="1.5.61" />
+  </ItemGroup>
+</Project>

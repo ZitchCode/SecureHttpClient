@@ -59,21 +59,21 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Shiny.Xunit.Runners.Maui" Version="1.0.0" />
-		<PackageReference Include="xunit.runner.utility" Version="2.9.3" />
+		<PackageReference Include="Microsoft.Maui.Controls" />
+		<PackageReference Include="Shiny.Xunit.Runners.Maui" />
+		<PackageReference Include="xunit.runner.utility" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
-		<PackageReference Include="Serilog.Sinks.Xamarin" Version="1.0.0" />
+		<PackageReference Include="Serilog.Sinks.Xamarin" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
-		<PackageReference Include="Serilog.Sinks.Xamarin" Version="1.0.0" />
+		<PackageReference Include="Serilog.Sinks.Xamarin" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
-		<PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
+		<PackageReference Include="Serilog.Sinks.Debug" />
 	</ItemGroup>
 
 	<ItemGroup>
