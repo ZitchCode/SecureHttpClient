@@ -22,7 +22,6 @@
     <File Path="README.md" />
     <File Path="scripts/clean.bat" />
     <File Path="scripts/nuget_pack.bat" />
-    <File Path="version.txt" />
   </Folder>
   <Folder Name="/Libraries/">
     <Project Path="SecureHttpClient.OkHttp/SecureHttpClient.OkHttp.csproj">

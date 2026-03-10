@@ -5,7 +5,7 @@ SETLOCAL
 echo -- INIT ----------------------------------------------------------------------------------------------------------------------------------------------------
 set Z_LibName=SecureHttpClient
 echo LibName: %Z_LibName%
-set /p Z_Version=<..\version.txt
+for /f %%i in ('dotnet msbuild ..\Directory.Build.props /getProperty:SecureHttpClientVersion /nologo') do set Z_Version=%%i
 echo Version: %Z_Version%
 set Z_AndroidSdkDirectory=D:\android\sdk
 echo AndroidSdkDirectory: %Z_AndroidSdkDirectory%

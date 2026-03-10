@@ -1,5 +1,6 @@
 <Project>
   <PropertyGroup>
     <LangVersion>14.0</LangVersion>
+    <SecureHttpClientVersion>2.4.5</SecureHttpClientVersion>
   </PropertyGroup>
 </Project>
