@@ -11,13 +11,5 @@
 		<PackageReference Include="Xamarin.Brotli.Dec" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<AndroidLibrary Include="Jars\securehttpclient-okhttp.jar" />
-		<AndroidLibrary Include="Jars\securehttpclient-javanetcookiejar.jar" />
-	</ItemGroup>
 
-	<ItemGroup>
-		<AndroidJavaSource Remove="src\**" />
-	</ItemGroup>
-  
 </Project>
