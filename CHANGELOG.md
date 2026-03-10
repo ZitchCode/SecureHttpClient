@@ -4,6 +4,7 @@
 - android 36.1.30
 - ios 26.2.10197
 - test : add colors to console test runner
+- test : use coreclr instead of mono
 
 ## 2.4.4
 - vs 18.2.1

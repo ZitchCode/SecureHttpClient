@@ -10,7 +10,8 @@
 		<IsAotCompatible>true</IsAotCompatible>
 
 		<!-- ILxxxx is for trimmer -->
-		<NoWarn>$(NoWarn);IL2026;IL2104</NoWarn>
+		<!-- XA1040 is for CoreCLR runtime -->
+		<NoWarn>$(NoWarn);IL2026;IL2104;XA1040</NoWarn>
 
 		<!-- Display name -->
 		<ApplicationTitle>SecureHttpClient.TestRunner.Maui</ApplicationTitle>
@@ -33,15 +34,16 @@
 		<RuntimeIdentifiers>android-x64</RuntimeIdentifiers>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$([MSBuild]::GetTargetPlatformIdentifier($(TargetFramework)))'=='android'">
+		<UseMonoRuntime>false</UseMonoRuntime>
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$([MSBuild]::GetTargetPlatformIdentifier($(TargetFramework)))'=='Release|android'">
-		<AndroidManifest>Platforms\Android\AndroidManifest.xml</AndroidManifest>
 	    <AndroidLinkTool>r8</AndroidLinkTool>
-		<RunAOTCompilation>true</RunAOTCompilation>
-		<AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
-		<AndroidAotAdditionalArguments>no-write-symbols,nodebug</AndroidAotAdditionalArguments>
+
+		<!-- Trimmer -->
 		<TrimMode>full</TrimMode>
 		<PublishTrimmed>true</PublishTrimmed>
-		<EnableLLVM>true</EnableLLVM>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$([MSBuild]::GetTargetPlatformIdentifier($(TargetFramework)))'=='Debug|ios'">
