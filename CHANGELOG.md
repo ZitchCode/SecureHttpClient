@@ -1,4 +1,8 @@
 ## 2.4.5
+- vs 18.3.2
+- dotnet sdk 10.0.103
+- android 36.1.30
+- ios 26.2.10197
 - test : add colors to console test runner
 
 ## 2.4.4
