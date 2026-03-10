@@ -3,6 +3,7 @@
 - dotnet sdk 10.0.103
 - android 36.1.30
 - ios 26.2.10197
+- Microsoft.Extensions.* 10.0.3
 - test : add colors to console test runner
 - test : use coreclr instead of mono
 
