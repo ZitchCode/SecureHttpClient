@@ -7,6 +7,7 @@
 - Microsoft.Extensions.* 10.0.3
 - test : add colors to console test runner
 - test : use coreclr instead of mono
+- test : Microsoft.Maui.* 10.0.41
 
 ## 2.4.4
 - vs 18.2.1
