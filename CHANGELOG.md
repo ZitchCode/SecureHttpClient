@@ -1,8 +1,8 @@
 ## 2.4.5
-- vs 18.3.2
-- dotnet sdk 10.0.103
-- android 36.1.30
-- ios 26.2.10197
+- vs 18.4.0
+- dotnet sdk 10.0.200
+- android 36.1.43
+- ios 26.2.10217
 - build: enable central package management (directory.packages.props)
 - build: use official bindings instead of manual jar import
 - build: propagate versions to nuspec
