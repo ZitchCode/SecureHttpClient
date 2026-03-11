@@ -2,5 +2,9 @@
   <PropertyGroup>
     <LangVersion>14.0</LangVersion>
     <SecureHttpClientVersion>2.4.5</SecureHttpClientVersion>
+    <NetTfm>net10.0</NetTfm>
+    <AndroidTfm>net10.0-android36.1</AndroidTfm>
+    <IosTfm>net10.0-ios26.2</IosTfm>
+    <WindowsTfm>net10.0-windows10.0.19041.0</WindowsTfm>
   </PropertyGroup>
 </Project>

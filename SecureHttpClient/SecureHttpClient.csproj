@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net10.0;net10.0-android36.1;net10.0-ios26.2</TargetFrameworks>
+		<TargetFrameworks>$(NetTfm);$(AndroidTfm);$(IosTfm)</TargetFrameworks>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">26.0</SupportedOSPlatformVersion>
 		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
@@ -24,6 +24,9 @@
 		<PropertyGroup>
 			<NuspecProperties>
 				version=$(SecureHttpClientVersion);
+				NetTfm=$(NetTfm);
+				AndroidTfm=$(AndroidTfm);
+				IosTfm=$(IosTfm);
 				MicrosoftExtensionsLoggingAbstractionsVersion=@(PackageVersion->WithMetadataValue('Identity','Microsoft.Extensions.Logging.Abstractions')->'%(Version)');
 				SquareOkHttp3AndroidVersion=@(PackageVersion->WithMetadataValue('Identity','Square.OkHttp3.Android')->'%(Version)');
 				SquareOkIOVersion=@(PackageVersion->WithMetadataValue('Identity','Square.OkIO')->'%(Version)');
@@ -58,7 +61,7 @@
 		<Compile Include="Platforms\iOS\**\*.cs" />
 	</ItemGroup>
 
-	<ItemGroup Condition="$(TargetFramework) == 'net10.0'">
+	<ItemGroup Condition="$(TargetFramework) == '$(NetTfm)'">
 		<Compile Include="Platforms\Net\**\*.cs" />
 	</ItemGroup>
 
