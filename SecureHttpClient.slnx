@@ -13,13 +13,13 @@
     <Platform Name="x86" />
   </Configurations>
   <Folder Name="/Build/">
-    <File Path="build/SecureHttpClient.nuspec" />
     <File Path="CHANGELOG.md" />
     <File Path="CODE_OF_CONDUCT.md" />
     <File Path="Directory.Build.props" />
     <File Path="Directory.Packages.props" />
     <File Path="global.json" />
     <File Path="README.md" />
+    <File Path="SecureHttpClient.nuspec" />
   </Folder>
   <Folder Name="/Libraries/">
     <Project Path="SecureHttpClient.OkHttp/SecureHttpClient.OkHttp.csproj">
