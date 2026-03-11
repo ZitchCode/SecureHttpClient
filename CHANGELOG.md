@@ -10,7 +10,7 @@
 - Microsoft.Extensions.* 10.0.3
 - test : add colors to console test runner
 - test : use coreclr instead of mono
-- test : Microsoft.Maui.* 10.0.41
+- test : Microsoft.Maui.* 10.0.50
 - test : Serilog 4.3.1
 
 ## 2.4.4
