@@ -6,10 +6,16 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">26.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
+	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+		<Version>$(SecureHttpClientVersion)</Version>
+		<AssemblyVersion>$(SecureHttpClientVersion)</AssemblyVersion>
+		<AssemblyFileVersion>$(SecureHttpClientVersion)</AssemblyFileVersion>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Square.OkHttp3.Android" />
 		<PackageReference Include="Xamarin.Brotli.Dec" />
 	</ItemGroup>
-
 
 </Project>

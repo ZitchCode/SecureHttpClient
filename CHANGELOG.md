@@ -5,6 +5,7 @@
 - ios 26.2.10197
 - build: enable central package management (directory.packages.props)
 - build: use official bindings instead of manual jar import
+- build: propagate versions to nuspec
 - Microsoft.Extensions.* 10.0.3
 - test : add colors to console test runner
 - test : use coreclr instead of mono

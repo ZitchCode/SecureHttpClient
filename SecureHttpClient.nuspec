@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>SecureHttpClient</id>
+    <version>$version$</version>
+    <title>SecureHttpClient</title>
+    <authors>tranb3r</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/ZitchCode/SecureHttpClient</projectUrl>
+    <description>Cross-platform HttpClientHandler with additional security features (certificate pinning, TLS1.2+, client certificates)</description>
+    <releaseNotes>https://github.com/ZitchCode/SecureHttpClient/releases</releaseNotes>
+    <copyright>Copyright 2026 ZitchCode</copyright>
+    <tags>.net dotnet-maui xamarin dotnet maui cross-platform ios android windows httpclient security certificate pinning</tags>
+    <repository type="git" url="https://github.com/ZitchCode/SecureHttpClient.git" />
+	<readme>README.md</readme>
+    <icon>icon.png</icon>	
+    <dependencies>
+      <group targetFramework="net10.0">
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="$MicrosoftExtensionsLoggingAbstractionsVersion$" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework="net10.0-android36.1">
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="$MicrosoftExtensionsLoggingAbstractionsVersion$" exclude="Build,Analyzers" />
+        <dependency id="Square.OkHttp3.Android" version="$SquareOkHttp3AndroidVersion$" exclude="Build,Analyzers" />
+        <dependency id="Square.OkIO" version="$SquareOkIOVersion$" exclude="Build,Analyzers" />
+        <dependency id="Xamarin.Brotli.Dec" version="$XamarinBrotliDecVersion$" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework="net10.0-ios26.2">
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="$MicrosoftExtensionsLoggingAbstractionsVersion$" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="SecureHttpClient\bin\Release\net10.0\SecureHttpClient.dll" target="lib\net10.0" />
+    <file src="SecureHttpClient\bin\Release\net10.0\SecureHttpClient.xml" target="lib\net10.0" />
+    <file src="SecureHttpClient\bin\Release\net10.0\SecureHttpClient.pdb" target="lib\net10.0" />
+    <file src="SecureHttpClient\bin\Release\net10.0-android36.1\SecureHttpClient.dll" target="lib\net10.0-android36.1" />
+    <file src="SecureHttpClient\bin\Release\net10.0-android36.1\SecureHttpClient.xml" target="lib\net10.0-android36.1" />
+    <file src="SecureHttpClient\bin\Release\net10.0-android36.1\SecureHttpClient.pdb" target="lib\net10.0-android36.1" />
+    <file src="SecureHttpClient.OkHttp\bin\Release\net10.0-android36.1\SecureHttpClient.OkHttp.dll" target="lib\net10.0-android36.1" />
+    <file src="SecureHttpClient.OkHttp\bin\Release\net10.0-android36.1\SecureHttpClient.OkHttp.xml" target="lib\net10.0-android36.1" />
+    <file src="SecureHttpClient.OkHttp\bin\Release\net10.0-android36.1\SecureHttpClient.OkHttp.aar" target="lib\net10.0-android36.1" />
+    <file src="SecureHttpClient.OkHttp\bin\Release\net10.0-android36.1\SecureHttpClient.OkHttp.pdb" target="lib\net10.0-android36.1" />
+    <file src="SecureHttpClient\bin\Release\net10.0-ios26.2\SecureHttpClient.dll" target="lib\net10.0-ios26.2" />
+    <file src="SecureHttpClient\bin\Release\net10.0-ios26.2\SecureHttpClient.xml" target="lib\net10.0-ios26.2" />
+    <file src="SecureHttpClient\bin\Release\net10.0-ios26.2\SecureHttpClient.pdb" target="lib\net10.0-ios26.2" />
+	<file src="README.md" target="." />
+    <file src="icon.png" target="." />
+  </files>
+</package>

@@ -10,7 +10,27 @@
 
 	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<PackageOutputPath>$(MSBuildThisFileDirectory)..</PackageOutputPath>
+		<NuspecFile>..\SecureHttpClient.nuspec</NuspecFile>
+		<Version>$(SecureHttpClientVersion)</Version>
+		<AssemblyVersion>$(SecureHttpClientVersion)</AssemblyVersion>
+		<AssemblyFileVersion>$(SecureHttpClientVersion)</AssemblyFileVersion>
 	</PropertyGroup>
+
+	<Target Name="SetNuspecPropertiesFromCentralPackageVersions" BeforeTargets="GenerateNuspec" Condition=" '$(Configuration)' == 'Release' ">
+		<PropertyGroup>
+			<NuspecProperties>
+				version=$(SecureHttpClientVersion);
+				MicrosoftExtensionsLoggingAbstractionsVersion=@(PackageVersion->WithMetadataValue('Identity','Microsoft.Extensions.Logging.Abstractions')->'%(Version)');
+				SquareOkHttp3AndroidVersion=@(PackageVersion->WithMetadataValue('Identity','Square.OkHttp3.Android')->'%(Version)');
+				SquareOkIOVersion=@(PackageVersion->WithMetadataValue('Identity','Square.OkIO')->'%(Version)');
+				XamarinBrotliDecVersion=@(PackageVersion->WithMetadataValue('Identity','Xamarin.Brotli.Dec')->'%(Version)')
+			</NuspecProperties>
+		</PropertyGroup>
+	</Target>
 
 	<ItemGroup>
 		<None Include="**\*.cs;**\*.xml;**\*.axml;**\*.png" Exclude="obj\**\*.*;bin\**\*.*;bin;obj" />
