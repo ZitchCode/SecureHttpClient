@@ -7,7 +7,7 @@
 - build: use official bindings instead of manual jar import
 - build: propagate versions to nuspec
 - build: centralize tfm versions
-- Microsoft.Extensions.* 10.0.3
+- Microsoft.Extensions.* 10.0.4
 - test : add colors to console test runner
 - test : use coreclr instead of mono
 - test : Microsoft.Maui.* 10.0.50
