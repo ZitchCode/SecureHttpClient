@@ -20,8 +20,6 @@
     <File Path="Directory.Packages.props" />
     <File Path="global.json" />
     <File Path="README.md" />
-    <File Path="scripts/clean.bat" />
-    <File Path="scripts/nuget_pack.bat" />
   </Folder>
   <Folder Name="/Libraries/">
     <Project Path="SecureHttpClient.OkHttp/SecureHttpClient.OkHttp.csproj">
