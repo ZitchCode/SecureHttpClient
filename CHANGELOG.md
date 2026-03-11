@@ -8,6 +8,9 @@
 - build: propagate versions to nuspec
 - build: centralize tfm versions
 - Microsoft.Extensions.* 10.0.4
+- Square.OkHttp3.Android 5.3.2.2
+- Square.OkIO 3.16.4.2
+- Xamarin.Brotli.Dec 0.1.2.11
 - test : add colors to console test runner
 - test : use coreclr instead of mono
 - test : Microsoft.Maui.* 10.0.50
