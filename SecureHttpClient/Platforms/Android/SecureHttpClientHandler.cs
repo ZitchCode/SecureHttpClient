@@ -199,8 +199,21 @@ namespace SecureHttpClient
             var rq = builder.Build();
             var call = _client.Value.NewCall(rq);
 
-            // NB: Even closing a socket must be done off the UI thread. Cray!
-            cancellationToken.Register(() => Task.Run(() => call.Cancel()));
+            using var cancellationRegistration = cancellationToken.Register(() =>
+            {
+                // Keep cancellation work off the caller thread (can be UI thread).
+                ThreadPool.QueueUserWorkItem(_ =>
+                {
+                    try
+                    {
+                        call.Cancel();
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger?.LogDebug(ex, "Ignoring exception while cancelling OkHttp call.");
+                    }
+                });
+            });
 
             Response resp;
             try
