@@ -72,6 +72,17 @@ namespace SecureHttpClient.Test
             await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(page));
         }
 
+        [Fact]
+        public async Task SslTest_MultipleSetTrustedRoots()
+        {
+            const string page = "https://untrusted-root.badssl.com/";
+            var rootA = await ResourceHelper.GetStringAsync("untrusted_root_badssl_com_certificate.pem");
+            SetCaCertificate(rootA);
+            var rootB = await ResourceHelper.GetStringAsync("rsa_certificate.pem");
+            SetCaCertificate(rootB);
+            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(page));
+        }
+
         [Fact(Skip = "Mobile apps usually skip revocation checks")]
         public async Task SslTest_RevokedCertificate()
         {
