@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -12,6 +13,7 @@ using Java.Security;
 using Java.Security.Cert;
 using Java.Util.Concurrent;
 using Javax.Net.Ssl;
+using Square.OkIO;
 using Square.OkHttp3;
 using SecureHttpClient.OkHttp;
 using Microsoft.Extensions.Logging;
@@ -157,15 +159,10 @@ namespace SecureHttpClient
             var body = default(RequestBody);
             if (request.Content != null)
             {
-                var bytes = await request.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-                if (bytes.Length > 0 || request.Method != HttpMethod.Get)
+                var contentLength = request.Content.Headers.ContentLength;
+                if (contentLength.GetValueOrDefault() > 0 || request.Method != HttpMethod.Get)
                 {
-                    var contentType = "text/plain";
-                    if (request.Content.Headers.ContentType != null)
-                    {
-                        contentType = string.Join(" ", request.Content.Headers.GetValues("Content-Type"));
-                    }
-                    body = RequestBody.Create(bytes, MediaType.Parse(contentType));
+                    body = new StreamingRequestBody(request.Content);
                 }
             }
 
@@ -173,14 +170,11 @@ namespace SecureHttpClient
                 .Method(request.Method.Method.ToUpperInvariant(), body)
                 .Url(url);
 
-            var keyValuePairs = request.Headers
-                .Union(request.Content?.Headers ?? Enumerable.Empty<KeyValuePair<string, IEnumerable<string>>>())
-                .ToArray();
+            var keyValuePairs = request.GetMergedRequestHeaders(includeContentHeaders: true).ToArray();
 
-            foreach (var (name, values) in keyValuePairs)
+            foreach (var (name, value) in keyValuePairs)
             {
-                var headerSeparator = name == "User-Agent" ? " " : ",";
-                builder.AddHeader(name, string.Join(headerSeparator, values));
+                builder.AddHeader(name, value);
             }
 
             if (!keyValuePairs.Any(kv => kv.Key.Equals("Accept-Encoding", StringComparison.OrdinalIgnoreCase)))
@@ -251,7 +245,7 @@ namespace SecureHttpClient
             }
             else
             {
-                ret.Content = new ByteArrayContent(new byte[0]);
+                ret.Content = new ByteArrayContent([]);
             }
 
             foreach (var (name, values) in resp.Headers().ToMultimap())
@@ -263,6 +257,32 @@ namespace SecureHttpClient
             }
 
             return ret;
+        }
+
+        private sealed class StreamingRequestBody : RequestBody
+        {
+            private readonly HttpContent _content;
+            private readonly MediaType _mediaType;
+            private readonly long _contentLength;
+
+            public StreamingRequestBody(HttpContent content)
+            {
+                _content = content;
+                var contentType = content.Headers.ContentType?.ToString();
+                _mediaType = string.IsNullOrEmpty(contentType) ? null : MediaType.Parse(contentType);
+                _contentLength = content.Headers.ContentLength ?? -1;
+            }
+
+            public override MediaType ContentType() => _mediaType;
+
+            public override long ContentLength() => _contentLength;
+
+            public override void WriteTo(IBufferedSink sink)
+            {
+                using var requestStream = _content.ReadAsStream();
+                using var sinkStream = sink.OutputStream;
+                requestStream.CopyTo(sinkStream);
+            }
         }
 
         private static Version GetVersion(Protocol protocol)

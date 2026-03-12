@@ -10,6 +10,7 @@ using System.Net.Http;
 using Foundation;
 using Microsoft.Extensions.Logging;
 using SecureHttpClient.CertificatePinning;
+using SecureHttpClient.Extensions;
 using System.Security.Cryptography.X509Certificates;
 
 namespace SecureHttpClient
@@ -127,7 +128,7 @@ namespace SecureHttpClient
                 InitSession();
             }
 
-            var headers = request.Headers as IEnumerable<KeyValuePair<string, IEnumerable<string>>>;
+            var includeContentHeaders = false;
 
             var body = default(NSData);
             if (request.Content != null)
@@ -136,9 +137,11 @@ namespace SecureHttpClient
                 if (bytes.Length > 0 || request.Method != HttpMethod.Get)
                 {
                     body = NSData.FromArray(bytes);
-                    headers = headers.Union(request.Content.Headers).ToArray();
+                    includeContentHeaders = true;
                 }
             }
+
+            var headers = request.GetMergedRequestHeaders(includeContentHeaders).ToArray();
 
             var rq = new NSMutableUrlRequest
             {
@@ -146,7 +149,7 @@ namespace SecureHttpClient
                 Body = body,
                 CachePolicy = NSUrlRequestCachePolicy.UseProtocolCachePolicy,
                 Headers = headers.Aggregate(new NSMutableDictionary(), (acc, x) => {
-                    acc.Add(new NSString(x.Key), new NSString(string.Join(x.Key == "User-Agent" ? " " : ",", x.Value)));
+                    acc.Add(new NSString(x.Key), new NSString(x.Value));
                     return acc;
                 }),
                 HttpMethod = request.Method.ToString().ToUpperInvariant(),

@@ -8,6 +8,7 @@
 - build: propagate versions to nuspec
 - build: centralize tfm versions
 - ios: fix ios trusted roots
+- fix large payload upload
 - Microsoft.Extensions.* 10.0.4
 - Square.OkHttp3.Android 5.3.2.2
 - Square.OkIO 3.16.4.2

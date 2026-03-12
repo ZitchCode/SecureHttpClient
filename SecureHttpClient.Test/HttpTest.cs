@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Maui.Devices;
@@ -294,6 +296,79 @@ namespace SecureHttpClient.Test
         {
             const string page = "https://nosuchhostisknown/";
             await Assert.ThrowsAsync<HttpRequestException>(() => GetAsync(page));
+        }
+
+        [Fact]
+        public async Task HttpTest_UploadSmallPayload()
+        {
+            const string page = "https://httpbingo.org/post";
+            const string payload = "small upload payload for cross-platform verification";
+
+            var request = new HttpRequestMessage(HttpMethod.Post, page)
+            {
+                Content = new StringContent(payload, Encoding.UTF8, "text/plain")
+            };
+
+            var result = await SendAsync(request).ReceiveString();
+            var json = JsonDocument.Parse(result);
+
+            var method = json.RootElement.GetProperty("method").GetString();
+            var data = json.RootElement.GetProperty("data").GetString();
+
+            Assert.Equal("POST", method);
+            Assert.Equal(payload, data);
+        }
+
+        [Fact]
+        public async Task HttpTest_UploadLargePayload()
+        {
+            const string page = "https://httpbingo.org/post";
+            const int payloadSize = 512 * 1024;
+            var payload = new string('A', payloadSize);
+
+            var request = new HttpRequestMessage(HttpMethod.Post, page)
+            {
+                Content = new StringContent(payload, Encoding.UTF8, "text/plain")
+            };
+
+            var result = await SendAsync(request).ReceiveString();
+            var json = JsonDocument.Parse(result);
+
+            var method = json.RootElement.GetProperty("method").GetString();
+            var data = json.RootElement.GetProperty("data").GetString();
+
+            Assert.Equal("POST", method);
+            Assert.Equal(payloadSize, data?.Length ?? 0);
+            Assert.Equal(payload, data);
+        }
+
+        [Fact]
+        public async Task HttpTest_UploadStreamContent()
+        {
+            const string page = "https://httpbingo.org/post";
+            var payload = "stream upload payload for cross-platform verification";
+            var payloadBytes = Encoding.UTF8.GetBytes(payload);
+
+            using var stream = new MemoryStream(payloadBytes);
+            using var content = new StreamContent(stream);
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("text/plain")
+            {
+                CharSet = "utf-8"
+            };
+
+            var request = new HttpRequestMessage(HttpMethod.Post, page)
+            {
+                Content = content
+            };
+
+            var result = await SendAsync(request).ReceiveString();
+            var json = JsonDocument.Parse(result);
+
+            var method = json.RootElement.GetProperty("method").GetString();
+            var data = json.RootElement.GetProperty("data").GetString();
+
+            Assert.Equal("POST", method);
+            Assert.Equal(payload, data);
         }
 
         [SkippableFact]
