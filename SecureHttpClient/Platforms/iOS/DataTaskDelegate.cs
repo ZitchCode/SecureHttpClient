@@ -1,12 +1,13 @@
 ﻿#if __IOS__
 
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Authentication;
+using System.Security.Cryptography.X509Certificates;
 using Foundation;
 using SecureHttpClient.CertificatePinning;
-using System.Security.Cryptography.X509Certificates;
 
 namespace SecureHttpClient
 {
@@ -165,30 +166,96 @@ namespace SecureHttpClient
 
             if (challenge.ProtectionSpace.AuthenticationMethod == NSUrlProtectionSpace.AuthenticationMethodServerTrust)
             {
-                challenge.ProtectionSpace.ServerSecTrust.SetAnchorCertificates(_trustedRoots);
+                var serverTrust = challenge.ProtectionSpace.ServerSecTrust;
+                var hostname = task.CurrentRequest?.Url?.Host ?? challenge.ProtectionSpace.Host;
+                var hasTrustedRoots = _trustedRoots != null && _trustedRoots.Count > 0;
+                var hasPin = _certificatePinner != null && !string.IsNullOrEmpty(hostname) && _certificatePinner.HasPin(hostname);
 
-                var hostname = task.CurrentRequest.Url.Host;
-                if (_certificatePinner != null && _certificatePinner.HasPin(hostname))
+                if (hasTrustedRoots)
                 {
-                    var serverTrust = challenge.ProtectionSpace.ServerSecTrust;
-                    var status = serverTrust.Evaluate(out _);
-                    if (status)
+                    // Use .NET X509Chain instead of iOS SecTrust SetAnchorCertificates, which is unreliable
+                    // on iOS 16+ with the .NET bindings.
+                    var serverNativeChain = serverTrust.GetCertificateChain();
+                    if (serverNativeChain == null || serverNativeChain.Length == 0)
                     {
-                        var serverCertificate = serverTrust.GetCertificateChain()[0];
-                        var x509Certificate = serverCertificate.ToX509Certificate2();
-                        var match = _certificatePinner.Check(hostname, x509Certificate);
-                        if (match)
-                        {
-                            completionHandler(NSUrlSessionAuthChallengeDisposition.UseCredential, NSUrlCredential.FromTrust(serverTrust));
-                        }
-                        else
-                        {
-                            var inflightRequest = GetResponseForTask(task);
-                            inflightRequest.Error = new NSError(NSError.NSUrlErrorDomain, (nint)(long)NSUrlError.ServerCertificateUntrusted);
-                            completionHandler(NSUrlSessionAuthChallengeDisposition.CancelAuthenticationChallenge, null);
-                        }
+                        RejectServerCertificate(task, completionHandler);
                         return;
                     }
+
+                    var leafX509 = serverNativeChain[0].ToX509Certificate2();
+                    if (leafX509 == null)
+                    {
+                        RejectServerCertificate(task, completionHandler);
+                        return;
+                    }
+
+                    using var x509chain = new X509Chain();
+                    x509chain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
+                    x509chain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
+                    // Populate the discovery store with server-provided intermediates
+                    for (int i = 1; i < serverNativeChain.Length; i++)
+                    {
+                        var cert = serverNativeChain[i].ToX509Certificate2();
+                        if (cert != null) x509chain.ChainPolicy.ExtraStore.Add(cert);
+                    }
+                    // Add our trusted roots so the chain builder can resolve to them
+                    foreach (X509Certificate2 trustedRoot in _trustedRoots)
+                        x509chain.ChainPolicy.ExtraStore.Add(trustedRoot);
+
+                    // Build returns false when root is not in system store; that's expected for custom CAs
+                    var chainBuilt = x509chain.Build(leafX509);
+                    if (!chainBuilt && x509chain.ChainStatus.Any(s => s.Status != X509ChainStatusFlags.UntrustedRoot))
+                    {
+                        RejectServerCertificate(task, completionHandler);
+                        return;
+                    }
+
+                    // Verify the resolved chain root is actually one of our explicitly trusted roots
+                    var chainRoot = x509chain.ChainElements[x509chain.ChainElements.Count - 1].Certificate;
+                    var trustedRootFound = _trustedRoots.Cast<X509Certificate2>()
+                        .Any(r => r.Thumbprint.Equals(chainRoot.Thumbprint, StringComparison.OrdinalIgnoreCase));
+                    if (!trustedRootFound)
+                    {
+                        RejectServerCertificate(task, completionHandler);
+                        return;
+                    }
+
+                    if (hasPin && !_certificatePinner.Check(hostname, leafX509))
+                    {
+                        RejectServerCertificate(task, completionHandler);
+                        return;
+                    }
+
+                    completionHandler(NSUrlSessionAuthChallengeDisposition.UseCredential, NSUrlCredential.FromTrust(serverTrust));
+                    return;
+                }
+
+                // No custom roots — pin-only validation using system SecTrust
+                if (hasPin)
+                {
+                    var status = serverTrust.Evaluate(out _);
+                    if (!status)
+                    {
+                        RejectServerCertificate(task, completionHandler);
+                        return;
+                    }
+
+                    var serverChain = serverTrust.GetCertificateChain();
+                    if (serverChain == null || serverChain.Length == 0)
+                    {
+                        RejectServerCertificate(task, completionHandler);
+                        return;
+                    }
+
+                    var x509Certificate = serverChain[0].ToX509Certificate2();
+                    if (!_certificatePinner.Check(hostname, x509Certificate))
+                    {
+                        RejectServerCertificate(task, completionHandler);
+                        return;
+                    }
+
+                    completionHandler(NSUrlSessionAuthChallengeDisposition.UseCredential, NSUrlCredential.FromTrust(serverTrust));
+                    return;
                 }
             }
 
@@ -209,6 +276,13 @@ namespace SecureHttpClient
             }
 
             completionHandler(NSUrlSessionAuthChallengeDisposition.PerformDefaultHandling, challenge.ProposedCredential);
+        }
+
+        private void RejectServerCertificate(NSUrlSessionTask task, Action<NSUrlSessionAuthChallengeDisposition, NSUrlCredential> completionHandler)
+        {
+            var inflightRequest = GetResponseForTask(task);
+            inflightRequest.Error = new NSError(NSError.NSUrlErrorDomain, (nint)(long)NSUrlError.ServerCertificateUntrusted);
+            completionHandler(NSUrlSessionAuthChallengeDisposition.CancelAuthenticationChallenge, null);
         }
 
         public override void WillPerformHttpRedirection(NSUrlSession session, NSUrlSessionTask task, NSHttpUrlResponse response, NSUrlRequest newRequest, Action<NSUrlRequest> completionHandler)

@@ -7,10 +7,13 @@ using Xunit;
 
 namespace SecureHttpClient.Test
 {
-    public class SslTest : TestBase, IClassFixture<TestFixture>
+    public class SslTest : TestBase, IClassFixture<TestPinFixture>
     {
-        public SslTest(TestFixture testFixture) : base(testFixture)
+        private readonly TestPinFixture _fixture;
+
+        public SslTest(TestPinFixture testFixture) : base(testFixture)
         {
+            _fixture = testFixture;
         }
 
         [Fact]
@@ -41,17 +44,23 @@ namespace SecureHttpClient.Test
             await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(page));
         }
 
-        [SkippableFact]
+        [Fact]
         public async Task SslTest_SpecificTrustedRootCertificate()
         {
-            Skip.If(DeviceInfo.Platform == DevicePlatform.iOS, "Not working on iOS 13");
-
-            // NB: Using this feature on iOS 11 requires setting NSExceptionDomains in Info.plist,
-            // particularly NSExceptionRequiresForwardSecrecy=NO : https://stackoverflow.com/q/46316604/5652125
             const string page = "https://untrusted-root.badssl.com/";
             var caCert = await ResourceHelper.GetStringAsync("untrusted_root_badssl_com_certificate.pem");
             SetCaCertificate(caCert);
             await GetAsync(page);
+        }
+
+        [Fact]
+        public async Task SslTest_SpecificTrustedRootCertificate_WithWrongPin()
+        {
+            const string page = "https://untrusted-root.badssl.com/";
+            var caCert = await ResourceHelper.GetStringAsync("untrusted_root_badssl_com_certificate.pem");
+            SetCaCertificate(caCert);
+            AddCertificatePinner("untrusted-root.badssl.com", _fixture.PinsKo);
+            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(page));
         }
 
         [Fact]
