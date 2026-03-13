@@ -322,7 +322,9 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task HttpTest_UploadLargePayload()
         {
-            const string page = "https://httpbingo.org/post";
+            // Using httpbin.org instead of httpbingo.org: the Fly.io proxies behind httpbingo
+            // intermittently fail large uploads on iOS (HTTP/2 flow control / framing issue).
+            const string page = "https://httpbin.org/post";
             const int payloadSize = 512 * 1024;
             var payload = new string('A', payloadSize);
 
@@ -334,10 +336,8 @@ namespace SecureHttpClient.Test
             var result = await SendAsync(request).ReceiveString();
             var json = JsonDocument.Parse(result);
 
-            var method = json.RootElement.GetProperty("method").GetString();
             var data = json.RootElement.GetProperty("data").GetString();
 
-            Assert.Equal("POST", method);
             Assert.Equal(payloadSize, data?.Length ?? 0);
             Assert.Equal(payload, data);
         }

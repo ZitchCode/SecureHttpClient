@@ -146,17 +146,19 @@ namespace SecureHttpClient
             var rq = new NSMutableUrlRequest
             {
                 AllowsCellularAccess = true,
-                Body = body,
                 CachePolicy = NSUrlRequestCachePolicy.UseProtocolCachePolicy,
-                Headers = headers.Aggregate(new NSMutableDictionary(), (acc, x) => {
-                    acc.Add(new NSString(x.Key), new NSString(x.Value));
-                    return acc;
-                }),
                 HttpMethod = request.Method.ToString().ToUpperInvariant(),
                 Url = NSUrl.FromString(request.RequestUri.AbsoluteUri),
             };
 
-            var op = _session.CreateDataTask(rq);
+            foreach (var (name, value) in headers)
+            {
+                rq[name] = value;
+            }
+
+            var op = body != null
+                ? (NSUrlSessionTask)_session.CreateUploadTask(rq, body)
+                : _session.CreateDataTask(rq);
 
             cancellationToken.ThrowIfCancellationRequested();
 
