@@ -1,6 +1,6 @@
 ## 2.4.5
 - vs 18.4.0
-- dotnet sdk 10.0.200
+- dotnet sdk 10.0.201
 - android 36.1.43
 - ios 26.2.10217
 - build: enable central package management (directory.packages.props)
@@ -9,7 +9,7 @@
 - build: centralize tfm versions
 - ios: fix ios trusted roots
 - fix large payload upload
-- Microsoft.Extensions.* 10.0.4
+- Microsoft.Extensions.* 10.0.5
 - Square.OkHttp3.Android 5.3.2.2
 - Square.OkIO 3.16.4.2
 - Xamarin.Brotli.Dec 0.1.2.11
