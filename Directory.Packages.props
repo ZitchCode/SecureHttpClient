@@ -10,8 +10,8 @@
     <PackageVersion Include="Square.OkIO" Version="3.16.4.2" />
     <PackageVersion Include="Xamarin.Brotli.Dec" Version="0.1.2.11" />
     <!-- MAUI -->
-    <PackageVersion Include="Microsoft.Maui.Controls" Version="10.0.50" />
-    <PackageVersion Include="Microsoft.Maui.Essentials" Version="10.0.50" />
+    <PackageVersion Include="Microsoft.Maui.Controls" Version="10.0.51" />
+    <PackageVersion Include="Microsoft.Maui.Essentials" Version="10.0.51" />
     <!-- Microsoft.Extensions -->
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.7" />
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.7" />

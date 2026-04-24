@@ -5,6 +5,7 @@
 - ios 26.2.10233
 - enable nullable reference types
 - Microsoft.Extensions.* 10.0.7
+- test : Microsoft.Maui.* 10.0.51
 
 ## 2.4.5
 - vs 18.4.0
