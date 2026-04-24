@@ -1,5 +1,10 @@
 ## 2.4.6
+- vs 18.5.1
+- dotnet sdk 10.0.203
+- android 36.1.53
+- ios 26.2.10233
 - enable nullable reference types
+- Microsoft.Extensions.* 10.0.7
 
 ## 2.4.5
 - vs 18.4.0
