@@ -11,15 +11,15 @@ namespace SecureHttpClient.Test
         public string Wildcard2 => "**.howsmyssl.com";
         public string InvalidPattern => "*.*.howsmyssl.com";
         public string Page => "https://www.howsmyssl.com/a/check";
-        public string[] PinsOk { get; private set; }
+        public string[] PinsOk { get; private set; } = null!;
 
         public string Hostname2 => "github.com";
         public string Page2 => "https://github.com";
-        public string[] Pins2Ok { get; private set; }
+        public string[] Pins2Ok { get; private set; } = null!;
 
         public string Hostname3 => "ecc256.badssl.com";
         public string Page3 => "https://ecc256.badssl.com/";
-        public string[] Pins3Ok { get; private set; }
+        public string[] Pins3Ok { get; private set; } = null!;
 
         public string[] PinsKo => ["sha256/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx="];
 

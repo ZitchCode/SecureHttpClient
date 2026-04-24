@@ -11,7 +11,7 @@ namespace SecureHttpClient.TestRunner.Net
     internal class Program
     {
         // Use an event to know when we're done
-        private static ManualResetEvent _finished;
+        private static ManualResetEvent? _finished;
 
         // Start out assuming success; we'll set this to 1 if we get a failed test
         private static int _result;
@@ -90,7 +90,7 @@ namespace SecureHttpClient.TestRunner.Net
             _testsSkipped += info.TestsSkipped;
             _executionTime += info.ExecutionTime;
 
-            _finished.Set();
+            _finished!.Set();
         }
 
         private static void OnTestFailed(TestFailedInfo info)

@@ -167,8 +167,8 @@ namespace SecureHttpClient.Test
             var request = new HttpRequestMessage(HttpMethod.Get, page);
             var response = await SendAsync(request);
 
-            Assert.Equal(final, request.RequestUri.AbsoluteUri);
-            Assert.Equal(final, response.RequestMessage.RequestUri.AbsoluteUri);
+            Assert.Equal(final, request.RequestUri!.AbsoluteUri);
+            Assert.Equal(final, response.RequestMessage!.RequestUri!.AbsoluteUri);
         }
 
         [Fact]
@@ -178,7 +178,7 @@ namespace SecureHttpClient.Test
             DoNotFollowRedirects();
             var response = await GetAsync(page, false);
             Assert.Equal(HttpStatusCode.Found, response.StatusCode);
-            Assert.Equal(page, response.RequestMessage.RequestUri.AbsoluteUri);
+            Assert.Equal(page, response.RequestMessage!.RequestUri!.AbsoluteUri);
         }
 
         [Fact]

@@ -10,9 +10,9 @@ namespace SecureHttpClient.CertificatePinning
     internal class CertificatePinner
     {
         private readonly ConcurrentDictionary<string, string[]> _pins;
-        private readonly ILogger _logger;
+        private readonly ILogger? _logger;
 
-        public CertificatePinner(ILogger logger = null)
+        public CertificatePinner(ILogger? logger = null)
         {
             _pins = new ConcurrentDictionary<string, string[]>();
             _logger = logger;

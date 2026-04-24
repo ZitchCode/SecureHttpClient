@@ -1,3 +1,6 @@
+## 2.4.6
+- enable nullable reference types
+
 ## 2.4.5
 - vs 18.4.0
 - dotnet sdk 10.0.201

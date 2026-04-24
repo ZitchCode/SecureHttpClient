@@ -14,10 +14,10 @@ namespace SecureHttpClient
     internal class DataTaskDelegate : NSUrlSessionDataDelegate
     {
         private readonly SecureHttpClientHandler _secureHttpClientHandler;
-        private readonly CertificatePinner _certificatePinner;
-        private readonly X509Certificate2Collection _trustedRoots;
+        private readonly CertificatePinner? _certificatePinner;
+        private readonly X509Certificate2Collection? _trustedRoots;
 
-        public DataTaskDelegate(SecureHttpClientHandler secureHttpClientHandler, CertificatePinner certificatePinner, X509Certificate2Collection trustedRoots)
+        public DataTaskDelegate(SecureHttpClientHandler secureHttpClientHandler, CertificatePinner? certificatePinner, X509Certificate2Collection? trustedRoots)
         {
             _secureHttpClientHandler = secureHttpClientHandler;
             _certificatePinner = certificatePinner;
@@ -59,7 +59,7 @@ namespace SecureHttpClient
                     Content = content,
                     RequestMessage = data.Request,
                 };
-                ret.RequestMessage.RequestUri = new Uri(resp.Url.AbsoluteString);
+                ret.RequestMessage.RequestUri = new Uri(resp.Url!.AbsoluteString!);
 
                 foreach (var v in resp.AllHeaderFields)
                 {
@@ -100,14 +100,14 @@ namespace SecureHttpClient
             completionHandler(proposedResponse);
         }
 
-        public override void DidCompleteWithError(NSUrlSession session, NSUrlSessionTask task, NSError error)
+        public override void DidCompleteWithError(NSUrlSession session, NSUrlSessionTask task, NSError? error)
         {
             var data = GetResponseForTask(task);
             data.IsCompleted = true;
 
             if (error != null || data.Error != null)
             {
-                var ex = CreateExceptionForNsError(data.Error ?? error);
+                var ex = CreateExceptionForNsError((data.Error ?? error)!);
 
                 // Pass the exception to the response
                 data.FutureResponse.TrySetException(ex);
@@ -155,8 +155,8 @@ namespace SecureHttpClient
                     }
                     else
                     {
-                        var uri = GetResponseForTask(task).Request.RequestUri;
-                        credentialsToUse = _secureHttpClientHandler.Credentials.GetCredential(uri, "NTLM");
+                        var uri = GetResponseForTask(task).Request.RequestUri!;
+                        credentialsToUse = _secureHttpClientHandler.Credentials.GetCredential(uri, "NTLM")!;
                     }
                     var credential = new NSUrlCredential(credentialsToUse.UserName, credentialsToUse.Password, NSUrlCredentialPersistence.ForSession);
                     completionHandler(NSUrlSessionAuthChallengeDisposition.UseCredential, credential);
@@ -166,7 +166,7 @@ namespace SecureHttpClient
 
             if (challenge.ProtectionSpace.AuthenticationMethod == NSUrlProtectionSpace.AuthenticationMethodServerTrust)
             {
-                var serverTrust = challenge.ProtectionSpace.ServerSecTrust;
+                var serverTrust = challenge.ProtectionSpace.ServerSecTrust!;
                 var hostname = task.CurrentRequest?.Url?.Host ?? challenge.ProtectionSpace.Host;
                 var hasTrustedRoots = _trustedRoots != null && _trustedRoots.Count > 0;
                 var hasPin = _certificatePinner != null && !string.IsNullOrEmpty(hostname) && _certificatePinner.HasPin(hostname);
@@ -199,7 +199,7 @@ namespace SecureHttpClient
                         if (cert != null) x509chain.ChainPolicy.ExtraStore.Add(cert);
                     }
                     // Add our trusted roots so the chain builder can resolve to them
-                    foreach (X509Certificate2 trustedRoot in _trustedRoots)
+                    foreach (X509Certificate2 trustedRoot in _trustedRoots!)
                         x509chain.ChainPolicy.ExtraStore.Add(trustedRoot);
 
                     // Build returns false when root is not in system store; that's expected for custom CAs
@@ -212,7 +212,7 @@ namespace SecureHttpClient
 
                     // Verify the resolved chain root is actually one of our explicitly trusted roots
                     var chainRoot = x509chain.ChainElements[x509chain.ChainElements.Count - 1].Certificate;
-                    var trustedRootFound = _trustedRoots.Cast<X509Certificate2>()
+                    var trustedRootFound = _trustedRoots!.Cast<X509Certificate2>()
                         .Any(r => r.Thumbprint.Equals(chainRoot.Thumbprint, StringComparison.OrdinalIgnoreCase));
                     if (!trustedRootFound)
                     {
@@ -220,7 +220,7 @@ namespace SecureHttpClient
                         return;
                     }
 
-                    if (hasPin && !_certificatePinner.Check(hostname, leafX509))
+                    if (hasPin && !_certificatePinner!.Check(hostname, leafX509))
                     {
                         RejectServerCertificate(task, completionHandler);
                         return;
@@ -248,7 +248,7 @@ namespace SecureHttpClient
                     }
 
                     var x509Certificate = serverChain[0].ToX509Certificate2();
-                    if (!_certificatePinner.Check(hostname, x509Certificate))
+                    if (!_certificatePinner!.Check(hostname, x509Certificate))
                     {
                         RejectServerCertificate(task, completionHandler);
                         return;
@@ -264,8 +264,8 @@ namespace SecureHttpClient
                 var certificate = _secureHttpClientHandler.ClientCertificate;
                 if (certificate == null)
                 {
-                    var url = task.CurrentRequest.Url;
-                    var space = new NSUrlProtectionSpace(url.Host, url.Port, url.Scheme, null, NSUrlProtectionSpace.AuthenticationMethodClientCertificate);
+                    var url = task.CurrentRequest!.Url!;
+                    var space = new NSUrlProtectionSpace(url.Host!, url.Port, url.Scheme, null, NSUrlProtectionSpace.AuthenticationMethodClientCertificate);
                     certificate = NSUrlCredentialStorage.SharedCredentialStorage.GetDefaultCredential(space);
                 }
                 if (certificate != null)
@@ -282,13 +282,13 @@ namespace SecureHttpClient
         {
             var inflightRequest = GetResponseForTask(task);
             inflightRequest.Error = new NSError(NSError.NSUrlErrorDomain, (nint)(long)NSUrlError.ServerCertificateUntrusted);
-            completionHandler(NSUrlSessionAuthChallengeDisposition.CancelAuthenticationChallenge, null);
+            completionHandler(NSUrlSessionAuthChallengeDisposition.CancelAuthenticationChallenge, null!);
         }
 
         public override void WillPerformHttpRedirection(NSUrlSession session, NSUrlSessionTask task, NSHttpUrlResponse response, NSUrlRequest newRequest, Action<NSUrlRequest> completionHandler)
         {
             var nextRequest = _secureHttpClientHandler.AllowAutoRedirect ? newRequest : null;
-            completionHandler(nextRequest);
+            completionHandler(nextRequest!);
         }
 
         private static Exception CreateExceptionForNsError(NSError error)

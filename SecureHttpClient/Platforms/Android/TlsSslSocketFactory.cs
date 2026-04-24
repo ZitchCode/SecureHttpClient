@@ -9,14 +9,14 @@ namespace SecureHttpClient
 {
     internal static class TlsSslSocketFactory
     {
-        public static IX509TrustManager GetSystemDefaultTrustManager()
+        public static IX509TrustManager? GetSystemDefaultTrustManager()
         {
-            IX509TrustManager x509TrustManager = null;
+            IX509TrustManager? x509TrustManager = null;
             try
             {
-                var trustManagerFactory = TrustManagerFactory.GetInstance(TrustManagerFactory.DefaultAlgorithm);
-                trustManagerFactory.Init((KeyStore)null);
-                foreach (var trustManager in trustManagerFactory.GetTrustManagers())
+                var trustManagerFactory = TrustManagerFactory.GetInstance(TrustManagerFactory.DefaultAlgorithm)!;
+                trustManagerFactory.Init((KeyStore?)null);
+                foreach (var trustManager in trustManagerFactory.GetTrustManagers()!)
                 {
                     var manager = trustManager.JavaCast<IX509TrustManager>();
                     if (manager != null)

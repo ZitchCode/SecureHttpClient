@@ -10,7 +10,7 @@ namespace SecureHttpClient.Test.Helpers
             var d = new Dictionary<string, string>();
             foreach (var p in jsonElement.EnumerateObject())
             {
-                d[p.Name] = p.Value.GetString();
+                d[p.Name] = p.Value.GetString()!;
             }
             return d;
         }

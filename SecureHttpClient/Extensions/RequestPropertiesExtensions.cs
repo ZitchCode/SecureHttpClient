@@ -19,7 +19,7 @@ namespace SecureHttpClient.Extensions
             request.Options.Set(new HttpRequestOptionsKey<object>(HeadersOrderPropertyKey), headers);
         }
 
-        internal static string[] GetHeadersOrder(this HttpRequestMessage request)
+        internal static string[]? GetHeadersOrder(this HttpRequestMessage request)
         {
             if (request.Options.TryGetValue(new HttpRequestOptionsKey<object>(HeadersOrderPropertyKey), out var value))
             {

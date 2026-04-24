@@ -34,7 +34,7 @@ namespace SecureHttpClient
         /// <param name="type">The type of backing store for this certificate provider.</param>
         public ClientCertificateProvider(string type)
         {
-            KeyStore = KeyStore.GetInstance(type);
+            KeyStore = KeyStore.GetInstance(type)!;
             KeyStore.Load(null);
         }
     }

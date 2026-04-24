@@ -31,11 +31,11 @@ namespace SecureHttpClient
         private readonly Lazy<OkHttpClient> _client;
         private readonly Lazy<CertificatePinner.Builder> _certificatePinnerBuilder;
         private readonly ILogger<Abstractions.ISecureHttpClientHandler> _logger;
-        private KeyManagerFactory _keyMgrFactory;
-        private TrustManagerFactory _trustMgrFactory;
-        private IX509TrustManager _x509TrustManager;
-        private IKeyManager[] KeyManagers => _keyMgrFactory?.GetKeyManagers();
-        private ITrustManager[] TrustManagers => _trustMgrFactory?.GetTrustManagers();
+        private KeyManagerFactory? _keyMgrFactory;
+        private TrustManagerFactory? _trustMgrFactory;
+        private IX509TrustManager? _x509TrustManager;
+        private IKeyManager[]? KeyManagers => _keyMgrFactory?.GetKeyManagers();
+        private ITrustManager[]? TrustManagers => _trustMgrFactory?.GetTrustManagers();
 
         /// <summary>
         /// SecureHttpClientHandler constructor (Android implementation)
@@ -68,7 +68,7 @@ namespace SecureHttpClient
         {
             if (provider is IClientCertificateProvider androidProvider)
             {
-                _keyMgrFactory = KeyManagerFactory.GetInstance("X509");
+                _keyMgrFactory = KeyManagerFactory.GetInstance("X509")!;
                 _keyMgrFactory.Init(androidProvider.KeyStore, null);
             }
             else
@@ -89,18 +89,18 @@ namespace SecureHttpClient
                 _x509TrustManager = null;
                 return;
             }
-            var keyStore = KeyStore.GetInstance(KeyStore.DefaultType);
+            var keyStore = KeyStore.GetInstance(KeyStore.DefaultType)!;
             keyStore.Load(null);
-            var certFactory = CertificateFactory.GetInstance("X.509");
+            var certFactory = CertificateFactory.GetInstance("X.509")!;
             foreach (var certificate in certificates)
             {
-                var cert = (X509Certificate) certFactory.GenerateCertificate(new System.IO.MemoryStream(certificate));
-                keyStore.SetCertificateEntry(cert.SubjectDN.Name, cert);
+                var cert = (X509Certificate) certFactory.GenerateCertificate(new System.IO.MemoryStream(certificate))!;
+                keyStore.SetCertificateEntry(cert.SubjectDN!.Name, cert);
             }
 
-            _trustMgrFactory = TrustManagerFactory.GetInstance(TrustManagerFactory.DefaultAlgorithm);
+            _trustMgrFactory = TrustManagerFactory.GetInstance(TrustManagerFactory.DefaultAlgorithm)!;
             _trustMgrFactory.Init(keyStore);
-            foreach (var trustManager in TrustManagers)
+            foreach (var trustManager in TrustManagers!)
             {
                 _x509TrustManager = trustManager.JavaCast<IX509TrustManager>();
                 if (_x509TrustManager != null)
@@ -113,9 +113,9 @@ namespace SecureHttpClient
         private OkHttpClient CreateOkHttpClientInstance()
         {
             var builder = new OkHttpClient.Builder()
-                .ConnectTimeout(100, TimeUnit.Seconds)
-                .WriteTimeout(100, TimeUnit.Seconds)
-                .ReadTimeout(100, TimeUnit.Seconds)
+                .ConnectTimeout(100, TimeUnit.Seconds!)
+                .WriteTimeout(100, TimeUnit.Seconds!)
+                .ReadTimeout(100, TimeUnit.Seconds!)
                 .FollowRedirects(AllowAutoRedirect)
                 .AddInterceptor(new DecompressInterceptor())
                 .AddNetworkInterceptor(new HeadersOrderInterceptor());
@@ -131,7 +131,7 @@ namespace SecureHttpClient
             }
             else if (Proxy is WebProxy webProxy)
             {
-                var proxyAddress = new InetSocketAddress(webProxy.Address.Host, webProxy.Address.Port);
+                var proxyAddress = new InetSocketAddress(webProxy.Address!.Host, webProxy.Address!.Port);
                 builder.Proxy(new Proxy(Java.Net.Proxy.Type.Http, proxyAddress));
             }
 
@@ -142,9 +142,9 @@ namespace SecureHttpClient
 
             if (_keyMgrFactory != null || _trustMgrFactory != null)
             {
-                var context = SSLContext.GetInstance("TLS");
+                var context = SSLContext.GetInstance("TLS")!;
                 context.Init(KeyManagers, TrustManagers, null);
-                builder.SslSocketFactory(context.SocketFactory, _x509TrustManager ?? TlsSslSocketFactory.GetSystemDefaultTrustManager());
+                builder.SslSocketFactory(context.SocketFactory!, (_x509TrustManager ?? TlsSslSocketFactory.GetSystemDefaultTrustManager())!);
             }
 
             return builder.Build();
@@ -153,7 +153,7 @@ namespace SecureHttpClient
         /// <inheritdoc />
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var javaUri = request.RequestUri.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped);
+            var javaUri = request.RequestUri!.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped);
             var url = new Java.Net.URL(javaUri);
 
             var body = default(RequestBody);
@@ -237,7 +237,7 @@ namespace SecureHttpClient
                 ReasonPhrase = resp.Message(),
                 Version = GetVersion(resp.Protocol())
             };
-            ret.RequestMessage.RequestUri = new Uri(resp.Request().Url().Url().ToString()); // should point to the request leading to the final response (in case of redirects)
+            ret.RequestMessage!.RequestUri = new Uri(resp.Request()!.Url()!.Url()!.ToString()); // should point to the request leading to the final response (in case of redirects)
 
             if (respBody != null)
             {
@@ -262,7 +262,7 @@ namespace SecureHttpClient
         private sealed class StreamingRequestBody : RequestBody
         {
             private readonly HttpContent _content;
-            private readonly MediaType _mediaType;
+            private readonly MediaType? _mediaType;
             private readonly long _contentLength;
 
             public StreamingRequestBody(HttpContent content)
@@ -273,7 +273,7 @@ namespace SecureHttpClient
                 _contentLength = content.Headers.ContentLength ?? -1;
             }
 
-            public override MediaType ContentType() => _mediaType;
+            public override MediaType? ContentType() => _mediaType;
 
             public override long ContentLength() => _contentLength;
 

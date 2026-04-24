@@ -30,7 +30,7 @@ namespace SecureHttpClient.TestRunner.Maui
             return MauiProgram.CreateMauiApp();
         }
 
-        private static void OnAndroidEnvironmentUnhandledExceptionRaiser(object sender, RaiseThrowableEventArgs e)
+        private static void OnAndroidEnvironmentUnhandledExceptionRaiser(object? sender, RaiseThrowableEventArgs e)
         {
             Log.Fatal(e.Exception, "AndroidEnvironment.UnhandledExceptionRaiser");
             Assert.Fail("AndroidEnvironment.UnhandledExceptionRaiser");

@@ -21,10 +21,10 @@ namespace SecureHttpClient
     public class SecureHttpClientHandler : HttpClientHandler, Abstractions.ISecureHttpClientHandler
     {
         internal readonly Dictionary<NSUrlSessionTask, InflightOperation> InflightRequests;
-        internal NSUrlCredential ClientCertificate { get; private set; }
-        private X509Certificate2Collection _trustedRoots = null;
+        internal NSUrlCredential? ClientCertificate { get; private set; }
+        private X509Certificate2Collection? _trustedRoots;
         private readonly Lazy<CertificatePinner> _certificatePinner;
-        private NSUrlSession _session;
+        private NSUrlSession? _session;
 
         /// <summary>
         /// SecureHttpClientHandler constructor (iOS implementation)
@@ -96,8 +96,8 @@ namespace SecureHttpClient
 
         private static NSDictionary GetProxyDictionary(WebProxy webProxy)
         {
-            var host = webProxy.Address.Host;
-            var port = webProxy.Address.Port;
+            var host = webProxy.Address!.Host;
+            var port = webProxy.Address!.Port;
             var values = new []
             {
                 NSObject.FromObject(host),
@@ -148,7 +148,7 @@ namespace SecureHttpClient
                 AllowsCellularAccess = true,
                 CachePolicy = NSUrlRequestCachePolicy.UseProtocolCachePolicy,
                 HttpMethod = request.Method.ToString().ToUpperInvariant(),
-                Url = NSUrl.FromString(request.RequestUri.AbsoluteUri),
+                Url = NSUrl.FromString(request.RequestUri!.AbsoluteUri),
             };
 
             foreach (var (name, value) in headers)
@@ -157,8 +157,8 @@ namespace SecureHttpClient
             }
 
             var op = body != null
-                ? (NSUrlSessionTask)_session.CreateUploadTask(rq, body)
-                : _session.CreateDataTask(rq);
+                ? (NSUrlSessionTask)_session!.CreateUploadTask(rq, body)
+                : _session!.CreateDataTask(rq);
 
             cancellationToken.ThrowIfCancellationRequested();
 

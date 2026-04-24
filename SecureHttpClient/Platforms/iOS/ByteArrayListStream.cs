@@ -10,7 +10,7 @@ namespace SecureHttpClient
 {
     internal class ByteArrayListStream : Stream
     {
-        private Exception _exception;
+        private Exception? _exception;
         private IDisposable _lockRelease;
         private readonly AsyncLock _readStreamLock;
         private readonly List<byte[]> _bytes = new ();

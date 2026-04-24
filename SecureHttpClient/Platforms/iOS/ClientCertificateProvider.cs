@@ -15,7 +15,7 @@ namespace SecureHttpClient
         /// The current client certificate
         /// </summary>
         /// <value>The credential.</value>
-        NSUrlCredential Credential { get; }
+        NSUrlCredential? Credential { get; }
     }
 
     /// <summary>
@@ -27,7 +27,7 @@ namespace SecureHttpClient
 		/// The current client certificate
 		/// </summary>
 		/// <value>The credential.</value>
-		public NSUrlCredential Credential { get; protected set; }
+		public NSUrlCredential? Credential { get; protected set; }
     }
 
     /// <summary>
@@ -57,11 +57,11 @@ namespace SecureHttpClient
             if (status == SecStatusCode.Success)
             {
                 var identity = Runtime.GetINativeObject<SecIdentity>(array[0]["identity"].Handle, false);
-                NSArray chain = array[0]["chain"] as NSArray;
-                SecCertificate[] certs = new SecCertificate[chain.Count];
+                NSArray? chain = array[0]["chain"] as NSArray;
+                SecCertificate[] certs = new SecCertificate[chain!.Count];
                 for (nuint i = 0; i < chain.Count; i++)
                     certs[i] = chain.GetItem<SecCertificate>(i);
-                Credential = new NSUrlCredential(identity, certs, NSUrlCredentialPersistence.ForSession);
+                Credential = new NSUrlCredential(identity!, certs, NSUrlCredentialPersistence.ForSession);
             }
         }
     }

@@ -65,14 +65,14 @@ namespace SecureHttpClient
             Progress(bytes, _totalBytes, _totalBytesExpected);
         }
 
-        ProgressDelegate _progress;
+        ProgressDelegate _progress = delegate { };
         public ProgressDelegate Progress
         {
             get => _progress;
             set { _progress = value ?? delegate { }; }
         }
 
-        protected override Task SerializeToStreamAsync(Stream stream, TransportContext context)
+        protected override Task SerializeToStreamAsync(Stream stream, TransportContext? context)
         {
             Reset();
             return base.SerializeToStreamAsync(stream, context);

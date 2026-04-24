@@ -28,7 +28,7 @@ namespace SecureHttpClient.Test.Helpers
             var assembly = Assembly.GetExecutingAssembly();
             var resourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith($"res.{resource}"));
             var resourceStream = assembly.GetManifestResourceStream(resourceName);
-            return resourceStream;
+            return resourceStream!;
         }
     }
 }

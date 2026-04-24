@@ -9,7 +9,7 @@ namespace SecureHttpClient
 {
     internal class CancellableStreamContent : ProgressStreamContent
     {
-        private Action _onDispose;
+        private Action? _onDispose;
 
         public CancellableStreamContent(Stream source, Action onDispose) : base(source, CancellationToken.None)
         {
