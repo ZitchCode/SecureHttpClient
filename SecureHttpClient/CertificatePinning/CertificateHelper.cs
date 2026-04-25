@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Net.Security;
 using System.Net.Sockets;
 using System.Security.Authentication;
@@ -34,7 +37,7 @@ namespace SecureHttpClient.CertificatePinning
         }
 
         /// <summary>
-        /// Retrieves the Subject Public Key Info (SPKI) fingerprint of the TLS certificate presented by the specified host.
+        /// Retrieves the Subject Public Key Info (SPKI) fingerprint of the TLS certificate presented by the specified host, using default address family.
         /// </summary>
         /// <param name="hostname">The DNS name of the remote host from which to retrieve the TLS certificate. Cannot be null or empty.</param>
         /// <returns>A task which result contains the SPKI fingerprint in the format "sha256/{base64}".</returns>
@@ -45,11 +48,46 @@ namespace SecureHttpClient.CertificatePinning
             return spkiFingerprint;
         }
 
+        /// <summary>
+        /// Retrieves the Subject Public Key Info (SPKI) fingerprints of the TLS certificates presented by the specified host.
+        /// </summary>
+        /// <param name="hostname">The DNS name of the remote host from which to retrieve the TLS certificates. Cannot be null or empty.</param>
+        /// <returns>A task which result contains the SPKI fingerprints in the format "sha256/{base64}".</returns>
+        public static async Task<IReadOnlyCollection<string>> GetSpkiFingerprintsAsync(string hostname)
+        {
+            var certificates = await GetCertificatesAsync(hostname);
+            var spkiFingerprints = certificates.Select(GetSpkiFingerprint).ToList();
+            return spkiFingerprints;
+        }
+
         internal static async Task<X509Certificate2> GetCertificateAsync(string hostname)
         {
             using var tcpClient = new TcpClient();
             await tcpClient.ConnectAsync(hostname, 443);
+            var cert = await GetCertificateAsync(hostname, tcpClient);
+            return cert;
+        }
 
+        internal static async Task<IReadOnlyCollection<X509Certificate2>> GetCertificatesAsync(string hostname)
+        {
+            var results = new List<X509Certificate2>();
+            var seenThumbprints = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var addresses = await Dns.GetHostAddressesAsync(hostname); // DNS resolution (IPv4 + IPv6)
+            foreach (var address in addresses)
+            {
+                using var tcpClient = new TcpClient(address.AddressFamily);
+                await tcpClient.ConnectAsync(address, 443);
+                var cert = await GetCertificateAsync(hostname, tcpClient);
+                if (seenThumbprints.Add(cert.Thumbprint))
+                {
+                    results.Add(cert);
+                }
+            }
+            return results;
+        }
+
+        private static async Task<X509Certificate2> GetCertificateAsync(string hostname, TcpClient tcpClient)
+        {
             await using var sslStream = new SslStream(
                 tcpClient.GetStream(),
                 leaveInnerStreamOpen: false,

@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using SecureHttpClient.CertificatePinning;
 using SecureHttpClient.Test.Helpers;
@@ -27,6 +28,25 @@ namespace SecureHttpClient.Test
             const string hostname = "www.howsmyssl.com";
             var certificate = await CertificateHelper.GetCertificateAsync(hostname);
             Assert.NotNull(certificate);
+
+            const string expectedIssuer = "CN=R12, O=Let's Encrypt, C=US";
+            Assert.Equal(expectedIssuer, certificate.Issuer);
+
+            const string expectedSubject = "CN=www.howsmyssl.com";
+            Assert.Equal(expectedSubject, certificate.Subject);
+
+            const string expectedSignatureAlgorithm = "sha256RSA";
+            Assert.Equal(expectedSignatureAlgorithm, certificate.SignatureAlgorithm.FriendlyName);
+        }
+
+        [Fact]
+        public async Task CertificateHelperTest_GetCertificates()
+        {
+            const string hostname = "www.howsmyssl.com";
+            var certificates = await CertificateHelper.GetCertificatesAsync(hostname);
+            Assert.Single(certificates);
+
+            var certificate = certificates.First();
 
             const string expectedIssuer = "CN=R12, O=Let's Encrypt, C=US";
             Assert.Equal(expectedIssuer, certificate.Issuer);

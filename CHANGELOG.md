@@ -4,6 +4,7 @@
 - android 36.1.53
 - ios 26.2.10233
 - enable nullable reference types
+- add the possibility to check all certificates from a hostname
 - Microsoft.Extensions.* 10.0.7
 - Square.OkIO 3.17.0
 - test : Microsoft.Maui.* 10.0.51
