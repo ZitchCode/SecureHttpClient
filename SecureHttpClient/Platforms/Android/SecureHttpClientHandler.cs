@@ -279,9 +279,27 @@ namespace SecureHttpClient
 
             public override void WriteTo(IBufferedSink sink)
             {
-                using var requestStream = _content.ReadAsStream();
-                using var sinkStream = sink.OutputStream;
-                requestStream.CopyTo(sinkStream);
+                var requestStream = _content.ReadAsStream();
+                var sinkStream = sink.OutputStream;
+                try
+                {
+                    requestStream.CopyTo(sinkStream);
+                }
+                finally
+                {
+                    try
+                    {
+                        sinkStream.Dispose();
+                    }
+                    catch (Exception e) when (e is IOException or Java.IO.IOException)
+                    {
+                        // When CopyTo writes fewer bytes than declared in ContentLength (e.g. cancelled
+                        // request), OkHttp's Exchange$RequestBodySink.close() throws ProtocolException.
+                        // Left uncaught, it crosses the JNI boundary as JavaProxyThrowable (RuntimeException),
+                        // which OkHttp's AsyncCall.run() cannot catch as IOException → FATAL EXCEPTION on
+                        // the OkHttp Dispatcher thread.
+                    }
+                }
             }
         }
 

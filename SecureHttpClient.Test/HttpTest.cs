@@ -400,5 +400,33 @@ namespace SecureHttpClient.Test
             var url = json.RootElement.GetProperty("url").GetString();
             Assert.Equal(page, url);
         }
+
+        // Regression test for the JavaProxyThrowable crash on the OkHttp Dispatcher thread.
+        //
+        // Root cause: when HttpContent.ContentLength is larger than what ReadAsStream() returns,
+        // WriteTo() copies fewer bytes than declared. The `using var sinkStream` then calls
+        // sinkStream.Dispose() → OutputStreamInvoker.Dispose() → Java OutputStream.close()
+        // → OkHttp Exchange$RequestBodySink.close() throws ProtocolException("unexpected end of stream").
+        // That exception escapes WriteTo() as System.IO.IOException, which the JNI bridge wraps in
+        // JavaProxyThrowable (a RuntimeException). OkHttp's AsyncCall.run() only catches IOException,
+        // so JavaProxyThrowable propagates to the ThreadPoolExecutor → FATAL EXCEPTION on the
+        // OkHttp Dispatcher thread, crashing the process.
+        //
+        // Fix: catch IOException in the finally block inside WriteTo() so the exception never
+        // crosses the JNI boundary as a RuntimeException.
+        [SkippableFact]
+        public async Task HttpTest_ContentLengthMismatchDoesNotCrashOkHttpThread()
+        {
+            Skip.If(DeviceInfo.Platform != DevicePlatform.Android, "JavaProxyThrowable / OkHttp Dispatcher crash is Android-only");
+
+            // Declare 1 MB but provide only 5 bytes. When WriteTo() closes the OkHttp sink
+            // after CopyTo(), Exchange$RequestBodySink.close() detects the mismatch and throws.
+            var content = new TruncatedContent(actualBytes: Encoding.UTF8.GetBytes("short"), declaredLength: 1_000_000);
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://httpbingo.org/post")
+            {
+                Content = content
+            };
+            await Assert.ThrowsAsync<HttpRequestException>(() => SendAsync(request, ensureSuccessStatusCode: false));
+        }
     }
 }
