@@ -23,38 +23,47 @@ namespace SecureHttpClient.Test
         }
 
         [Fact]
-        public async Task CertificateHelperTest_GetCertificate()
+        public async Task CertificateHelperTest_GetCertificate_howsmyssl()
         {
             const string hostname = "www.howsmyssl.com";
             var certificate = await CertificateHelper.GetCertificateAsync(hostname);
             Assert.NotNull(certificate);
-
-            const string expectedIssuer = "CN=R12, O=Let's Encrypt, C=US";
-            Assert.Equal(expectedIssuer, certificate.Issuer);
-
-            const string expectedSubject = "CN=www.howsmyssl.com";
-            Assert.Equal(expectedSubject, certificate.Subject);
-
-            const string expectedSignatureAlgorithm = "sha256RSA";
-            Assert.Equal(expectedSignatureAlgorithm, certificate.SignatureAlgorithm.FriendlyName);
+            CheckCertificate(certificate, hostname, "CN=R12, O=Let's Encrypt, C=US", "sha256RSA");
         }
 
         [Fact]
-        public async Task CertificateHelperTest_GetCertificates()
+        public async Task CertificateHelperTest_GetCertificate_zitch()
+        {
+            const string hostname = "www.zitch.com";
+            var certificate = await CertificateHelper.GetCertificateAsync(hostname);
+            Assert.NotNull(certificate);
+            CheckCertificate(certificate, hostname, "CN=WE1, O=Google Trust Services, C=US", "sha256ECDSA");
+        }
+
+        [Fact]
+        public async Task CertificateHelperTest_GetCertificates_howsmyssl()
         {
             const string hostname = "www.howsmyssl.com";
             var certificates = await CertificateHelper.GetCertificatesAsync(hostname);
             Assert.Single(certificates);
-
             var certificate = certificates.First();
+            CheckCertificate(certificate, hostname, "CN=R12, O=Let's Encrypt, C=US", "sha256RSA");
+        }
 
-            const string expectedIssuer = "CN=R12, O=Let's Encrypt, C=US";
+        [Fact]
+        public async Task CertificateHelperTest_GetCertificates_zitch()
+        {
+            const string hostname = "www.zitch.com";
+            var certificates = await CertificateHelper.GetCertificatesAsync(hostname);
+            Assert.Single(certificates);
+            var certificate = certificates.First();
+            CheckCertificate(certificate, hostname, "CN=WE1, O=Google Trust Services, C=US", "sha256ECDSA");
+        }
+
+        private static void CheckCertificate(X509Certificate2 certificate, string hostname, string expectedIssuer, string expectedSignatureAlgorithm)
+        {
             Assert.Equal(expectedIssuer, certificate.Issuer);
-
-            const string expectedSubject = "CN=www.howsmyssl.com";
-            Assert.Equal(expectedSubject, certificate.Subject);
-
-            const string expectedSignatureAlgorithm = "sha256RSA";
+            Assert.Equal($"CN={hostname}", certificate.Subject);
             Assert.Equal(expectedSignatureAlgorithm, certificate.SignatureAlgorithm.FriendlyName);
         }
     }
