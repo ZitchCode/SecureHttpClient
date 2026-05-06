@@ -107,14 +107,14 @@ namespace SecureHttpClient
                 NSNumber.FromInt32(port),
                 NSNumber.FromInt32(1)
             };
-            var keys = new []
+            var keys = new NSObject[]
             {
-                NSObject.FromObject("HTTPProxy"),
-                NSObject.FromObject("HTTPPort"),
-                NSObject.FromObject("HTTPEnable"),
-                NSObject.FromObject("HTTPSProxy"),
-                NSObject.FromObject("HTTPSPort"),
-                NSObject.FromObject("HTTPSEnable")
+                NSObject.FromObject("HTTPProxy")!,
+                NSObject.FromObject("HTTPPort")!,
+                NSObject.FromObject("HTTPEnable")!,
+                NSObject.FromObject("HTTPSProxy")!,
+                NSObject.FromObject("HTTPSPort")!,
+                NSObject.FromObject("HTTPSEnable")!
             };
             var proxyDictionary = NSDictionary.FromObjectsAndKeys(values, keys);
             return proxyDictionary;

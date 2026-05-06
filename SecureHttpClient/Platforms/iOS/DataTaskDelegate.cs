@@ -66,11 +66,11 @@ namespace SecureHttpClient
                     // NB: Cocoa trolling us so hard by giving us back dummy dictionary entries
                     if (v.Key == null || v.Value == null) continue;
 
-                    var headerKey = v.Key.ToString();
+                    var headerKey = v.Key.ToString()!;
 
                     if (headerKey.ToLower() == "set-cookie")
                     {
-                        var splitter = new SetCookieHeaderSplitter(v.Value.ToString());
+                        var splitter = new SetCookieHeaderSplitter(v.Value.ToString()!);
                         while (splitter.HasNext())
                         {
                             var setCookieHeaderValue = splitter.Next();

@@ -52,15 +52,15 @@ namespace SecureHttpClient
                 opt = NSDictionary.FromObjectAndKey(new NSString(passphrase), SecImportExport.Passphrase);
             }
 
-            var status = SecImportExport.ImportPkcs12(certificate, opt, out NSDictionary[] array);
+            var status = SecImportExport.ImportPkcs12(certificate, opt, out NSDictionary[]? array);
 
-            if (status == SecStatusCode.Success)
+            if (status == SecStatusCode.Success && array != null)
             {
-                var identity = Runtime.GetINativeObject<SecIdentity>(array[0]["identity"].Handle, false);
+                var identity = Runtime.GetINativeObject<SecIdentity>(array[0]["identity"]!.Handle, false);
                 NSArray? chain = array[0]["chain"] as NSArray;
                 SecCertificate[] certs = new SecCertificate[chain!.Count];
                 for (nuint i = 0; i < chain.Count; i++)
-                    certs[i] = chain.GetItem<SecCertificate>(i);
+                    certs[i] = chain.GetItem<SecCertificate>(i)!;
                 Credential = new NSUrlCredential(identity!, certs, NSUrlCredentialPersistence.ForSession);
             }
         }
