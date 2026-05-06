@@ -1,5 +1,7 @@
 ## 2.4.7
 - vs 18.5.2
+- workload 10.0.203.1
+- ios 26.2.10259
 - swallow IOException in WriteTo to prevent JNI crash on android
 
 ## 2.4.6
