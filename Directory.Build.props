@@ -5,7 +5,7 @@
     <SecureHttpClientVersion>2.4.7</SecureHttpClientVersion>
     <NetTfm>net10.0</NetTfm>
     <AndroidTfm>net10.0-android36.1</AndroidTfm>
-    <IosTfm>net10.0-ios26.4</IosTfm>
+    <IosTfm>net10.0-ios26.5</IosTfm>
     <WindowsTfm>net10.0-windows10.0.19041.0</WindowsTfm>
   </PropertyGroup>
 </Project>
