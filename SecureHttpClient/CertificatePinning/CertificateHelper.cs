@@ -70,14 +70,18 @@ namespace SecureHttpClient.CertificatePinning
 
         internal static async Task<IReadOnlyCollection<X509Certificate2>> GetCertificatesAsync(string hostname)
         {
-            var results = new List<X509Certificate2>();
-            var seenThumbprints = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             var addresses = await Dns.GetHostAddressesAsync(hostname); // DNS resolution (IPv4 + IPv6)
-            foreach (var address in addresses)
+            var tasks = addresses.Select(async address =>
             {
                 using var tcpClient = new TcpClient(address.AddressFamily);
                 await tcpClient.ConnectAsync(address, 443);
-                var cert = await GetCertificateAsync(hostname, tcpClient);
+                return await GetCertificateAsync(hostname, tcpClient);
+            });
+            var certs = await Task.WhenAll(tasks);
+            var seenThumbprints = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var results = new List<X509Certificate2>();
+            foreach (var cert in certs)
+            {
                 if (seenThumbprints.Add(cert.Thumbprint))
                 {
                     results.Add(cert);
