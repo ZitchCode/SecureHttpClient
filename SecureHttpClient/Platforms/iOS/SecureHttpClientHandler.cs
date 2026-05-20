@@ -24,6 +24,7 @@ namespace SecureHttpClient
         internal NSUrlCredential? ClientCertificate { get; private set; }
         private X509Certificate2Collection? _trustedRoots;
         private readonly Lazy<CertificatePinner> _certificatePinner;
+        private readonly ILogger<Abstractions.ISecureHttpClientHandler> _logger;
         private NSUrlSession? _session;
 
         /// <summary>
@@ -32,6 +33,7 @@ namespace SecureHttpClient
         /// <param name="logger">Logger</param>
         public SecureHttpClientHandler(ILogger<Abstractions.ISecureHttpClientHandler> logger)
         {
+            _logger = logger;
             InflightRequests = new Dictionary<NSUrlSessionTask, InflightOperation>();
             _certificatePinner = new Lazy<CertificatePinner>(() => new CertificatePinner(logger));
         }
@@ -123,6 +125,11 @@ namespace SecureHttpClient
         /// <inheritdoc />
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
+            if (request.GetHeadersOrder() != null)
+            {
+                _logger?.LogWarning("SetHeadersOrder is not supported on this platform and will be ignored.");
+            }
+
             if (_session == null)
             {
                 InitSession();

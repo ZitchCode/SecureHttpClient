@@ -5,8 +5,11 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using SecureHttpClient.CertificatePinning;
+using SecureHttpClient.Extensions;
 
 namespace SecureHttpClient
 {
@@ -75,6 +78,16 @@ namespace SecureHttpClient
                 _trustedRoots.Add(X509CertificateLoader.LoadCertificate(cert));
             }
             ServerCertificateCustomValidationCallback = CheckServerCertificate;
+        }
+
+        /// <inheritdoc />
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            if (request.GetHeadersOrder() != null)
+            {
+                _logger?.LogWarning("SetHeadersOrder is not supported on this platform and will be ignored.");
+            }
+            return base.SendAsync(request, cancellationToken);
         }
 
         private bool CheckServerCertificate(HttpRequestMessage httpRequestMessage, X509Certificate2? certificate, X509Chain? chain, SslPolicyErrors sslPolicyErrors)
