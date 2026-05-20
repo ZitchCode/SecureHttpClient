@@ -85,6 +85,7 @@ namespace SecureHttpClient
                     }
                 }
 
+                data.Response = ret;
                 data.FutureResponse.TrySetResult(ret);
             }
             catch (Exception ex)
@@ -139,6 +140,30 @@ namespace SecureHttpClient
             lock (_secureHttpClientHandler.InflightRequests)
             {
                 return _secureHttpClientHandler.InflightRequests[task];
+            }
+        }
+
+        public override void DidFinishCollectingMetrics(NSUrlSession session, NSUrlSessionTask task, NSUrlSessionTaskMetrics metrics)
+        {
+            // This callback fires before DidCompleteWithError (per Apple documentation), so setting
+            // response.Version here is guaranteed to happen before the consumer reads the response.
+            InflightOperation data;
+            lock (_secureHttpClientHandler.InflightRequests)
+            {
+                if (!_secureHttpClientHandler.InflightRequests.TryGetValue(task, out data!))
+                    return;
+            }
+
+            if (data.Response != null)
+            {
+                var protocolName = metrics.TransactionMetrics?.LastOrDefault()?.NetworkProtocolName;
+                data.Response.Version = protocolName switch
+                {
+                    "h2"       => HttpVersion.Version20,
+                    "http/1.1" => HttpVersion.Version11,
+                    "http/1.0" => HttpVersion.Version10,
+                    _          => HttpVersion.Unknown,
+                };
             }
         }
 

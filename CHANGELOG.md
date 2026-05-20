@@ -6,6 +6,7 @@
 - parallelize certificate retrieval across DNS addresses in GetCertificatesAsync
 - use structured logging instead of string interpolation
 - warn when SetHeadersOrder is used on unsupported platforms (ios, net)
+- populate response.Version via NSURLSessionTaskMetrics (HTTP/2 detection) on ios
 - Microsoft.Extensions.* 10.0.8
 
 ## 2.4.7

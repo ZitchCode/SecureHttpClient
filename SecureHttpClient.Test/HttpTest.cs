@@ -268,11 +268,9 @@ namespace SecureHttpClient.Test
             Assert.Empty(cookies);
         }
 
-        [SkippableFact]
+        [Fact]
         public async Task HttpTest_Protocol()
         {
-            Skip.If(DeviceInfo.Platform == DevicePlatform.iOS, "Need help to get http version from NSHttpUrlResponse");
-
             const string page = "https://httpbingo.org/get";
             var request = new HttpRequestMessage(HttpMethod.Get, page);
             if (DeviceInfo.Platform != DevicePlatform.Android && DeviceInfo.Platform != DevicePlatform.iOS)

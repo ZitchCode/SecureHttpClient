@@ -16,6 +16,7 @@ namespace SecureHttpClient
         public CancellationToken CancellationToken { get; set; }
         public bool IsCompleted { get; set; }
         public NSError? Error { get; set; }
+        public HttpResponseMessage? Response { get; set; }
     }
 }
 
