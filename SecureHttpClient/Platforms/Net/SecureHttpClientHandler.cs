@@ -99,7 +99,7 @@ namespace SecureHttpClient
 
             if (!good)
             {
-                _logger?.LogDebug($"SSL policy errors {sslPolicyErrors}");
+                _logger?.LogDebug("SSL policy errors {SslPolicyErrors}", sslPolicyErrors);
                 return false;
             }
 

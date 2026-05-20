@@ -20,7 +20,7 @@ namespace SecureHttpClient.CertificatePinning
 
         public void AddPins(string hostname, string[] pins)
         {
-            _logger?.LogDebug($"Add CertificatePinner: hostname:{hostname}, pins:{string.Join("|", pins)}");
+            _logger?.LogDebug("Add CertificatePinner: hostname:{Hostname}, pins:{Pins}", hostname, string.Join("|", pins));
             ValidatePattern(hostname);
             _pins[hostname] = pins; // Updates value if already existing
         }
@@ -47,7 +47,7 @@ namespace SecureHttpClient.CertificatePinning
             var pins = GetMatchingPins(hostname);
             if (pins.Length == 0)
             {
-                _logger?.LogDebug($"No certificate pin found for {hostname}");
+                _logger?.LogDebug("No certificate pin found for {Hostname}", hostname);
                 return true;
             }
 
@@ -58,11 +58,11 @@ namespace SecureHttpClient.CertificatePinning
             var match = Array.IndexOf(pins, spkiFingerprint) > -1;
             if (match)
             {
-                _logger?.LogDebug($"Certificate pin is ok for {hostname}");
+                _logger?.LogDebug("Certificate pin is ok for {Hostname}", hostname);
             }
             else
             {
-                _logger?.LogInformation($"Certificate pin error for {hostname}: found {spkiFingerprint}, expected {string.Join("|", pins)}");
+                _logger?.LogInformation("Certificate pin error for {Hostname}: found {SpkiFingerprint}, expected {ExpectedPins}", hostname, spkiFingerprint, string.Join("|", pins));
             }
             return match;
         }

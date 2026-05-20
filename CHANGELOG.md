@@ -4,6 +4,7 @@
 - workload 10.0.300.2
 - ios 26.5.10280
 - parallelize certificate retrieval across DNS addresses in GetCertificatesAsync
+- use structured logging instead of string interpolation
 - Microsoft.Extensions.* 10.0.8
 
 ## 2.4.7
