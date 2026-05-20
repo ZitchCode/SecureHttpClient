@@ -111,33 +111,33 @@ namespace SecureHttpClient.Test
         [Fact]
         public async Task HttpTest_Headers()
         {
-            const string page = "https://postman-echo.com/get";
-            var req = new HttpRequestMessage(HttpMethod.Get, page);
+            await using var server = new EchoServer();
+            var req = new HttpRequestMessage(HttpMethod.Get, $"http://127.0.0.1:{server.Port}/");
             req.Headers.Add("header1", "value1");
             req.Headers.Add("header2", "value2");
             req.Headers.Add("header3", "value3");
-            var result = await SendAsync(req).ReceiveString();
-            var json = JsonDocument.Parse(result);
-            var headers = json.RootElement.GetProperty("headers").GetDictionary().Select(kv => kv.Key).ToList();
+            var captureTask = server.AcceptAndGetHeaderNamesAsync();
+            await SendAsync(req);
+            var headers = await captureTask;
             Assert.Contains("header1", headers);
             Assert.Contains("header2", headers);
             Assert.Contains("header3", headers);
         }
 
-        [SkippableFact(Skip = "Headers order is not respected by postman-echo anymore, this test needs to be fixed")]
+        [SkippableFact]
         public async Task HttpTest_HeadersOrder()
         {
             Skip.If(DeviceInfo.Platform != DevicePlatform.Android, "Only on Android");
 
-            const string page = "https://postman-echo.com/get";
-            var req = new HttpRequestMessage(HttpMethod.Get, page);
+            await using var server = new EchoServer();
+            var req = new HttpRequestMessage(HttpMethod.Get, $"http://127.0.0.1:{server.Port}/");
             req.Headers.Add("header1", "value1");
             req.Headers.Add("header2", "value2");
             req.Headers.Add("header3", "value3");
             req.SetHeadersOrder("header3", "header2", "header1");
-            var result = await SendAsync(req).ReceiveString();
-            var json = JsonDocument.Parse(result);
-            var headers = json.RootElement.GetProperty("headers").GetDictionary().Select(kv => kv.Key).ToList();
+            var captureTask = server.AcceptAndGetHeaderNamesAsync();
+            await SendAsync(req);
+            var headers = await captureTask;
             var index1 = headers.IndexOf("header1");
             var index2 = headers.IndexOf("header2");
             var index3 = headers.IndexOf("header3");
@@ -417,14 +417,17 @@ namespace SecureHttpClient.Test
         {
             Skip.If(DeviceInfo.Platform != DevicePlatform.Android, "JavaProxyThrowable / OkHttp Dispatcher crash is Android-only");
 
+            await using var server = new EchoServer();
             // Declare 1 MB but provide only 5 bytes. When WriteTo() closes the OkHttp sink
             // after CopyTo(), Exchange$RequestBodySink.close() detects the mismatch and throws.
             var content = new TruncatedContent(actualBytes: Encoding.UTF8.GetBytes("short"), declaredLength: 1_000_000);
-            var request = new HttpRequestMessage(HttpMethod.Post, "https://httpbingo.org/post")
+            var request = new HttpRequestMessage(HttpMethod.Post, $"http://127.0.0.1:{server.Port}/")
             {
                 Content = content
             };
+            var drainTask = server.AcceptAndDrainAsync();
             await Assert.ThrowsAsync<HttpRequestException>(() => SendAsync(request, ensureSuccessStatusCode: false));
+            await drainTask;
         }
     }
 }

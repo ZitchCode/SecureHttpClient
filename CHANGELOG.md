@@ -7,6 +7,7 @@
 - use structured logging instead of string interpolation
 - warn when SetHeadersOrder is used on unsupported platforms (ios, net)
 - populate response.Version via NSURLSessionTaskMetrics (HTTP/2 detection) on ios
+- replace postman-echo with an in-process echo server for HttpTest_Headers, HttpTest_HeadersOrder and HttpTest_ContentLengthMismatch
 - Microsoft.Extensions.* 10.0.8
 
 ## 2.4.7
