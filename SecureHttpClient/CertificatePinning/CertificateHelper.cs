@@ -43,7 +43,7 @@ namespace SecureHttpClient.CertificatePinning
         /// <returns>A task which result contains the SPKI fingerprint in the format "sha256/{base64}".</returns>
         public static async Task<string> GetSpkiFingerprintAsync(string hostname)
         {
-            var certificate = await GetCertificateAsync(hostname);
+            var certificate = await GetCertificateAsync(hostname).ConfigureAwait(false);
             var spkiFingerprint = GetSpkiFingerprint(certificate);
             return spkiFingerprint;
         }
@@ -55,7 +55,7 @@ namespace SecureHttpClient.CertificatePinning
         /// <returns>A task which result contains the SPKI fingerprints in the format "sha256/{base64}".</returns>
         public static async Task<IReadOnlyCollection<string>> GetSpkiFingerprintsAsync(string hostname)
         {
-            var certificates = await GetCertificatesAsync(hostname);
+            var certificates = await GetCertificatesAsync(hostname).ConfigureAwait(false);
             var spkiFingerprints = certificates.Select(GetSpkiFingerprint).ToList();
             return spkiFingerprints;
         }
@@ -63,21 +63,21 @@ namespace SecureHttpClient.CertificatePinning
         internal static async Task<X509Certificate2> GetCertificateAsync(string hostname)
         {
             using var tcpClient = new TcpClient();
-            await tcpClient.ConnectAsync(hostname, 443);
-            var cert = await GetCertificateAsync(hostname, tcpClient);
+            await tcpClient.ConnectAsync(hostname, 443).ConfigureAwait(false);
+            var cert = await GetCertificateAsync(hostname, tcpClient).ConfigureAwait(false);
             return cert;
         }
 
         internal static async Task<IReadOnlyCollection<X509Certificate2>> GetCertificatesAsync(string hostname)
         {
-            var addresses = await Dns.GetHostAddressesAsync(hostname); // DNS resolution (IPv4 + IPv6)
+            var addresses = await Dns.GetHostAddressesAsync(hostname).ConfigureAwait(false); // DNS resolution (IPv4 + IPv6)
             var tasks = addresses.Select(async address =>
             {
                 using var tcpClient = new TcpClient(address.AddressFamily);
-                await tcpClient.ConnectAsync(address, 443);
-                return await GetCertificateAsync(hostname, tcpClient);
+                await tcpClient.ConnectAsync(address, 443).ConfigureAwait(false);
+                return await GetCertificateAsync(hostname, tcpClient).ConfigureAwait(false);
             });
-            var certs = await Task.WhenAll(tasks);
+            var certs = await Task.WhenAll(tasks).ConfigureAwait(false);
             var seenThumbprints = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             var results = new List<X509Certificate2>();
             foreach (var cert in certs)
@@ -92,7 +92,7 @@ namespace SecureHttpClient.CertificatePinning
 
         private static async Task<X509Certificate2> GetCertificateAsync(string hostname, TcpClient tcpClient)
         {
-            await using var sslStream = new SslStream(
+            using var sslStream = new SslStream(
                 tcpClient.GetStream(),
                 leaveInnerStreamOpen: false,
                 userCertificateValidationCallback: (_, _, _, _) => true
@@ -105,7 +105,7 @@ namespace SecureHttpClient.CertificatePinning
                 CertificateRevocationCheckMode = X509RevocationMode.NoCheck
             };
 
-            await sslStream.AuthenticateAsClientAsync(options);
+            await sslStream.AuthenticateAsClientAsync(options).ConfigureAwait(false);
 
             var cert = new X509Certificate2(sslStream.RemoteCertificate!);
             return cert;

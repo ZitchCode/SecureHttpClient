@@ -163,7 +163,7 @@ namespace SecureHttpClient
                 _token.ThrowIfCancellationRequested();
                 var linked = CancellationTokenSource.CreateLinkedTokenSource(_token, cancellationToken);
 
-                var readCount = await ParentStream.ReadAsync(buffer, offset, count, linked.Token);
+                var readCount = await ParentStream.ReadAsync(buffer, offset, count, linked.Token).ConfigureAwait(false);
 
                 ReadCallback(readCount);
                 return readCount;
