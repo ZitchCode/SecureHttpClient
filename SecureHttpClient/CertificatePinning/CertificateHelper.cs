@@ -92,23 +92,25 @@ namespace SecureHttpClient.CertificatePinning
 
         private static async Task<X509Certificate2> GetCertificateAsync(string hostname, TcpClient tcpClient)
         {
-            using var sslStream = new SslStream(
+            var sslStream = new SslStream(
                 tcpClient.GetStream(),
                 leaveInnerStreamOpen: false,
                 userCertificateValidationCallback: (_, _, _, _) => true
             );
-
-            var options = new SslClientAuthenticationOptions
+            await using (sslStream.ConfigureAwait(false))
             {
-                TargetHost = hostname,
-                EnabledSslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13,
-                CertificateRevocationCheckMode = X509RevocationMode.NoCheck
-            };
+                var options = new SslClientAuthenticationOptions
+                {
+                    TargetHost = hostname,
+                    EnabledSslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13,
+                    CertificateRevocationCheckMode = X509RevocationMode.NoCheck
+                };
 
-            await sslStream.AuthenticateAsClientAsync(options).ConfigureAwait(false);
+                await sslStream.AuthenticateAsClientAsync(options).ConfigureAwait(false);
 
-            var cert = new X509Certificate2(sslStream.RemoteCertificate!);
-            return cert;
+                var cert = new X509Certificate2(sslStream.RemoteCertificate!);
+                return cert;
+            }
         }
     }
 }
