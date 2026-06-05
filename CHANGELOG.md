@@ -2,6 +2,7 @@
 - vs 18.6.2
 - add missing configureawait(false)
 - enable HTTP/3 opportunistically when supported
+- Square.OkHttp3.Android 5.3.2.3
 
 ## 2.4.8
 - vs 18.6.0
