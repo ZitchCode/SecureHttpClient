@@ -163,6 +163,10 @@ namespace SecureHttpClient
                 rq[name] = value;
             }
 
+            // Attempt HTTP/3 opportunistically from the first request (iOS 15+).
+            // NSURLSession will fall back to HTTP/2 or HTTP/1.1 if QUIC is unavailable.
+            rq.AssumesHttp3Capable = true;
+
             var op = body != null
                 ? (NSUrlSessionTask)_session!.CreateUploadTask(rq, body)
                 : _session!.CreateDataTask(rq);

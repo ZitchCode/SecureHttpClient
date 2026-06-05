@@ -9,6 +9,7 @@ SecureHttpClient is a dotnet cross-platform HttpClientHandler library, with addi
 | Certificate pinning | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | TLS 1.2+ | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | HTTP/2 | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| HTTP/3 | :x: | :white_check_mark: | :white_check_mark: |
 | Compression (gzip / deflate / br) | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | Client certificates | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | Headers ordering | :white_check_mark: | :x: | :x: |

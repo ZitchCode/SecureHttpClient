@@ -87,6 +87,15 @@ namespace SecureHttpClient
             {
                 _logger?.LogWarning("SetHeadersOrder is not supported on this platform and will be ignored.");
             }
+
+            // Enable HTTP/3 opportunistically (Alt-Svc negotiation).
+            // Equivalent to iOS rq.AssumesHttp3Capable = true.
+            // A request with explicit VersionPolicy.RequestVersionExact keeps its precise semantics.
+            if (request.VersionPolicy == HttpVersionPolicy.RequestVersionOrLower)
+            {
+                request.VersionPolicy = HttpVersionPolicy.RequestVersionOrHigher;
+            }
+
             return base.SendAsync(request, cancellationToken);
         }
 

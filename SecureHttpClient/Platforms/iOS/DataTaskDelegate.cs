@@ -159,6 +159,7 @@ namespace SecureHttpClient
                 var protocolName = metrics.TransactionMetrics?.LastOrDefault()?.NetworkProtocolName;
                 data.Response.Version = protocolName switch
                 {
+                    "h3"       => HttpVersion.Version30,
                     "h2"       => HttpVersion.Version20,
                     "http/1.1" => HttpVersion.Version11,
                     "http/1.0" => HttpVersion.Version10,

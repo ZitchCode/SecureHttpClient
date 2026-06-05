@@ -1,10 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Maui.Devices;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Quic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using SecureHttpClient.Test.Helpers;
+using Xunit;
 
 namespace SecureHttpClient.Test
 {
@@ -71,6 +74,25 @@ namespace SecureHttpClient.Test
         protected void DisableCookies()
         {
             _secureHttpClientHandler.UseCookies = false;
+        }
+
+        protected static void SkipIfHttp3NotSupported()
+        {
+            // Android: OkHttp does not support HTTP/3 yet.
+            Skip.If(DeviceInfo.Platform == DevicePlatform.Android, "HTTP/3 is not yet supported on Android.");
+            // Net: requires OS-level QUIC support (Windows 11 / Windows Server 2022+).
+            // iOS: NSURLSession handles HTTP/3 natively — no .NET QUIC stack involved, no skip needed.
+            Skip.If(DeviceInfo.Platform != DevicePlatform.iOS && !QuicConnection.IsSupported, "HTTP/3 (QUIC) is not supported on this platform.");
+        }
+
+        /// <summary>
+        /// Skips the test on platforms where HttpRequestMessage.VersionPolicy is not honoured
+        /// (iOS uses NSURLSession, Android uses OkHttp — both manage version negotiation internally).
+        /// </summary>
+        protected static void SkipIfNotNetPlatform()
+        {
+            Skip.If(DeviceInfo.Platform == DevicePlatform.iOS || DeviceInfo.Platform == DevicePlatform.Android,
+                "HttpRequestMessage.VersionPolicy is not supported on this platform.");
         }
 
         protected async Task<Dictionary<string, string>> GetCookiesAsync(string page)

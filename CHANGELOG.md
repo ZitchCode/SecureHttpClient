@@ -1,6 +1,7 @@
 ## 2.4.9
 - vs 18.6.2
 - add missing configureawait(false)
+- enable HTTP/3 opportunistically when supported
 
 ## 2.4.8
 - vs 18.6.0
