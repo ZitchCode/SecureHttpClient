@@ -2,7 +2,7 @@
   <PropertyGroup>
     <LangVersion>14.0</LangVersion>
     <Nullable>enable</Nullable>
-    <SecureHttpClientVersion>2.4.8</SecureHttpClientVersion>
+    <SecureHttpClientVersion>2.4.9</SecureHttpClientVersion>
     <NetTfm>net10.0</NetTfm>
     <AndroidTfm>net10.0-android36.1</AndroidTfm>
     <IosTfm>net10.0-ios26.5</IosTfm>
