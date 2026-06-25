@@ -4,6 +4,7 @@
 - workload 10.0.301.1
 - android 36.1.69
 - Microsoft.Extensions.* 10.0.9
+- Square.OkHttp3.Android 5.4.0
 - test : Microsoft.Maui.* 10.0.80
 - test : accept Improvable rating on non-iOS platforms in SslTest_HowsMySsl
 
