@@ -1,3 +1,11 @@
+## 2.4.10
+- vs 18.7.0
+- dotnet sdk 10.0.301
+- workload 10.0.301.1
+- android 36.1.69
+- Microsoft.Extensions.* 10.0.9
+- test : Microsoft.Maui.* 10.0.80
+
 ## 2.4.9
 - vs 18.6.2
 - add missing configureawait(false)
