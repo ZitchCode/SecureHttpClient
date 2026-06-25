@@ -5,6 +5,7 @@
 - android 36.1.69
 - Microsoft.Extensions.* 10.0.9
 - test : Microsoft.Maui.* 10.0.80
+- test : accept Improvable rating on non-iOS platforms in SslTest_HowsMySsl
 
 ## 2.4.9
 - vs 18.6.2

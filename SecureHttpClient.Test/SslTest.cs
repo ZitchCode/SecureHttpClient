@@ -167,7 +167,8 @@ namespace SecureHttpClient.Test
         public async Task SslTest_HowsMySsl()
         {
             var expectedTlsVersion = (DeviceInfo.Platform == DevicePlatform.Android && DeviceInfo.Version.Major < 10) ? "TLS 1.2" : "TLS 1.3";
-            const string expectedRating = "Probably Okay";
+            const string expectedRatingProbablyOkay = "Probably Okay";
+            const string expectedRatingImprovable = "Improvable";
 
             const string page = "https://www.howsmyssl.com/a/check";
             var result = await GetAsync(page).ReceiveString();
@@ -177,7 +178,18 @@ namespace SecureHttpClient.Test
             var actualRating = json.RootElement.GetProperty("rating").GetString();
 
             Assert.Equal(expectedTlsVersion, actualTlsVersion);
-            Assert.Equal(expectedRating, actualRating);
+
+            // HACK: howsmyssl.com now returns "Improvable" instead of "Probably Okay" when the client does not support post-quantum key agreement.
+            // This is the case on Android and Windows for now.
+            // TODO: remove the else branch once post-quantum key agreement is supported on all platforms and only keep the iOS branch.
+            if (DeviceInfo.Platform == DevicePlatform.iOS)
+            {
+                Assert.Equal(expectedRatingProbablyOkay, actualRating);
+            }
+            else
+            {
+                Assert.True(actualRating == expectedRatingProbablyOkay || actualRating == expectedRatingImprovable);
+            }
         }
     }
 }
