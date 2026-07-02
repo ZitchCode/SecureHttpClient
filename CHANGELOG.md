@@ -1,3 +1,6 @@
+## 2.4.11
+- add coding agents instructions
+
 ## 2.4.10
 - vs 18.7.0
 - dotnet sdk 10.0.301

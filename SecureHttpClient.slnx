@@ -13,6 +13,7 @@
     <Platform Name="x86" />
   </Configurations>
   <Folder Name="/Build/">
+    <File Path="AGENTS.md" />
     <File Path="CHANGELOG.md" />
     <File Path="CODE_OF_CONDUCT.md" />
     <File Path="Directory.Build.props" />
