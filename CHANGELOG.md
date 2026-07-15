@@ -1,6 +1,9 @@
 ## 2.4.11
 - add coding agents instructions
 - fix fallback to http/1.1 on .net
+- Square.OkHttp3.Android 5.4.0.1
+- Square.OkIO 3.17.0.1
+- Xamarin.Brotli.Dec 0.1.2.12
 - test : Serilog 4.4.0
 
 ## 2.4.10

@@ -6,9 +6,9 @@
     <!-- SecureHttpClient -->
     <PackageVersion Include="SecureHttpClient" Version="$(SecureHttpClientVersion)" />
     <!-- Http -->
-    <PackageVersion Include="Square.OkHttp3.Android" Version="5.4.0" />
-    <PackageVersion Include="Square.OkIO" Version="3.17.0" />
-    <PackageVersion Include="Xamarin.Brotli.Dec" Version="0.1.2.11" />
+    <PackageVersion Include="Square.OkHttp3.Android" Version="5.4.0.1" />
+    <PackageVersion Include="Square.OkIO" Version="3.17.0.1" />
+    <PackageVersion Include="Xamarin.Brotli.Dec" Version="0.1.2.12" />
     <!-- MAUI -->
     <PackageVersion Include="Microsoft.Maui.Controls" Version="10.0.80" />
     <PackageVersion Include="Microsoft.Maui.Essentials" Version="10.0.80" />
