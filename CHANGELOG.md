@@ -1,6 +1,11 @@
 ## 2.4.11
+- vs 18.8.0
+- dotnet sdk 10.0.302
+- workload 10.0.302
+- ios 26.5.10301
 - add coding agents instructions
 - fix fallback to http/1.1 on .net
+- Microsoft.Extensions.* 10.0.10
 - Square.OkHttp3.Android 5.4.0.1
 - Square.OkIO 3.17.0.1
 - Xamarin.Brotli.Dec 0.1.2.12
