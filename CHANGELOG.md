@@ -1,5 +1,6 @@
 ## 2.4.11
 - add coding agents instructions
+- fix fallback to http/1.1 on .net
 
 ## 2.4.10
 - vs 18.7.0

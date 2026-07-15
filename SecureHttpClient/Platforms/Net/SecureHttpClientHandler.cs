@@ -88,12 +88,13 @@ namespace SecureHttpClient
                 _logger?.LogWarning("SetHeadersOrder is not supported on this platform and will be ignored.");
             }
 
-            // Enable HTTP/3 opportunistically (Alt-Svc negotiation).
+            // Enable HTTP/3 opportunistically from the first request.
             // Equivalent to iOS rq.AssumesHttp3Capable = true.
-            // A request with explicit VersionPolicy.RequestVersionExact keeps its precise semantics.
-            if (request.VersionPolicy == HttpVersionPolicy.RequestVersionOrLower)
+            // SocketsHttpHandler will fall back to HTTP/2 or HTTP/1.1 if QUIC is unavailable
+            // (RequestVersionOrLower policy allows fallback to lower versions).
+            if (request.Version.Major < 3 && request.VersionPolicy == HttpVersionPolicy.RequestVersionOrLower)
             {
-                request.VersionPolicy = HttpVersionPolicy.RequestVersionOrHigher;
+                request.Version = HttpVersion.Version30;
             }
 
             return base.SendAsync(request, cancellationToken);
