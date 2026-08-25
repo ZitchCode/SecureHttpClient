@@ -4,6 +4,7 @@
 - workload 10.0.400
 - ios 26.5.10315
 - Microsoft.Extensions.* 10.0.11
+- test : Microsoft.Maui.* 10.0.100
 - test : Xunit.SkippableFact 1.5.85
 
 ## 2.4.11
