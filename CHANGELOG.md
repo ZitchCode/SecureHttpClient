@@ -1,3 +1,10 @@
+## 2.4.12
+- vs 18.9.1
+- dotnet sdk 10.0.400
+- workload 10.0.400
+- ios 26.5.10315
+- Microsoft.Extensions.* 10.0.11
+
 ## 2.4.11
 - vs 18.8.0
 - dotnet sdk 10.0.302
