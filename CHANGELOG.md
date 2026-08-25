@@ -4,6 +4,8 @@
 - workload 10.0.400
 - ios 26.5.10315
 - Microsoft.Extensions.* 10.0.11
+- Square.OkHttp3.Android 5.5.0
+- Square.OkIO 3.18.1
 - test : Microsoft.Maui.* 10.0.100
 - test : Xunit.SkippableFact 1.5.85
 
