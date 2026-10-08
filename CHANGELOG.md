@@ -8,6 +8,7 @@
 - ios: replace the custom byte-array stream and async lock with System.IO.Pipelines
 - ios: propagate cancellation to the NSUrlSession task and release the inflight request on error
 - ios: dispose the linked cancellation token sources in the progress stream
+- Microsoft.Extensions.* 10.0.12
 - test : Microsoft.Maui.* 10.0.110
 
 ## 2.4.12
