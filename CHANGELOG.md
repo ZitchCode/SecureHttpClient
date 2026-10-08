@@ -5,6 +5,7 @@
 - ios 26.5.10318
 - fix response headers placement on android/ios (general/custom headers were leaked into Content.Headers)
 - stream decompressed responses instead of buffering the whole body in memory on android
+- replace the custom byte-array stream and async lock with System.IO.Pipelines on ios
 
 ## 2.4.12
 - vs 18.9.1

@@ -182,7 +182,7 @@ namespace SecureHttpClient
                 {
                     FutureResponse = ret,
                     Request = request,
-                    ResponseBody = new ByteArrayListStream(),
+                    ResponseBody = new PipeStream(),
                     CancellationToken = cancellationToken,
                 };
             }
