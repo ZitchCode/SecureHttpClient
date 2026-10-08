@@ -57,7 +57,11 @@ namespace SecureHttpClient.Test.Helpers
         // Accepts one connection, drains the request, then responds with the given
         // headers plus a Content-Length and Connection: close. Used to assert where
         // response headers end up on the client side.
-        internal async Task AcceptAndRespondWithHeadersAsync(IEnumerable<KeyValuePair<string, string>> responseHeaders, string body = "")
+        internal Task AcceptAndRespondWithHeadersAsync(IEnumerable<KeyValuePair<string, string>> responseHeaders, string body = "")
+            => AcceptAndRespondWithBytesAsync(responseHeaders, Encoding.UTF8.GetBytes(body));
+
+        // Same as above but with a raw body, used to send pre-compressed payloads.
+        internal async Task AcceptAndRespondWithBytesAsync(IEnumerable<KeyValuePair<string, string>> responseHeaders, byte[] body)
         {
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             using var tcpClient = await _listener.AcceptTcpClientAsync(cts.Token);
@@ -70,21 +74,57 @@ namespace SecureHttpClient.Test.Helpers
             string? line;
             while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync(cts.Token))) { }
 
-            var bodyBytes = Encoding.UTF8.GetBytes(body);
             var builder = new StringBuilder("HTTP/1.1 200 OK\r\n");
             foreach (var (name, value) in responseHeaders)
             {
                 builder.Append(name).Append(": ").Append(value).Append("\r\n");
             }
-            builder.Append("Content-Length: ").Append(bodyBytes.Length).Append("\r\n");
+            builder.Append("Content-Length: ").Append(body.Length).Append("\r\n");
             builder.Append("Connection: close\r\n\r\n");
 
             await stream.WriteAsync(Encoding.ASCII.GetBytes(builder.ToString()), cts.Token);
-            if (bodyBytes.Length > 0)
+            if (body.Length > 0)
             {
-                await stream.WriteAsync(bodyBytes, cts.Token);
+                await stream.WriteAsync(body, cts.Token);
             }
             await stream.FlushAsync(cts.Token);
+        }
+
+        // Accepts one connection and sends a response with a partial body while declaring a much
+        // larger Content-Length, then waits for the client to close the connection. Used to assert
+        // that the client returns as soon as the headers are available instead of buffering the body.
+        internal async Task AcceptAndSendPartialResponseThenWaitAsync(IEnumerable<KeyValuePair<string, string>> responseHeaders, byte[] partialBody, long declaredContentLength)
+        {
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using var tcpClient = await _listener.AcceptTcpClientAsync(cts.Token);
+            var stream = tcpClient.GetStream();
+            using var reader = new StreamReader(stream, Encoding.ASCII,
+                detectEncodingFromByteOrderMarks: false, bufferSize: 4096, leaveOpen: true);
+
+            // Skip the request line and the request headers
+            await reader.ReadLineAsync(cts.Token);
+            string? line;
+            while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync(cts.Token))) { }
+
+            var builder = new StringBuilder("HTTP/1.1 200 OK\r\n");
+            foreach (var (name, value) in responseHeaders)
+            {
+                builder.Append(name).Append(": ").Append(value).Append("\r\n");
+            }
+            builder.Append("Content-Length: ").Append(declaredContentLength).Append("\r\n");
+            builder.Append("Connection: close\r\n\r\n");
+
+            await stream.WriteAsync(Encoding.ASCII.GetBytes(builder.ToString()), cts.Token);
+            await stream.WriteAsync(partialBody, cts.Token);
+            await stream.FlushAsync(cts.Token);
+
+            // Park until the client disposes the response (closing the connection) or the timeout elapses.
+            var buffer = new byte[1024];
+            try
+            {
+                while (await stream.ReadAsync(buffer, cts.Token) > 0) { }
+            }
+            catch (Exception) { /* connection reset or cancellation — expected */ }
         }
 
         // Accepts one connection and drains all incoming data without sending a

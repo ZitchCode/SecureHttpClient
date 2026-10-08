@@ -33,6 +33,17 @@ namespace SecureHttpClient.Test
             return response;
         }
 
+        // Returns as soon as the response headers are available, without buffering the body.
+        protected async Task<HttpResponseMessage> GetAsync(string page, HttpCompletionOption completionOption, bool ensureSuccessStatusCode = true)
+        {
+            var response = await _httpClient.GetAsync(page, completionOption).ConfigureAwait(false);
+            if (ensureSuccessStatusCode)
+            {
+                response.EnsureSuccessStatusCode();
+            }
+            return response;
+        }
+
         protected async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, bool ensureSuccessStatusCode = true)
         {
             var response = await _httpClient.SendAsync(request).ConfigureAwait(false);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -105,6 +106,78 @@ namespace SecureHttpClient.Test
             Assert.True(url);
             var requestEncoding = json.RootElement.GetProperty("headers").GetProperty("Accept-Encoding").GetString();
             Assert.Contains("br", requestEncoding);
+        }
+
+        // Regression test: decompressed response bodies must be streamed (not buffered into
+        // memory) and report an unknown content length, matching the default .NET handler.
+        [Fact]
+        public async Task HttpTest_Compression_StreamingContentLengthUnknown()
+        {
+            await using var server = new EchoServer();
+            var payload = new string('A', 10000);
+            var payloadBytes = Encoding.UTF8.GetBytes(payload);
+
+            byte[] gzipped;
+            using (var ms = new MemoryStream())
+            {
+                using (var gzip = new GZipStream(ms, CompressionLevel.Optimal, leaveOpen: true))
+                {
+                    gzip.Write(payloadBytes, 0, payloadBytes.Length);
+                }
+                gzipped = ms.ToArray();
+            }
+
+            var responseHeaders = new Dictionary<string, string>
+            {
+                ["Content-Type"] = "text/plain",
+                ["Content-Encoding"] = "gzip",
+            };
+            var serverTask = server.AcceptAndRespondWithBytesAsync(responseHeaders, gzipped);
+
+            // Use ResponseHeadersRead: the default (ResponseContentRead) buffers the whole body, which
+            // makes StreamContent (Android) report the buffered length instead of an unknown one.
+            var response = await GetAsync($"http://127.0.0.1:{server.Port}/", HttpCompletionOption.ResponseHeadersRead);
+            await serverTask;
+
+            // The decompressed length is unknown: .NET and Android strip the Content-Length header.
+            // iOS NSURLSession manages decompression itself and may still report the compressed length.
+            if (DeviceInfo.Platform != DevicePlatform.iOS)
+            {
+                Assert.Null(response.Content.Headers.ContentLength);
+            }
+
+            // Read as a stream (not a one-shot buffer) and verify integrity.
+            await using var stream = await response.Content.ReadAsStreamAsync();
+            using var reader = new StreamReader(stream);
+            var read = await reader.ReadToEndAsync();
+            Assert.Equal(payload, read);
+        }
+
+        // Regression test: the decompression interceptor must not buffer the whole body before
+        // returning. The server sends headers plus a partial compressed body and then stalls; if
+        // the body were buffered (the previous readByteArray implementation), SendAsync would block
+        // until the client timeout. With streaming it returns as soon as the headers are available.
+        [SkippableFact]
+        public async Task HttpTest_Compression_DoesNotBufferBodyBeforeReturning()
+        {
+            // iOS uses NSURLSession decompression, not the interceptor.
+            Skip.If(DeviceInfo.Platform == DevicePlatform.iOS, "iOS does not use the decompression interceptor.");
+
+            await using var server = new EchoServer();
+            var responseHeaders = new Dictionary<string, string>
+            {
+                ["Content-Type"] = "text/plain",
+                ["Content-Encoding"] = "gzip",
+            };
+            // Incomplete gzip stream (magic + a couple of bytes), never completed by the server.
+            var partialBody = new byte[] { 0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00 };
+            var serverTask = server.AcceptAndSendPartialResponseThenWaitAsync(responseHeaders, partialBody, declaredContentLength: 1_000_000);
+
+            SetTimeout(10);
+            var response = await GetAsync($"http://127.0.0.1:{server.Port}/", HttpCompletionOption.ResponseHeadersRead);
+
+            response.Dispose();
+            await serverTask;
         }
 
         [Fact]
