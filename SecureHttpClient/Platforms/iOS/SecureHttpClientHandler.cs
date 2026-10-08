@@ -173,8 +173,7 @@ namespace SecureHttpClient
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            var ret = new TaskCompletionSource<HttpResponseMessage>();
-            cancellationToken.Register(() => ret.TrySetCanceled());
+            var ret = new TaskCompletionSource<HttpResponseMessage>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             lock (InflightRequests)
             {
@@ -188,6 +187,23 @@ namespace SecureHttpClient
             }
 
             op.Resume();
+
+            // Propagate cancellation to the underlying NSUrlSession task (so a cancelled request
+            // does not keep running in the background) and dispose the registration once the
+            // operation completes, so the callback is not retained by the token indefinitely.
+            using var registration = cancellationToken.Register(() =>
+            {
+                ret.TrySetCanceled(cancellationToken);
+                try
+                {
+                    op.Cancel();
+                }
+                catch (Exception ex)
+                {
+                    _logger?.LogDebug(ex, "Ignoring exception while cancelling NSUrlSession task.");
+                }
+            });
+
             return await ret.Task.ConfigureAwait(false);
         }
     }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Quic;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using SecureHttpClient.Test.Helpers;
 using Xunit;
@@ -52,6 +53,11 @@ namespace SecureHttpClient.Test
                 response.EnsureSuccessStatusCode();
             }
             return response;
+        }
+
+        protected Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            return _httpClient.SendAsync(request, cancellationToken);
         }
 
         protected void AddCertificatePinner(string hostname, string[] pins)

@@ -127,6 +127,29 @@ namespace SecureHttpClient.Test.Helpers
             catch (Exception) { /* connection reset or cancellation — expected */ }
         }
 
+        // Accepts one connection, reads the request, signals the caller that the request was
+        // received, then waits until the client closes the connection. Completes normally on
+        // disconnect and throws OperationCanceledException if the timeout elapses first.
+        internal async Task AcceptAndWaitForClientDisconnectAsync(TaskCompletionSource requestReceived, TimeSpan timeout)
+        {
+            using var cts = new CancellationTokenSource(timeout);
+            using var tcpClient = await _listener.AcceptTcpClientAsync(cts.Token);
+            var stream = tcpClient.GetStream();
+            using var reader = new StreamReader(stream, Encoding.ASCII,
+                detectEncodingFromByteOrderMarks: false, bufferSize: 4096, leaveOpen: true);
+
+            // Skip the request line and the request headers
+            await reader.ReadLineAsync(cts.Token);
+            string? line;
+            while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync(cts.Token))) { }
+
+            requestReceived.TrySetResult();
+
+            // Wait for the client to close the connection.
+            var buffer = new byte[1024];
+            while (await stream.ReadAsync(buffer, cts.Token) > 0) { }
+        }
+
         // Accepts one connection and drains all incoming data without sending a
         // response. Used for tests that expect a client-side exception raised
         // before the response is needed.

@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Maui.Devices;
 using SecureHttpClient.Extensions;
@@ -177,6 +178,30 @@ namespace SecureHttpClient.Test
             var response = await GetAsync($"http://127.0.0.1:{server.Port}/", HttpCompletionOption.ResponseHeadersRead);
 
             response.Dispose();
+            await serverTask;
+        }
+
+        // Regression test: cancelling a pending request must cancel the underlying HTTP request so
+        // the connection is released. The server never responds and only completes when the client
+        // disconnects; without propagating cancellation to the NSUrlSession task (iOS), the server
+        // would never observe a disconnect and this test would time out.
+        [Fact]
+        public async Task HttpTest_Cancellation_ClosesConnection()
+        {
+            await using var server = new EchoServer();
+            var requestReceived = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            var serverTask = server.AcceptAndWaitForClientDisconnectAsync(requestReceived, TimeSpan.FromSeconds(8));
+
+            using var cts = new CancellationTokenSource();
+            var request = new HttpRequestMessage(HttpMethod.Get, $"http://127.0.0.1:{server.Port}/");
+            var sendTask = SendAsync(request, cts.Token);
+
+            await requestReceived.Task.WaitAsync(TimeSpan.FromSeconds(8));
+            cts.Cancel();
+
+            await Assert.ThrowsAnyAsync<OperationCanceledException>(() => sendTask);
+
+            // Throws if the client did not disconnect (i.e. cancellation was not propagated).
             await serverTask;
         }
 

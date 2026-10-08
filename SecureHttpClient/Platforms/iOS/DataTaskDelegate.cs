@@ -83,7 +83,7 @@ namespace SecureHttpClient
                     }
                     else
                     {
-                        ret.AddResponseHeader(headerKey, [v.Value.ToString()]);
+                        ret.AddResponseHeader(headerKey, [v.Value.ToString()!]);
                     }
                 }
 
@@ -108,6 +108,13 @@ namespace SecureHttpClient
             var data = GetResponseForTask(task);
             data.IsCompleted = true;
 
+            // Always remove the inflight operation, including on error/cancellation, so it does
+            // not linger until the task eventually completes on its own.
+            lock (_secureHttpClientHandler.InflightRequests)
+            {
+                _secureHttpClientHandler.InflightRequests.Remove(task);
+            }
+
             if (error != null || data.Error != null)
             {
                 var ex = CreateExceptionForNsError((data.Error ?? error)!);
@@ -119,11 +126,6 @@ namespace SecureHttpClient
             }
 
             data.ResponseBody.Complete();
-
-            lock (_secureHttpClientHandler.InflightRequests)
-            {
-                _secureHttpClientHandler.InflightRequests.Remove(task);
-            }
         }
 
         public override void DidReceiveData(NSUrlSession session, NSUrlSessionDataTask dataTask, NSData byteData)
