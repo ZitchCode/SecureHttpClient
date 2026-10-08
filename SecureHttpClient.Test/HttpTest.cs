@@ -123,6 +123,31 @@ namespace SecureHttpClient.Test
             Assert.Contains("header3", headers);
         }
 
+        // Regression test: each response header must be routed to a single collection.
+        // Content headers (Content-Type, ...) belong to response.Content.Headers while
+        // general/custom headers (Date, Server, X-*, Set-Cookie, ...) belong to
+        // response.Headers. Android/iOS previously added every header to both collections,
+        // leaking custom/general headers into Content.Headers (unlike the default handler).
+        [Fact]
+        public async Task HttpTest_ResponseHeadersPlacement()
+        {
+            await using var server = new EchoServer();
+            var responseHeaders = new Dictionary<string, string>
+            {
+                ["Content-Type"] = "text/plain",
+                ["X-Custom-Header"] = "custom-value",
+            };
+            var serverTask = server.AcceptAndRespondWithHeadersAsync(responseHeaders, "ok");
+
+            var response = await GetAsync($"http://127.0.0.1:{server.Port}/");
+            await serverTask;
+
+            Assert.True(response.Content.Headers.Contains("Content-Type"));
+            Assert.False(response.Content.Headers.NonValidated.Contains("X-Custom-Header"));
+            Assert.True(response.Headers.NonValidated.Contains("X-Custom-Header"));
+            Assert.False(response.Headers.NonValidated.Contains("Content-Type"));
+        }
+
         [SkippableFact]
         public async Task HttpTest_HeadersOrder()
         {

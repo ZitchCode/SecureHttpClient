@@ -1,6 +1,7 @@
 ﻿#if __IOS__
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -8,6 +9,7 @@ using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using Foundation;
 using SecureHttpClient.CertificatePinning;
+using SecureHttpClient.Extensions;
 
 namespace SecureHttpClient
 {
@@ -68,20 +70,20 @@ namespace SecureHttpClient
 
                     var headerKey = v.Key.ToString()!;
 
-                    if (headerKey.ToLower() == "set-cookie")
+                    if (string.Equals(headerKey, "set-cookie", StringComparison.OrdinalIgnoreCase))
                     {
+                        // NSURLSession may fold multiple cookies into a single header value.
                         var splitter = new SetCookieHeaderSplitter(v.Value.ToString()!);
+                        var values = new List<string>();
                         while (splitter.HasNext())
                         {
-                            var setCookieHeaderValue = splitter.Next();
-                            ret.Headers.TryAddWithoutValidation(headerKey, setCookieHeaderValue);
-                            ret.Content.Headers.TryAddWithoutValidation(headerKey, setCookieHeaderValue);
+                            values.Add(splitter.Next());
                         }
+                        ret.AddResponseHeader(headerKey, values);
                     }
                     else
                     {
-                        ret.Headers.TryAddWithoutValidation(headerKey, v.Value.ToString());
-                        ret.Content.Headers.TryAddWithoutValidation(headerKey, v.Value.ToString());
+                        ret.AddResponseHeader(headerKey, [v.Value.ToString()]);
                     }
                 }
 

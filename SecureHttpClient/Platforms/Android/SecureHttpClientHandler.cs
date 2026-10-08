@@ -250,10 +250,7 @@ namespace SecureHttpClient
 
             foreach (var (name, values) in resp.Headers().ToMultimap())
             {
-                // special handling for Set-Cookie because folding them into one header is strongly discouraged.
-                // but adding them just folds them again so this is no option at the moment
-                ret.Headers.TryAddWithoutValidation(name, values);
-                ret.Content.Headers.TryAddWithoutValidation(name, values);
+                ret.AddResponseHeader(name, values);
             }
 
             return ret;
