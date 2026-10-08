@@ -7,6 +7,7 @@
 - android: stream decompressed responses instead of buffering the whole body in memory
 - ios: replace the custom byte-array stream and async lock with System.IO.Pipelines
 - ios: propagate cancellation to the NSUrlSession task and release the inflight request on error
+- ios: dispose the linked cancellation token sources in the progress stream
 
 ## 2.4.12
 - vs 18.9.1

@@ -161,7 +161,7 @@ namespace SecureHttpClient
             public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
             {
                 _token.ThrowIfCancellationRequested();
-                var linked = CancellationTokenSource.CreateLinkedTokenSource(_token, cancellationToken);
+                using var linked = CancellationTokenSource.CreateLinkedTokenSource(_token, cancellationToken);
 
                 var readCount = await ParentStream.ReadAsync(buffer, offset, count, linked.Token).ConfigureAwait(false);
 
@@ -169,15 +169,15 @@ namespace SecureHttpClient
                 return readCount;
             }
 
-            public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+            public override async Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
             {
                 _token.ThrowIfCancellationRequested();
 
-                var linked = CancellationTokenSource.CreateLinkedTokenSource(_token, cancellationToken);
+                using var linked = CancellationTokenSource.CreateLinkedTokenSource(_token, cancellationToken);
                 var task = ParentStream.WriteAsync(buffer, offset, count, linked.Token);
 
                 WriteCallback(count);
-                return task;
+                await task.ConfigureAwait(false);
             }
 
             protected override void Dispose(bool disposing)
