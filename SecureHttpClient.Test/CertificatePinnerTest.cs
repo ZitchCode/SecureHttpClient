@@ -28,6 +28,30 @@ namespace SecureHttpClient.Test
             await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(_fixture.Page));
         }
 
+        // Regression test: configuring a pin after the handler has already sent a request must not be
+        // silently ignored. Either the configuration is rejected (like the .NET handler, which forbids
+        // changing properties after the first request) or it must take effect and be enforced.
+        [Fact]
+        public async Task CertificatePinnerTest_AddedAfterFirstRequest_IsNotSilentlyIgnored()
+        {
+            // First request without any pin: forces the platform session/client to be created.
+            await GetAsync(_fixture.Page);
+
+            // Configure a wrong pin only now.
+            try
+            {
+                AddCertificatePinner(_fixture.Hostname, _fixture.PinsKo);
+            }
+            catch (InvalidOperationException)
+            {
+                // Rejected because the handler is already in use: acceptable (matches the .NET handler).
+                return;
+            }
+
+            // Otherwise the pin must be enforced.
+            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(_fixture.Page));
+        }
+
         [Fact]
         public async Task CertificatePinnerTest_TwoHosts_Success()
         {

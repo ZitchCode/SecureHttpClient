@@ -8,6 +8,7 @@
 - ios: replace the custom byte-array stream and async lock with System.IO.Pipelines
 - ios: propagate cancellation to the NSUrlSession task and release the inflight request on error
 - ios: dispose the linked cancellation token sources in the progress stream
+- net/android/ios: throw when certificate pinning, trusted roots or client certificates are configured after the first request (previously silently ignored)
 - Microsoft.Extensions.* 10.0.12
 - test : Microsoft.Maui.* 10.0.110
 

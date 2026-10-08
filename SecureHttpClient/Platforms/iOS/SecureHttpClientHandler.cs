@@ -45,6 +45,7 @@ namespace SecureHttpClient
         /// <param name="pins">The array of certifiate pins (example of pin string: "sha256/fiKY8VhjQRb2voRmVXsqI0xPIREcwOVhpexrplrlqQY=")</param>
         public virtual void AddCertificatePinner(string hostname, string[] pins)
         {
+            EnsureNotStarted();
             _certificatePinner.Value.AddPins(hostname, pins);
         }
 
@@ -54,6 +55,7 @@ namespace SecureHttpClient
         /// <param name="provider">The provider for client certificates on this platform</param>
         public virtual void SetClientCertificates(Abstractions.IClientCertificateProvider provider)
         {
+            EnsureNotStarted();
             ClientCertificate = (provider as IClientCertificateProvider)?.Credential;
         }
 
@@ -63,6 +65,7 @@ namespace SecureHttpClient
         /// <param name="certificates">Certificates for the CAs to trust</param>
         public virtual void SetTrustedRoots(params byte[][] certificates)
         {
+            EnsureNotStarted();
             if (certificates.Length == 0)
             {
                 _trustedRoots = null;
@@ -72,6 +75,16 @@ namespace SecureHttpClient
             foreach (var cert in certificates)
             {
                 _trustedRoots.Add(X509CertificateLoader.LoadCertificate(cert));
+            }
+        }
+
+        // Certificate pinning, trusted roots and client certificates are captured when the
+        // NSUrlSession is created, so they cannot be changed once the handler has been used.
+        private void EnsureNotStarted()
+        {
+            if (_session != null)
+            {
+                throw new InvalidOperationException("Certificate pinning, trusted roots and client certificates must be configured before the first request.");
             }
         }
 

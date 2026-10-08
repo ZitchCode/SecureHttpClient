@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Maui.Devices;
@@ -161,6 +162,33 @@ namespace SecureHttpClient.Test
             const string certPass = "badssl.com";
             SetClientCertificate(clientCert, certPass);
             await GetAsync(page);
+        }
+
+        // Regression test: configuring a client certificate after the handler has already sent a
+        // request must not be silently ignored. Either the configuration is rejected (like the .NET
+        // handler does for pinning after the first request) or the certificate must be presented.
+        [Fact]
+        public async Task SslTest_ClientCertificate_AddedAfterFirstRequest_IsNotSilentlyIgnored()
+        {
+            // First request without a client certificate: forces the platform session/client to be created.
+            // Use an unrelated host so the TLS connection is not coalesced with client.badssl.com.
+            await GetAsync("https://www.howsmyssl.com/a/check");
+
+            // Configure the client certificate only now.
+            var clientCert = await ResourceHelper.GetBytesAsync("badssl.com-client.p12");
+            const string certPass = "badssl.com";
+            try
+            {
+                SetClientCertificate(clientCert, certPass);
+            }
+            catch (InvalidOperationException)
+            {
+                // Rejected because the handler is already in use: acceptable.
+                return;
+            }
+
+            // Otherwise the client certificate must be presented to a server that requires it.
+            await GetAsync("https://client.badssl.com/");
         }
 
         [Fact]

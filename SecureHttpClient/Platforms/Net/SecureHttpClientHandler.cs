@@ -21,6 +21,7 @@ namespace SecureHttpClient
         private readonly Lazy<CertificatePinner> _certificatePinner;
         private readonly ILogger<Abstractions.ISecureHttpClientHandler> _logger;
         private X509Certificate2Collection? _trustedRoots;
+        private bool _started;
 
         /// <summary>
         /// SecureHttpClientHandler constructor (NetStandard implementation)
@@ -54,10 +55,21 @@ namespace SecureHttpClient
         /// <param name="provider">The provider for client certificates on this platform</param>
         public virtual void SetClientCertificates(Abstractions.IClientCertificateProvider provider)
         {
+            EnsureNotStarted();
             ClientCertificates.Clear();
             if (provider is IClientCertificateProvider netProvider)
             {
                 ClientCertificates.AddRange(netProvider.Certificates);
+            }
+        }
+
+        // Client certificates cannot be applied once the handler has been used, so reject late
+        // configuration instead of silently ignoring it.
+        private void EnsureNotStarted()
+        {
+            if (_started)
+            {
+                throw new InvalidOperationException("Certificate pinning, trusted roots and client certificates must be configured before the first request.");
             }
         }
 
@@ -83,6 +95,8 @@ namespace SecureHttpClient
         /// <inheritdoc />
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
+            _started = true;
+
             if (request.GetHeadersOrder() != null)
             {
                 _logger?.LogWarning("SetHeadersOrder is not supported on this platform and will be ignored.");

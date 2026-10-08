@@ -55,6 +55,7 @@ namespace SecureHttpClient
         /// <param name="pins">The array of certifiate pins (example of pin string: "sha256/fiKY8VhjQRb2voRmVXsqI0xPIREcwOVhpexrplrlqQY=")</param>
         public virtual void AddCertificatePinner(string hostname, string[] pins)
         {
+            EnsureNotStarted();
             _logger?.LogDebug("Add CertificatePinner: hostname:{Hostname}, pins:{Pins}", hostname, string.Join("|", pins));
             CertificatePinning.CertificatePinner.ValidatePattern(hostname); // will throw c# exception instead of java exception if pattern is invalid
             _certificatePinnerBuilder.Value.Add(hostname, pins);
@@ -66,6 +67,7 @@ namespace SecureHttpClient
         /// <param name="provider">The provider for client certificates on this platform</param>
         public virtual void SetClientCertificates(Abstractions.IClientCertificateProvider provider)
         {
+            EnsureNotStarted();
             if (provider is IClientCertificateProvider androidProvider)
             {
                 _keyMgrFactory = KeyManagerFactory.GetInstance("X509")!;
@@ -83,6 +85,7 @@ namespace SecureHttpClient
         /// <param name="certificates">Certificates for the CAs to trust</param>
         public virtual void SetTrustedRoots(params byte[][] certificates)
         {
+            EnsureNotStarted();
             if (certificates == null)
             {
                 _trustMgrFactory = null;
@@ -107,6 +110,16 @@ namespace SecureHttpClient
                 {
                     break;
                 }
+            }
+        }
+
+        // The OkHttpClient (with its certificate pinner, trust manager and key managers) is built on
+        // the first request, so these cannot be changed once the handler has been used.
+        private void EnsureNotStarted()
+        {
+            if (_client.IsValueCreated)
+            {
+                throw new InvalidOperationException("Certificate pinning, trusted roots and client certificates must be configured before the first request.");
             }
         }
 
