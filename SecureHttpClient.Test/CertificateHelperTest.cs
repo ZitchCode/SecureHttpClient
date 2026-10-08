@@ -28,7 +28,7 @@ namespace SecureHttpClient.Test
             const string hostname = "www.howsmyssl.com";
             var certificate = await CertificateHelper.GetCertificateAsync(hostname);
             Assert.NotNull(certificate);
-            CheckCertificate(certificate, hostname, "CN=YR1, O=Let's Encrypt, C=US", "sha256RSA");
+            CheckCertificate(certificate, hostname, "CN=YR2, O=Let's Encrypt, C=US", "sha256RSA");
         }
 
         [Fact]
@@ -47,7 +47,7 @@ namespace SecureHttpClient.Test
             var certificates = await CertificateHelper.GetCertificatesAsync(hostname);
             Assert.Single(certificates);
             var certificate = certificates.First();
-            CheckCertificate(certificate, hostname, "CN=YR1, O=Let's Encrypt, C=US", "sha256RSA");
+            CheckCertificate(certificate, hostname, "CN=YR2, O=Let's Encrypt, C=US", "sha256RSA");
         }
 
         [Fact]
