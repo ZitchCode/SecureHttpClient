@@ -3,10 +3,10 @@
 - dotnet sdk 10.0.401
 - workload 10.0.401
 - ios 26.5.10318
-- fix response headers placement on android/ios (general/custom headers were leaked into Content.Headers)
-- stream decompressed responses instead of buffering the whole body in memory on android
-- replace the custom byte-array stream and async lock with System.IO.Pipelines on ios
-- ios : propagate cancellation to the NSUrlSession task and release the inflight request on error
+- android/ios: fix response headers placement (general/custom headers were leaked into Content.Headers)
+- android: stream decompressed responses instead of buffering the whole body in memory
+- ios: replace the custom byte-array stream and async lock with System.IO.Pipelines
+- ios: propagate cancellation to the NSUrlSession task and release the inflight request on error
 
 ## 2.4.12
 - vs 18.9.1
