@@ -99,6 +99,31 @@ namespace SecureHttpClient.Test
             await GetAsync("https://sha256.badssl.com/");
         }
 
+        // Regression test: configuring trusted roots after the handler has already sent a request
+        // must not be silently ignored. Either the configuration is rejected (like the .NET handler,
+        // which forbids changing properties after the first request) or it must take effect.
+        [Fact]
+        public async Task SslTest_TrustedRoots_AddedAfterFirstRequest_IsNotSilentlyIgnored()
+        {
+            // First request without custom roots: forces the platform session/client to be created.
+            await GetAsync("https://sha256.badssl.com/");
+
+            // Configure a custom trusted root only now.
+            var caCert = await ResourceHelper.GetStringAsync("untrusted_root_badssl_com_certificate.pem");
+            try
+            {
+                SetCaCertificate(caCert);
+            }
+            catch (InvalidOperationException)
+            {
+                // Rejected because the handler is already in use: acceptable.
+                return;
+            }
+
+            // Otherwise the custom root must be enforced: badssl.com is not signed by it.
+            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync("https://badssl.com/"));
+        }
+
         [Fact(Skip = "Mobile apps usually skip revocation checks")]
         public async Task SslTest_RevokedCertificate()
         {

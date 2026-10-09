@@ -45,6 +45,7 @@ namespace SecureHttpClient
         /// <param name="pins">The array of certifiate pins (example of pin string: "sha256/fiKY8VhjQRb2voRmVXsqI0xPIREcwOVhpexrplrlqQY=")</param>
         public virtual void AddCertificatePinner(string hostname, string[] pins)
         {
+            EnsureNotStarted();
             _certificatePinner.Value.AddPins(hostname, pins);
             ServerCertificateCustomValidationCallback = CheckServerCertificate;
         }
@@ -63,8 +64,8 @@ namespace SecureHttpClient
             }
         }
 
-        // Client certificates cannot be applied once the handler has been used, so reject late
-        // configuration instead of silently ignoring it.
+        // Pinning, trusted roots and client certificates cannot be applied once the handler has
+        // been used, so reject late configuration instead of silently ignoring it.
         private void EnsureNotStarted()
         {
             if (_started)
@@ -79,6 +80,7 @@ namespace SecureHttpClient
         /// <param name="certificates">Certificates for the CAs to trust</param>
         public virtual void SetTrustedRoots(params byte[][] certificates)
         {
+            EnsureNotStarted();
             if (certificates.Length == 0)
             {
                 _trustedRoots = null;
