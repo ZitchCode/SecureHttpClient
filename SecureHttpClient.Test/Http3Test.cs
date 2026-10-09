@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -24,18 +25,14 @@ namespace SecureHttpClient.Test
         }
 
         // HTTP/3 is negotiated via Alt-Svc: the first request goes over TCP (HTTP/2 or 1.1),
-        // then subsequent requests to the same server upgrade to QUIC.
-        // We therefore send two requests and assert the second one is HTTP/3.
+        // then subsequent requests to the same server upgrade to QUIC. The upgrade is best-effort
+        // so a few requests may be needed; retry until HTTP/3 is observed.
         [SkippableFact]
         public async Task Http3Test_NegotiatedOnHttp3Server()
         {
             SkipIfHttp3NotSupported();
 
-            // First request — may be HTTP/2; server sends back Alt-Svc: h3=...
-            await GetAsync(_fixture.Http3Page);
-
-            // Second request — should be HTTP/3 now that the Alt-Svc is cached
-            var response = await GetAsync(_fixture.Http3Page);
+            var response = await GetUntilVersionAsync(_fixture.Http3Page, HttpVersion.Version30);
             Assert.Equal(HttpVersion.Version30, response.Version);
         }
 
@@ -59,12 +56,21 @@ namespace SecureHttpClient.Test
             var pin = await CertificateHelper.GetSpkiFingerprintAsync(_fixture.Http3Hostname);
             AddCertificatePinner(_fixture.Http3Hostname, [pin]);
 
-            // First request establishes Alt-Svc cache entry
-            await GetAsync(_fixture.Http3Page);
-
-            // Second request goes over QUIC with pinning active
-            var response = await GetAsync(_fixture.Http3Page);
+            var response = await GetUntilVersionAsync(_fixture.Http3Page, HttpVersion.Version30);
             Assert.Equal(HttpVersion.Version30, response.Version);
+        }
+
+        // HTTP/3 is negotiated on a best-effort basis (Alt-Svc + QUIC handshake), so a few
+        // requests may be needed before the connection upgrades from HTTP/2.
+        private async Task<HttpResponseMessage> GetUntilVersionAsync(string page, Version expectedVersion, int maxAttempts = 10)
+        {
+            var response = await GetAsync(page);
+            for (var attempt = 1; attempt < maxAttempts && response.Version != expectedVersion; attempt++)
+            {
+                await Task.Delay(200);
+                response = await GetAsync(page);
+            }
+            return response;
         }
 
         [SkippableFact]
