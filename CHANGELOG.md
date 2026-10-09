@@ -20,6 +20,7 @@
 - android/ios: merge duplicate request headers and use the correct separator for Cookie
 - internal cleanup: guard the NTLM credential lookup, drop the dead progress write callback
 - test: cover request-header merge (Cookie separator) and handler dispose
+- test: keep HTTP/3 enabled in the .NET runner under AOT (Http3Support)
 - Microsoft.Extensions.* 10.0.12
 - test : Microsoft.Maui.* 10.0.110
 

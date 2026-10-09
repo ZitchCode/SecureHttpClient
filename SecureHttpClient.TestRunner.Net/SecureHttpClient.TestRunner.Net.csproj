@@ -8,6 +8,9 @@
 
 	<PropertyGroup Condition="'$(Configuration)'=='Release'">
 		<PublishAot>true</PublishAot>
+		<!-- PublishAot/trimming disables HTTP/3 by default (System.Net.SocketsHttpHandler.Http3Support=false).
+		     Keep it enabled so the runner exercises HTTP/3 like a regular app. -->
+		<Http3Support>true</Http3Support>
 	</PropertyGroup>
 
 	<ItemGroup>
