@@ -93,7 +93,7 @@ namespace SecureHttpClient
         }
 
         /// <inheritdoc />
-        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             _started = true;
 
@@ -106,12 +106,21 @@ namespace SecureHttpClient
             // Equivalent to iOS rq.AssumesHttp3Capable = true.
             // SocketsHttpHandler will fall back to HTTP/2 or HTTP/1.1 if QUIC is unavailable
             // (RequestVersionOrLower policy allows fallback to lower versions).
-            if (request.Version.Major < 3 && request.VersionPolicy == HttpVersionPolicy.RequestVersionOrLower)
+            // The caller's version is restored afterwards so the upgrade stays internal.
+            var originalVersion = request.Version;
+            if (originalVersion.Major < 3 && request.VersionPolicy == HttpVersionPolicy.RequestVersionOrLower)
             {
                 request.Version = HttpVersion.Version30;
             }
 
-            return base.SendAsync(request, cancellationToken);
+            try
+            {
+                return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            }
+            finally
+            {
+                request.Version = originalVersion;
+            }
         }
 
         private bool CheckServerCertificate(HttpRequestMessage httpRequestMessage, X509Certificate2? certificate, X509Chain? chain, SslPolicyErrors sslPolicyErrors)

@@ -3,7 +3,6 @@
 using System;
 using System.IO;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace SecureHttpClient
 {
@@ -21,12 +20,9 @@ namespace SecureHttpClient
             var disp = Interlocked.Exchange(ref _onDispose, null);
             disp?.Invoke();
 
-            // EVIL HAX: We have to let at least one ReadAsync of the underlying
-            // stream fail with OperationCancelledException before we can dispose
-            // the base, or else the exception coming out of the ReadAsync will
-            // be an ObjectDisposedException from an internal MemoryStream. This isn't
-            // the Ideal way to fix this, but #yolo.
-            Task.Run(() => base.Dispose(disposing));
+            // onDispose completes the response pipe with an OperationCanceledException, so any
+            // pending read observes the cancellation before the base stream is disposed.
+            base.Dispose(disposing);
         }
     }
 }

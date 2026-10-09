@@ -85,7 +85,7 @@ public class DecompressInterceptor implements Interceptor {
                 .build();
     }
 
-    private Boolean isCompressed(Response response) {
+    private boolean isCompressed(Response response) {
         String contentEncoding = response.header("Content-Encoding");
         return contentEncoding != null 
             && (contentEncoding.equalsIgnoreCase("gzip") || contentEncoding.equalsIgnoreCase("deflate") || contentEncoding.equalsIgnoreCase("br"));

@@ -11,6 +11,7 @@
 - net/android/ios: throw when certificate pinning, trusted roots or client certificates are configured after the first request (previously silently ignored)
 - android: SetTrustedRoots() with no argument resets to the system roots instead of trusting nothing
 - test: retry the http/3 negotiation tests until HTTP/3 is observed (Alt-Svc is best-effort)
+- internal cleanup: no deferred response-stream dispose on ios, no caller request.Version mutation on net, typed headers-order request option, primitive boolean in the okhttp decompress interceptor
 - Microsoft.Extensions.* 10.0.12
 - test : Microsoft.Maui.* 10.0.110
 
