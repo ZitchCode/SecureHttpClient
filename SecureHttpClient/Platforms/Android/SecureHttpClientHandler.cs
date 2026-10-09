@@ -269,6 +269,7 @@ namespace SecureHttpClient
             return ret;
         }
 
+        /// <inheritdoc />
         protected override void Dispose(bool disposing)
         {
             if (disposing && _client.IsValueCreated)

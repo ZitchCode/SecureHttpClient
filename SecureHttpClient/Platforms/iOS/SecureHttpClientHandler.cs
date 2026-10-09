@@ -276,6 +276,7 @@ namespace SecureHttpClient
             }
         }
 
+        /// <inheritdoc />
         protected override void Dispose(bool disposing)
         {
             if (disposing && _session.IsValueCreated)
