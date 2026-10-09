@@ -13,6 +13,10 @@ namespace SecureHttpClient
 
     internal class ProgressStreamContent : StreamContent
     {
+        private long _totalBytes;
+        private long _totalBytesExpected = -1;
+        private ProgressDelegate _progress = delegate { };
+
         public ProgressStreamContent(Stream stream, CancellationToken token)
             : this(new ProgressStream(stream, token))
         {
@@ -47,9 +51,6 @@ namespace SecureHttpClient
             _totalBytes = 0L;
         }
 
-        private long _totalBytes;
-        private long _totalBytesExpected = -1;
-
         private void ReadBytes(long bytes)
         {
             if (_totalBytesExpected == -1)
@@ -65,7 +66,6 @@ namespace SecureHttpClient
             Progress(bytes, _totalBytes, _totalBytesExpected);
         }
 
-        ProgressDelegate _progress = delegate { };
         public ProgressDelegate Progress
         {
             get => _progress;
@@ -95,12 +95,9 @@ namespace SecureHttpClient
                 _token = token;
 
                 ReadCallback = delegate { };
-                WriteCallback = delegate { };
             }
 
             public Action<long> ReadCallback { private get; set; }
-
-            private Action<long> WriteCallback { get; }
 
             private Stream ParentStream { get; }
 
@@ -155,7 +152,6 @@ namespace SecureHttpClient
             {
                 _token.ThrowIfCancellationRequested();
                 ParentStream.Write(buffer, offset, count);
-                WriteCallback(count);
             }
 
             public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
@@ -174,10 +170,7 @@ namespace SecureHttpClient
                 _token.ThrowIfCancellationRequested();
 
                 using var linked = CancellationTokenSource.CreateLinkedTokenSource(_token, cancellationToken);
-                var task = ParentStream.WriteAsync(buffer, offset, count, linked.Token);
-
-                WriteCallback(count);
-                await task.ConfigureAwait(false);
+                await ParentStream.WriteAsync(buffer, offset, count, linked.Token).ConfigureAwait(false);
             }
 
             protected override void Dispose(bool disposing)

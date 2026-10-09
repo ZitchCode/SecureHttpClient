@@ -221,6 +221,18 @@ namespace SecureHttpClient.Test
             Assert.Contains("header3", headers);
         }
 
+        // Smoke test: disposing the handler after a request must not throw (session/client teardown).
+        [Fact]
+        public async Task HttpTest_DisposeAfterRequest_DoesNotThrow()
+        {
+            await using var server = new EchoServer();
+            var serverTask = server.AcceptAndGetHeaderNamesAsync();
+            await GetAsync($"http://127.0.0.1:{server.Port}/");
+            await serverTask;
+
+            DisposeHandler();
+        }
+
         // Regression test: each response header must be routed to a single collection.
         // Content headers (Content-Type, ...) belong to response.Content.Headers while
         // general/custom headers (Date, Server, X-*, Set-Cookie, ...) belong to

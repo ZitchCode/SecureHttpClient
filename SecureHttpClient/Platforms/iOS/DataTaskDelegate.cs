@@ -30,6 +30,11 @@ namespace SecureHttpClient
         public override void DidReceiveResponse(NSUrlSession session, NSUrlSessionDataTask dataTask, NSUrlResponse response, Action<NSUrlSessionResponseDisposition> completionHandler)
         {
             var data = GetResponseForTask(dataTask);
+            if (data == null)
+            {
+                completionHandler(NSUrlSessionResponseDisposition.Cancel);
+                return;
+            }
 
             try
             {
@@ -107,6 +112,10 @@ namespace SecureHttpClient
         public override void DidCompleteWithError(NSUrlSession session, NSUrlSessionTask task, NSError? error)
         {
             var data = GetResponseForTask(task);
+            if (data == null)
+            {
+                return;
+            }
             data.IsCompleted = true;
 
             // Always remove the inflight operation, including on error/cancellation, so it does
@@ -139,6 +148,10 @@ namespace SecureHttpClient
         public override void DidReceiveData(NSUrlSession session, NSUrlSessionDataTask dataTask, NSData byteData)
         {
             var data = GetResponseForTask(dataTask);
+            if (data == null)
+            {
+                return;
+            }
             var bytes = byteData.ToArray();
 
             // NB: If we're cancelled, we still might have one more chunk of data that attempts to be delivered
@@ -147,11 +160,11 @@ namespace SecureHttpClient
             data.ResponseBody.AddByteArray(bytes);
         }
 
-        private InflightOperation GetResponseForTask(NSUrlSessionTask task)
+        private InflightOperation? GetResponseForTask(NSUrlSessionTask task)
         {
             lock (_secureHttpClientHandler.InflightRequests)
             {
-                return _secureHttpClientHandler.InflightRequests[task];
+                return _secureHttpClientHandler.InflightRequests.TryGetValue(task, out var data) ? data : null;
             }
         }
 
@@ -193,8 +206,14 @@ namespace SecureHttpClient
                     }
                     else
                     {
-                        var uri = GetResponseForTask(task).Request.RequestUri!;
-                        credentialsToUse = _secureHttpClientHandler.Credentials.GetCredential(uri, "NTLM")!;
+                        var uri = GetResponseForTask(task)?.Request.RequestUri;
+                        var ntlmCredential = uri == null ? null : _secureHttpClientHandler.Credentials.GetCredential(uri, "NTLM");
+                        if (ntlmCredential == null)
+                        {
+                            completionHandler(NSUrlSessionAuthChallengeDisposition.PerformDefaultHandling, challenge.ProposedCredential);
+                            return;
+                        }
+                        credentialsToUse = ntlmCredential;
                     }
                     var credential = new NSUrlCredential(credentialsToUse.UserName, credentialsToUse.Password, NSUrlCredentialPersistence.ForSession);
                     completionHandler(NSUrlSessionAuthChallengeDisposition.UseCredential, credential);
@@ -319,7 +338,10 @@ namespace SecureHttpClient
         private void RejectServerCertificate(NSUrlSessionTask task, Action<NSUrlSessionAuthChallengeDisposition, NSUrlCredential> completionHandler)
         {
             var inflightRequest = GetResponseForTask(task);
-            inflightRequest.Error = new NSError(NSError.NSUrlErrorDomain, (nint)(long)NSUrlError.ServerCertificateUntrusted);
+            if (inflightRequest != null)
+            {
+                inflightRequest.Error = new NSError(NSError.NSUrlErrorDomain, (nint)(long)NSUrlError.ServerCertificateUntrusted);
+            }
             completionHandler(NSUrlSessionAuthChallengeDisposition.CancelAuthenticationChallenge, null!);
         }
 

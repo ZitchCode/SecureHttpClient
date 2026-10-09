@@ -44,7 +44,10 @@ namespace SecureHttpClient
                 var span = _pipe.Writer.GetSpan(bytes.Length);
                 bytes.CopyTo(span);
                 _pipe.Writer.Advance(bytes.Length);
-                // Signal the reader without blocking the delegate thread on backpressure.
+
+                // Signal the reader without blocking the delegate thread. The returned ValueTask must
+                // NOT be awaited: the pipe reuses its writer ValueTask source, so awaiting an earlier
+                // flush after a newer one has started triggers a "concurrent operations" fault.
                 _ = _pipe.Writer.FlushAsync();
             }
         }

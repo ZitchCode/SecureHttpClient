@@ -15,18 +15,50 @@ namespace SecureHttpClient.Extensions
 
         internal static IEnumerable<KeyValuePair<string, string>> GetMergedRequestHeaders(this HttpRequestMessage request, bool includeContentHeaders)
         {
-            IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers = request.Headers;
+            // Merge request and content headers into a single ordered list, combining the values of
+            // header names present in both collections (case-insensitive) so a header is emitted once.
+            var merged = new List<KeyValuePair<string, IEnumerable<string>>>(request.Headers);
 
             if (includeContentHeaders && request.Content != null)
             {
-                headers = headers.Union(request.Content.Headers.Where(h => !ExcludedFramingHeaders.Contains(h.Key, StringComparer.OrdinalIgnoreCase)));
+                foreach (var header in request.Content.Headers)
+                {
+                    if (ExcludedFramingHeaders.Contains(header.Key, StringComparer.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+
+                    var index = merged.FindIndex(h => string.Equals(h.Key, header.Key, StringComparison.OrdinalIgnoreCase));
+                    if (index >= 0)
+                    {
+                        merged[index] = new KeyValuePair<string, IEnumerable<string>>(
+                            merged[index].Key, merged[index].Value.Concat(header.Value));
+                    }
+                    else
+                    {
+                        merged.Add(header);
+                    }
+                }
             }
 
-            foreach (var (name, values) in headers)
+            foreach (var (name, values) in merged)
             {
-                var headerSeparator = name.Equals("User-Agent", StringComparison.OrdinalIgnoreCase) ? " " : ",";
-                yield return new KeyValuePair<string, string>(name, string.Join(headerSeparator, values));
+                yield return new KeyValuePair<string, string>(name, string.Join(GetSeparator(name), values));
             }
+        }
+
+        private static string GetSeparator(string headerName)
+        {
+            // A few headers have special multi-value separators per RFC 7230.
+            if (headerName.Equals("User-Agent", StringComparison.OrdinalIgnoreCase))
+            {
+                return " ";
+            }
+            if (headerName.Equals("Cookie", StringComparison.OrdinalIgnoreCase))
+            {
+                return "; ";
+            }
+            return ",";
         }
     }
 }

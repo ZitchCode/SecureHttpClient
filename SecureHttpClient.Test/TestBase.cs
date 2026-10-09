@@ -98,6 +98,11 @@ namespace SecureHttpClient.Test
             _secureHttpClientHandler.UseCookies = false;
         }
 
+        protected void DisposeHandler()
+        {
+            _secureHttpClientHandler.Dispose();
+        }
+
         protected static void SkipIfHttp3NotSupported()
         {
             // Android: OkHttp does not support HTTP/3 yet.
