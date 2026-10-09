@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -113,6 +114,13 @@ namespace SecureHttpClient
             lock (_secureHttpClientHandler.InflightRequests)
             {
                 _secureHttpClientHandler.InflightRequests.Remove(task);
+            }
+
+            // The request body (if any) was buffered to a temporary file; delete it now that the
+            // task is done.
+            if (data.TempFilePath != null)
+            {
+                SecureHttpClientHandler.TryDeleteFile(data.TempFilePath);
             }
 
             if (error != null || data.Error != null)

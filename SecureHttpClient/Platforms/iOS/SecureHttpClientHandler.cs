@@ -1,6 +1,7 @@
 #if __IOS__
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Collections.Generic;
@@ -149,75 +150,147 @@ namespace SecureHttpClient
             }
 
             var includeContentHeaders = false;
-
             var body = default(NSData);
-            if (request.Content != null)
+            string? tempFilePath = null;
+
+            try
             {
-                var bytes = await request.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-                if (bytes.Length > 0 || request.Method != HttpMethod.Get)
+                if (request.Content != null)
                 {
-                    body = NSData.FromArray(bytes);
-                    includeContentHeaders = true;
+                    const long memoryBufferThreshold = 64 * 1024;
+                    var contentLength = request.Content.Headers.ContentLength;
+
+                    if (contentLength is null || contentLength > memoryBufferThreshold)
+                    {
+                        // Large or unknown-size bodies are buffered to a temporary file so
+                        // NSURLSession streams them from disk instead of holding them in memory.
+                        tempFilePath = Path.Combine(Path.GetTempPath(), $"securehttpclient-{Guid.NewGuid():N}.tmp");
+
+                        long written;
+                        await using (var file = File.Create(tempFilePath))
+                        {
+                            await request.Content.CopyToAsync(file, cancellationToken).ConfigureAwait(false);
+                            written = file.Length;
+                        }
+
+                        if (written > 0 || request.Method != HttpMethod.Get)
+                        {
+                            includeContentHeaders = true;
+                        }
+                        else
+                        {
+                            TryDeleteFile(tempFilePath);
+                            tempFilePath = null;
+                        }
+                    }
+                    else
+                    {
+                        // Small bodies stay in memory (no temp file churn).
+                        var bytes = await request.Content.ReadAsByteArrayAsync(cancellationToken).ConfigureAwait(false);
+                        if (bytes.Length > 0 || request.Method != HttpMethod.Get)
+                        {
+                            body = NSData.FromArray(bytes);
+                            includeContentHeaders = true;
+                        }
+                    }
                 }
-            }
 
-            var headers = request.GetMergedRequestHeaders(includeContentHeaders).ToArray();
+                var headers = request.GetMergedRequestHeaders(includeContentHeaders).ToArray();
 
-            var rq = new NSMutableUrlRequest
-            {
-                AllowsCellularAccess = true,
-                CachePolicy = NSUrlRequestCachePolicy.UseProtocolCachePolicy,
-                HttpMethod = request.Method.ToString().ToUpperInvariant(),
-                Url = NSUrl.FromString(request.RequestUri!.AbsoluteUri),
-            };
-
-            foreach (var (name, value) in headers)
-            {
-                rq[name] = value;
-            }
-
-            // Attempt HTTP/3 opportunistically from the first request (iOS 15+).
-            // NSURLSession will fall back to HTTP/2 or HTTP/1.1 if QUIC is unavailable.
-            rq.AssumesHttp3Capable = true;
-
-            var op = body != null
-                ? (NSUrlSessionTask)_session!.CreateUploadTask(rq, body)
-                : _session!.CreateDataTask(rq);
-
-            cancellationToken.ThrowIfCancellationRequested();
-
-            var ret = new TaskCompletionSource<HttpResponseMessage>(TaskCreationOptions.RunContinuationsAsynchronously);
-
-            lock (InflightRequests)
-            {
-                InflightRequests[op] = new InflightOperation
+                var rq = new NSMutableUrlRequest
                 {
-                    FutureResponse = ret,
-                    Request = request,
-                    ResponseBody = new PipeStream(),
-                    CancellationToken = cancellationToken,
+                    AllowsCellularAccess = true,
+                    CachePolicy = NSUrlRequestCachePolicy.UseProtocolCachePolicy,
+                    HttpMethod = request.Method.ToString().ToUpperInvariant(),
+                    Url = NSUrl.FromString(request.RequestUri!.AbsoluteUri),
                 };
+
+                foreach (var (name, value) in headers)
+                {
+                    rq[name] = value;
+                }
+
+                // Attempt HTTP/3 opportunistically from the first request (iOS 15+).
+                // NSURLSession will fall back to HTTP/2 or HTTP/1.1 if QUIC is unavailable.
+                rq.AssumesHttp3Capable = true;
+
+                NSUrlSessionTask op;
+                if (tempFilePath != null)
+                {
+                    op = _session!.CreateUploadTask(rq, NSUrl.FromFilename(tempFilePath));
+                }
+                else if (body != null)
+                {
+                    op = _session!.CreateUploadTask(rq, body);
+                }
+                else
+                {
+                    op = _session!.CreateDataTask(rq);
+                }
+
+                cancellationToken.ThrowIfCancellationRequested();
+
+                var ret = new TaskCompletionSource<HttpResponseMessage>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+                lock (InflightRequests)
+                {
+                    InflightRequests[op] = new InflightOperation
+                    {
+                        FutureResponse = ret,
+                        Request = request,
+                        ResponseBody = new PipeStream(),
+                        CancellationToken = cancellationToken,
+                        TempFilePath = tempFilePath,
+                    };
+                }
+
+                // The inflight operation now owns the temp file; DidCompleteWithError deletes it.
+                tempFilePath = null;
+
+                op.Resume();
+
+                // Propagate cancellation to the underlying NSUrlSession task (so a cancelled request
+                // does not keep running in the background) and dispose the registration once the
+                // operation completes, so the callback is not retained by the token indefinitely.
+                using var registration = cancellationToken.Register(() =>
+                {
+                    ret.TrySetCanceled(cancellationToken);
+                    try
+                    {
+                        op.Cancel();
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger?.LogDebug(ex, "Ignoring exception while cancelling NSUrlSession task.");
+                    }
+                });
+
+                return await ret.Task.ConfigureAwait(false);
             }
-
-            op.Resume();
-
-            // Propagate cancellation to the underlying NSUrlSession task (so a cancelled request
-            // does not keep running in the background) and dispose the registration once the
-            // operation completes, so the callback is not retained by the token indefinitely.
-            using var registration = cancellationToken.Register(() =>
+            finally
             {
-                ret.TrySetCanceled(cancellationToken);
-                try
+                // Cleans up if setup failed before the request was registered; afterwards the
+                // inflight operation owns the file and DidCompleteWithError deletes it.
+                if (tempFilePath != null)
                 {
-                    op.Cancel();
+                    TryDeleteFile(tempFilePath);
                 }
-                catch (Exception ex)
-                {
-                    _logger?.LogDebug(ex, "Ignoring exception while cancelling NSUrlSession task.");
-                }
-            });
+            }
+        }
 
-            return await ret.Task.ConfigureAwait(false);
+        internal static void TryDeleteFile(string path)
+        {
+            try
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
+            catch
+            {
+                // Best effort: the OS eventually cleans up the temp directory.
+            }
         }
     }
 }

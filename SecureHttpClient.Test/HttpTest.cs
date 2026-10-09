@@ -491,6 +491,33 @@ namespace SecureHttpClient.Test
             Assert.Equal(payload, data);
         }
 
+        // Smoke test: upload a multi-megabyte streamed body and verify it arrives complete. The body
+        // is generated lazily on the client so the test itself does not allocate it either.
+        [Fact]
+        public async Task HttpTest_UploadLargeStreamedBody()
+        {
+            const long size = 5 * 1024 * 1024; // 5 MB
+            const byte value = (byte)'A';
+
+            await using var server = new EchoServer();
+            var receivedTask = server.AcceptAndConsumeBodyAsync();
+
+            using var stream = new GeneratedStream(size, value);
+            using var content = new StreamContent(stream);
+            content.Headers.ContentLength = size;
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+
+            var request = new HttpRequestMessage(HttpMethod.Post, $"http://127.0.0.1:{server.Port}/")
+            {
+                Content = content
+            };
+            await SendAsync(request);
+
+            var (count, checksum) = await receivedTask;
+            Assert.Equal(size, count);
+            Assert.Equal(size * value, checksum);
+        }
+
         [SkippableFact]
         public async Task HttpTest_GetWithNonEmptyRequestBody()
         {

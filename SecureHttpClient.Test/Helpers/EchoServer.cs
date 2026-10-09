@@ -170,6 +170,67 @@ namespace SecureHttpClient.Test.Helpers
             catch (OperationCanceledException) { }
         }
 
+        // Accepts one connection, reads the request (headers + body) and returns the number of body
+        // bytes received and their checksum. Used for large-upload smoke tests without external services.
+        internal async Task<(long Count, long Checksum)> AcceptAndConsumeBodyAsync()
+        {
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(120));
+            using var tcpClient = await _listener.AcceptTcpClientAsync(cts.Token);
+            var stream = tcpClient.GetStream();
+
+            // Read the headers byte by byte so we don't over-read into the body.
+            var headerBuilder = new StringBuilder();
+            var one = new byte[1];
+            while (true)
+            {
+                var read = await stream.ReadAsync(one.AsMemory(0, 1), cts.Token);
+                if (read == 0)
+                {
+                    break;
+                }
+                headerBuilder.Append((char)one[0]);
+                if (headerBuilder.Length >= 4 &&
+                    headerBuilder[^4] == '\r' && headerBuilder[^3] == '\n' &&
+                    headerBuilder[^2] == '\r' && headerBuilder[^1] == '\n')
+                {
+                    break;
+                }
+            }
+
+            long contentLength = 0;
+            foreach (var headerLine in headerBuilder.ToString().Split("\r\n"))
+            {
+                if (headerLine.StartsWith("Content-Length:", StringComparison.OrdinalIgnoreCase))
+                {
+                    contentLength = long.Parse(headerLine["Content-Length:".Length..].Trim());
+                }
+            }
+
+            long count = 0;
+            long checksum = 0;
+            var buffer = new byte[81920];
+            while (count < contentLength)
+            {
+                var toRead = (int)Math.Min(buffer.Length, contentLength - count);
+                var read = await stream.ReadAsync(buffer.AsMemory(0, toRead), cts.Token);
+                if (read == 0)
+                {
+                    break;
+                }
+                for (var i = 0; i < read; i++)
+                {
+                    checksum += buffer[i];
+                }
+                count += read;
+            }
+
+            const string response = "HTTP/1.1 200 OK\r\nContent-Length: 0\r\nConnection: close\r\n\r\n";
+            await stream.WriteAsync(Encoding.ASCII.GetBytes(response), cts.Token);
+            await stream.FlushAsync(cts.Token);
+
+            return (count, checksum);
+        }
+
         public ValueTask DisposeAsync()
         {
             _listener.Stop();

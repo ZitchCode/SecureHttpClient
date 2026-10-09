@@ -13,6 +13,7 @@
 - test: retry the http/3 negotiation tests until HTTP/3 is observed (Alt-Svc is best-effort)
 - net: apply the first-request guard to AddCertificatePinner and SetTrustedRoots too (the reset path was previously silently ignored)
 - internal cleanup: no deferred response-stream dispose on ios, no caller request.Version mutation on net, typed headers-order request option, primitive boolean in the okhttp decompress interceptor
+- ios: upload request bodies larger than 64 KB from a temporary file instead of buffering them in memory
 - Microsoft.Extensions.* 10.0.12
 - test : Microsoft.Maui.* 10.0.110
 

@@ -17,6 +17,7 @@ namespace SecureHttpClient
         public bool IsCompleted { get; set; }
         public NSError? Error { get; set; }
         public HttpResponseMessage? Response { get; set; }
+        public string? TempFilePath { get; set; }
     }
 }
 
