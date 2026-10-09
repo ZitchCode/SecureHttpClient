@@ -26,7 +26,7 @@ namespace SecureHttpClient
         private X509Certificate2Collection? _trustedRoots;
         private readonly Lazy<CertificatePinner> _certificatePinner;
         private readonly ILogger<Abstractions.ISecureHttpClientHandler> _logger;
-        private NSUrlSession? _session;
+        private readonly Lazy<NSUrlSession> _session;
 
         /// <summary>
         /// SecureHttpClientHandler constructor (iOS implementation)
@@ -37,6 +37,7 @@ namespace SecureHttpClient
             _logger = logger;
             InflightRequests = new Dictionary<NSUrlSessionTask, InflightOperation>();
             _certificatePinner = new Lazy<CertificatePinner>(() => new CertificatePinner(logger));
+            _session = new Lazy<NSUrlSession>(InitSession);
         }
 
         /// <summary>
@@ -83,13 +84,13 @@ namespace SecureHttpClient
         // NSUrlSession is created, so they cannot be changed once the handler has been used.
         private void EnsureNotStarted()
         {
-            if (_session != null)
+            if (_session.IsValueCreated)
             {
                 throw new InvalidOperationException("Certificate pinning, trusted roots and client certificates must be configured before the first request.");
             }
         }
 
-        private void InitSession()
+        private NSUrlSession InitSession()
         {
             using var configuration = NSUrlSessionConfiguration.EphemeralSessionConfiguration;
             if (!UseProxy)
@@ -107,7 +108,7 @@ namespace SecureHttpClient
                 configuration.HttpCookieStorage = null;
             }
             var nsUrlSessionDelegate = (INSUrlSessionDelegate)new DataTaskDelegate(this, _certificatePinner.IsValueCreated ? _certificatePinner.Value : null, _trustedRoots);
-            _session = NSUrlSession.FromConfiguration(configuration, nsUrlSessionDelegate, null);
+            return NSUrlSession.FromConfiguration(configuration, nsUrlSessionDelegate, null);
         }
 
         private static NSDictionary GetProxyDictionary(WebProxy webProxy)
@@ -144,10 +145,7 @@ namespace SecureHttpClient
                 _logger?.LogWarning("SetHeadersOrder is not supported on this platform and will be ignored.");
             }
 
-            if (_session == null)
-            {
-                InitSession();
-            }
+            var session = _session.Value;
 
             var includeContentHeaders = false;
             var body = default(NSData);
@@ -217,15 +215,15 @@ namespace SecureHttpClient
                 NSUrlSessionTask op;
                 if (tempFilePath != null)
                 {
-                    op = _session!.CreateUploadTask(rq, NSUrl.FromFilename(tempFilePath));
+                    op = session.CreateUploadTask(rq, NSUrl.FromFilename(tempFilePath));
                 }
                 else if (body != null)
                 {
-                    op = _session!.CreateUploadTask(rq, body);
+                    op = session.CreateUploadTask(rq, body);
                 }
                 else
                 {
-                    op = _session!.CreateDataTask(rq);
+                    op = session.CreateDataTask(rq);
                 }
 
                 cancellationToken.ThrowIfCancellationRequested();
@@ -276,6 +274,15 @@ namespace SecureHttpClient
                     TryDeleteFile(tempFilePath);
                 }
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && _session.IsValueCreated)
+            {
+                _session.Value.InvalidateAndCancel();
+            }
+            base.Dispose(disposing);
         }
 
         internal static void TryDeleteFile(string path)

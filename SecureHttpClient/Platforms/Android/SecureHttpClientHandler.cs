@@ -269,6 +269,19 @@ namespace SecureHttpClient
             return ret;
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && _client.IsValueCreated)
+            {
+                var client = _client.Value;
+                var dispatcher = client.Dispatcher();
+                dispatcher.CancelAll();
+                dispatcher.ExecutorService()?.Shutdown();
+                client.ConnectionPool().EvictAll();
+            }
+            base.Dispose(disposing);
+        }
+
         private sealed class StreamingRequestBody : RequestBody
         {
             private readonly HttpContent _content;
