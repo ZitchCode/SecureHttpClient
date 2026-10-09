@@ -86,7 +86,7 @@ namespace SecureHttpClient
         public virtual void SetTrustedRoots(params byte[][] certificates)
         {
             EnsureNotStarted();
-            if (certificates == null)
+            if (certificates is null || certificates.Length == 0)
             {
                 _trustMgrFactory = null;
                 _x509TrustManager = null;

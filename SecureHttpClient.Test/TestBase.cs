@@ -78,6 +78,11 @@ namespace SecureHttpClient.Test
             _secureHttpClientHandler.SetTrustedRoots(caCert);
         }
 
+        protected void ClearTrustedRoots()
+        {
+            _secureHttpClientHandler.SetTrustedRoots();
+        }
+
         protected void DoNotFollowRedirects()
         {
             _secureHttpClientHandler.AllowAutoRedirect = false;

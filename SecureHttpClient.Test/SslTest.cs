@@ -84,6 +84,21 @@ namespace SecureHttpClient.Test
             await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(page));
         }
 
+        // Regression test: SetTrustedRoots() with no argument must reset to the platform default roots
+        // (a no-op restore), not trust nothing. Because "params" produces an empty array (not null),
+        // Android used to build an empty trust store and reject every public certificate.
+        [Fact]
+        public async Task SslTest_ResetTrustedRoots()
+        {
+            // Restrict trust to a custom root, then reset it (no argument).
+            var caCert = await ResourceHelper.GetStringAsync("untrusted_root_badssl_com_certificate.pem");
+            SetCaCertificate(caCert);
+            ClearTrustedRoots();
+
+            // With the default roots restored, a normally-trusted host must succeed.
+            await GetAsync("https://sha256.badssl.com/");
+        }
+
         [Fact(Skip = "Mobile apps usually skip revocation checks")]
         public async Task SslTest_RevokedCertificate()
         {
