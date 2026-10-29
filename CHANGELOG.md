@@ -1,3 +1,12 @@
+## 2.4.14
+- vs 18.11.2
+- dotnet sdk 10.0.403
+- workload 10.0.402
+- android 36.1.118
+- ios 27.0.10722
+- Microsoft.Extensions.* 10.0.14
+- test : Microsoft.Maui.* 10.0.120
+
 ## 2.4.13
 - vs 18.10.3
 - dotnet sdk 10.0.401
