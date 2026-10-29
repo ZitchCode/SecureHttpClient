@@ -5,6 +5,7 @@
 - android 36.1.118
 - ios 27.0.10722
 - Microsoft.Extensions.* 10.0.14
+- Square.OkIO 3.18.2
 - test : Microsoft.Maui.* 10.0.120
 
 ## 2.4.13
