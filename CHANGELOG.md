@@ -6,6 +6,7 @@
 - ios 27.1.10018
 - Microsoft.Extensions.* 10.0.14
 - Square.OkIO 3.18.2
+- adopt the UIKit scene lifecycle, required to launch when built with the iOS 27 SDK
 - test : Microsoft.Maui.* 10.0.120
 
 ## 2.4.13
