@@ -1,11 +1,12 @@
 <Project>
   <PropertyGroup>
-    <LangVersion>14.0</LangVersion>
+    <LangVersion>15.0</LangVersion>
     <Nullable>enable</Nullable>
     <SecureHttpClientVersion>2.4.14</SecureHttpClientVersion>
-    <NetTfm>net10.0</NetTfm>
-    <AndroidTfm>net10.0-android36.1</AndroidTfm>
-    <IosTfm>net10.0-ios27.1</IosTfm>
-    <WindowsTfm>net10.0-windows10.0.19041.0</WindowsTfm>
+    <Features>runtime-async=on</Features>
+    <NetTfm>net11.0</NetTfm>
+    <AndroidTfm>net11.0-android37.2</AndroidTfm>
+    <IosTfm>net11.0-ios27.2</IosTfm>
+    <WindowsTfm>net11.0-windows10.0.19041.0</WindowsTfm>
   </PropertyGroup>
 </Project>

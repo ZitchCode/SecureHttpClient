@@ -1,3 +1,17 @@
+## 2.5.0
+- vs 18.12.0
+- dotnet sdk 11.0.100
+- workload 11.0.100.1
+- android 37.2.31
+- ios 27.2.11039
+- C# 15.0
+- enable runtime-async
+- Microsoft.Extensions.* 11.0.0
+- Microsoft.Extensions.Logging.Abstractions is in-box in .NET 11: removed the PackageReference and the NuGet dependency (NU1510)
+- build: set NuspecProperties before _GetOutputItemsFromPack so Release packaging works on SDK 11
+- build: SecureHttpClient.OkHttp uses TargetFramework instead of TargetFrameworks (fixes MSB4057 on referenced-project publish items)
+- test : Microsoft.Maui.* 11.0.10
+
 ## 2.4.14
 - vs 18.11.3
 - dotnet sdk 10.0.403
