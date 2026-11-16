@@ -39,9 +39,6 @@
 		<!-- Trimmer -->
 		<TrimMode>full</TrimMode>
 		<PublishTrimmed>true</PublishTrimmed>
-
-		<!-- Full R2R -->
-		<MauiEnableFullReadyToRun>true</MauiEnableFullReadyToRun>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$([MSBuild]::GetTargetPlatformIdentifier($(TargetFramework)))'=='Debug|ios'">
