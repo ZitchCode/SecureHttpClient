@@ -133,17 +133,7 @@ namespace SecureHttpClient
                 return false;
             }
 
-            var good = sslPolicyErrors == SslPolicyErrors.None;
-            if (_trustedRoots != null && (sslPolicyErrors & ~SslPolicyErrors.RemoteCertificateChainErrors) == 0)
-            {
-                chain!.ChainPolicy.ExtraStore.AddRange(_trustedRoots);
-                chain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
-                if (chain.Build(certificate!))
-                {
-                    var root = chain.ChainElements[^1].Certificate;
-                    good = _trustedRoots.Find(X509FindType.FindByThumbprint, root.Thumbprint, false).Count > 0;
-                }
-            }
+            var good = CustomRootTrustValidator.IsCertificateTrusted(certificate, sslPolicyErrors, _trustedRoots);
 
             if (!good)
             {
