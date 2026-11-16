@@ -78,6 +78,11 @@ namespace SecureHttpClient.Test
             _secureHttpClientHandler.SetTrustedRoots(caCert);
         }
 
+        protected void SetCaCertificates(params byte[][] caCertificates)
+        {
+            _secureHttpClientHandler.SetTrustedRoots(caCertificates);
+        }
+
         protected void ClearTrustedRoots()
         {
             _secureHttpClientHandler.SetTrustedRoots();

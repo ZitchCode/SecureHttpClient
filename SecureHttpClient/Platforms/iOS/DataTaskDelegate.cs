@@ -246,6 +246,14 @@ namespace SecureHttpClient
                         return;
                     }
 
+                    // X509Chain validates the chain but never the hostname. Without this check, a
+                    // certificate issued by a trusted root for another host would be accepted.
+                    if (!MatchesHostname(leafX509, hostname))
+                    {
+                        RejectServerCertificate(task, completionHandler);
+                        return;
+                    }
+
                     using var x509chain = new X509Chain();
                     x509chain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
                     x509chain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
@@ -343,6 +351,22 @@ namespace SecureHttpClient
                 inflightRequest.Error = new NSError(NSError.NSUrlErrorDomain, (nint)(long)NSUrlError.ServerCertificateUntrusted);
             }
             completionHandler(NSUrlSessionAuthChallengeDisposition.CancelAuthenticationChallenge, null!);
+        }
+
+        private static bool MatchesHostname(X509Certificate2 certificate, string? hostname)
+        {
+            if (string.IsNullOrEmpty(hostname))
+            {
+                return false;
+            }
+
+            // Uri.Host wraps IPv6 literals in brackets, which MatchesHostname does not accept.
+            if (hostname[0] == '[' && hostname[^1] == ']')
+            {
+                hostname = hostname[1..^1];
+            }
+
+            return certificate.MatchesHostname(hostname, allowWildcards: true, allowCommonName: false);
         }
 
         public override void WillPerformHttpRedirection(NSUrlSession session, NSUrlSessionTask task, NSHttpUrlResponse response, NSUrlRequest newRequest, Action<NSUrlRequest> completionHandler)

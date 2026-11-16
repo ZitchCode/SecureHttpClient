@@ -31,6 +31,25 @@ namespace SecureHttpClient.Test
             await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(page));
         }
 
+        // Regression test: trusting a custom root must not disable hostname validation.
+        // The local server uses a certificate issued by a throw-away CA and only valid for localhost.
+        // With that CA configured as a trusted root the chain is valid, so the only remaining reason
+        // to reject a request to 127.0.0.1 (same loopback server, wrong name) is the hostname.
+        [Fact]
+        public async Task SslTest_WrongHostCertificate_WithTrustedRoot()
+        {
+            await using var server = new TlsTestServer();
+
+            SetCaCertificates(server.CertificateAuthority.RawData);
+
+            // Control: the custom root is applied (the CA is not in the system store) and the
+            // certificate matches localhost.
+            await GetAsync($"https://localhost:{server.Port}/");
+
+            // 127.0.0.1 reaches the same server, but the certificate does not cover that name.
+            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync($"https://127.0.0.1:{server.Port}/"));
+        }
+
         [Fact]
         public async Task SslTest_SelfSignedCertificate()
         {

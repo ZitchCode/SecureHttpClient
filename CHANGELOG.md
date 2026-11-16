@@ -10,6 +10,8 @@
 - Microsoft.Extensions.Logging.Abstractions is in-box in .NET 11: removed the PackageReference and the NuGet dependency (NU1510)
 - build: set NuspecProperties before _GetOutputItemsFromPack so Release packaging works on SDK 11
 - build: SecureHttpClient.OkHttp uses TargetFramework instead of TargetFrameworks (fixes MSB4057 on referenced-project publish items)
+- ios: verify the hostname against the server certificate when custom trusted roots are configured (X509Chain validates the chain only, so a certificate issued by a trusted root for another hostname was accepted)
+- test : local TLS server with a wrong-hostname certificate to cover custom trusted roots
 - test : Microsoft.Maui.* 11.0.10
 
 ## 2.4.14
