@@ -95,21 +95,29 @@ namespace SecureHttpClient
             var keyStore = KeyStore.GetInstance(KeyStore.DefaultType)!;
             keyStore.Load(null);
             var certFactory = CertificateFactory.GetInstance("X.509")!;
-            foreach (var certificate in certificates)
+            for (var index = 0; index < certificates.Length; index++)
             {
-                var cert = (X509Certificate) certFactory.GenerateCertificate(new System.IO.MemoryStream(certificate))!;
-                keyStore.SetCertificateEntry(cert.SubjectDN!.Name, cert);
+                var cert = (X509Certificate) certFactory.GenerateCertificate(new System.IO.MemoryStream(certificates[index]))!;
+                // The subject DN is not unique (cross-signed or re-issued roots) and
+                // SetCertificateEntry replaces an existing entry, so use the position as the alias.
+                keyStore.SetCertificateEntry($"root-{index}", cert);
             }
 
             _trustMgrFactory = TrustManagerFactory.GetInstance(TrustManagerFactory.DefaultAlgorithm)!;
             _trustMgrFactory.Init(keyStore);
+            _x509TrustManager = null;
             foreach (var trustManager in TrustManagers!)
             {
                 _x509TrustManager = trustManager.JavaCast<IX509TrustManager>();
-                if (_x509TrustManager != null)
+                if (_x509TrustManager is not null)
                 {
                     break;
                 }
+            }
+
+            if (_x509TrustManager is null)
+            {
+                throw new InvalidOperationException("No X509 trust manager is available for the configured trusted roots.");
             }
         }
 
@@ -155,9 +163,21 @@ namespace SecureHttpClient
 
             if (_keyMgrFactory != null || _trustMgrFactory != null)
             {
+                // The trust manager handed to OkHttp must be the one built from the configured
+                // roots. Falling back to the system trust manager would be inconsistent with the
+                // SSLContext below; fail fast instead.
+                var trustManager = _trustMgrFactory is null
+                    ? TlsSslSocketFactory.GetSystemDefaultTrustManager()
+                    : _x509TrustManager;
+
+                if (trustManager is null)
+                {
+                    throw new InvalidOperationException("No X509 trust manager is available for the configured certificates.");
+                }
+
                 var context = SSLContext.GetInstance("TLS")!;
                 context.Init(KeyManagers, TrustManagers, null);
-                builder.SslSocketFactory(context.SocketFactory!, (_x509TrustManager ?? TlsSslSocketFactory.GetSystemDefaultTrustManager())!);
+                builder.SslSocketFactory(context.SocketFactory!, trustManager);
             }
 
             return builder.Build();

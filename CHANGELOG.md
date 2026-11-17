@@ -12,6 +12,8 @@
 - build: SecureHttpClient.OkHttp uses TargetFramework instead of TargetFrameworks (fixes MSB4057 on referenced-project publish items)
 - ios: verify the hostname against the server certificate when custom trusted roots are configured (X509Chain validates the chain only, so a certificate issued by a trusted root for another hostname was accepted)
 - net: custom trusted roots now use X509ChainTrustMode.CustomRootTrust (a failed chain rebuild no longer falls back to the system trust result)
+- android: fail fast when no X509 trust manager is available for the configured trusted roots (previously the system trust manager was silently passed to OkHttp)
+- android: use a unique KeyStore alias for trusted roots (two roots with the same subject no longer overwrite each other)
 - test : local TLS server with a wrong-hostname certificate to cover custom trusted roots
 - test : Microsoft.Maui.* 11.0.10
 

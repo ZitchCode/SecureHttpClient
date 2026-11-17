@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Maui.Devices;
@@ -48,6 +49,41 @@ namespace SecureHttpClient.Test
 
             // 127.0.0.1 reaches the same server, but the certificate does not cover that name.
             await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync($"https://127.0.0.1:{server.Port}/"));
+        }
+
+        // Regression test: on Android the trusted roots are stored in a KeyStore keyed by the
+        // certificate subject DN, so two roots with the same subject used to overwrite each other.
+        [Fact]
+        public async Task SslTest_TrustedRootsWithSameSubject_AreBothAccepted()
+        {
+            await using var first = new TlsTestServer();
+            await using var second = new TlsTestServer();
+
+            SetCaCertificates(first.CertificateAuthority.RawData, second.CertificateAuthority.RawData);
+
+            await GetAsync($"https://localhost:{first.Port}/");
+            await GetAsync($"https://localhost:{second.Port}/");
+        }
+
+        // Regression test: when no X509 trust manager can be obtained for the configured roots, the
+        // Android handler used to silently pass the system trust manager to OkHttp. This state is
+        // not reachable through the public API, so it is forced through the private field.
+        [SkippableFact]
+        public async Task SslTest_MissingX509TrustManager_ThrowsOnFirstRequest()
+        {
+            Skip.If(DeviceInfo.Platform != DevicePlatform.Android, "Android-only trust manager fallback.");
+
+            await using var server = new TlsTestServer();
+            SetCaCertificates(server.CertificateAuthority.RawData);
+
+#pragma warning disable IL2075 // Test-only white-box check: the field is used by the handler, this only forces a defensive state.
+            var field = Handler.GetType().GetField("_x509TrustManager", BindingFlags.NonPublic | BindingFlags.Instance);
+#pragma warning restore IL2075
+            Skip.If(field is null, "The Android handler field is not available (trimmed or renamed).");
+
+            field!.SetValue(Handler, null);
+
+            await Assert.ThrowsAsync<InvalidOperationException>(() => GetAsync($"https://localhost:{server.Port}/"));
         }
 
         [Fact]

@@ -17,6 +17,8 @@ namespace SecureHttpClient.Test
         private readonly SecureHttpClientHandler _secureHttpClientHandler;
         private readonly HttpClient _httpClient;
 
+        protected SecureHttpClientHandler Handler => _secureHttpClientHandler;
+
         protected TestBase(TestFixture fixture)
         {
             _secureHttpClientHandler = (fixture.ServiceProvider.GetRequiredService<HttpClientHandler>() as SecureHttpClientHandler)!;
