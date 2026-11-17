@@ -2,8 +2,8 @@
   <PropertyGroup>
     <LangVersion>15.0</LangVersion>
     <Nullable>enable</Nullable>
-    <SecureHttpClientVersion>2.4.14</SecureHttpClientVersion>
     <Features>runtime-async=on</Features>
+    <SecureHttpClientVersion>2.5.0</SecureHttpClientVersion>
     <NetTfm>net11.0</NetTfm>
     <AndroidTfm>net11.0-android37.2</AndroidTfm>
     <IosTfm>net11.0-ios27.2</IosTfm>
