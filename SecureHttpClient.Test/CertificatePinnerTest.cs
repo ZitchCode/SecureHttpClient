@@ -21,6 +21,33 @@ namespace SecureHttpClient.Test
             await GetAsync(_fixture.Page);
         }
 
+        // End-to-end case-insensitivity: the pattern uses a different case than the host. With the
+        // correct pin the request must succeed...
+        [Fact]
+        public async Task CertificatePinnerTest_WildcardPatternWithDifferentCase_Success()
+        {
+            AddCertificatePinner("*.HowsMySsl.com", _fixture.PinsOk);
+            await GetAsync(_fixture.Page);
+        }
+
+        // ...and with a wrong pin it must still be rejected. Before the fix the mixed-case pattern
+        // did not match the host, so the pin was silently ignored and the request succeeded.
+        [Fact]
+        public async Task CertificatePinnerTest_WildcardPatternWithDifferentCase_Failure()
+        {
+            AddCertificatePinner("*.HowsMySsl.com", _fixture.PinsKo);
+            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync(_fixture.Page));
+        }
+
+        // Same check when the case difference comes from the request host (iOS can preserve the
+        // case of the URL host instead of normalizing it like .NET).
+        [Fact]
+        public async Task CertificatePinnerTest_HostWithDifferentCase_Failure()
+        {
+            AddCertificatePinner(_fixture.Hostname, _fixture.PinsKo);
+            await AssertExtensions.ThrowsTrustFailureAsync(() => GetAsync("https://WWW.HowsMySsl.COM/a/check"));
+        }
+
         [Fact]
         public async Task CertificatePinnerTest_OneHost_Failure()
         {
@@ -157,10 +184,27 @@ namespace SecureHttpClient.Test
         [InlineData("**.example.com", "abc.example.com", true)]
         [InlineData("**.example.com", "abc.def.example.com", true)]
         [InlineData("**.example.com", "abc.def.example.org", false)]
+        // Host names are case-insensitive (RFC 4343), so patterns must match regardless of case.
+        [InlineData("*.Example.com", "abc.example.com", true)]
+        [InlineData("*.example.com", "ABC.Example.COM", true)]
+        [InlineData("api.Example.com", "API.example.com", true)]
+        [InlineData("**.Example.com", "a.b.example.com", true)]
+        [InlineData("*.Example.com", "example.com", false)]
         public void CertificatePinnerTest_MatchesPattern(string pattern, string hostname, bool expected)
         {
             var actual = CertificatePinning.CertificatePinner.MatchesPattern(pattern, hostname);
             Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void CertificatePinnerTest_HasPin_IsCaseInsensitive()
+        {
+            var pinner = new CertificatePinning.CertificatePinner();
+            pinner.AddPins("*.Example.com", ["sha256/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="]);
+
+            Assert.True(pinner.HasPin("abc.example.com"));
+            Assert.True(pinner.HasPin("ABC.Example.COM"));
+            Assert.False(pinner.HasPin("example.com"));
         }
     }
 }

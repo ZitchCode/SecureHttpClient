@@ -14,6 +14,7 @@
 - net: custom trusted roots now use X509ChainTrustMode.CustomRootTrust (a failed chain rebuild no longer falls back to the system trust result)
 - android: fail fast when no X509 trust manager is available for the configured trusted roots (previously the system trust manager was silently passed to OkHttp)
 - android: use a unique KeyStore alias for trusted roots (two roots with the same subject no longer overwrite each other)
+- net/ios: match certificate pin patterns case-insensitively and canonicalize patterns to lowercase like OkHttp (a pattern such as *.Example.com used to silently disable pinning for that host)
 - test : local TLS server with a wrong-hostname certificate to cover custom trusted roots
 - test : Microsoft.Maui.* 11.0.10
 

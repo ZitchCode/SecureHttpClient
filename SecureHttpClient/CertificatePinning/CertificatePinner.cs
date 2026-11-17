@@ -22,7 +22,8 @@ namespace SecureHttpClient.CertificatePinning
         {
             _logger?.LogDebug("Add CertificatePinner: hostname:{Hostname}, pins:{Pins}", hostname, string.Join("|", pins));
             ValidatePattern(hostname);
-            _pins[hostname] = pins; // Updates value if already existing
+            // Host names are case-insensitive; store the canonical lowercase form like OkHttp does.
+            _pins[hostname.ToLowerInvariant()] = pins; // Updates value if already existing
         }
 
         public bool HasPin(string hostname)
@@ -73,14 +74,14 @@ namespace SecureHttpClient.CertificatePinning
             {
                 throw new ArgumentException("Pattern cannot be null or empty");
             }
-            if (pattern.StartsWith("*."))
+            if (pattern.StartsWith("*.", StringComparison.Ordinal))
             {
                 if (pattern.IndexOf('*', 1) != -1)
                 {
                     throw new ArgumentException($"Unexpected pattern: {pattern}");
                 }
             }
-            else if (pattern.StartsWith("**."))
+            else if (pattern.StartsWith("**.", StringComparison.Ordinal))
             {
                 if (pattern.IndexOf('*', 2) != -1)
                 {
@@ -116,22 +117,23 @@ namespace SecureHttpClient.CertificatePinning
 
         internal static bool MatchesPattern(string pattern, string hostname)
         {
-            if (pattern.StartsWith("**."))
+            if (pattern.StartsWith("**.", StringComparison.Ordinal))
             {
                 var suffix = pattern[3..];
-                return hostname == suffix || hostname.EndsWith("." + suffix);
+                return hostname.Equals(suffix, StringComparison.OrdinalIgnoreCase) ||
+                       hostname.EndsWith("." + suffix, StringComparison.OrdinalIgnoreCase);
             }
-            if (pattern.StartsWith("*."))
+            if (pattern.StartsWith("*.", StringComparison.Ordinal))
             {
                 var suffix = pattern[2..];
-                if (!hostname.EndsWith("." + suffix))
+                if (!hostname.EndsWith("." + suffix, StringComparison.OrdinalIgnoreCase))
                 {
                     return false;
                 }
                 var prefix = hostname[..(hostname.Length - suffix.Length - 1)];
                 return !prefix.Contains('.');
             }
-            return hostname == pattern;
+            return hostname.Equals(pattern, StringComparison.OrdinalIgnoreCase);
         }
     }
 }
